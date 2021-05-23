@@ -1,0 +1,112 @@
+{% extends "user_base.html" %}
+{% block title %}Library Loan System - Cart {% endblock %}
+
+{% block css %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/jquery.fancybox.min.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/owl.carousel.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/owl.transitions.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/book.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/booking_colors.css') }}"/>
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
+
+{% endblock %}
+
+
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<!-- Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" id="cart">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="show-cart">
+                <li>???????</li>
+            </ul>
+            <div>You have <span class="total-count">X</span> items in your cart</div>
+            <div>Total Cart:$<span class="total-cart"></span></div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="pay_now" data-target="#cartModal" data-dismiss="modal">Check Out</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Main -->
+<form method="POST">
+    <div class="container">
+      <div class="row">
+          <div class="col">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cartModal" >Cart (<span class="total-count"></span>)</button><button class="clear-cart btn btn-danger">Clear Cart</button>
+          </div>
+      </div>
+
+
+
+<hr>
+
+        <div class="row">
+          <div class="col">
+            <div class="card" style="width: 20rem;">
+                   <img class="card-img-top" src="http://www.azspagirls.com/files/2010/09/orange.jpg" alt="Card image cap">
+                   <div class="card-block">
+                    <h4 class="card-title">Pasta</h4>
+                    <p class="card-text">Price: $35.99</p>
+                    <button type="button" data-name="Pasta" data-price="35.99" class="add-to-cart btn btn-primary">Add to cart</button>
+                   </div>
+           </div>
+       </div>
+
+       <div class="col">
+         <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="http://www.azspagirls.com/files/2010/09/orange.jpg" alt="Card image cap">
+                <div class="card-block">
+                 <h4 class="card-title">Apple</h4>
+                 <p class="card-text">Price: $30.00</p>
+                 <button name="add_cart" data-name="Apple" data-price="30" class="add-to-cart btn btn-primary">Add to cart</button>
+                </div>
+        </div>
+    </div>
+
+    <div class="col">
+      <div class="card" style="width: 20rem;">
+             <img class="card-img-top" src="http://www.azspagirls.com/files/2010/09/orange.jpg" alt="Card image cap">
+             <div class="card-block">
+              <h4 class="card-title">Pear</h4>
+              <p class="card-text">Price: $50.00</p>
+              <button name="add_cart" data-name="Pear" data-price="50" class="add-to-cart btn btn-primary">Add to cart</button>
+             </div>
+     </div>
+ </div>
+
+
+
+
+  </div>
+
+
+</div>
+</form>
+{% endblock %}
+
+    {% block scripts %}
+      {{ super() }}
+      <script src="{{url_for('static', filename='js/cart_test.js')}}"></script>
+
+
+    {%endblock%}

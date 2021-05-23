@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Library Loan System - Retrieve Pre-Orders {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <h1 class="display-4">View Pre-Order Details</h1>
+
+
+  <div>
+     <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Food No.</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% set count = namespace(value=0) %}
+      {% for food in order %}
+        {% set count.value = count.value + 1 %}
+        <tr>
+          <td>{{ count.value }}</td>
+          <td>{{ food['name'] }}</td>
+          <td>{{ food['price'] }}</td>
+          <td>{{ food['count'] }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

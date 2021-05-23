@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}HOTEL LÃ BODO - Retrieve Order{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='vendor/datatables/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div>
+      <div class="col d-flex justify-content-end">
+      <a class="btn btn-outline-secondary ml-1" href="{{ url_for('createOrder') }}"><i class="fas fa-plus-circle"></i> Create New Order</a>
+    </div>
+    <p></p>
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover" id="productcatTable" width="100%" cellspacing="1">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Item Name</th>
+                <th>Product Name</th>
+                <th>Supplier</th>
+                <th>Quantity</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Order ID</th>
+                <th>Item Name</th>
+                <th>Product Name</th>
+                <th>Supplier</th>
+                <th>Quantity</th>
+                <th>Remarks</th>
+              </tr>
+            </tfoot>
+            <tbody>
+            {% for order in order_list %}
+            <tr>
+              <td>{{ order.get_order_id() }}</td>
+              <td>{{ order.get_item_name() }}</td>
+              <td>{{ order.get_product_name() }}</td>
+              <td>{{ order.get_supplier() }}</td>
+              <td>{{ order.get_quantity() }}</td>
+              <td>{{ order.get_remarks() }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<!-- Page level plugins -->
+<script src="{{ url_for('static',filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static',filename='vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js" charset="utf-8"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{ url_for('static',filename='js/datamultiselect.js') }}"></script>
+{% endblock %}

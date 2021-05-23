@@ -1,0 +1,187 @@
+{% extends "server_base.html "%}
+
+{% block css%}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static',filename='vendor/slick/slick/slick.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='vendor/slick/slick/slick-theme.css') }}">
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+{% from "includes/_formHelper.html" import render_field %}
+
+<body id="page-top">
+                <!-- Begin Page Content -->
+
+                <div class="container-fluid">
+                  <button type="button" class="btn btn-secondary">Guest Details</button>
+                  <button type="button" class="btn btn-outline-secondary">Hospitals</button>
+                  <button type="button" class="btn btn-outline-secondary">Occupations</button>
+                  <button type="button" class="btn btn-outline-secondary">Industries</button>
+                  <button type="button" class="btn btn-outline-secondary">Edit required fields</button>
+                  <hr>
+                <div class="row flex-lg-nowrap">
+
+                  <div class="col">
+                    <div class="row">
+                      <div class="col mb-3">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="e-profile">
+                              <div class="row">
+
+                                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                  <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{guest.get_name()}}</h4>
+
+
+                                  </div>
+                                  <div class="text-center text-sm-right">
+                                    <span class="badge badge-secondary">Guest</span>
+                                    <span class="badge badge-secondary">Grade {{guest.get_grade()}}</span>
+                                    <span class="badge badge-secondary">Priority {{guest.get_priority()}}</span>
+                                    <div class="text-muted"><small>Checking in {{guest.get_check_in()}}</small></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <ul class="nav nav-tabs">
+                                <li class="nav-item"><a href="" class="active nav-link">Information</a></li>
+                              </ul>
+                              <div class="tab-content pt-3">
+                                <div class="tab-pane active">
+                                  <form class="form" novalidate="" method="POST" action="">
+                                    {{ form.csrt_token }}
+
+                                        <div class="row">
+                                          <div class="col">
+                                            <div class="form-group">
+                                              <label>Former Check In Date</label>
+                                              <input class="form-control" type="text" name="username"
+                                                     value="{{guest.get_check_in()}}" readonly>
+                                            </div>
+                                          </div>
+                                          <div class="col">
+                                            <div class="form-group">
+                                              <label>Former Check Out Date</label>
+                                              <input class="form-control" type="text" name="username"
+                                                     value="{{guest.get_check_out()}}" readonly>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="form-group">
+                                          {{ form.bookindate.label }} {{form.bookindate(class='datepicker form-control')}} {{form.hidden_tag()}}
+                                            {% if form.bookindate.errors %}
+                                            {% for error in form.bookindate.errors %}
+                                            <div class="text-danger">{{ error }}</div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                      </div>
+                                      <div class="col">
+                                        <div class="form-group">
+                                          {{ form.bookoutdate.label }} {{form.bookoutdate(class='datepicker form-control')}} {{form.hidden_tag()}}
+                                            {% if form.bookoutdate.errors %}
+                                            {% for error in form.bookoutdate.errors %}
+                                            <div class="text-danger">{{ error }}</div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col d-flex justify-content-end">
+                                        <button class="btn btn-primary" type="submit">Save Changes</button>
+                                      </div>
+                                    </div>
+                                    
+                                  </form>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-md-3 mb-3">
+                        <div class="card mb-3">
+                          <div class="card-body">
+                            <div class="px-xl-3">
+                              <a class="btn btn-block btn-secondary" href="{{ url_for('server_guests') }}">
+                                <i class="fa fa-sign-out"></i>
+                                <span>Switch Guest</span>
+                              </a>
+                              <a class="btn btn-block btn-secondary" href="{{ url_for('server_guests') }}">
+                                <i class="fa fa-sign-out"></i>
+                                <span>Change Check In/Out Date</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block script %}
+  {{ super() }}
+  <script src="{{ url_for('static',filename='vendor/slick/slick/slick.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='js/slick_carousel.js') }}"></script>
+
+{% endblock %}
