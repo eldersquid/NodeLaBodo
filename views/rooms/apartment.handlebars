@@ -1,26 +1,19 @@
-{% extends "userBase.html" %}
 
-{% block title %}
-Rooms
-{% endblock %}
 
 
 	<!-- CSS
 	================================================== -->
-	{% block css %}
-		{{ super() }}
-		<link rel="stylesheet" href="{{ url_for('static',filename='styles/jquery.fancybox.min.css') }}"/>
-		<link rel="stylesheet" href="{{ url_for('static',filename='styles/book.css') }}"/>
-		<link rel="stylesheet" href="{{ url_for('static',filename='styles/booking_colors.css') }}"/>
+	
+		
+		<link rel="stylesheet" href="/styles/jquery.fancybox.min.css"/>
+		<link rel="stylesheet" href="/styles/book.css"/>
+		<link rel="stylesheet" href="/styles/booking_colors.css"/>
 		<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 
-	{% endblock %}
 
-</head>
 
-{% block content %}
 
-{% from "includes/_formHelper.html" import render_field %}
+
 
 
 
@@ -30,7 +23,7 @@ Rooms
 
 	<div class="section big-55-height over-hide">
 
-		<div class="parallax parallax-top" style="background-image: url('img/rooms.jpg')"></div>
+		<div class="parallax parallax-top" style="background-image: url('/img/kura.jpg')"></div>
 		<div class="dark-over-pages"></div>
 
 		<div class="hero-center-section pages">
@@ -50,37 +43,37 @@ Rooms
 				<div class="row">
 					<div class="col-6 col-sm-6 col-md-4 col-lg-2 text-center">
 						<div class="amenities">
-							<img src="img/icons/1.svg" alt="">
+							<img src="/img/svg/1@2x.svg" alt="">
 							<p>no smoking</p>
 						</div>
 					</div>
 					<div class="col-6 col-sm-6 col-md-4 col-lg-2 text-center">
 						<div class="amenities">
-							<img src="img/icons/2.svg" alt="">
+							<img src="/img/svg/2@2x.svg" alt="">
 							<p>big beds</p>
 						</div>
 					</div>
 					<div class="col-6 col-sm-6 col-md-4 col-lg-2 text-center mt-4 mt-md-0">
 						<div class="amenities">
-							<img src="img/icons/3.svg" alt="">
+							<img src="/img/svg/3@2x.svg" alt="">
 							<p>yacht riding</p>
 						</div>
 					</div>
 					<div class="col-6 col-sm-6 col-md-4 col-lg-2 text-center mt-4 mt-lg-0">
 						<div class="amenities">
-							<img src="img/icons/4.svg" alt="">
+							<img src="/img/svg/4@2x.svg" alt="">
 							<p>free drinks</p>
 						</div>
 					</div>
 					<div class="col-6 col-sm-6 col-md-4 col-lg-2 text-center mt-4 mt-lg-0">
 						<div class="amenities">
-							<img src="img/icons/5.svg" alt="">
+							<img src="/img/svg/5@2x.svg" alt="">
 							<p>swimming pool</p>
 						</div>
 					</div>
 					<div class="col-6 col-sm-6 col-md-4 col-lg-2 text-center mt-4 mt-lg-0">
 						<div class="amenities">
-							<img src="img/icons/6.svg" alt="">
+							<img src="/img/svg/6@2x.svg" alt="">
 							<p>room breakfast</p>
 						</div>
 					</div>
@@ -101,7 +94,7 @@ Rooms
 							</div>
 							<div id="rooms-sync1" class="owl-carousel">
 								<div class="item">
-									<img src="{{ url_for('static',filename='image/hotel2.jpg') }}" alt="">
+									<img src="/img/kura.jpg" alt="">
 								</div>
 
 							</div>
@@ -109,28 +102,28 @@ Rooms
 						<div class="section">
 							<div id="rooms-sync2" class="owl-carousel">
 								<div class="item">
-									<img src="img/gallery/2-s.jpg" alt="">
+									<img src="/img/kura.jpg" alt="">
 								</div>
 								<div class="item">
-									<img src="img/gallery/3-s.jpg" alt="">
+									<img src="/img/kura.jpg" alt="">
 								</div>
 								<div class="item">
-									<img src="img/gallery/4-s.jpg" alt="">
+									<img src="/img/kura.jpg" alt="">
 								</div>
 								<div class="item">
-									<img src="img/gallery/5-s.jpg" alt="">
+									<img src="/img/kura.jpg" alt="">
 								</div>
 								<div class="item">
-									<img src="img/gallery/6-s.jpg" alt="">
+									<img src="/img/kura.jpg" alt="">
 								</div>
 								<div class="item">
-									<img src="img/gallery/7-s.jpg" alt="">
+									<img src="/img/kura.jpg" alt="">
 								</div>
 								<div class="item">
-									<img src="img/gallery/8-s.jpg" alt="">
+									<img src="/img/kura.jpg" alt="">
 								</div>
 								<div class="item">
-									<img src="img/gallery/9-s.jpg" alt="">
+									<img src="/img/kura.jpg" alt="">
 								</div>
 							</div>
 						</div>
@@ -163,43 +156,39 @@ Rooms
 						</div>
 					</div>
 					<div class="col-lg-4 order-first order-lg-last">
-						<form action="" method='POST' name="myform">
-							{{ form.csrt_token }}
+						<form action="/rooms/bookingDetails" method='POST' name="myform">
+							
 						<div class="section background-dark p-4">
-							{{ form.bookindate.label }} {{form.bookindate(class='datepicker form-control')}}
-							{{form.hidden_tag()}}
-							{% if form.bookindate.errors %}
-							{% for error in form.bookindate.errors %}
-							<div class="text-danger">{{ error }}</div>
-							{% endfor %}
-							{% endif %}
+							<label for="BookInDate">Book In Date</label>
+							<input type="date" class="datepicker form-control" name="BookInDate" placeholder="">
+							
+							
+							
+							
 							<br>
-							{{ form.bookoutdate.label }} {{form.bookoutdate(class='datepicker form-control')}}
-							{{form.hidden_tag()}}
-							{% if form.bookoutdate.errors %}
-							{% for error in form.bookoutdate.errors %}
-							<div class="text-danger">{{ error }}</div>
-							{% endfor %}
-							{% endif %}
+							<label for="BookOutDate">Book Out Date</label>
+							<input type="date" class="datepicker form-control" name="BookOutDate" placeholder="">
+							
+							
+							
+							
 							<div class="row">
 								<div class="col-12 col-md-6 col-lg-12 pt-5">
 								  <h6 class="color-white mb-3">Guests exposed to COVID-19 will be graded from C to S and will be assigned to the upper floors of Hotel Lã Bodo. A separate exit and entrance will be assigned to you.</h6>
 								</div>
 								<div class="col-12 col-md-6 col-lg-12 pt-5">
 								  <h6 class="color-white mb-3">Additional Items:</h6>
-									{% if inventories_list %}
-								  <ul class="list">
-											{% for inventory in inventories_list %}
+									
+								  {{!-- <ul class="list">
+											
 								    <li class="list__item">
-											<input type="checkbox" class="checkbox" value="{{inventory.get_item_name()}}" name="checkbox">
+											<input type="checkbox" class="checkbox" value="" name="checkbox">
 								      <label>
-								        {{inventory.get_item_name()}}
+								        
 								      </label>
 								    </li>
-								  </ul>
-										{% endfor %}
-									{% else %}
-								{% endif %}
+								  </ul> --}}
+										
 								</div>
 								
 								<div class="col-12 pt-4">
@@ -227,7 +216,7 @@ Rooms
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>
 						</div>
-						<img src="img/room3.jpg" alt="">
+						<img src="/img/hotel3.jpg" alt="">
 						<div class="room-box-in">
 							<h5 class="">Villa</h5>
 							<p class="mt-3">Sed ut perspiciatis unde omnis, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et.</p>
@@ -377,18 +366,12 @@ Rooms
 	<div class="scroll-to-top"></div>
 
 
-{% endblock %}
-
-	{% block scripts %}
 
 	<!-- JAVASCRIPT
     ================================================== -->
-		{{ super() }}
-		<script src="{{url_for('static', filename='js/popper.min.js')}}"></script>
-		<script src="{{url_for('static', filename='js/plugins.js')}}"></script>
-		<script src="{{url_for('static', filename='js/newcustom_thalia.js')}}"></script>
+		
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/plugins.js"></script>
+		<script src="/js/newcustom_thalia.js"></script>
 		<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
-
-
-	{% endblock %}

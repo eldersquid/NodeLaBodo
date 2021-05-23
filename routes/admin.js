@@ -12,7 +12,6 @@ router.get('/hospitalList', (req, res) => {
 });
 
 router.get('/hospitalSearch', (req, res) => {
-	const title = 'Create Hospital';
 	res.render('admin/hospital/hospital_search', { layout : "admin",
                                         title : title});
 	console.log(req.body.hospital);
