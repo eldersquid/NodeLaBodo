@@ -57,6 +57,29 @@ router.get('/vehicleCreated', (req, res) => {
 
 });
 
+router.get('/requestList', (req, res) => {
+	const title = 'Requests';
+	
+	res.render('admin/requests/request_list', { layout : "admin",
+                                        title : title}); 
+
+});
+
+router.get('/requestCreate', (req, res) => {
+	const title = "Create Vehicle";
+	res.render('admin/requests/request_create', { layout : "admin",
+                                        title : title});
+	
+
+});
+
+router.get('/requestCreated', (req, res) => {
+	res.render('admin/requests/request_list', 
+	{ layout : "admin"});
+	
+
+});
+
 
 
 router.get('/productcat', (req, res) => {
