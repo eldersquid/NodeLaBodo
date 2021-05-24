@@ -27,6 +27,13 @@ router.get('/hospitalCreate', (req, res) => {
 
 });
 
+router.get('/hospitalCreated', (req, res) => {
+	res.render('admin/hospital/hospital_list', 
+	{ layout : "admin"});
+	
+
+});
+
 router.get('/VehicleList', (req, res) => {
 	const title = 'Vehicles';
 	
@@ -35,14 +42,21 @@ router.get('/VehicleList', (req, res) => {
 
 });
 
+router.get('/vehicleCreate', (req, res) => {
+	const title = "Create Vehicle";
+	res.render('admin/vehicles/vehicle_create', { layout : "admin",
+                                        title : title});
+	
 
+});
 
-router.get('/hospitalCreated', (req, res) => {
-	res.render('admin/hospital/hospital_list', 
+router.get('/vehicleCreated', (req, res) => {
+	res.render('admin/vehicles/vehicle_list', 
 	{ layout : "admin"});
 	
 
 });
+
 
 
 router.get('/productcat', (req, res) => {

@@ -1,8 +1,8 @@
 module.exports = {
     host: 'localhost',
     database: 'hotelbodo',
-    username: 'minju',
-    password: 'danish'
+    username: 'bodo',
+    password: 'bodo'
     }
     
     

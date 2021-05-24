@@ -1,27 +1,17 @@
-{% extends "server_base.html" %}
 
-{% block title %} Create Vehicle {% endblock %}
+  <link rel="stylesheet" href="css/g_map.css">
 
-{% block css %}
-  {{ super() }}
-  <link rel="stylesheet" href="{{ url_for('static',filename='styles/g_map.css') }}">
-{% endblock %}
-
-{% block content %}
-
-
-{% from "includes/_formHelper.html" import render_field %}
 
 <body id="page-top">
 
                 <!-- Begin Page Content -->
 
                 <div class="container-fluid">
-                  <a class="btn btn-outline-secondary" href="{{ url_for('server_guests') }}">Guest Details</a>
-                  <a class="btn btn-outline-secondary" href="{{ url_for('hospital_list') }}">Hospitals</a>
-                  <a class="btn btn-outline-secondary" href="{{ url_for('occupation_list') }}">Occupations</a>
+                  <a class="btn btn-outline-secondary" href="">Guest Details</a>
+                  <a class="btn btn-outline-secondary" href="">Hospitals</a>
+                  <a class="btn btn-outline-secondary" href="">Occupations</a>
                   <a class="btn btn-secondary">Vehicles</a>
-                  <a class="btn btn-outline-secondary" href="{{ url_for('request_list') }}">Requests</a>
+                  
                   <hr>
                 <div class="row flex-lg-nowrap">
 
@@ -47,35 +37,40 @@
                                         <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                              {{ render_field(form.vehicle_name, class="form-control") }}
+                                              <label for="name">Vehicle Name</label>
+                                             <input type="text" class="form-control" name="name" value="{{name}}" required>
                                             </div>
                                           </div>
                                         </div>
                                         <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                              {{ render_field(form.vehicle_model, class="form-control") }}
+                                              <label for="name">Vehicle Model</label>
+                                             <input type="text" class="form-control" name="model" value="{{model}}" required>
                                             </div>
                                           </div>
                                         </div>
                                         <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                              {{ render_field(form.vehicle_car_plate, class="form-control") }}
+                                              <label for="name">Car Plate</label>
+                                             <input type="text" class="form-control" name="cplate" value="{{cplate}}" required>
                                             </div>
                                           </div>
                                         </div>
                                          <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                              {{ render_field(form.vehicle_contact, class="form-control") }}
+                                              <label for="name">Driver Contact Number</label>
+                                             <input type="text" class="form-control" name="contact" value="{{contact}}" required>
                                             </div>
                                           </div>
                                         </div>
                                            <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                              {{ render_field(form.vehicle_location, class="form-control") }}
+                                              <label for="name">Driver Address</label>
+                                             <input type="text" class="form-control" name="address" value="{{address}}" required>
                                             </div>
                                           </div>
                                         </div>
@@ -138,15 +133,10 @@
     </div>
 </body>
 
-{% endblock %}
-
-{% block script %}
-  {{ super() }}
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO5-kE5NU-8iLRbhk-nG5vgcWedjXgPMg&callback=initAutocomplete&libraries=places&v=weekly"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhR62_UUROPzt6A8IOhVZBppjp9e51w2w&callback=initAutocomplete&libraries=places&v=weekly"
     defer
   ></script>
-  <script src="{{ url_for('static',filename='js/google_map.js') }}"></script>
+  <script src="/js/google_map.js"></script>
 
-  {% endblock %}
