@@ -54,9 +54,9 @@
             <div id="collapseSupplier" class="collapse" aria-labelledby="headingSupplier"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                  <a class="collapse-item" href="">Create</a>
-                  <a class="collapse-item" href="">Update</a>
-                  <a class="collapse-item" href="">Product Category</a>
+                  <a class="collapse-item" href="/supplier/create">Create</a>
+                  <a class="collapse-item" href="/supplier">Update</a>
+                  <a class="collapse-item" href="/productcat">Product Category</a>
                 </div>
             </div>
         </li>
@@ -70,9 +70,23 @@
             </a>
             <div id="collapseInventory" class="collapse" aria-labelledby="headingInventory" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                  <a class="collapse-item" href="">Create</a>
-                  <a class="collapse-item" href="">Update</a>
-                  <a class="collapse-item" href="">Order</a>
+                  <a class="collapse-item" href="/inventory/create">Create</a>
+                  <a class="collapse-item" href="/inventory">Update</a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Nav Item - Order Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="true"
+                aria-controls="collapseOrder">
+                <i class="far fa-clipboard" style="width: 17px;"></i>
+                <span>Order</span>
+            </a>
+            <div id="collapseOrder" class="collapse" aria-labelledby="headingOrder" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/order/create">Create</a>
+                    <a class="collapse-item" href="/order">Track</a>
                 </div>
             </div>
         </li>
