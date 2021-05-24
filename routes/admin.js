@@ -69,6 +69,17 @@ router.get('/productcat', (req, res) => {
 
 });
 
+router.get('/productcat/create', (req, res) => {
+	const title = 'Product Category';
+
+	res.render('admin/productcat/create', {
+		layout: "admin",
+		title: title
+	});
+});
+
+
+
 router.get('/supplier', (req, res) => {
 	const title = 'Supplier';
 
@@ -78,6 +89,25 @@ router.get('/supplier', (req, res) => {
 	});
 
 });
+
+router.get('/supplier/create', (req, res) => {
+	const title = 'Supplier';
+
+	res.render('admin/supplier/create', {
+		layout: "admin",
+		title: title
+	});
+});
+
+router.get('/supplier/update', (req, res) => {
+	const title = 'Supplier';
+
+	res.render('admin/supplier/update', {
+		layout: "admin",
+		title: title
+	});
+});
+
 
 router.get('/inventory', (req, res) => {
 	const title = 'Inventory';
@@ -89,6 +119,24 @@ router.get('/inventory', (req, res) => {
 
 });
 
+router.get('/inventory/create', (req, res) => {
+	const title = 'Inventory';
+
+	res.render('admin/inventory/create', {
+		layout: "admin",
+		title: title
+	});
+});
+
+router.get('/inventory/update', (req, res) => {
+	const title = 'Inventory';
+
+	res.render('admin/inventory/update', {
+		layout: "admin",
+		title: title
+	});
+});
+
 router.get('/order', (req, res) => {
 	const title = 'Order';
 
@@ -97,6 +145,15 @@ router.get('/order', (req, res) => {
 		title: title
 	});
 
+});
+
+router.get('/order/create', (req, res) => {
+	const title = 'Order';
+
+	res.render('admin/order/create', {
+		layout: "admin",
+		title: title
+	});
 });
 
 
