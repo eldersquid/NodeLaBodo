@@ -57,6 +57,29 @@ router.get('/vehicleCreated', (req, res) => {
 
 });
 
+router.get('/requestList', (req, res) => {
+	const title = 'Requests';
+	
+	res.render('admin/requests/request_list', { layout : "admin",
+                                        title : title}); 
+
+});
+
+router.get('/requestCreate', (req, res) => {
+	const title = "Create Vehicle";
+	res.render('admin/requests/request_create', { layout : "admin",
+                                        title : title});
+	
+
+});
+
+router.get('/requestCreated', (req, res) => {
+	res.render('admin/requests/request_list', 
+	{ layout : "admin"});
+	
+
+});
+
 
 
 router.get('/productcat', (req, res) => {
@@ -155,6 +178,36 @@ router.get('/order/create', (req, res) => {
 		title: title
 	});
 });
+
+
+router.get('/galleryList', (req, res) => {
+    const title = 'View Gallery';
+    res.render('admin/gallery/gallery_list', { layout : "admin",
+                                        title : title});
+
+});
+
+router.get('/galleryRequests', (req, res) => {
+    const title = 'Gallery Requests';
+    res.render('admin/gallery/gallery_requests', { layout : "admin",
+                                        title : title});
+
+});
+
+router.get('/facilitiesGym', (req, res) => {
+    const title = 'Gym Bookings';
+    res.render('admin/facilities/facilities_gym', { layout : "admin",
+                                        title : title});
+
+});
+
+router.get('/facilitiesSwimming', (req, res) => {
+    const title = 'Swimming Pool Bookings';
+    res.render('admin/facilities/facilities_swimming', { layout : "admin",
+                                        title : title});
+
+});
+
 
 
 module.exports = router;

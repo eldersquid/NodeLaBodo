@@ -1,18 +1,7 @@
-{% extends "server_base.html "%}
 
-{% block css%}
-  {{ super() }}
-  <link rel="stylesheet" href="{{ url_for('static',filename='vendor/slick/slick/slick.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static',filename='vendor/slick/slick/slick-theme.css') }}">
+  <link rel="stylesheet" href="/vendor/slick/slick/slick.css">
+  <link rel="stylesheet" href="/vendor/slick/slick/slick-theme.css">
 
-
-{% endblock %}
-
-
-
-{% block content %}
-
-{% from "includes/_formHelper.html" import render_field %}
 
 <body id="page-top">
 
@@ -21,10 +10,10 @@
                 <!-- Begin Page Content -->
 
                 <div class="container-fluid">
-                  <a class="btn btn-outline-secondary" href="{{ url_for('server_guests') }}">Hotel Rooms</a>
-                  <a class="btn btn-outline-secondary ml-1" href="{{ url_for('hospital_list') }}">Hospitals</a>
-                  <a class="btn btn-outline-secondary ml-1" href="{{ url_for('occupation_list') }}">Occupations</a>
-                  <a class="btn btn-outline-secondary ml-1" href="{{ url_for('vehicle_list') }}">Vehicles</a>
+                  <a class="btn btn-outline-secondary" href="">Hotel Rooms</a>
+                  <a class="btn btn-outline-secondary ml-1" href="">Hospitals</a>
+                  <a class="btn btn-outline-secondary ml-1" href="">Occupations</a>
+                  <a class="btn btn-outline-secondary ml-1" href="">Vehicles</a>
                   <a class="btn btn-secondary ml-1">Requests</a>
                   <hr>
                 <div class="row flex-lg-nowrap">
@@ -40,14 +29,14 @@
 
                                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                   <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{guest.get_name()}}</h4>
-                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Room {{guest.get_room_number()}}</h4>
+                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"></h4>
+                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Room </h4>
 
                                   </div>
                                   <div class="text-center text-sm-right">
                                     <span class="badge badge-secondary">Guest</span>
-                                    <span class="badge badge-secondary">Grade {{guest.get_grade()}}</span>
-                                    <span class="badge badge-secondary">Priority {{guest.get_priority()}}</span>
+                                    <span class="badge badge-secondary">Grade </span>
+                                    <span class="badge badge-secondary">Priority </span>
                                     <div class="text-muted"><small>Joined 15 Nov 2020</small></div>
                                   </div>
                                 </div>
@@ -63,13 +52,13 @@
                                           <div class="col-12 col-sm-6 mb-3">
                                             <div class="form-group">
                                               <label>Grade</label>
-                                              <input class="form-control" type="text" value={{guest.get_grade()}}  readonly>
+                                              <input class="form-control" type="text" value=  readonly>
                                             </div>
                                           </div>
                                           <div class="col-12 col-sm-6 mb-3">
                                             <div class="form-group">
                                               <label>Priority</label>
-                                              <input class="form-control" type="text" value={{guest.get_priority()}}  readonly>
+                                              <input class="form-control" type="text" value= readonly>
                                             </div>
                                           </div>
                                         </div>
@@ -78,7 +67,8 @@
                                         <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                            {{ render_field(form.type, class="form-control") }}
+                                            <label for="name">Request Type</label>
+                                             <input type="text" class="form-control" name="type" value="{{type}}" required>
                                           </div>
                                           </div>
 
@@ -87,7 +77,8 @@
                                         <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                              {{ render_field(form.topic, class="form-control") }}
+                                              <label for="name">Request Topic</label>
+                                             <input type="text" class="form-control" name="topic" value="{{topic}}" required>
                                             </div>
                                           </div>
 
@@ -96,7 +87,8 @@
                                         <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                              {{ render_field(form.details, class="form-control") }}
+                                              <label for="name">Details</label>
+                                             <input type="textarea" class="form-control" name="details" value="{{details}}" required>
                                             </div>
                                           </div>
 
@@ -175,12 +167,7 @@
         </div>
     </div>
 
-    {% endblock %}
 
+      <script src="/vendor/slick/slick/slick.min.js"></script>
+      <script src="/js/slick_carousel.js"></script>
 
-    {% block script %}
-      {{ super() }}
-      <script src="{{ url_for('static',filename='vendor/slick/slick/slick.min.js') }}"></script>
-      <script src="{{ url_for('static',filename='js/slick_carousel.js') }}"></script>
-
-    {% endblock %}
