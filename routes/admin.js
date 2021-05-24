@@ -123,4 +123,34 @@ router.get('/order', (req, res) => {
 });
 
 
+router.get('/galleryList', (req, res) => {
+    const title = 'View Gallery';
+    res.render('admin/gallery/gallery_list', { layout : "admin",
+                                        title : title});
+
+});
+
+router.get('/galleryRequests', (req, res) => {
+    const title = 'Gallery Requests';
+    res.render('admin/gallery/gallery_requests', { layout : "admin",
+                                        title : title});
+
+});
+
+router.get('/facilitiesGym', (req, res) => {
+    const title = 'Gym Bookings';
+    res.render('admin/facilities/facilities_gym', { layout : "admin",
+                                        title : title});
+
+});
+
+router.get('/facilitiesSwimming', (req, res) => {
+    const title = 'Swimming Pool Bookings';
+    res.render('admin/facilities/facilities_swimming', { layout : "admin",
+                                        title : title});
+
+});
+
+
+
 module.exports = router;
