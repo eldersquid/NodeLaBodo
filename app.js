@@ -97,8 +97,6 @@ app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.
 app.use('/rooms',roomsRoute);
 
 
-
-
 /*
 * Creates a unknown port 5000 for express server since we don't want our app to clash with well known
 * ports such as 80 or 8080.

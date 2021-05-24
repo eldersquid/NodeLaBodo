@@ -45,4 +45,45 @@ router.get('/hospitalCreated', (req, res) => {
 });
 
 
+router.get('/productcat', (req, res) => {
+	const title = 'Product Category';
+
+	res.render('admin/productcat/view', {
+		layout: "admin",
+		title: title
+	});
+
+});
+
+router.get('/supplier', (req, res) => {
+	const title = 'Supplier';
+
+	res.render('admin/supplier/view', {
+		layout: "admin",
+		title: title
+	});
+
+});
+
+router.get('/inventory', (req, res) => {
+	const title = 'Inventory';
+
+	res.render('admin/inventory/view', {
+		layout: "admin",
+		title: title
+	});
+
+});
+
+router.get('/order', (req, res) => {
+	const title = 'Order';
+
+	res.render('admin/order/view', {
+		layout: "admin",
+		title: title
+	});
+
+});
+
+
 module.exports = router;
