@@ -82,7 +82,7 @@ router.get('/requestCreated', (req, res) => {
 
 
 
-router.get('/productcat', (req, res) => {
+router.get('/productcat_view', (req, res) => {
 	const title = 'Product Category';
 
 	res.render('admin/productcat/view', {
@@ -92,7 +92,7 @@ router.get('/productcat', (req, res) => {
 
 });
 
-router.get('/productcat/create', (req, res) => {
+router.get('/productcat_create', (req, res) => {
 	const title = 'Product Category';
 
 	res.render('admin/productcat/create', {
@@ -103,7 +103,7 @@ router.get('/productcat/create', (req, res) => {
 
 
 
-router.get('/supplier', (req, res) => {
+router.get('/supplier_view', (req, res) => {
 	const title = 'Supplier';
 
 	res.render('admin/supplier/view', {
@@ -113,7 +113,7 @@ router.get('/supplier', (req, res) => {
 
 });
 
-router.get('/supplier/create', (req, res) => {
+router.get('/supplier_create', (req, res) => {
 	const title = 'Supplier';
 
 	res.render('admin/supplier/create', {
@@ -122,7 +122,7 @@ router.get('/supplier/create', (req, res) => {
 	});
 });
 
-router.get('/supplier/update', (req, res) => {
+router.get('/supplier_update', (req, res) => {
 	const title = 'Supplier';
 
 	res.render('admin/supplier/update', {
@@ -132,7 +132,7 @@ router.get('/supplier/update', (req, res) => {
 });
 
 
-router.get('/inventory', (req, res) => {
+router.get('/inventory_view', (req, res) => {
 	const title = 'Inventory';
 
 	res.render('admin/inventory/view', {
@@ -142,7 +142,7 @@ router.get('/inventory', (req, res) => {
 
 });
 
-router.get('/inventory/create', (req, res) => {
+router.get('/inventory_create', (req, res) => {
 	const title = 'Inventory';
 
 	res.render('admin/inventory/create', {
@@ -151,7 +151,7 @@ router.get('/inventory/create', (req, res) => {
 	});
 });
 
-router.get('/inventory/update', (req, res) => {
+router.get('/inventory_update', (req, res) => {
 	const title = 'Inventory';
 
 	res.render('admin/inventory/update', {
@@ -160,7 +160,7 @@ router.get('/inventory/update', (req, res) => {
 	});
 });
 
-router.get('/order', (req, res) => {
+router.get('/order_track', (req, res) => {
 	const title = 'Order';
 
 	res.render('admin/order/view', {
@@ -170,7 +170,7 @@ router.get('/order', (req, res) => {
 
 });
 
-router.get('/order/create', (req, res) => {
+router.get('/order_create', (req, res) => {
 	const title = 'Order';
 
 	res.render('admin/order/create', {
