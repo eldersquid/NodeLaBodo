@@ -10,6 +10,11 @@ router.get('/', (req, res) => {
 	}) // renders views/index.handlebars
 });
 
+// User View Restaurant 
+router.get('/Dine', (req, res) => {
+    res.render('restaurant/Dining&Bar')
+});
+
 // User View Gallery
 router.get('/galleryViewUser', (req, res) => {
     res.render('user/gallery/gallery_view') // 
