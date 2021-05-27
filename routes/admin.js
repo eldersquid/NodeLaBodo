@@ -249,8 +249,8 @@ router.get('/ViewReview', (req, res) => {
 });
 
 router.get('/ViewRoomServiceOrders', (req, res) => {
-	const title = 'View Room Service';
-	res.render('admin/reservation/view_review', {
+	const title = 'ViewRoomService';
+	res.render('admin/reservation/view_orders', {
 		layout: "admin",
 		title: title
 	});
