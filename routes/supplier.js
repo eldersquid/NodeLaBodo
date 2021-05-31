@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/view', (req, res) => {
+router.get('supplier/view', (req, res) => {
     const title = 'Supplier';
 
     res.render('admin/supplier/view', {
@@ -11,7 +11,7 @@ router.get('/view', (req, res) => {
 
 });
 
-router.get('/create', (req, res) => {
+router.get('supplier/create', (req, res) => {
     const title = 'Supplier';
 
     res.render('admin/supplier/create', {
@@ -20,7 +20,7 @@ router.get('/create', (req, res) => {
     });
 });
 
-router.get('/update', (req, res) => {
+router.get('supplier/update', (req, res) => {
     const title = 'Supplier';
 
     res.render('admin/supplier/update', {
