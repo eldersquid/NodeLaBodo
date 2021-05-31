@@ -20,7 +20,7 @@ router.get('supplier/create', (req, res) => {
     });
 });
 
-router.get('supplier/update', (req, res) => {
+router.get('/supplier/update', (req, res) => {
     const title = 'Supplier';
 
     res.render('admin/supplier/update', {
