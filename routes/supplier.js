@@ -4,7 +4,7 @@ const router = express.Router();
 router.get('supplier/view', (req, res) => {
     const title = 'Supplier';
 
-    res.render('admin/supplier/view', {
+    res.render('supplier/view', {
         layout: "admin",
         title: title
     });
