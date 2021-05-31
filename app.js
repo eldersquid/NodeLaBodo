@@ -20,13 +20,13 @@ const adminRoute = require('./routes/admin');
 
 const roomsRoute = require('./routes/rooms');
 
-const categoryRoute = require('./routes/category')
+const categoryRoute = require('./routes/category');
 
-const supplierRoute = require('./routes/supplier')
+const supplierRoute = require('./routes/supplier');
 
-const inventoryRoute = require('./routes/inventory')
+const inventoryRoute = require('./routes/inventory');
 
-const orderRoute = require('./routes/order')
+const orderRoute = require('./routes/order');
 
 
 
