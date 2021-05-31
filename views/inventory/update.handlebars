@@ -1,18 +1,36 @@
 <div class="container-fluid">
-    <h1 class="display-4">Update Inventory</h1>
+    <h1 class="display-4">Update Supplier</h1>
 
     <form method="POST" action="">
         <div class="form-group">
-            name
+
+            <label for="company_name">Company Name</label>
+            <input class="form-control" id="company_name" name="company_name" required type="text" value="danish">
+
+
         </div>
         <div class="form-group">
-            supplier
+
+            <label for="uen_number">UEN Number</label>
+            <input class="form-control" id="uen_number" name="uen_number" required type="number" value="123456789">
+
+
         </div>
         <div class="form-group">
-            product category
+
+            <label for="email">Email</label>
+            <input class="form-control" id="email" name="email" required type="email" value="ziyuan2497@gmail.com">
+
+
         </div>
         <div class="form-group">
-            quantity
+
+            <label for="product_name">Product Name</label>
+            <select class="form-control" id="product_name" multiple name="product_name" required>
+
+            </select>
+
+
         </div>
         <input type="submit" value="Submit" class="btn btn-primary" />
     </form>
