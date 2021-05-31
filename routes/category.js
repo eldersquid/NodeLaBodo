@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/category/view', (req, res) => {
+router.get('/view', (req, res) => {
     const title = 'Product Category';
 
     res.render('productcat/view', {
@@ -11,7 +11,7 @@ router.get('/category/view', (req, res) => {
 
 });
 
-router.get('/category/create', (req, res) => {
+router.get('/create', (req, res) => {
     const title = 'Product Category';
 
     res.render('productcat/create', {

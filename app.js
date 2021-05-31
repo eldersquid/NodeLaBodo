@@ -95,14 +95,11 @@ app.use('/', mainRoute); // mainRoute is declared to point to routes/main.js
 // app.use('/rooms', roomsRoute); // mainRoute is declared to point to routes/main.js
 // This route maps the root URL to any path defined in main.js
 
+
+
 app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.js
 // This route maps the root URL to any path defined in main.js
 
-
-
-// 2. roomsRoute is declared to point to routes/rooms.js
-// This route maps the rooms URL to any path defined in rooms.js
-app.use('/rooms',roomsRoute);
 
 app.use('/category', categoryRoute);
 
@@ -111,6 +108,12 @@ app.use('/supplier', supplierRoute);
 app.use('/inventory', inventoryRoute);
 
 app.use('/order', orderRoute);
+
+// 2. roomsRoute is declared to point to routes/rooms.js
+// This route maps the rooms URL to any path defined in rooms.js
+app.use('/rooms',roomsRoute);
+
+
 
 /*
 * Creates a unknown port 5000 for express server since we don't want our app to clash with well known
