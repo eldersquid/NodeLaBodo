@@ -4,7 +4,7 @@ const router = express.Router();
 router.get('/order/track', (req, res) => {
     const title = 'Order';
 
-    res.render('admin/order/view', {
+    res.render('order/view', {
         layout: "admin",
         title: title
     });
@@ -14,7 +14,7 @@ router.get('/order/track', (req, res) => {
 router.get('/order/create', (req, res) => {
     const title = 'Order';
 
-    res.render('admin/order/create', {
+    res.render('order/create', {
         layout: "admin",
         title: title
     });

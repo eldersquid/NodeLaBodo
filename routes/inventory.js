@@ -4,7 +4,7 @@ const router = express.Router();
 router.get('/inventory/view', (req, res) => {
     const title = 'Inventory';
 
-    res.render('admin/inventory/view', {
+    res.render('inventory/view', {
         layout: "admin",
         title: title
     });
@@ -14,7 +14,7 @@ router.get('/inventory/view', (req, res) => {
 router.get('/inventory/create', (req, res) => {
     const title = 'Inventory';
 
-    res.render('admin/inventory/create', {
+    res.render('inventory/create', {
         layout: "admin",
         title: title
     });
@@ -23,7 +23,7 @@ router.get('/inventory/create', (req, res) => {
 router.get('/inventory/update', (req, res) => {
     const title = 'Inventory';
 
-    res.render('admin/inventory/update', {
+    res.render('inventory/update', {
         layout: "admin",
         title: title
     });
