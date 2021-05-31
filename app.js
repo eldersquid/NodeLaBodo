@@ -20,6 +20,14 @@ const adminRoute = require('./routes/admin');
 
 const roomsRoute = require('./routes/rooms');
 
+const categoryRoute = require('./routes/category')
+
+const supplierRoute = require('./routes/supplier')
+
+const inventoryRoute = require('./routes/inventory')
+
+const orderRoute = require('./routes/order')
+
 
 
 // 1. Danish's Route
@@ -96,6 +104,13 @@ app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.
 // This route maps the rooms URL to any path defined in rooms.js
 app.use('/rooms',roomsRoute);
 
+app.use('/category', categoryRoute);
+
+app.use('/supplier', supplierRoute);
+
+app.use('/inventory', inventoryRoute);
+
+app.use('/order', orderRoute);
 
 /*
 * Creates a unknown port 5000 for express server since we don't want our app to clash with well known
