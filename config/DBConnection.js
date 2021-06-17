@@ -6,7 +6,7 @@ const productcat = require('../models/Productcat.js');
 const setUpDB = (drop) => {
     mySQLDB.authenticate()
         .then(() => {
-            console.log('Vidjot database connected');
+            console.log('Hotel La Bodo database connected');
         })
         .then(() => {
             /*
@@ -14,7 +14,7 @@ const setUpDB = (drop) => {
             In this case the primary key from user will be a foreign key
             in video.
             */
-            user.hasMany(video);
+            user.hasMany(productcat);
             mySQLDB.sync({ // Creates table if none exists
                 force: drop
             }).then(() => {

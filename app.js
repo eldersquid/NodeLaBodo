@@ -29,6 +29,15 @@ const inventoryRoute = require('./routes/inventory');
 const orderRoute = require('./routes/order');
 
 
+const productcatDB = require('./config/DBConnection');
+
+// Library to use MySQL to store session objects
+const MySQLStore = require('express-mysql-session');
+const db = require('./config/db');
+
+// Messaging libraries
+const flash = require('connect-flash');
+const FlashMessenger = require('flash-messenger');
 
 // 1. Danish's Route
 // const roomsRoute = require('./routes/rooms');
@@ -39,6 +48,8 @@ const orderRoute = require('./routes/order');
 */
 const app = express();
 
+
+productcatDB.setUpDB(false); // Set up database with new tables (true)
 // Handlebars Middleware
 /*
 * 1. Handlebars is a front-end web templating engine that helps to create dynamic web pages using variables
@@ -73,12 +84,34 @@ app.use(cookieParser());
 app.use(session({
 	key: 'vidjot_session',
 	secret: 'tojiv',
+	store: new MySQLStore({
+		host: db.host,
+		port: 3306,
+		user: db.username,
+		password: db.password,
+		database: db.database,
+		clearExpired: true,
+		// How frequently expired sessions will be cleared; milliseconds:
+		checkExpirationInterval: 900000,
+		// The maximum age of a valid session; milliseconds:
+		expiration: 900000,
+	}),
 	resave: false,
 	saveUninitialized: false,
 }));
 
 // Place to define global variables - not used in practical 1
+// Two flash messenging libraries - Flash (connect-flash) and Flash Messenger
+app.use(flash());
+app.use(FlashMessenger.middleware);
+
+
+// Global variables
 app.use(function (req, res, next) {
+	res.locals.success_msg = req.flash('success_msg');
+	res.locals.error_msg = req.flash('error_msg');
+	res.locals.error = req.flash('error');
+	res.locals.user = req.user || null;
 	next();
 });
 
@@ -101,7 +134,7 @@ app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.
 // This route maps the root URL to any path defined in main.js
 
 
-app.use('/category', productcatRoute);
+app.use('/productcat', productcatRoute);
 
 app.use('/supplier', supplierRoute);
 
