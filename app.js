@@ -20,7 +20,7 @@ const adminRoute = require('./routes/admin');
 
 const roomsRoute = require('./routes/rooms');
 
-const categoryRoute = require('./routes/category');
+const productcatRoute = require('./routes/productcat');
 
 const supplierRoute = require('./routes/supplier');
 
@@ -101,7 +101,7 @@ app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.
 // This route maps the root URL to any path defined in main.js
 
 
-app.use('/category', categoryRoute);
+app.use('/category', productcatRoute);
 
 app.use('/supplier', supplierRoute);
 
