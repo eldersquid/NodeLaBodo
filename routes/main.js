@@ -46,6 +46,13 @@ router.get('/galleryCancelBooking', (req, res) => {
     res.render('user/facilities/facilities_cancelbooking') // 
 });
 
+router.get('/test', (req, res) => {
+    res.render('test', {
+		layout : "blank"
+	    }
+    ) // 
+});
+
 
 // Logout User
 router.get('/logout', (req, res) => {
