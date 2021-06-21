@@ -14,6 +14,7 @@ const alertMessage = require('../helpers/messenger.js');
 // });
 
 router.get('/view', (req, res) => {
+    const title = 'Inventory';
     Inventory.findAll({
         where: {
             adminId: req.admin.id
@@ -26,7 +27,8 @@ router.get('/view', (req, res) => {
         .then((inventory) => {
             // pass object to listInventory.handlebar
             res.render('inventory/view', {
-                inventory: inventory
+                layout: "admin",
+                title: title
             });
         })
         .catch(err => console.log(err));

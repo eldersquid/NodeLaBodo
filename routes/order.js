@@ -15,6 +15,7 @@ var nodemailer = require('nodemailer');
 // });
 
 router.get('/view', (req, res) => {
+    const title = 'Order';
     Order.findAll({
         where: {
             adminId: req.admin.id
@@ -27,7 +28,8 @@ router.get('/view', (req, res) => {
         .then((order) => {
             // pass object to listOrder.handlebar
             res.render('order/view', {
-                order: order
+                layout: "admin",
+                title: title
             });
         })
         .catch(err => console.log(err));
