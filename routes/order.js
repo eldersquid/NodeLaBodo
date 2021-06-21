@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 const alertMessage = require('../helpers/messenger.js');
+var nodemailer = require('nodemailer');
 
 // router.get('/view', (req, res) => {
 //     const title = 'Order';
@@ -57,6 +58,29 @@ router.post('/create', (req, res) => {
     }).then((order) => {
         res.redirect('/order/view');
     }).catch(err => console.log(err))
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'hotel.la.bodo@gmail.com',
+            pass: 'Admin-123'
+        }
+    });
+
+    var mailOptions = {
+        from: 'hotel.la.bodo@gmail.com',
+        to: 'ziyuan2497@gmail.com',
+        subject: 'Order From Hotel La Bodo',
+        text: 'Dear ' + supplier + ',\n' + '\nWe would like to order another ' + quantity + ' ' + item_name + '.\n\nAdditional Remarks:' + '\n' + remarks + '\n\nWe hope to hear from you soon!\n' + 'Sincerely,\nHotel La Bodo'
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
 });
 
 module.exports = router;
