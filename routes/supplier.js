@@ -61,15 +61,6 @@ router.post('/create', (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.get('/update', (req, res) => {
-    const title = 'Supplier';
-
-    res.render('supplier/update', {
-        layout: "admin",
-        title: title
-    });
-});
-
 router.get('/showUpdate/:id', (req, res) => {
     Supplier.findOne({
         where: {
