@@ -28,7 +28,10 @@ router.get('/test', (req, res) => {
 
 // User View Restaurant 
 router.get('/DineV2', (req, res) => {
-    res.render('restaurant/DineV2')
+    res.render('restaurant/DineV2', {
+        layout: "blank"
+        }
+    )
 });
 
 // User View Gallery

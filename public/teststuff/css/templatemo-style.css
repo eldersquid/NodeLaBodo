@@ -157,7 +157,7 @@ p {
 
 .banner {
 	padding: 180px 0px;
-	background-image: url(../img/banner-bg.jpg);
+	background-image: url(/restimg/banner-bg.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
@@ -169,7 +169,7 @@ p {
 	font-family: 'Roboto', sans-serif;
 	font-weight: 700;
 	font-size: 15px;
-	color: #fff;
+	color:white;
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
 }
@@ -178,12 +178,12 @@ p {
 	font-family: 'Spectral', serif;
 	font-size: 44px;
 	font-weight: 600;
-	color: #fff;
+	color: white;
 	text-transform: uppercase;
 }
 
 .banner p {
-	color: #fff;
+	color:white;
 	font-size: 14px;
 }
 

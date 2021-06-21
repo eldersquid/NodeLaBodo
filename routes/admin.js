@@ -130,31 +130,4 @@ router.get('/facilitiesSwimming', (req, res) => {
 
 });
 
-router.get('/ViewReservation', (req, res) => {
-	const title = 'View Reservation';
-	res.render('admin/reservation/view_reservation', {
-		layout: "admin",
-		title: title
-	});
-
-});
-
-router.get('/ViewReview', (req, res) => {
-	const title = 'View Review';
-	res.render('admin/reservation/view_review', {
-		layout: "admin",
-		title: title
-	});
-
-});
-
-router.get('/ViewRoomServiceOrders', (req, res) => {
-	const title = 'ViewRoomService';
-	res.render('admin/reservation/view_orders', {
-		layout: "admin",
-		title: title
-	});
-
-});
-
 module.exports = router;
