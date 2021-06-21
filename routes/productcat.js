@@ -24,16 +24,12 @@ router.get('/showCreate', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
-    
-
     let product_name = req.body.product_name;
 
-    // Multi-value components return array of strings or undefined
     Productcat.create({
         product_name
     }).then((productcat) => {
-        res.redirect('/productcat/view'); // redirect to call router.get(/listVideos...) to retrieve all updated
-        // videos
+        res.redirect('/productcat/view');
     }).catch(err => console.log(err))
 });
 
@@ -52,6 +48,29 @@ router.get('/view', (req, res) => {
             });
         })
         .catch(err => console.log(err));
+});
+
+router.get('/delete/:id', (req, res) => {
+    let productcatId = req.params.id;
+    let adminId = req.admin.id;
+    Productcat.findOne({
+        where: {
+            id: productcatId,
+            adminId: adminId
+        },
+        attributes: ['id', 'adminId']
+    }).then((productcat) => {
+        if (productcat != null) {
+            Productcat.destroy({
+                where: {
+                    id: productcatId
+                }
+            }).then(() => {
+                alertMessage(res, 'info', 'Productcat deleted', 'far fa-trash-alt', true);
+                res.redirect('/productcat/view');
+            }).catch(err => console.log(err));
+        }
+    });
 });
 
 module.exports = router;

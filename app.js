@@ -30,6 +30,9 @@ const orderRoute = require('./routes/order');
 
 
 const productcatDB = require('./config/DBConnection');
+const supplierDB = require('./config/DBConnection');
+const inventoryDB = require('./config/DBConnection');
+const orderDB = require('./config/DBConnection');
 
 // Library to use MySQL to store session objects
 const MySQLStore = require('express-mysql-session');
@@ -50,6 +53,9 @@ const app = express();
 
 
 productcatDB.setUpDB(false); // Set up database with new tables (true)
+supplierDB.setUpDB(false);
+inventoryDB.setUpDB(false);
+orderDB.setUpDB(false);
 // Handlebars Middleware
 /*
 * 1. Handlebars is a front-end web templating engine that helps to create dynamic web pages using variables
