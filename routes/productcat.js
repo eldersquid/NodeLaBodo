@@ -16,6 +16,9 @@ const alertMessage = require('../helpers/messenger.js');
 router.get('/view', (req, res) => {
     const title = 'Product Category';
     Productcat.findAll({
+        where: {
+            adminId: req.admin.id
+        },
         order: [
             ['product_name', 'ASC']
         ],

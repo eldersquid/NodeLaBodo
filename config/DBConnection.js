@@ -9,7 +9,7 @@ const mySQLDB = require('./DBConfig');
 const setUpDB = (drop) => {
     mySQLDB.authenticate()
         .then(() => {
-            console.log('Hotel La Bodo database connected');
+            console.log('Vidjot database connected');
         })
         .then(() => {
             /*
@@ -17,7 +17,7 @@ const setUpDB = (drop) => {
             In this case the primary key from user will be a foreign key
             in video.
             */
-            user.hasMany(productcat);
+            user.hasMany(video);
             mySQLDB.sync({ // Creates table if none exists
                 force: drop
             }).then(() => {

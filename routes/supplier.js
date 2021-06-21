@@ -14,6 +14,7 @@ const alertMessage = require('../helpers/messenger.js');
 // });
 
 router.get('/view', (req, res) => {
+    const title = 'Supplier';
     Supplier.findAll({
         where: {
             adminId: req.admin.id
@@ -26,7 +27,8 @@ router.get('/view', (req, res) => {
         .then((supplier) => {
             // pass object to listSupplier.handlebar
             res.render('supplier/view', {
-                supplier: supplier
+                layout: "admin",
+                title: title
             });
         })
         .catch(err => console.log(err));
@@ -57,15 +59,6 @@ router.post('/create', (req, res) => {
     }).then((supplier) => {
         res.redirect('/supplier/view');
     }).catch(err => console.log(err))
-});
-
-router.get('/update', (req, res) => {
-    const title = 'Supplier';
-
-    res.render('supplier/update', {
-        layout: "admin",
-        title: title
-    });
 });
 
 router.get('/showUpdate/:id', (req, res) => {
