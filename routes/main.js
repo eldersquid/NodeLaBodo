@@ -12,7 +12,23 @@ router.get('/', (req, res) => {
 
 // User View Restaurant 
 router.get('/Dine', (req, res) => {
-    res.render('restaurant/Dining&Bar')
+    res.render('restaurant/Dining&Bar', {
+        layout: "blank"
+        }
+    )
+});
+
+router.get('/test', (req, res) => {
+    res.render('test', {
+		layout : "blank"
+	    }
+    ) // 
+});
+
+
+// User View Restaurant 
+router.get('/DineV2', (req, res) => {
+    res.render('restaurant/DineV2')
 });
 
 // User View Gallery
@@ -44,13 +60,6 @@ router.get('/galleryFacilitiesBooking', (req, res) => {
 // User Cancel Booking
 router.get('/galleryCancelBooking', (req, res) => {
     res.render('user/facilities/facilities_cancelbooking') // 
-});
-
-router.get('/test', (req, res) => {
-    res.render('test', {
-		layout : "blank"
-	    }
-    ) // 
 });
 
 

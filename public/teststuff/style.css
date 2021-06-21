@@ -511,7 +511,7 @@ img {
   width: 100%;
 }
 
-.mu-restaurant-menu-content {
+.menuContent {
   display: inline;
   float: left;
   margin-top: 30px;
@@ -586,24 +586,24 @@ img {
   margin-bottom: 0;
 }
 
-.mu-menu-item-nav li .media .media-left {
+.mu-menu-item-nav li .medi .medileft {
   width: 110px;
   height: 110px;
 }
 
-.mu-menu-item-nav li .media .media-left a,
-.mu-menu-item-nav li .media .media-left a img {
+.mu-menu-item-nav li .medi .medileft a,
+.mu-menu-item-nav li .medi .medileft a img {
   display: block;
   width: 110px;
   height: 110px;
 }
 
-.mu-menu-item-nav li .media .media-body .media-heading {
+.mu-menu-item-nav li .medi .medibody .heading {
   font-size: 20px;
   margin-bottom: 10px;
 }
 
-.mu-menu-item-nav li .media .media-body .media-heading a {
+.mu-menu-item-nav li .medi .medibody .heading a {
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -ms-transition: all 0.5s;
@@ -611,14 +611,14 @@ img {
   transition: all 0.5s;
 }
 
-.mu-menu-item-nav li .media .media-body .mu-menu-price {
+.mu-menu-item-nav li .medi .medibody .mu-menu-price {
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 1.5px;
   line-height: 20px;
 }
 
-.mu-menu-item-nav li .media .media-body p {
+.mu-menu-item-nav li .medi .medibody p {
   margin-top: 10px;
   font-size: 14px;
 }
@@ -1402,7 +1402,7 @@ RESERVATION SECTION
  RESPONSIVE DESIGN
 ====================*/
 
-@media (max-width: 1199px) {
+@medi (max-width: 1199px) {
 
   .mu-main-navbar .mu-main-nav li a {
     padding-left: 10px;
@@ -1445,7 +1445,7 @@ RESERVATION SECTION
 }
 
 
-@media (max-width: 991px) {
+@medi (max-width: 991px) {
 
 
   .mu-main-navbar .mu-main-nav li a {
@@ -1488,7 +1488,7 @@ RESERVATION SECTION
 }
 
 
-@media (max-width: 767px) {
+@medi (max-width: 767px) {
 
   #mu-header {
     padding: 0 15px;
@@ -1522,7 +1522,7 @@ RESERVATION SECTION
 }
 
 
-@media (max-width: 640px) {
+@medi (max-width: 640px) {
   
   .navbar-default .navbar-toggle:hover, 
   .navbar-default .navbar-toggle:focus {
@@ -1538,7 +1538,7 @@ RESERVATION SECTION
     top: 18%;
   }
 
-  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-restaurant-menu li a {
+  #mu-restaurant-menu .mu-restaurant-menu-area .menuContent .mu-restaurant-menu li a {
     font-size: 16px;
     margin: 0 5px;
   }
@@ -1586,7 +1586,7 @@ RESERVATION SECTION
 }
 
 
-@media (max-width: 480px) {
+@medi (max-width: 480px) {
 
   .mu-top-slider .mu-top-slider-single .mu-top-slider-content {
    top: 20%;
@@ -1635,14 +1635,14 @@ RESERVATION SECTION
     height: 350px;
   }
 
-  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-restaurant-menu li {
+  #mu-restaurant-menu .mu-restaurant-menu-area .menuContent .mu-restaurant-menu li {
     margin-bottom: 10px;
   }
   
   
 }
 
-@media (max-width: 360px) {
+@medi (max-width: 360px) {
 
   #mu-slider .mu-slider-area .mu-top-slider .mu-top-slider-single .mu-top-slider-content .mu-slider-title {
     font-size: 22px;
@@ -1654,7 +1654,7 @@ RESERVATION SECTION
     line-height: 25px;
   }
 
-  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-restaurant-menu li {
+  #mu-restaurant-menu .mu-restaurant-menu-area .menuContent .mu-restaurant-menu li {
     margin-bottom: 12px;
   }
 
@@ -1708,19 +1708,19 @@ RESERVATION SECTION
     text-align: center;
   }
 
-  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-left {
+  #mu-restaurant-menu .mu-restaurant-menu-area .menuContent .mu-tab-content-area .mu-menu-item-nav li .medi .medileft {
     height: auto;
     width: 100%;
     margin-right: 0;
     float: left;
   }
 
-  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-left a{
+  #mu-restaurant-menu .mu-restaurant-menu-area .menuContent .mu-tab-content-area .mu-menu-item-nav li .medi .medileft a{
     display: inline-block;
     margin-bottom: 10px;
   }
 
-  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-left a img {
+  #mu-restaurant-menu .mu-restaurant-menu-area .menuContent .mu-tab-content-area .mu-menu-item-nav li .medi .medileft a img {
     display: inline-block;
   }
 
@@ -1735,7 +1735,7 @@ RESERVATION SECTION
 }
 
 
-@media (max-width: 320px) {
+@medi (max-width: 320px) {
 
   #mu-gallery .mu-gallery-area .mu-gallery-content .mu-gallery-body .mu-single-gallery .mu-single-gallery-item .mu-single-gallery-info {
     padding-top: 25.5%;
