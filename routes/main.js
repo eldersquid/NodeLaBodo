@@ -5,24 +5,23 @@ const bodyParser = require('body-parser');
 
 
 router.get('/', (req, res) => {
-	const title = 'Home Page';
-	res.render('home', {title: title
-	}) // renders views/index.handlebars
+    const title = 'Home Page';
+    res.render('home', {
+            title: title
+        }) // renders views/index.handlebars
 });
 
 // User View Restaurant 
 router.get('/Dine', (req, res) => {
     res.render('restaurant/Dining&Bar', {
         layout: "blank"
-        }
-    )
+    })
 });
 
 router.get('/test', (req, res) => {
     res.render('test', {
-		layout : "blank"
-	    }
-    ) // 
+            layout: "blank"
+        }) // 
 });
 
 
@@ -30,8 +29,7 @@ router.get('/test', (req, res) => {
 router.get('/DineV2', (req, res) => {
     res.render('restaurant/DineV2', {
         layout: "blank"
-        }
-    )
+    })
 });
 
 // User View Gallery
@@ -65,11 +63,19 @@ router.get('/galleryCancelBooking', (req, res) => {
     res.render('user/facilities/facilities_cancelbooking') // 
 });
 
+// Sign Up
+router.get('/signup', (req, res) => {
+    res.render('login/signup') //
+});
+
+
+
+
 
 // Logout User
 router.get('/logout', (req, res) => {
-	req.logout();
-	res.redirect('/');
+    req.logout();
+    res.redirect('/');
 });
 
 
