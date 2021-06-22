@@ -5,8 +5,8 @@ Author URI : http://www.markups.io/
 ========================================*/
 
 .scrollToTop {
-  background-color: #FFA500;
-  border: 2px solid #FFA500;
+  background-color: #fb5849;
+  border: 2px solid #fb5849;
 }
 
 .mu-readmore-btn,
@@ -28,7 +28,7 @@ Author URI : http://www.markups.io/
 .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, 
 .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus,
 .mu-main-navbar .navbar-header .navbar-brand span {
-  color: #FFA500;
+  color: #fb5849;
 }
 
 .mu-readmore-btn::after,
@@ -36,7 +36,7 @@ Author URI : http://www.markups.io/
 .mu-chef-nav .slick-dots li,
 .mu-top-slider .slick-dots li button,
 .mu-opening-hour {
-  border: 2px solid #FFA500;
+  border: 2px solid #fb5849;
 }
 
 .mu-readmore-btn:hover, 
@@ -56,7 +56,7 @@ Author URI : http://www.markups.io/
 .datepicker table tr td.day:hover,
 .mu-counter-nav li .mu-single-counter,
 .mu-top-slider .slick-dots li.slick-active button::before  {
-  background-color: #FFA500;
+  background-color: #fb5849;
 }
 
 .mu-readmore-btn:hover::after, 
@@ -68,7 +68,7 @@ Author URI : http://www.markups.io/
 .mu-contact-form input[type="text"]:focus,
 .mu-contact-form input[type="email"]:focus,
 .mu-contact-form textarea:focus {
-  border-color: #FFA500;
+  border-color: #fb5849;
 }
 
 .mu-browsmore-btn:hover, 
@@ -79,8 +79,8 @@ Author URI : http://www.markups.io/
 .mu-top-slider .slick-next:focus,
 .mu-send-btn:hover, 
 .mu-send-btn:focus {
-  background-color: #FFA500;
-  border-color: #FFA500;
+  background-color: #fb5849;
+  border-color: #fb5849;
 }
 
 
@@ -89,21 +89,21 @@ Author URI : http://www.markups.io/
 .mu-restaurant-menu li.active a,
 .mu-restaurant-menu li.active a:hover,
 .mu-restaurant-menu li.active a:focus {
-  color: #FFA500;
-  border-color: #FFA500 #FFA500 transparent;
+  color: #fb5849;
+  border-color: #fb5849 #fb5849 transparent;
 }
 
 
 #mu-reservation .mu-reservation-area .mu-reservation-content h3,
 .mu-contact-right .mu-contact-widget h3,
 .mu-opening-hour h2 {
-  border-bottom: 2px solid #FFA500;
+  border-bottom: 2px solid #fb5849;
 }
 
 
 .mu-chef-nav .slick-list li .mu-single-chef .mu-single-chef-social a {
-  border: 1px solid #FFA500;
-  color: #FFA500;
+  border: 1px solid #fb5849;
+  color: #fb5849;
 }
 
 

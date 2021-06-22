@@ -13,7 +13,7 @@ const Supplier = db.define('supplier', {
 	},
 	
 	office_num: {
-		type: Sequelize.STRING,
+		type: Sequelize.STRING
 	},
 	product_name: {
 		type: Sequelize.STRING
