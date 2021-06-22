@@ -9,7 +9,7 @@ const mySQLDB = require('./DBConfig');
 const setUpDB = (drop) => {
     mySQLDB.authenticate()
         .then(() => {
-            console.log('Vidjot database connected');
+            console.log('Hotel La Bodo database connected');
         })
         .then(() => {
             /*
