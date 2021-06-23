@@ -6,13 +6,13 @@ const Supplier = db.define('supplier', {
 		type: Sequelize.STRING
 	},
 	uen_number: {
-		type: Sequelize.STRING(1000)
+		type: Sequelize.STRING
 	},
 	email: {
 		type: Sequelize.STRING
 	},
 	
-	office_num: {
+	office_number: {
 		type: Sequelize.STRING
 	},
 	product_name: {

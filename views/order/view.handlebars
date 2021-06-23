@@ -30,13 +30,15 @@
                         </tr>
                     </tfoot>
                     <tbody>
+                        {{#if order}}
+                        {{#each order}}
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{id}}</td>
+                            <td>{{item_name}}</td>
+                            <td>{{product_name}}</td>
+                            <td>{{supplier}}</td>
+                            <td>{{quantity}}</td>
+                            <td>{{remarks}}</td>
                             <td style="width: 279px;">
                                 <select name="cars" id="cars">
                                     <option value="1">Ordered Placed</option>
@@ -47,6 +49,8 @@
                                 </select>
                             </td>
                         </tr>
+                        {{/each}}
+                        {{/if}}
                     </tbody>
                 </table>
             </div>

@@ -17,10 +17,10 @@ router.get('/view', (req, res) => {
     const title = 'Supplier';
     Supplier.findAll({
         where: {
-            adminId: req.admin.id
+            // adminId: req.admin.id
         },
         order: [
-            ['company_name', 'ASC']
+            ['id', 'ASC']
         ],
         raw: true
     })
@@ -28,7 +28,8 @@ router.get('/view', (req, res) => {
             // pass object to listSupplier.handlebar
             res.render('supplier/view', {
                 layout: "admin",
-                title: title
+                title: title,
+                supplier: supplier
             });
         })
         .catch(err => console.log(err));
@@ -110,14 +111,15 @@ router.put('/update/:id', (req, res) => {
 
 router.get('/delete/:id', (req, res) => {
     let supplierId = req.params.id;
-    let adminId = req.admin.id;
+    // let adminId = req.admin.id;
     // Select * from supplier where supplier.id=supplierID and supplier.adminId=adminID
     Supplier.findOne({
         where: {
             id: supplierId,
-            adminId: adminId
+            // adminId: adminId
         },
-        attributes: ['id', 'adminId']
+        // attributes: ['id', 'adminId']
+        attributes: ['id']
     }).then((supplier) => {
         // if record is found, admin is owner of supplier
         if (supplier != null) {

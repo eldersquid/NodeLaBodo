@@ -17,17 +17,18 @@ router.get('/view', (req, res) => {
     const title = 'Product Category';
     Productcat.findAll({
         where: {
-            adminId: req.admin.id
+            // adminId: req.admin.id
         },
         order: [
-            ['product_name', 'ASC']
+            ['id', 'ASC']
         ],
         raw: true
     })
         .then((productcat) => {
             res.render('productcat/view', {
                 layout: "admin",
-                title: title
+                title: title,
+                productcat: productcat
             });
         })
         .catch(err => console.log(err));
@@ -54,13 +55,14 @@ router.post('/create', (req, res) => {
 
 router.get('/delete/:id', (req, res) => {
     let productcatId = req.params.id;
-    let adminId = req.admin.id;
+    // let adminId = req.admin.id;
     Productcat.findOne({
         where: {
             id: productcatId,
-            adminId: adminId
+            // adminId: adminId
         },
-        attributes: ['id', 'adminId']
+        // attributes: ['id', 'adminId']
+        attributes: ['id']
     }).then((productcat) => {
         if (productcat != null) {
             Productcat.destroy({
