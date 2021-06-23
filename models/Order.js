@@ -15,7 +15,7 @@ const Order = db.define('order', {
         type: Sequelize.STRING
     },
     remarks: {
-        type: Sequelize.STRING(1000)
+        type: Sequelize.STRING
     }
 });
 
