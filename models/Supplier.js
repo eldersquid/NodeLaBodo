@@ -12,7 +12,7 @@ const Supplier = db.define('supplier', {
 		type: Sequelize.STRING
 	},
 	
-	office_num: {
+	office_number: {
 		type: Sequelize.STRING
 	},
 	product_name: {

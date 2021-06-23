@@ -5,7 +5,7 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <div class="col d-flex justify-content-end">
-        <a class="btn btn-outline-secondary ml-1" href="create"><i class="fas fa-plus-circle"></i> Create New Category</a>
+        <a class="btn btn-outline-secondary ml-1" href="showCreate"><i class="fas fa-plus-circle"></i> Create New Category</a>
     </div>
     <p></p>
     <!-- DataTales Example -->
@@ -28,9 +28,11 @@
                         </tr>
                     </tfoot>
                     <tbody>
+                        {{#if productcat}}
+                        {{#each productcat}}
                         <tr>
-                            <td></td>
-                            <td></td>
+                            <td>{{id}}</td>
+                            <td>{{product_name}}</td>
                             <td>
                                 <form action="" method="POST">
                                     <!-- Modal -->
@@ -64,6 +66,8 @@
                                 </form>
                             </td>
                         </tr>
+                        {{/each}}
+                        {{/if}}
                     </tbody>
                 </table>
             </div>
