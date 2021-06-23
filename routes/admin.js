@@ -1,7 +1,26 @@
+const { google } = require('googleapis');
+const cors = require('cors');
 const express = require('express');
+const app = express();
+const request = require('request');
 const router = express.Router();
 const fastJson = require('fast-json-stringify');
 const bodyParser = require('body-parser');
+const axios = require('axios');
+const queryParse = require('query-string');
+const urlParse = require('url-parse');
+const { trafficdirector } = require('googleapis/build/src/apis/trafficdirector');
+
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+  });
+
+//440621396466-esnk2ehi54ki6fkoh4scomu9r285iolg.apps.googleusercontent.com
+
+//KH6OEAEGnreCHUPn7EV0KJKO
+
 
 router.get('/hospitalList', (req, res) => {
 	const title = 'Hospitals';
@@ -19,15 +38,21 @@ router.get('/hospitalSearch', (req, res) => {
 		layout: "admin",
 		title: title
 	});
-	console.log(req.body.hospital);
+	
 
 });
 
-router.get('/hospitalCreate', (req, res) => {
+
+
+
+router.post('/hospitalCreate', (req, res) => {
+	let js_data = req.body.hospital1;
 	const title = "Create Hospital";
+	console.log(js_data);
 	res.render('admin/hospital/hospital_create', {
 		layout: "admin",
-		title: title
+		title: title,
+		js_data : js_data
 	});
 
 
