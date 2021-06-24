@@ -17,10 +17,10 @@ router.get('/view', (req, res) => {
     const title = 'Inventory';
     Inventory.findAll({
         where: {
-            adminId: req.admin.id
+            // adminId: req.admin.id
         },
         order: [
-            ['item_name', 'ASC']
+            ['id', 'ASC']
         ],
         raw: true
     })
@@ -28,7 +28,8 @@ router.get('/view', (req, res) => {
             // pass object to listInventory.handlebar
             res.render('inventory/view', {
                 layout: "admin",
-                title: title
+                title: title,
+                inventory: inventory
             });
         })
         .catch(err => console.log(err));
@@ -106,14 +107,15 @@ router.put('/update/:id', (req, res) => {
 
 router.get('/delete/:id', (req, res) => {
     let inventoryId = req.params.id;
-    let adminId = req.admin.id;
+    // let adminId = req.admin.id;
     // Select * from inventory where inventory.id=inventoryID and inventory.adminId=adminID
     Inventory.findOne({
         where: {
             id: inventoryId,
-            adminId: adminId
+            // adminId: adminId
         },
-        attributes: ['id', 'adminId']
+        // attributes: ['id', 'adminId']
+        attributes: ['id']
     }).then((inventory) => {
         // if record is found, admin is owner of inventory
         if (inventory != null) {

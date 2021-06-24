@@ -34,17 +34,19 @@
                             </tr>
                         </tfoot>
                         <tbody>
+                            {{#if supplier}}
+                            {{#each supplier}}
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{id}}</td>
+                                <td>{{company_name}}</td>
+                                <td>{{uen_number}}</td>
+                                <td>{{email}}</td>
+                                <td>{{office_number}}</td>
+                                <td>{{product_name}}</td>
                                 <td><a href="update" style="display: flex; justify-content: center;"
                                         class="btn btn-warning">Update</a></td>
                                 <td>
-                                    <form action="4" method="POST">
+                                    <form action="" method="POST">
 
                                         <!-- Modal -->
                                         <div class="modal fade" id="myModal_" tabindex="-1" role="dialog"
@@ -79,6 +81,8 @@
                                     </form>
                                 </td>
                             </tr>
+                            {{/each}}
+                            {{/if}}
                         </tbody>
                     </table>
                 </div>

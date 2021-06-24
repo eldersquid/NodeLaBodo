@@ -4,20 +4,19 @@ function hospital_name() {
    console.log("users value is: " + name);
    var js_data = JSON.stringify(name);
    console.log("test js data value: " + js_data);
-//    $.ajax({
-//        url: 'http://localhost',
-//        type : 'post',
-//        contentType: 'application/json',
-//        dataType : 'json',
-//        data : js_data
-//    }).done(function(result) {
-//        console.log(result);
-       
-//        $("#data").html(result);
-//    }).fail(function(jqXHR, textStatus, errorThrown) {
-//        console.log("fail: ",textStatus, errorThrown);
-//    });
+   $.ajax({
+       url: 'hospitalCreate',
+       type : 'post',
+       contentType: 'json',
+       dataType : 'json',
+       data : js_data
+   }).done(function(result) {
+       console.log(result);
+       location.href="hospitalCreate";
+       $("#data").html(result);
+   }).fail(function(jqXHR, textStatus, errorThrown) {
+       console.log("fail: ",textStatus, errorThrown);
+   });
 
 
 }
-

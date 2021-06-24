@@ -1,5 +1,5 @@
 <head>
-  <link rel="stylesheet" href="/css/g_map.css">
+  <link rel="stylesheet" href="/css/place_finder.css">
 
 
 </head>
@@ -17,6 +17,13 @@
               </div>
                 <!-- Begin Page Content -->
                 <div id="map"></div>
+                <div id="infowindow-content">
+                <span id="place-name" class="title"></span><br />
+                <strong>Place ID:</strong> <span id="place-id"></span><br />
+                <span id="place-address"></span>
+              </div>
+              <input class="form-control" id="pac-input" type="text" name="hospital" placeholder="" value="">                             
+
                 <br>
 
                 <div class="container-fluid">
@@ -37,14 +44,20 @@
                               </ul>
                               <div class="tab-content pt-3">
                                 <div class="tab-pane active">
-                                  <form method="POST" action="">
+                                  <form method="POST" action="hospitalCreate">
                                     <div class="row">
                                       <div class="col">
                                         <div class="row">
-                                          <div class="col">
+                                          <div class="col-6">
                                             <div class="form-group">
-                                              <label>Hospital Name</label>
-                                              <input class="form-control" id="pac-input" type="text" name="hospital" placeholder="" value="">
+                                              <label>Place ID</label>
+                                              <input class="form-control" id="test1" type="text" name="hospital1" placeholder="" value="" readonly>                           
+                                            </div>
+                                          </div>
+                                          <div class="col-6">
+                                            <div class="form-group">
+                                              <label>Coordinates</label>
+                                              <input class="form-control" id="test2" type="text" name="hospital2" placeholder="" value="" readonly>                           
                                             </div>
                                           </div>
                                         </div>
@@ -55,7 +68,11 @@
 
                                     <div class="row">
                                       <div class="col d-flex justify-content-end">
-                                        <button class="btn btn-primary" onclick="fetch_gmaps()" type="button">Search</button>
+                                        {{!-- <button class="btn btn-primary" onclick="fetch_gmaps()" type="button">Search</button> --}}
+                                      </div>
+                                      <div class="col d-flex justify-content-end">
+                                        <input type="submit" class="btn btn-primary" value="Search">
+                                        
                                       </div>
                                     </div>
                                   </form>
@@ -116,12 +133,13 @@
         </div>
     </div>
 
+  <script src="/js/jquery-3.2.1.min.js"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhR62_UUROPzt6A8IOhVZBppjp9e51w2w&callback=initAutocomplete&libraries=places&v=weekly"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhR62_UUROPzt6A8IOhVZBppjp9e51w2w&callback=initMap&libraries=places&v=weekly"
     defer
   ></script>
-  <script src="/js/google_map.js"></script>
-  <script src="/js/hospital_search.js"></script>
-  <script src="/js/googlemaps_fetch.js"></script>
+  <script src="/js/place_finder.js"></script>
+  {{!-- <script src="/js/hospital_search.js"></script> --}}
+  {{!-- <script src="/js/googlemaps_fetch.js"></script> --}}
 

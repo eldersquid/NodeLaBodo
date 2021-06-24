@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <h1 class="display-5">Create New Supplier</h1>
 
-    <form method="POST" action="">
+    <form method="POST" action="/supplier/create">
         <div class="form-group">
 
             <label for="company_name">Company Name</label>
@@ -33,7 +33,8 @@
         <div class="form-group" id="cont">
 
             <label for="product_name">Product Name</label>
-            <select class="form-control" id="product_name" multiple name="product_name" required>
+            <select class="form-control" id="product_name" multiple name="product_name">
+            {{!-- <select class="form-control" id="product_name" multiple name="product_name" required> --}}
                 
             </select>
 

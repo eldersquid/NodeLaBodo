@@ -32,12 +32,14 @@
                             </tr>
                         </tfoot>
                         <tbody>
+                            {{#if inventory}}
+                            {{#each inventory}}
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{id}}</td>
+                                <td>{{item_name}}</td>
+                                <td>{{supplier}}</td>
+                                <td>{{product_name}}</td>
+                                <td>{{quantity}}</td>
                                 <td><a href="update" style="display: flex; justify-content: center;"
                                         class="btn btn-warning">Update</a></td>
                                 <td>
@@ -76,6 +78,8 @@
                                     </form>
                                 </td>
                             </tr>
+                            {{/each}}
+                            {{/if}}
                         </tbody>
                     </table>
                 </div>
