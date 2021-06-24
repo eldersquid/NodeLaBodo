@@ -10,13 +10,19 @@ const axios = require('axios');
 const queryParse = require('query-string');
 const urlParse = require('url-parse');
 const { trafficdirector } = require('googleapis/build/src/apis/trafficdirector');
+const fs = require('fs');
+const upload = require('../helpers/img');
 
 
 
-//440621396466-esnk2ehi54ki6fkoh4scomu9r285iolg.apps.googleusercontent.com
+//440621396466-esnk2ehi54ki6fkoh4scomu9r285iolg.apps.googleusercontent.com remember to delete this
 
-//KH6OEAEGnreCHUPn7EV0KJKO
+//KH6OEAEGnreCHUPn7EV0KJKO remember to delete this
 
+//https://cors-anywhere.herokuapp.com/
+// go here every day or when the day of testing comes to enable api calls!!
+
+app.use(cors());
 
 router.get('/hospitalList', (req, res) => {
 	const title = 'Hospitals';
@@ -53,6 +59,24 @@ router.post('/hospitalCreate', cors(), (req, res) => {
 
 
 });
+
+router.post('/hospitalLogoUpload', (req, res) => {
+	// Creates user id directory for upload if not exist
+	if (!fs.existsSync('./public/uploads/' + req.hospital.id)){
+	fs.mkdirSync('./public/uploads/' + req.hospital.id);
+	}
+	upload(req, res, (err) => {
+	if (err) {
+	res.json({file: '/img/g.png', err: err});
+	} else {
+	if (req.file === undefined) {
+	res.json({file: '/img/g.png', err: err});
+	} else {
+	res.json({file: `/uploads/${req.hospital.id}/${req.file.filename}`});
+	}
+	}
+	});
+	})
 
 router.get('/hospitalCreated', (req, res) => {
 	res.render('admin/hospital/hospital_list',
