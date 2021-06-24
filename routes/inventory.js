@@ -105,7 +105,7 @@ router.put('/update/:id', (req, res) => {
     }).catch(err => console.log(err));
 });
 
-router.get('/delete/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     let inventoryId = req.params.id;
     // let adminId = req.admin.id;
     // Select * from inventory where inventory.id=inventoryID and inventory.adminId=adminID

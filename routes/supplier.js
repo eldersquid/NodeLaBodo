@@ -109,7 +109,7 @@ router.put('/update/:id', (req, res) => {
     }).catch(err => console.log(err));
 });
 
-router.get('/delete/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     let supplierId = req.params.id;
     // let adminId = req.admin.id;
     // Select * from supplier where supplier.id=supplierID and supplier.adminId=adminID
