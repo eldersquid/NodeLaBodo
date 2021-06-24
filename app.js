@@ -142,7 +142,7 @@ app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.
 
 app.use('/restaurant', restaurantRoute);
 
-// app.use('/reservation', reservationRoute);
+app.use('/reservation', reservationRoute);
 
 app.use('/productcat', productcatRoute);
 
