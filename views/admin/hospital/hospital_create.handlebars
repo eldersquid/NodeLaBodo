@@ -40,39 +40,42 @@
                                         <div class="row">
                                           <div class="col-lg-9">
                                             <div class="form-group">
-                                              <label>Search Location</label>
+                                              <label>Place ID</label>
                                                 <input type="hidden" id="google_location" name="google_location" value="{{js_data}}"> 
                                               <input type="text" id="location" class="form-control" value="{{js_data}}" readonly>
                                             </div>
                                             <div class="form-group">
                                              <label for="name">Hospital Name</label>
-                                             <input type="text" class="form-control" name="name" value="{{name}}" required>
+                                             <input type="text" class="form-control" name="name" id="name" value="" required>
                                             </div>
                                             <div class="form-group">
-                                              <label for="name">Address</label>
+                                              <label for="address">Address</label>
                                              <input type="text" class="form-control" name="address" id="add" value="" required>
                                             </div>
                                           </div>
                                           <div class="col-lg-3">
                                             {{!—-Poster image --}}
-                                            <img id="poster"src="/img/no-image.jpg"alt=""class="border img-thumbnail img-fluid"style="height:95%;width:100%">
-                                            {{!—-Hidden field to submit URL of poster to the server --}}
-                                            <input id="posterURL"type="hidden"name="posterURL">
+                                            <label for="hospital_image">Hospital Logo</label>
+                                            <input type="file" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
+                                            <img id="hospital_image" src="" alt=""class="border img-thumbnail img-fluid"style="height:95%;width:100%">
+                                            <input id="photoURL"type="hidden"name="photoURL">
                                             </div>
+                                            <div class="font-weight-bold text-danger small" id="photoError" style="display:none"></div>
+
                                         </div>
                                         <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                             <label for="name">Contact Number</label>
-                                             <input type="text" class="form-control" name="contact" value="{{contact}}" required>
+                                             <label for="contact">Contact Number</label>
+                                             <input type="text" class="form-control" name="contact" id="contact" value="" required>
                                             </div>
                                           </div>
                                         </div>
                                         <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                             <label for="name">Website</label>
-                                             <input type="text" class="form-control" name="contact" value="{{website}}" required>
+                                             <label for="website">Website</label>
+                                             <input type="text" class="form-control" name="website" id="website" value="" required>
                                             </div>
                                           </div>
                                         </div>

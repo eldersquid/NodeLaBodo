@@ -23,6 +23,7 @@
     "flash-messenger": "^1.1.1",
     "googleapis": "^78.0.0",
     "method-override": "^3.0.0",
+    "moment": "^2.29.1",
     "mysql2": "^2.2.5",
     "nodemailer": "^6.6.2",
     "query-string": "^7.0.1",

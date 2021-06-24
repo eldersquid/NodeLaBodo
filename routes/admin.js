@@ -11,11 +11,7 @@ const queryParse = require('query-string');
 const urlParse = require('url-parse');
 const { trafficdirector } = require('googleapis/build/src/apis/trafficdirector');
 
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-  });
+
 
 //440621396466-esnk2ehi54ki6fkoh4scomu9r285iolg.apps.googleusercontent.com
 
@@ -32,7 +28,7 @@ router.get('/hospitalList', (req, res) => {
 
 });
 
-router.get('/hospitalSearch', (req, res) => {
+router.get('/hospitalSearch', cors(), (req, res) => {
 	const title = "Search Hospital";
 	res.render('admin/hospital/hospital_search', {
 		layout: "admin",
@@ -45,7 +41,7 @@ router.get('/hospitalSearch', (req, res) => {
 
 
 
-router.post('/hospitalCreate', (req, res) => {
+router.post('/hospitalCreate', cors(), (req, res) => {
 	let js_data = req.body.hospital1;
 	const title = "Create Hospital";
 	console.log(js_data);
