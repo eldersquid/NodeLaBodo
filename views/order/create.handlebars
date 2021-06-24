@@ -5,8 +5,12 @@
         <div class="form-group">
 
             <label for="item_name">Item Name</label>
-            <select class="form-control" id="item_name" name="item_name">
-            {{!-- <select class="form-control" id="item_name" name="item_name" required> --}}
+            <select class="form-control" id="item_name" name="item_name" required>
+                {{#if inventory}}
+                {{#each inventory}}
+                <option value="{{item_name}}">{{item_name}}</option>
+                {{/each}}
+                {{/if}}
 
             </select>
 
@@ -15,8 +19,12 @@
         <div class="form-group">
 
             <label for="product_name">Product Name</label>
-            <select class="form-control" id="product_name" name="product_name">
-            {{!-- <select class="form-control" id="product_name" name="product_name" required> --}}
+            <select class="form-control" id="product_name" name="product_name" required>
+                {{#if inventory}}
+                {{#each inventory}}
+                <option value="{{product_name}}">{{product_name}}</option>
+                {{/each}}
+                {{/if}}
 
             </select>
 
@@ -25,8 +33,12 @@
         <div class="form-group">
 
             <label for="supplier">Supplier</label>
-            <select class="form-control" id="supplier" name="supplier">
-            {{!-- <select class="form-control" id="supplier" name="supplier" required> --}}
+            <select class="form-control" id="supplier" name="supplier" required>
+                {{#if inventory}}
+                {{#each inventory}}
+                <option value="{{supplier}}">{{supplier}}</option>
+                {{/each}}
+                {{/if}}
 
             </select>
 

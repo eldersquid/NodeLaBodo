@@ -5,7 +5,7 @@ photo: {
     type: Sequelize.BLOB("long")
 },
 hospitalName: {
-type: Sequelize.STRING
+type: Sequelize.STRING(2000)
 },
 address: {
 type: Sequelize.STRING(2000)

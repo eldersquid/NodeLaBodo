@@ -53,7 +53,7 @@ router.post('/create', (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.get('/delete/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     let productcatId = req.params.id;
     // let adminId = req.admin.id;
     Productcat.findOne({

@@ -33,11 +33,13 @@
         <div class="form-group" id="cont">
 
             <label for="product_name">Product Name</label>
-            <select class="form-control" id="product_name" multiple name="product_name">
-            {{!-- <select class="form-control" id="product_name" multiple name="product_name" required> --}}
-                
+            <select class="form-control" id="product_name" name="product_name" required multiple>
+                {{#if productcat}}
+                {{#each productcat}}
+                <option value="{{product_name}}">{{product_name}}</option>
+                {{/each}}
+                {{/if}}
             </select>
-
 
         </div>
         <input type="submit" value="Submit" class="btn btn-primary" />

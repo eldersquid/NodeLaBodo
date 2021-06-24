@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Supplier = require('../models/Supplier');
 const Inventory = require('../models/Inventory');
 const alertMessage = require('../helpers/messenger.js');
 
@@ -37,11 +38,24 @@ router.get('/view', (req, res) => {
 
 router.get('/showCreate', (req, res) => {
     const title = 'Inventory';
-
-    res.render('inventory/create', {
-        layout: "admin",
-        title: title
-    });
+    Supplier.findAll({
+        where: {
+            // adminId: req.admin.id
+        },
+        order: [
+            ['id', 'ASC']
+        ],
+        raw: true
+    })
+        .then((supplier) => {
+            // pass object to listInventory.handlebar
+            res.render('inventory/create', {
+                layout: "admin",
+                title: title,
+                supplier: supplier
+            });
+        })
+        .catch(err => console.log(err));
 });
 
 router.post('/create', (req, res) => {
@@ -105,7 +119,7 @@ router.put('/update/:id', (req, res) => {
     }).catch(err => console.log(err));
 });
 
-router.get('/delete/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     let inventoryId = req.params.id;
     // let adminId = req.admin.id;
     // Select * from inventory where inventory.id=inventoryID and inventory.adminId=adminID
