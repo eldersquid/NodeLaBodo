@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Supplier = require('../models/Supplier');
+const Productcat = require('../models/Productcat');
 const alertMessage = require('../helpers/messenger.js');
 
 // router.get('/view', (req, res) => {
@@ -37,11 +38,24 @@ router.get('/view', (req, res) => {
 
 router.get('/showCreate', (req, res) => {
     const title = 'Supplier';
-
-    res.render('supplier/create', {
-        layout: "admin",
-        title: title
-    });
+    Productcat.findAll({
+        where: {
+            // adminId: req.admin.id
+        },
+        order: [
+            ['id', 'ASC']
+        ],
+        raw: true
+    })
+        .then((productcat) => {
+            // pass object to listSupplier.handlebar
+            res.render('supplier/create', {
+                layout: "admin",
+                title: title,
+                productcat: productcat
+            });
+        })
+        .catch(err => console.log(err));
 });
 
 router.post('/create', (req, res) => {
