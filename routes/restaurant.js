@@ -3,16 +3,6 @@ const router = express.Router();
 const Reservation = require('../models/Reservation');
 const alertMessage = require('../helpers/messenger.js');
 
-// router.get('/viewReservation', (req, res) => {
-//     const title = 'Reservation';
-
-//     res.render('reservation/viewReservation', {
-//         layout: "admin",
-//         title: title
-//     });
-
-// });
-
 
 // User View Restaurant 
 router.get('/DineV2', (req, res) => {

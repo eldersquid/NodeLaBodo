@@ -51,7 +51,7 @@ router.post('/hospitalCreate', cors(), (req, res) => {
 	let js_data = req.body.hospital1;
 	const title = "Create Hospital";
 	console.log(js_data);
-	res.render('admin/hospital/hospital_create', {
+	res.render('admin/hospital/hospital_create', { 
 		layout: "admin",
 		title: title,
 		js_data : js_data
