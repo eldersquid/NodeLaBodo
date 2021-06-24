@@ -12,6 +12,8 @@ const urlParse = require('url-parse');
 const { trafficdirector } = require('googleapis/build/src/apis/trafficdirector');
 const fs = require('fs');
 const upload = require('../helpers/img');
+const Hospital = require('../models/Hospital');
+const moment = require('moment');
 
 
 
@@ -51,12 +53,37 @@ router.post('/hospitalCreate', cors(), (req, res) => {
 	let js_data = req.body.hospital1;
 	const title = "Create Hospital";
 	console.log(js_data);
+
 	res.render('admin/hospital/hospital_create', {
 		layout: "admin",
 		title: title,
 		js_data : js_data
 	});
 
+
+});
+
+router.post('/hospitalCreated', cors(), (req, res) => {
+	let hospitalName = req.body.name;
+	let address = req.body.address;
+	let photo = req.body.photoURL;
+	let contactNo = req.body.contact;
+	let website = req.body.website;
+
+	Hospital.create({
+		photo,
+		hospitalName,
+		address,
+		contactNo,
+		website
+
+
+	}).then((hospital)=> {
+		res.redirect('/admin/hospitalList');
+
+
+
+	}).catch(err => console.log(err))
 
 });
 
@@ -78,12 +105,7 @@ router.post('/hospitalLogoUpload', (req, res) => {
 	});
 	})
 
-router.get('/hospitalCreated', (req, res) => {
-	res.render('admin/hospital/hospital_list',
-		{ layout: "admin" });
 
-
-});
 
 router.get('/VehicleList', (req, res) => {
 	const title = 'Vehicles';
