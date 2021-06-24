@@ -15,6 +15,9 @@ const bodyParser = require('body-parser');
 */
 const mainRoute = require('./routes/main');
 
+const restaurantRoute = require('./routes/restaurant');
+
+const reservationRoute = require('./routes/adm_restaurant');
 
 const adminRoute = require('./routes/admin');
 
@@ -38,6 +41,7 @@ const db = require('./config/db');
 // Messaging libraries
 const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger');
+// const Reservation = require('./models/Reservation');
 
 // 1. Danish's Route
 // const roomsRoute = require('./routes/rooms');
@@ -134,6 +138,9 @@ app.use('/', mainRoute); // mainRoute is declared to point to routes/main.js
 app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.js
 // This route maps the root URL to any path defined in main.js
 
+app.use('/restaurant', restaurantRoute);
+
+// app.use('/reservation', reservationRoute);
 
 app.use('/productcat', productcatRoute);
 
