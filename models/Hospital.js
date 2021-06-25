@@ -1,6 +1,11 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
+
 const Hospital = db.define('hospitals', {
+placeID : {
+    type : Sequelize.STRING(1000)
+
+},
 photo: {
     type: Sequelize.BLOB("long")
 },
@@ -17,4 +22,5 @@ website: {
 type: Sequelize.STRING(1000),
 },
 });
+
 module.exports = Hospital;

@@ -59,58 +59,62 @@
                                     <table class="table table-bordered table-hover" id="hospitalTable" width="100%" cellspacing="1">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <th></th>
+                                                <th></th>
                                                 <th>Hospital Name</th>
                                                 <th>Address</th>
                                                 <th>Contact Number</th>
-                                                <th>Number of Beds</th>
-                                                <th>Number of Guests assigned</th>
-                                                <th>Number of transport vehicles assigned</th>
+                                                <th>Website</th>
+                                                <th></th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-
-                                              <th>ID</th>
+                                              <th></th>
+                                              <th></th>
                                               <th>Hospital Name</th>
                                               <th>Address</th>
                                               <th>Contact Number</th>
-                                              <th>Number of Beds</th>
-                                              <th>Number of Guests assigned</th>
-                                              <th>Number of transport vehicles assigned</th>
+                                              <th>Website</th>
+                                              <th></th>
                                               <th></th>
                                               <th></th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                          <tr>
-                                            <td>
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td></td>
-                                            <td><a href="" class="btn btn-warning">Update</a></td>
-                                            <td>
-                                              <form action="" method="POST">
+                                          {{#if hospitals }}
+                                            
+                                            {{#each hospitals }}
+                                            <tr>
+                                              <td>
+                                                {{photo}}
+                                              </td>
+                                              <td>
+                                                {{@index}}
+                                              </td>
+                                              <td>
+                                                {{hospitalName}}
+                                              </td>
+                                              <td>
+                                                {{address}}
+                                              </td>
+                                              <td>
+                                                {{contactNo}}
+                                              </td>
+                                              <td>
+                                                {{website}}
+                                              </td>
+                                              <td>
+                                                <a href="/admin/hospitalProfile/{{id}}" class="btn btn-dark">Details</a>
+                                              </td>
+                                              <td><a href="/admin/hospitalEdit/{{id}}" class="btn btn-warning">Update</a></td>
+                                              <td>
+                                                
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                   <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                       <div class="modal-header">
@@ -124,7 +128,7 @@
                                                       </div>
                                                       <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <input type="submit" value="Delete" class="btn btn-danger">
+                                                        <a href="/admin/hospitalDelete/{{id}}"  class="btn btn-danger">Delete</a>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -132,16 +136,20 @@
 
 
 
-                                              <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="">
+                                              <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#deleteModal_{{id}}">
 
                                               <span>Delete</span>
                                             </button>
-                                            </form>
-                                          </td>
-                                          </tr>
+                                            
+                                            </td>
+                                            </tr>
+                                            {{/each}}
 
+                                          {{else}}
+                                          
 
                                         </tbody>
+                                        {{/if}}
                                     </table>
 
 

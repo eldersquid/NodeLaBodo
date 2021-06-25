@@ -16,7 +16,9 @@ window.onload = function fetch_gmaps() {
         console.log(test);
         document.getElementById("add").value = test["result"]["formatted_address"];
         document.getElementById("name").value = test["result"]["name"];
-        document.getElementById("contact").value = test["result"]["international_phone_number"];
+        var x = test["result"]["formatted_phone_number"].replace(/ /g,'');
+        console.log(x);
+        document.getElementById("contact").value = x;
         document.getElementById("website").value = test["result"]["website"];
         
       }

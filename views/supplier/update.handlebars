@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <h1 class="display-4">Update Supplier</h1>
 
-    <form method="POST" action="">
+    <form method="POST" action="/supplier/update/{{supplier.id}}?_method=PUT">
         <div class="form-group">
 
             <label for="company_name">Company Name</label>
@@ -34,7 +34,11 @@
 
             <label for="product_name">Product Name</label>
             <select class="form-control" id="product_name" multiple name="product_name" required>
-               
+                {{#if productcat}}
+                {{#each productcat}}
+                <option value="{{product_name}}">{{product_name}}</option>
+                {{/each}}
+                {{/if}}
             </select>
 
 

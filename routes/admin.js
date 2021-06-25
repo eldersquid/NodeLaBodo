@@ -14,6 +14,9 @@ const fs = require('fs');
 const upload = require('../helpers/img');
 const Hospital = require('../models/Hospital');
 const moment = require('moment');
+const methodOverride = require('method-override');
+// Method override middleware to use other HTTP methods such as PUT and DELETE
+app.use(methodOverride('_method'));
 
 
 
@@ -26,15 +29,28 @@ const moment = require('moment');
 
 app.use(cors());
 
+
+
 router.get('/hospitalList', (req, res) => {
-	const title = 'Hospitals';
-
+	const title = "Hospitals";
+	Hospital.findAll({
+	
+	order: [
+	['id', 'ASC']
+	],
+	raw: true
+	})
+	.then((hospitals) => {
+	// pass object to listVideos.handlebar
 	res.render('admin/hospital/hospital_list', {
-		layout: "admin",
-		title: title
+	layout : "admin",
+	title : title,
+	hospitals: hospitals
 	});
-
-});
+	})
+	.catch(err => console.log(err));
+	});
+	
 
 router.get('/hospitalSearch', cors(), (req, res) => {
 	const title = "Search Hospital";
@@ -68,8 +84,10 @@ router.post('/hospitalCreated', cors(), (req, res) => {
 	let photo = req.body.photoURL;
 	let contactNo = req.body.contact;
 	let website = req.body.website;
+	let placeID = req.body.google_location;
 
 	Hospital.create({
+		placeID,
 		photo,
 		hospitalName,
 		address,
@@ -85,6 +103,73 @@ router.post('/hospitalCreated', cors(), (req, res) => {
 	}).catch(err => console.log(err))
 
 });
+
+router.get("/hospitalProfile/:id", (req, res) => {
+  const title = "Edit Profile";
+  Hospital.findOne({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((hospital) => {
+      let place_ID = hospital.placeID;
+      // call views/video/editVideo.handlebar to render the edit video page
+      res.render("admin/hospital/hospitalProfile", {
+        hospital, // passes video object to handlebar
+        layout: "admin",
+        title: title,
+		place_ID : place_ID
+      });
+    })
+    .catch((err) => console.log(err)); // To catch no video ID
+});
+
+router.get("/hospitalEdit/:id", (req, res) => {
+	const title = "Edit Hospital Details";
+	Hospital.findOne({
+	  where: {
+		id: req.params.id,
+	  },
+	})
+	  .then((hospital) => {
+		let place_ID = hospital.placeID;
+		// call views/video/editVideo.handlebar to render the edit video page
+		res.render("admin/hospital/hospital_edit", {
+		  hospital, // passes video object to handlebar
+		  layout: "admin",
+		  title: title,
+		  place_ID : place_ID
+		});
+	  })
+	  .catch((err) => console.log(err)); // To catch no video ID
+  });
+
+router.put('/hospitalEdited/:id', (req, res) => {
+	let hospitalName = req.body.name;
+	let address = req.body.address;
+	let photo = req.body.photoURL;
+	let contactNo = req.body.contact;
+	let website = req.body.website;
+	let placeID = req.body.google_location;
+	Hospital.update({
+		placeID,
+		photo,
+		hospitalName,
+		address,
+		contactNo,
+		website
+	}, {
+	where: {
+	id: req.params.id
+	}
+	}).then(() => {
+	// After saving, redirect to router.get(/listVideos...) to retrieve all updated
+	// videos
+	res.redirect('/admin/hospitalList');
+	}).catch(err => console.log(err));
+	});
+	
+
 
 router.post('/hospitalLogoUpload', (req, res) => {
 	// Creates user id directory for upload if not exist
@@ -104,6 +189,30 @@ router.post('/hospitalLogoUpload', (req, res) => {
 	});
 	})
 
+router.get('/hospitalDelete/:id', (req, res) => {
+		let id = req.params.id;
+		// Select * from videos where videos.id=videoID and videos.userId=userID
+		Hospital.findOne({
+			where: {
+				id: id,
+			},
+			attributes: ['id']
+		}).then((hospital) => {
+			// if record is found, user is owner of video
+			if (hospital != null) {
+				Hospital.destroy({
+					where: {
+						id: id
+					}
+				}).then(() => {
+					res.redirect('/admin/hospitalList'); // To retrieve all videos again
+				}).catch(err => console.log(err));
+			} else {
+				alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+				
+			}
+		});
+	});
 
 
 router.get('/VehicleList', (req, res) => {
