@@ -111,36 +111,36 @@
                                               </td>
                                               <td><a href="/admin/hospitalEdit/{{id}}" class="btn btn-warning">Update</a></td>
                                               <td>
-                                                <form action="" method="POST">
+                                                
 
-                                                  <!-- Modal -->
-                                                  <div class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                      <div class="modal-content">
-                                                        <div class="modal-header">
-                                                          <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
-                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                          </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                          Do you really want to delete this hospital? This process cannot be undone.
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                          <input type="submit" value="Delete" class="btn btn-danger">
-                                                        </div>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        Do you really want to delete this hospital? This process cannot be undone.
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <a href="/admin/hospitalDelete/{{id}}"  class="btn btn-danger">Delete</a>
                                                       </div>
                                                     </div>
                                                   </div>
+                                                </div>
 
 
 
-                                                <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="">
+                                              <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#deleteModal_{{id}}">
 
-                                                <span>Delete</span>
-                                              </button>
-                                              </form>
+                                              <span>Delete</span>
+                                            </button>
+                                            
                                             </td>
                                             </tr>
                                             {{/each}}

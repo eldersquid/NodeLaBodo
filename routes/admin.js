@@ -189,6 +189,30 @@ router.post('/hospitalLogoUpload', (req, res) => {
 	});
 	})
 
+router.get('/hospitalDelete/:id', (req, res) => {
+		let id = req.params.id;
+		// Select * from videos where videos.id=videoID and videos.userId=userID
+		Hospital.findOne({
+			where: {
+				id: id,
+			},
+			attributes: ['id']
+		}).then((hospital) => {
+			// if record is found, user is owner of video
+			if (hospital != null) {
+				Hospital.destroy({
+					where: {
+						id: id
+					}
+				}).then(() => {
+					res.redirect('/admin/hospitalList'); // To retrieve all videos again
+				}).catch(err => console.log(err));
+			} else {
+				alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+				
+			}
+		});
+	});
 
 
 router.get('/VehicleList', (req, res) => {
