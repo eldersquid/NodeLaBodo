@@ -34,9 +34,9 @@
                             <td>{{id}}</td>
                             <td>{{product_name}}</td>
                             <td>
-                                <form action="" method="POST">
+                                <form action="/productcat/delete/{{id}}" method="POST">
                                     <!-- Modal -->
-                                    <div class="modal fade" id="deleteModal_" tabindex="-1" role="dialog"
+                                    <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
@@ -48,7 +48,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Do you really want to delete this Product Brand? This process cannot
+                                                    Do you really want to delete Product Category: <span style="color:red;">{{product_name}}</span>? This process cannot
                                                     be undone.
                                                 </div>
                                                 <div class="modal-footer">
@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-block btn-danger" data-toggle="modal"
-                                        data-target="#deleteModal_">
+                                        data-target="#deleteModal_{{id}}">
                                         <span>Delete</span>
                                     </button>
                                 </form>

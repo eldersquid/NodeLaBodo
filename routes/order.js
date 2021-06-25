@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Inventory = require('../models/Inventory');
 const Order = require('../models/Order');
 const alertMessage = require('../helpers/messenger.js');
 var nodemailer = require('nodemailer');
@@ -39,10 +40,25 @@ router.get('/view', (req, res) => {
 router.get('/showCreate', (req, res) => {
     const title = 'Order';
 
-    res.render('order/create', {
-        layout: "admin",
-        title: title
-    });
+    Inventory.findAll({
+        where: {
+            // adminId: req.admin.id
+        },
+        order: [
+            ['id', 'ASC']
+        ],
+        raw: true
+    })
+        .then((inventory) => {
+            // pass object to listOrder.handlebar
+            res.render('order/create', {
+                layout: "admin",
+                title: title,
+                inventory: inventory
+            });
+        })
+        .catch(err => console.log(err));
+    
 });
 
 router.post('/create', (req, res) => {

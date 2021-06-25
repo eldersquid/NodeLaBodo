@@ -43,13 +43,13 @@
                                 <td>{{email}}</td>
                                 <td>{{office_number}}</td>
                                 <td>{{product_name}}</td>
-                                <td><a href="update" style="display: flex; justify-content: center;"
+                                <td><a href="/supplier/showUpdate/{{id}}" style="display: flex; justify-content: center;"
                                         class="btn btn-warning">Update</a></td>
                                 <td>
-                                    <form action="" method="POST">
+                                    <form action="/supplier/delete/{{id}}" method="POST">
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="myModal_" tabindex="-1" role="dialog"
+                                        <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
@@ -62,9 +62,9 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         Are you sure you want to delete Supplier: <span
-                                                            style="color:red;"></span>,
-                                                        UEN Number:
-                                                        <span style="color:red;"></span>?
+                                                            style="color:red;">{{company_name}}</span>,
+                                                        UEN Number: 
+                                                        <span style="color:red;">{{uen_number}}</span>?
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
@@ -75,7 +75,7 @@
                                             </div>
                                         </div>
                                         <button type="button" class="btn btn-block btn-danger" data-toggle="modal"
-                                            data-target="#myModal_">
+                                            data-target="#deleteModal_{{id}}">
                                             <span>Delete</span>
                                         </button>
                                     </form>

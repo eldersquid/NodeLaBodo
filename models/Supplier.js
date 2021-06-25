@@ -11,7 +11,6 @@ const Supplier = db.define('supplier', {
 	email: {
 		type: Sequelize.STRING
 	},
-	
 	office_number: {
 		type: Sequelize.STRING
 	},

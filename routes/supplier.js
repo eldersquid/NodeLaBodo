@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Supplier = require('../models/Supplier');
+const Productcat = require('../models/Productcat');
 const alertMessage = require('../helpers/messenger.js');
 
 // router.get('/view', (req, res) => {
@@ -37,11 +38,24 @@ router.get('/view', (req, res) => {
 
 router.get('/showCreate', (req, res) => {
     const title = 'Supplier';
-
-    res.render('supplier/create', {
-        layout: "admin",
-        title: title
-    });
+    Productcat.findAll({
+        where: {
+            // adminId: req.admin.id
+        },
+        order: [
+            ['id', 'ASC']
+        ],
+        raw: true
+    })
+        .then((productcat) => {
+            // pass object to listSupplier.handlebar
+            res.render('supplier/create', {
+                layout: "admin",
+                title: title,
+                productcat: productcat
+            });
+        })
+        .catch(err => console.log(err));
 });
 
 router.post('/create', (req, res) => {
@@ -63,6 +77,8 @@ router.post('/create', (req, res) => {
 });
 
 router.get('/showUpdate/:id', (req, res) => {
+    const title = 'Supplier';
+
     Supplier.findOne({
         where: {
             id: req.params.id
@@ -73,15 +89,32 @@ router.get('/showUpdate/:id', (req, res) => {
             res.redirect('/supplier/view');
         } else {
             // Only authorised admin who is owner of supplier can edit it
-            if (req.admin.id === supplier.adminId) {
-                checkOptions(supplier);
-                res.render('supplier/update', { // call views/supplier/editSupplier.handlebar to render the edit supplier page
-                    supplier
-                });
-            } else {
-                alertMessage(res, 'danger', 'Unauthorised access to Supplier', 'fas fa-exclamation-circle', true);
-                res.redirect('/logout');
-            }
+            // if (req.admin.id === supplier.adminId) {
+            //     checkOptions(supplier);
+                Productcat.findAll({
+                    where: {
+                        // adminId: req.admin.id
+                    },
+                    order: [
+                        ['id', 'ASC']
+                    ],
+                    raw: true
+                })
+                    .then((productcat) => {
+                        // pass object to listSupplier.handlebar
+                        res.render('supplier/update', { // call views/supplier/editSupplier.handlebar to render the edit supplier page
+                            layout: "admin",
+                            title: title,
+                            productcat: productcat,
+                            supplier
+                        });
+                    })
+                    .catch(err => console.log(err));
+                
+            // } else {
+            //     alertMessage(res, 'danger', 'Unauthorised access to Supplier', 'fas fa-exclamation-circle', true);
+            //     res.redirect('/logout');
+            // }
         }
     }).catch(err => console.log(err)); // To catch no supplier ID
 });
@@ -103,13 +136,13 @@ router.put('/update/:id', (req, res) => {
         where: {
             id: req.params.id
         }
-    }).then(() => {
+    }).then((supplier) => {
         res.redirect('/supplier/view'); // redirect to call router.get(/listSupplier...) to retrieve all updated
         // supplier
     }).catch(err => console.log(err));
 });
 
-router.get('/delete/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     let supplierId = req.params.id;
     // let adminId = req.admin.id;
     // Select * from supplier where supplier.id=supplierID and supplier.adminId=adminID
