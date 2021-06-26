@@ -32,7 +32,7 @@ router.post('/createReservation', (req, res) => {
         cust_time,
         cust_message
     }).then((reservation) => {
-        res.redirect('/DineV2');
+        res.redirect('/restaurant/DineV2');
     }).catch(err => console.log(err))
 });
 

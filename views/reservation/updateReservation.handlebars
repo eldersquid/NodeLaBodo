@@ -1,73 +1,70 @@
+<head>
+    <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
+</head>
 
 <div class="container-fluid">
     <h1 class="display-4">Update Reservation</h1>
     <form id="contact" action="/updateReservation" method="post">
-        
-            <div class= "form-group">
-                <fieldset>
-                    <input name="cust_fname" type="text" id="cust_fname" placeholder="First Name*" required="">
-                </fieldset>
-            </div>
-            <div class= "form-group">
-                <fieldset>
-                    <input name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*" required="">
-                </fieldset>
-            </div>
-            <div class= "form-group">
-                <fieldset>
-                    <input name="cust_email" type="text" id="cust_email" pattern="[^ @]*@[^ @]*"
-                        placeholder="Your Email Address" required="">
-                </fieldset>
-            </div>
-            <div class= "form-group">
-                <fieldset>
-                    <input name="cust_phone" type="text" id="cust_phone" placeholder="Phone Number*" required="">
-                </fieldset>
-            </div>
-            <div class= "form-group">
-                <fieldset>
-                    <select value="number_guest" name="number_guest" id="number_guests">
-                        <option value="number_guests">Number Of Guests</option>
-                        <option name="1" id="1">1</option>
-                        <option name="2" id="2">2</option>
-                        <option name="3" id="3">3</option>
-                        <option name="4" id="4">4</option>
-                        <option name="5" id="5">5</option>
-                        <option name="6" id="6">6</option>
-                        <option name="7" id="7">7</option>
-                        <option name="8" id="8">8</option>
-                        <option name="9" id="9">9</option>
-                        <option name="10" id="10">10</option>
-                        <option name="11" id="11">11</option>
-                        <option name="12" id="12">12</option>
-                    </select>
-                </fieldset>
-            </div>
-            <div class= "form-group">
-                <div id="filterDate2">
-                    <div class= "form-group" data-date-format="dd/mm/yyyy">
-                        <input name="cust_date" id="cust_date" type="text" class="form-control"
-                            placeholder="dd/mm/yyyy">
-                        <div class= "form-group">
-                            <span class="glyphicon glyphicon-th"></span>
-                        </div>
+
+        <div class="form-group">
+            <fieldset>
+                <input class="form-control" name="cust_fname" type="text" id="cust_fname" placeholder="First Name*"
+                    value="{{reservation.cust_fname}}" required="">
+            </fieldset>
+        </div>
+        <div class="form-group">
+            <fieldset>
+                <input class="form-control" name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*"
+                    value="{{reservation.cust_lname}}" required="">
+            </fieldset>
+        </div>
+        <div class="form-group">
+            <fieldset>
+                <input class="form-control" name="cust_email" type="text" id="cust_email" pattern="[^ @]*@[^ @]*"
+                    placeholder="Your Email Address" value="{{reservation.cust_email}}" required="">
+            </fieldset>
+        </div>
+        <div class="form-group">
+            <fieldset>
+                <input class="form-control" name="cust_phone" type="text" id="cust_phone" placeholder="Phone Number*"
+                    value="{{reservation.cust_phone}}" required="">
+            </fieldset>
+        </div>
+        <div class="form-group">
+            <fieldset>
+                <input class="form-control" name="number_guest" type="text" id="number_guest"
+                    placeholder="No Of Guests*" value="{{reservation.number_guest}}" required="">
+            </fieldset>
+        </div>
+        <div class="form-group">
+            <div id="filterDate2">
+                <div class="form-group" data-date-format="dd/mm/yyyy">
+                    <input class="form-control" name="cust_date" id="cust_date" type="text"
+                        value="{{reservation.cust_date}}" class="form-control" placeholder="dd/mm/yyyy">
+                    <div class="form-group">
+                        <span class="glyphicon glyphicon-th"></span>
                     </div>
                 </div>
             </div>
-            <div class= "form-group">
-                <fieldset>
-                    <select value="time" name="cust_time" id="cust_time">
-                        <option value="time">Time</option>
-                        <option name="Breakfast" id="Breakfast">Breakfast</option>
-                        <option name="Lunch" id="Lunch">Lunch</option>
-                        <option name="Dinner" id="Dinner">Dinner</option>
-                    </select>
-                </fieldset>
-            </div>
-            <div class= "form-group">
-                <fieldset>
-                    <textarea name="cust_message" rows="6" id="cust_message" placeholder="Message"
-                        required=""></textarea>
-                </fieldset>
-            </div>
+        </div>
+        <div class="form-group">
+            <fieldset>
+                <select class="form-control" value="time" name="cust_time" id="cust_time"
+                    value="{{reservation.cust_time}}">
+                    <option value="time">Time</option>
+                    <option name="Breakfast" id="Breakfast">Breakfast</option>
+                    <option name="Lunch" id="Lunch">Lunch</option>
+                    <option name="Dinner" id="Dinner">Dinner</option>
+                </select>
+            </fieldset>
+        </div>
+        <div class="form-group">
+            <fieldset>
+                <textarea class="form-control" name="cust_message" rows="6" id="cust_message" placeholder="Message"
+                    value="" required="">{{reservation.cust_message}}</textarea>
+            </fieldset>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <button class="btn btn-primary" type="submit">Edit</button>
+        </div>
     </form>

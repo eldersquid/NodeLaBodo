@@ -55,6 +55,7 @@ router.put('/updateReservation', (req, res) => {
     let number_guest = req.body.number_guest;
     let cust_date = req.body.cust_date;
     let cust_time = req.body.cust_time;
+    let cust_message = req.body.cust_message;
 
     Reservation.update({
         cust_fname,
@@ -63,7 +64,8 @@ router.put('/updateReservation', (req, res) => {
         cust_phone,
         number_guest,
         cust_date,
-        cust_time
+        cust_time,
+        cust_message
     }, {
         where: {
             // id: req.params.id
