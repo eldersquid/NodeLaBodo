@@ -27,9 +27,10 @@ router.get('/viewReservation', (req,res) => {
 
 router.get('/updateReservation/:id', (req,res) => {
     const title = 'updateReservation';
+    console.log(req.params.id)
     Reservation.findOne({
         where: {
-             id: req.params.id
+            id: req.params.id
         },
         order: [
             // [reservation.id, 'ASC']
@@ -46,7 +47,7 @@ router.get('/updateReservation/:id', (req,res) => {
         }).catch(err => console.log(err));
 })
 
-router.put('/updateReservation/:id', (req, res) => {
+router.post('/updateReservation/:id', (req, res) => {
     let cust_fname = req.body.cust_fname;
     let cust_lname = req.body.cust_lname;
     let cust_email = req.body.cust_email;
@@ -70,7 +71,7 @@ router.put('/updateReservation/:id', (req, res) => {
             id: req.params.id
         }
     }).then(() => {
-        res.redirect('reservation/viewReservation'); // redirect to call router.get(/listSupplier...) to retrieve all updated
+        res.redirect('/reservation/viewReservation'); // redirect to call router.get(/listSupplier...) to retrieve all updated
         // reservation
     }).catch(err => console.log(err));
 });
@@ -91,7 +92,7 @@ router.get('/deleteReservation/:id', (req, res) => {
                     id: id
                 }
             }).then(() => {
-                res.redirect('reservation/viewReservation'); // To retrieve all videos again
+                res.redirect('/reservation/viewReservation'); // To retrieve all videos again
             }).catch(err => console.log(err));
         } else {
             alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
@@ -99,5 +100,7 @@ router.get('/deleteReservation/:id', (req, res) => {
         }
     });
 });
+
+
 
 module.exports = router;

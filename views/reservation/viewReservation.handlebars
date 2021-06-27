@@ -4,16 +4,6 @@
 
 <div class="container-fluid">
   <h1 class="display-4">View Reservation</h1>
-  {{!-- <div>
-    {% if count == 0 %}
-    <p>There are no reservation.</p>
-    {% elif count == 1 %}
-    <p>There is 1 reservation.</p>
-    {% else %}
-    <p>There are {{ count }} reservations.</p>
-    {% endif %}
-  </div> --}}
-
   <div>
     <table class="table table-striped">
       <thead>
@@ -34,53 +24,49 @@
         {{#if reservation}}
         {{#each reservation}}
         <tr>
-          <td>{{id}}</td>
-          <td>{{cust_fname}}</td>
-          <td>{{cust_lname}}</td>
-          <td>{{cust_email}}</td>
-          <td>{{cust_phone}}</td>
-          <td>{{cust_date}}</td>
-          <td>{{cust_time}}</td>
-          <td>{{cust_message}}</td>
-          <td><a href="/reservation/updateReservation/{{id}}" class="btn btn-warning">Update</a>
+          <td>{{this.id}}</td>
+          <td>{{this.cust_fname}}</td>
+          <td>{{this.cust_lname}}</td>
+          <td>{{this.cust_email}}</td>
+          <td>{{this.cust_phone}}</td>
+          <td>{{this.cust_date}}</td>
+          <td>{{this.cust_time}}</td>
+          <td>{{this.cust_message}}</td>
+          <td><a href="/reservation/updateReservation/{{this.id}}" class="btn btn-warning">Update</a>
           </td>
           <td>
-            <form action="" method="POST">
+            <form action="/reservation/deleteReservation/{{reservation.id}}" method="POST"></form>
 
-              <!-- Modal -->
-              <div class="modal fade" id="myModal_{{id}}" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      Do you really want to delete this Reservation? This process cannot be undone.
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="reservation/viewReservation/{{id}}" class="btn btn-danger">Delete</a>
-                    </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal_{{this.id}}" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Do you really want to delete this Reservation? This process cannot be undone.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="/reservation/viewReservation/{{id}}" class="btn btn-danger">Delete</a>
                   </div>
                 </div>
               </div>
+            </div>
 
+            <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#myModal_{{id}}">
 
-
-              <button type="button" class="btn btn-block btn-danger" data-toggle="modal"
-                data-target="#myModal_{{id}}">
-
-                <span>Delete</span>
-              </button>
+              <span>Delete</span>
+            </button>
             </form>
 
           </td>
         </tr>
-        {{!-- {% endfor %} --}}
         {{/each}}
         {{/if}}
       </tbody>
