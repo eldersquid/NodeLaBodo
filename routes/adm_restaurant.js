@@ -43,11 +43,10 @@ router.get('/updateReservation/:id', (req,res) => {
                 title: title,
                 reservation:reservation
             });
-        })
-        .catch(err => console.log(err));
+        }).catch(err => console.log(err));
 })
 
-router.put('/updateReservation', (req, res) => {
+router.put('/updateReservation/:id', (req, res) => {
     let cust_fname = req.body.cust_fname;
     let cust_lname = req.body.cust_lname;
     let cust_email = req.body.cust_email;
@@ -68,12 +67,37 @@ router.put('/updateReservation', (req, res) => {
         cust_message
     }, {
         where: {
-            // id: req.params.id
+            id: req.params.id
         }
     }).then(() => {
-        res.redirect('reservation/updateReservation'); // redirect to call router.get(/listSupplier...) to retrieve all updated
-        // supplier
+        res.redirect('reservation/viewReservation'); // redirect to call router.get(/listSupplier...) to retrieve all updated
+        // reservation
     }).catch(err => console.log(err));
+});
+
+router.get('/deleteReservation/:id', (req, res) => {
+    let id = req.params.id;
+    // Select * from videos where videos.id=videoID and videos.userId=userID
+    Reservation.findOne({
+        where: {
+            id: id,
+        },
+        attributes: ['id']
+    }).then((reservation) => {
+        // if record is found, user is owner of video
+        if (reservation != null) {
+            reservation.destroy({
+                where: {
+                    id: id
+                }
+            }).then(() => {
+                res.redirect('reservation/viewReservation'); // To retrieve all videos again
+            }).catch(err => console.log(err));
+        } else {
+            alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+            
+        }
+    });
 });
 
 module.exports = router;

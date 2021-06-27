@@ -48,7 +48,7 @@
             <form action="" method="POST">
 
               <!-- Modal -->
-              <div class="modal fade" id="myModal_" tabindex="-1" role="dialog"
+              <div class="modal fade" id="myModal_{{id}}" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
@@ -59,11 +59,11 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      Are you sure you want to delete?
+                      Do you really want to delete this Reservation? This process cannot be undone.
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <input type="submit" value="Delete" class="btn btn-danger">
+                      <a href="reservation/viewReservation/{{id}}" class="btn btn-danger">Delete</a>
                     </div>
                   </div>
                 </div>
@@ -72,8 +72,8 @@
 
 
               <button type="button" class="btn btn-block btn-danger" data-toggle="modal"
-                data-target="#myModal_">
-                <i class="far fa-times-circle"></i>
+                data-target="#myModal_{{id}}">
+
                 <span>Delete</span>
               </button>
             </form>
