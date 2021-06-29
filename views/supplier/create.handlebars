@@ -26,7 +26,7 @@
         <div class="form-group">
         
             <label for="office_number">Office Number</label>
-            <input class="form-control" id="office_number" name="office_number" required type="number" value="">
+            <input class="form-control" id="office_number" name="office_number" required type="text" value="">
         
         
         </div>
@@ -34,6 +34,7 @@
 
             <label for="product_name">Product Name</label>
             <select class="form-control" id="product_name" name="product_name" required multiple>
+                <option value="none" selected disabled hidden></option>
                 {{#if productcat}}
                 {{#each productcat}}
                 <option value="{{product_name}}">{{product_name}}</option>

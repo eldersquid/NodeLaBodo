@@ -6,6 +6,7 @@
 
             <label for="item_name">Item Name</label>
             <select class="form-control" id="item_name" name="item_name" required>
+                <option value="none" selected disabled hidden></option>
                 {{#if inventory}}
                 {{#each inventory}}
                 <option value="{{item_name}}">{{item_name}}</option>
@@ -20,6 +21,7 @@
 
             <label for="product_name">Product Name</label>
             <select class="form-control" id="product_name" name="product_name" required>
+                <option value="none" selected disabled hidden></option>
                 {{#if inventory}}
                 {{#each inventory}}
                 <option value="{{product_name}}">{{product_name}}</option>
@@ -34,6 +36,7 @@
 
             <label for="supplier">Supplier</label>
             <select class="form-control" id="supplier" name="supplier" required>
+                <option value="none" selected disabled hidden></option>
                 {{#if inventory}}
                 {{#each inventory}}
                 <option value="{{supplier}}">{{supplier}}</option>
