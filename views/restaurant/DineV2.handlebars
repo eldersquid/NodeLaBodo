@@ -1,3 +1,5 @@
+<head></head>
+
 <!-- Main style sheet -->
 <link href="/teststuff/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/teststuff/css/templatemo-style.css">
@@ -71,12 +73,14 @@
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_fname" type="text" id="cust_fname" placeholder="First Name*" required="">
+                                    <input name="cust_fname" type="text" id="cust_fname" placeholder="First Name*"
+                                        required="">
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*" required="">
+                                    <input name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*"
+                                        required="">
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
@@ -87,12 +91,14 @@
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_phone" type="text" id="cust_phone" placeholder="Phone Number*" required="">
+                                    <input name="cust_phone" type="text" id="cust_phone" placeholder="Phone Number*"
+                                        required="">
                                 </fieldset>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <fieldset>
-                                    <input name="number_guest" type="text" id="number_guest" placeholder="No Of Guests*" value="{{reservation.number_guest}}" required="">
+                                    <input name="number_guest" type="text" id="number_guest" placeholder="No Of Guests*"
+                                        value="{{reservation.number_guest}}" required="">
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
@@ -108,7 +114,8 @@
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_time" type="text" id="cust_time" placeholder="Time*" value="{{reservation.cust_time}}" required="">
+                                    <input name="cust_time" type="text" id="cust_time" placeholder="Time*"
+                                        value="{{reservation.cust_time}}" required="">
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
@@ -117,12 +124,39 @@
                                         required=""></textarea>
                                 </fieldset>
                             </div>
+                            <form action="/restaurant/createReservation" method="POST"></form>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <button type="submit" id="form-submit" class="main-button-icon">Make A
+
+                                    <button type="submit" id="form-submit" class="main-button-icon"
+                                        data-toggle="modal fade" data-target="#myModal_">Make A
                                         Reservation</button>
                                 </fieldset>
                             </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal_" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Confirmation</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Thank you, your reservation has been placed. We will send the reservation
+                                            details to your email.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <a href="/restaurant/DineV2" class="btn btn-danger">ok</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </form>
                 </div>
@@ -131,6 +165,7 @@
     </div>
 </section>
 <!-- ***** Reservation Area Ends ***** -->
+
 
 
 
