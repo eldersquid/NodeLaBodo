@@ -1,3 +1,4 @@
+const { STRING } = require('sequelize');
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
@@ -15,7 +16,7 @@ const Supplier = db.define('supplier', {
 		type: Sequelize.STRING
 	},
 	product_name: {
-		type: Sequelize.STRING
+		type: Sequelize.JSON
 	}
 });
 

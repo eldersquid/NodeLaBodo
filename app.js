@@ -32,7 +32,7 @@ const inventoryRoute = require('./routes/inventory');
 
 const orderRoute = require('./routes/order');
 
-
+const { replacePun } = require('./helpers/hbs');
 const adminDB = require('./config/DBConnection');
 
 // Library to use MySQL to store session objects
@@ -67,6 +67,9 @@ adminDB.setUpDB(false); // Set up database with new tables (true)
 *
 * */
 app.engine('handlebars', exphbs({
+	helpers: {
+		replacePun: replacePun
+	},
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
 }));
 app.set('view engine', 'handlebars');
