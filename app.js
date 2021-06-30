@@ -32,7 +32,6 @@ const inventoryRoute = require('./routes/inventory');
 
 const orderRoute = require('./routes/order');
 
-const {replaceCommas} = require('./helpers/hbs');
 const adminDB = require('./config/DBConnection');
 
 // Library to use MySQL to store session objects
@@ -67,9 +66,6 @@ adminDB.setUpDB(false); // Set up database with new tables (true)
 *
 * */
 app.engine('handlebars', exphbs({
-	helpers: {
-		replaceCommas: replaceCommas
-	},
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
 }));
 app.set('view engine', 'handlebars');
