@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Supplier = require('../models/Supplier');
+const Productcat = require('../models/Productcat');
 const Inventory = require('../models/Inventory');
 const alertMessage = require('../helpers/messenger.js');
 
@@ -48,12 +49,24 @@ router.get('/showCreate', (req, res) => {
         raw: true
     })
         .then((supplier) => {
-            // pass object to listInventory.handlebar
-            res.render('inventory/create', {
-                layout: "admin",
-                title: title,
-                supplier: supplier
-            });
+            Productcat.findAll({
+                where: {
+                    // adminId: req.admin.id
+                },
+                order: [
+                    ['id', 'ASC']
+                ],
+                raw: true
+            })
+            .then((productcat) => {
+                // pass object to listInventory.handlebar
+                res.render('inventory/create', {
+                    layout: "admin",
+                    title: title,
+                    supplier: supplier,
+                    productcat: productcat
+                });
+            })
         })
         .catch(err => console.log(err));
 });

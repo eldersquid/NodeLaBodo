@@ -29,8 +29,8 @@
             <label for="product_name">Product Name</label>
             <select class="form-control" id="product_name" name="product_name" required>
                 <option value="none" selected disabled hidden></option>
-                {{#if supplier}}
-                {{#each supplier}}
+                {{#if productcat}}
+                {{#each productcat}}
                 <option value="{{product_name}}" style="text-transform: capitalize;">{{product_name}}</option>
                 {{/each}}
                 {{/if}}
