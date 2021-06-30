@@ -6,21 +6,23 @@
 <link rel="stylesheet" href="/teststuff/css/hero-slider.css">
 <link rel="stylesheet" href="/teststuff/css/owl-carousel.css">
 <link rel="stylesheet" href="/teststuff/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="/teststuff/css/bootstrap.css">
-<link rel="stylesheet" href="/teststuff/css/bootstrap-theme.min.css">
+{{!-- <link rel="stylesheet" href="/teststuff/css/bootstrap.css">
+<link rel="stylesheet" href="/teststuff/css/bootstrap-theme.min.css"> --}}
 <link rel="stylesheet" href="/styles/templatemo-klassy-cafe.css">
 <link rel="stylesheet" href="/styles/font-awesome.css">
 <link rel="stylesheet" href="/teststuff/css/theme-color/default-theme.css">
 <!-- Gallery Lightbox -->
 <link rel="stylesheet" href="/teststuff/css/magnific-popup.css">
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 {{!-- {{>_navfood}} --}}
 
 <section class="banner">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col">
                 <h4>Here you can find delecious foods</h4>
                 <h2>Restaurant La Bodo</h2>
                 <p>Quisque nec nibh id lacus fringilla eleifend sed sit amet sem. Donec lectus odio, mollis a nisl non,
@@ -86,7 +88,7 @@
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
                                     <input name="cust_email" type="text" id="cust_email" pattern="[^ @]*@[^ @]*"
-                                        placeholder="Your Email Address" required="">
+                                        placeholder="Your Email Address*" required="">
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
@@ -102,19 +104,13 @@
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
-                                <div id="filterDate2">
-                                    <div class="input-group date" data-date-format="dd/mm/yyyy">
-                                        <input name="cust_date" id="cust_date" type="text" class="form-control"
-                                            placeholder="dd/mm/yyyy">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <fieldset>
+							        <input name="cust_date" type="date" id="cust_date" class="datepicker form-control" value="{{reservation.cust_date}}" placeholder="Date*" required = "">
+                                </fieldset>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_time" type="text" id="cust_time" placeholder="Time*"
+                                    <input name="cust_time" type="time" id="cust_time" placeholder="Time*"
                                         value="{{reservation.cust_time}}" required="">
                                 </fieldset>
                             </div>
@@ -124,38 +120,15 @@
                                         required=""></textarea>
                                 </fieldset>
                             </div>
-                            <form action="/restaurant/createReservation" method="POST"></form>
+                            {{!-- <form action="/restaurant/createReservation" method="POST"></form> --}}
                             <div class="col-lg-12">
                                 <fieldset>
-
-                                    <button type="submit" id="form-submit" class="main-button-icon"
+                                    <button type="submit" id="" class="main-button-icon"
                                         data-toggle="modal fade" data-target="#myModal_">Make A
                                         Reservation</button>
                                 </fieldset>
                             </div>
-                            <!-- Modal -->
-                            <div class="modal fade" id="myModal_" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Confirmation</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Thank you, your reservation has been placed. We will send the reservation
-                                            details to your email.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
-                                            <a href="/restaurant/DineV2" class="btn btn-danger">ok</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    
 
                         </div>
                     </form>
@@ -460,6 +433,11 @@
 <script src="/teststuff/js/bootstrap-datepicker.js"></script>
 <script src="/teststuff/js/slick.js"></script>
 <script src="/teststuff/js/app.js"></script>
+
+<script src="/js/popper.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/newcustom_thalia.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 
 
