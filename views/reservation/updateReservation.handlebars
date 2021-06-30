@@ -8,53 +8,58 @@
 
         <div class="form-group">
             <fieldset>
+                <label>First Name: </label>
                 <input class="form-control" name="cust_fname" type="text" id="cust_fname" placeholder="First Name*"
                     value="{{reservation.cust_fname}}" required="">
             </fieldset>
         </div>
         <div class="form-group">
             <fieldset>
+                <label>Last Name: </label>
                 <input class="form-control" name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*"
                     value="{{reservation.cust_lname}}" required="">
             </fieldset>
         </div>
         <div class="form-group">
             <fieldset>
-                <input class="form-control" name="cust_email" type="text" id="cust_email" pattern="[^ @]*@[^ @]*"
+                <label>Email: </label>
+                <input class="form-control" name="cust_email" type="email" id="cust_email" pattern="[^ @]*@[^ @]*"
                     placeholder="Your Email Address" value="{{reservation.cust_email}}" required="">
             </fieldset>
         </div>
         <div class="form-group">
             <fieldset>
+                <label>Phone Number: </label>
                 <input class="form-control" name="cust_phone" type="text" id="cust_phone" placeholder="Phone Number*"
                     value="{{reservation.cust_phone}}" required="">
             </fieldset>
         </div>
         <div class="form-group">
             <fieldset>
+                <label>No. Of Guests: </label>
                 <input class="form-control" name="number_guest" type="text" id="number_guest"
                     placeholder="No Of Guests*" value="{{reservation.number_guest}}" required="">
             </fieldset>
         </div>
         <div class="form-group">
             <div id="filterDate2">
-                <div class="form-group" data-date-format="dd/mm/yyyy">
-                    <input class="form-control" name="cust_date" id="cust_date" type="text"
-                        value="{{reservation.cust_date}}" class="form-control" placeholder="dd/mm/yyyy">
-                    <div class="form-group">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                </div>
+                <fieldset>
+                    <label>Date: </label>
+                    <input name="cust_date" type="date" id="cust_date" class="datepicker form-control"
+                        value="{{reservation.cust_date}}" placeholder="Date*" required="">
+                </fieldset>
             </div>
         </div>
         <div class="form-group">
             <fieldset>
-                <input class="form-control" name="cust_time" type="text" id="cust_time" placeholder="Email*"
+                <label>Time: </label>
+                <input class="form-control" name="cust_time" type="time" id="cust_time" placeholder="Time*"
                     value="{{reservation.cust_time}}" required="">
             </fieldset>
         </div>
         <div class="form-group">
             <fieldset>
+                <label>Message: </label>
                 <textarea class="form-control" name="cust_message" rows="6" id="cust_message" placeholder="Message"
                     value="" required="">{{reservation.cust_message}}</textarea>
             </fieldset>
