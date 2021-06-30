@@ -36,9 +36,9 @@
                             {{#each inventory}}
                             <tr>
                                 <td>{{id}}</td>
-                                <td>{{item_name}}</td>
-                                <td>{{supplier}}</td>
-                                <td>{{product_name}}</td>
+                                <td style="text-transform: capitalize;">{{item_name}}</td>
+                                <td style="text-transform: capitalize;">{{supplier}}</td>
+                                <td style="text-transform: capitalize;">{{product_name}}</td>
                                 <td>{{quantity}}</td>
                                 <td><a href="/inventory/showUpdate/{{id}}" style="display: flex; justify-content: center;"
                                         class="btn btn-warning">Update</a></td>

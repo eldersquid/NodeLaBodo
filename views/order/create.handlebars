@@ -9,7 +9,7 @@
                 <option value="none" selected disabled hidden></option>
                 {{#if inventory}}
                 {{#each inventory}}
-                <option value="{{item_name}}">{{item_name}}</option>
+                <option value="{{item_name}}" style="text-transform: capitalize;">{{item_name}}</option>
                 {{/each}}
                 {{/if}}
 
@@ -24,7 +24,7 @@
                 <option value="none" selected disabled hidden></option>
                 {{#if inventory}}
                 {{#each inventory}}
-                <option value="{{product_name}}">{{product_name}}</option>
+                <option value="{{product_name}}" style="text-transform: capitalize;">{{product_name}}</option>
                 {{/each}}
                 {{/if}}
 
@@ -39,7 +39,7 @@
                 <option value="none" selected disabled hidden></option>
                 {{#if inventory}}
                 {{#each inventory}}
-                <option value="{{supplier}}">{{supplier}}</option>
+                <option value="{{supplier}}" style="text-transform: capitalize;">{{supplier}}</option>
                 {{/each}}
                 {{/if}}
 

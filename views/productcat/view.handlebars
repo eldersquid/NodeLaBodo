@@ -32,7 +32,7 @@
                         {{#each productcat}}
                         <tr>
                             <td>{{id}}</td>
-                            <td>{{product_name}}</td>
+                            <td style="text-transform: capitalize;">{{product_name}}</td>
                             <td>
                                 <form action="/productcat/delete/{{id}}" method="POST">
                                     <!-- Modal -->

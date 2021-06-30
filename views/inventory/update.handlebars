@@ -16,7 +16,7 @@
                 <option value="none" selected disabled hidden></option>
                 {{#if supplier}}
                 {{#each supplier}}
-                <option value="{{company_name}}">{{company_name}}</option>
+                <option value="{{company_name}}" style="text-transform: capitalize;">{{company_name}}</option>
                 {{/each}}
                 {{/if}}
 
@@ -31,7 +31,7 @@
                 <option value="none" selected disabled hidden></option>
                 {{#if supplier}}
                 {{#each supplier}}
-                <option value="{{product_name}}">{{product_name}}</option>
+                <option value="{{product_name}}" style="text-transform: capitalize;">{{product_name}}</option>
                 {{/each}}
                 {{/if}}
 
