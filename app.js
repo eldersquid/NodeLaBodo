@@ -3,12 +3,12 @@
 * in this JS file.
 * */
 const express = require('express');
-const session = require('express-session');
 const path = require('path');
-const exphbs = require('express-handlebars');
-const methodOverride = require('method-override');
+const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
+const methodOverride = require('method-override');
 const cors = require('cors');
 /*
 * Loads routes file main.js in routes directory. The main.js determines which function
