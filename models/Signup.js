@@ -3,30 +3,21 @@ const sequelize = require('../config/DBConfig');
 const db = require('../config/DBConfig');
 
 const Reservation = db.define('reservation', {
-    cust_fname: {
+    name: {
         type: Sequelize.STRING
     },
-    cust_lname: {
+    email: {
         type: Sequelize.STRING
     },
-    cust_email: {
-        type: Sequelize.STRING
-    },
-    cust_phone: {
-        type: Sequelize.STRING
-    },
-    number_guest: {
+    phone_num: {
         type: Sequelize.INTEGER
     },
-    cust_date: {
+    package_deal: {
         type: Sequelize.STRING
     },
-    cust_time: {
-        type: Sequelize.STRING
+    points: {
+        type: Sequelize.INTEGER
     },
-    cust_message: {
-        type: Sequelize.STRING
-    }
 });
 
-module.exports = Reservation
+module.exports = Signup
