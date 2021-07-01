@@ -1,8 +1,7 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../config/DBConfig');
 const db = require('../config/DBConfig');
 
-const Reservation = db.define('reservation', {
+const Reservation = db.define('Signup', {
     name: {
         type: Sequelize.STRING
     },
@@ -14,9 +13,6 @@ const Reservation = db.define('reservation', {
     },
     package_deal: {
         type: Sequelize.STRING
-    },
-    points: {
-        type: Sequelize.INTEGER
     },
 });
 
