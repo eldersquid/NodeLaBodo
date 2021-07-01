@@ -125,6 +125,10 @@ router.post("/register", (req, res) => {
     }
 });
 
+// Profile
+router.get('/profile', (req, res) => {
+    res.render('login/profile') //
+});
 
 // Logout User
 router.get('/logout', (req, res) => {
