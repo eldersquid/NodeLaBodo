@@ -2,8 +2,20 @@
     <h1 class="display-5">Create New Order Form</h1>
 
     <form method="POST" action="/order/create">
-        <div class="form-group">
 
+        <div class="form-group">
+            <label for="supplier">Supplier</label>
+            <select class="form-control" id="supplier" name="supplier" required>
+                <option value="none" selected disabled hidden></option>
+                {{#if supplier}}
+                {{#each supplier}}
+                <option value="{{company_name}}" style="text-transform: capitalize;">{{company_name}}</option>
+                {{/each}}
+                {{/if}}
+            </select>
+        </div>
+
+        <div class="form-group">
             <label for="item_name">Item Name</label>
             <select class="form-control" id="item_name" name="item_name" required>
                 <option value="none" selected disabled hidden></option>
@@ -12,57 +24,21 @@
                 <option value="{{item_name}}" style="text-transform: capitalize;">{{item_name}}</option>
                 {{/each}}
                 {{/if}}
-
             </select>
-
-
         </div>
+
         <div class="form-group">
-
-            <label for="product_name">Product Name</label>
-            <select class="form-control" id="product_name" name="product_name" required>
-                <option value="none" selected disabled hidden></option>
-                {{#if inventory}}
-                {{#each inventory}}
-                <option value="{{product_name}}" style="text-transform: capitalize;">{{product_name}}</option>
-                {{/each}}
-                {{/if}}
-
-            </select>
-
-
-        </div>
-        <div class="form-group">
-
-            <label for="supplier">Supplier</label>
-            <select class="form-control" id="supplier" name="supplier" required>
-                <option value="none" selected disabled hidden></option>
-                {{#if inventory}}
-                {{#each inventory}}
-                <option value="{{supplier}}" style="text-transform: capitalize;">{{supplier}}</option>
-                {{/each}}
-                {{/if}}
-
-            </select>
-
-
-        </div>
-        <div class="form-group">
-
             <label for="quantity">Quantity</label>
             <input class="form-control" id="quantity" name="quantity" required type="number" value="">
-
-
         </div>
+
         <div id="prof">
             <div class="form-group">
-
                 <label for="remarks">Remarks</label>
                 <textarea class="form-control" id="remarks" name="remarks"></textarea>
-
-
             </div>
         </div>
+        
         <input type="submit" value="Submit" class="btn btn-primary" />
     </form>
 </div>

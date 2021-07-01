@@ -38,34 +38,46 @@ router.get('/view', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/showCreate', (req, res) => {
+router.get('/showCreate', async (req, res) => {
     const title = 'Order';
 
-    Inventory.findAll({
-        where: {
-            // adminId: req.admin.id
-        },
-        order: [
-            ['id', 'ASC']
-        ],
-        raw: true
-    })
-        .then((inventory) => {
-            // pass object to listOrder.handlebar
-            res.render('order/create', {
-                layout: "admin",
-                title: title,
-                inventory: inventory
-            });
+    const getInventoryData = () => {
+        const inventory = Inventory.findAll({
+            where: {
+                // adminId: req.admin.id
+            },
+            order: [
+                ['id', 'ASC']
+            ],
+            raw: true
         })
-        .catch(err => console.log(err));
-    
+        return inventory
+    };
+
+    const getSupplierData = () => {
+        const supplier = Supplier.findAll({
+            where: {
+                // adminId: req.admin.id
+            },
+            order: [
+                ['id', 'ASC']
+            ],
+            raw: true
+        })
+        return supplier
+    };
+
+    res.render('order/create', {
+        layout: "admin",
+        title: title,
+        inventory: await getInventoryData(),
+        supplier: await getSupplierData()
+    });
 });
 
 router.post('/create', (req, res) => {
-    let item_name = req.body.item_name;
-    let product_name = req.body.product_name;
     let supplier = req.body.supplier;
+    let item_name = req.body.item_name;
     let quantity = req.body.quantity;
     let remarks = req.body.remarks;
 
@@ -95,9 +107,8 @@ router.post('/create', (req, res) => {
     // });
 
     Order.create({
-        item_name,
-        product_name,
         supplier,
+        item_name,
         quantity,
         remarks
     }).then((order) => {
