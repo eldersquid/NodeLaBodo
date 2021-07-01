@@ -5,9 +5,11 @@
 <link rel="stylesheet" href="/teststuff/css/templatemo-style.css">
 <link rel="stylesheet" href="/teststuff/css/hero-slider.css">
 <link rel="stylesheet" href="/teststuff/css/owl-carousel.css">
-<link rel="stylesheet" href="/teststuff/css/bootstrap-datepicker.css">
-{{!--
+{{!-- <link rel="stylesheet" href="/teststuff/css/bootstrap-datepicker.css"> --}}
+<link rel="stylesheet" href="/teststuff/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <link rel="stylesheet" href="/teststuff/css/bootstrap.css">
+{{!--
 <link rel="stylesheet" href="/teststuff/css/bootstrap-theme.min.css"> --}}
 <link rel="stylesheet" href="/styles/templatemo-klassy-cafe.css">
 <link rel="stylesheet" href="/styles/font-awesome.css">
@@ -15,11 +17,7 @@
 <!-- Gallery Lightbox -->
 <link rel="stylesheet" href="/teststuff/css/magnific-popup.css">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+
 
 {{!-- {{>_navfood}} --}}
 
@@ -56,15 +54,15 @@
                         <div class="col-lg-6">
                             <div class="phone">
                                 <i class="fa fa-phone"></i>
-                                <h4>Phone Numbers</h4>
-                                <span><a href="#">080-090-0990</a><br><a href="#">080-090-0880</a></span>
+                                <h4>Phone Number</h4>
+                                <span><a href="#">080-090-0990</a></span>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="message">
                                 <i class="fa fa-envelope"></i>
-                                <h4>Emails</h4>
-                                <span><a href="#">hello@company.com</a><br><a href="#">info@company.com</a></span>
+                                <h4>Email</h4>
+                                <span><a href="#">HotelLaBodo@gmail.com</a></span>
                             </div>
                         </div>
                     </div>
@@ -85,8 +83,7 @@
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*"
-                                        required="">
+                                    <input name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*" required="" >
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
@@ -109,7 +106,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <fieldset>
-                                    <input name="cust_date" type="date" id="cust_date" class="datepicker form-control"
+                                    <input name="cust_date" type="date2" id="cust_date" class="far fa-calendar"
                                         value="{{reservation.cust_date}}" placeholder="Date*" required="">
                                 </fieldset>
                             </div>
@@ -127,63 +124,48 @@
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <button type="button" id="submitBtn" class="main-button-icon"
-                                        data-toggle="modal fade" value="submit" data-target="#myModal_ ">Make A
-                                        Reservation</button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#exampleModal" id="modalsubmit">
+                                        Make A Reservation
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLabel"
+                                                        style="float: left; width: auto; text-align: center;">
+                                                        Confirmation
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close" style="float: right; width: auto;">
+                                                        <span aria-hidden="true">
+                                                            ×
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h6 id="modal_body"></h6>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success btn-sm"
+                                                        data-toggle="modal" data-target="#exampleModal" id="submit">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </fieldset>
                             </div>
                         </div>
                     </form>
-                    <div class="modal fade" id="myModel_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    Confirmation
-                                </div>
-                                <div class="modal-body">
-                                    Thank you {{this.cust_fname}} + {{this.cust_fname}} for making an reservation with
-                                    restaurant la bodo.
-                                    Please check that the following details is correct. We will be sending this
-                                    reservation details to your email.
-                                    <table class="table">
-                                        <tr>
-                                            <th>Email</th>
-                                            <td id="cust_email"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Phone Number</th>
-                                            <td id="cust_phone"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>No. Of Guests</th>
-                                            <td id="number_guest"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Date</th>
-                                            <td id="cust_date"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Time</th>
-                                            <td id="cust_time"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Message</th>
-                                            <td id="cust_message"></td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <a href="/restaurant/DineV2" id="submit" class="btn btn-success success">Submit</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <!-- ***** Reservation Area Ends ***** -->
@@ -472,20 +454,29 @@
 </footer>
 <!-- End Footer -->
 
+<!-- Import jquery cdn -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    </script>
 
 <script src="/teststuff/js/jquery.min.js"></script>
 <script src="/teststuff/js/jquery.magnific-popup.min.js"></script>
 <script src="/teststuff/js/custom.js"></script>
 <script src="/teststuff/js/bootstrap.js"></script>
 <script src="/teststuff/js/simple-animated-counter.js"></script>
-<script src="/teststuff/js/bootstrap-datepicker.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
+{{!-- <script src="/teststuff/js/bootstrap-datepicker.js"></script> --}}
+<script src="/teststuff/js/bootstrap-datetimepicker.min.js"></script>
 <script src="/teststuff/js/slick.js"></script>
 <script src="/teststuff/js/app.js"></script>
 
 <script src="/js/popper.min.js"></script>
 <script src="/js/plugins.js"></script>
-<script src="/js/newcustom_thalia.js"></script>
+{{!-- <script src="/js/newcustom_thalia.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 
@@ -528,18 +519,58 @@
     }
 </script>
 
-<script>
-    $('#submitBtn').click(function () {
-        $('#cust_email').text($('#cust_email').val());
-        $('#cust_phone').text($('#cust_phone').val());
-        $('#number_guest').text($('#number_guest').val());
-        $('#cust_date').text($('#cust_date').val());
-        $('#cust_time').text($('#cust_time').val());
-        $('#cust_message').text($('#cust_message').val());
-
+<script type="text/javascript">
+    $("#modalsubmit").click(function () {
+        var fname = $("#cust_fname").val();
+        var lname = $("#cust_lname").val();
+        var email = $("#cust_email").val();
+        var phone = $("#cust_phone").val();
+        var guest = $("#number_guest").val();
+        var date = $("#cust_date").val();
+        var time = $("#cust_time").val();
+        var message = $("#cust_message").val();
+        var str = "Thank you " + fname + " " + lname + " for making a reservation with us. <br/>"
+            + "<br/>"
+            + "Please ensure that the details below is correct before submmitting.<br/>"
+            + "<br/>"
+            + "Email: " + email + "<br/>"
+            + "Phone Number: " + phone + "<br/>"
+            + "Number Of Guest: " + guest + "<br/>"
+            + "Date: " + date + "<br/>"
+            + "Time: " + time + "<br/>"
+            + "<br/>"
+            + "we will be sending these details to your email."
+        $("#modal_body").html(str);
     });
-    $('#submit').click(function () {
-        alert('submitting');
-        $('#contact').submit();
+</script>
+
+<script>
+    $(function () {
+        $.extend(true, $.fn.datetimepicker.defaults, {
+            icons: {
+                time: 'far fa-clock',
+                date2: 'far fa-calendar',
+                up: 'fas fa-arrow-up',
+                down: 'fas fa-arrow-down',
+                previous: 'fas fa-chevron-left',
+                next: 'fas fa-chevron-right',
+                today: 'far fa-calendar-check-o',
+                clear: 'far fa-trash',
+                close: 'far fa-times'
+            }
+        });
+    });
+
+    $(function () {
+              var minDate = new Date();
+              var maxDate = new Date();
+
+              minDate.setDate(minDate.getDate()); // set days - mean previous date from current date + mean future date from current date
+              maxDate.setDate(maxDate.getDate()+14);
+                $('#cust_date').datetimepicker({
+                  format: 'YYYY-MM-DD',
+                  minDate: minDate,
+                  maxDate: maxDate,
+        });
     });
 </script>
