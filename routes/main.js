@@ -61,10 +61,10 @@ router.get('/signup', (req, res) => {
     res.render('login/signup') //
 });
 
-router.post("/register", (req, res) => {
+router.post("/signup", (req, res) => {
     let errors = [];
     // Retrieves fields from register page from request body
-    let { name, email, password, password2 } = req.body;
+    let { name, email, phone_num, password2 } = req.body;
     // Checks if both passwords entered are the same
     if (password !== password2) {
         errors.push({ text: "Passwords do not match" });
@@ -74,10 +74,11 @@ router.post("/register", (req, res) => {
         errors.push({ text: "Password must be at least 4 characters" });
     }
     if (errors.length > 0) {
-        res.render("user/register", {
+        res.render("login/signup", {
             errors,
             name,
             email,
+            phone_num,
             password,
             password2,
         });
@@ -87,10 +88,11 @@ router.post("/register", (req, res) => {
             if (user) {
                 // If user is found, that means email has already been
                 // registered
-                res.render("user/register", {
+                res.render("login/signup", {
                     error: user.email + " already registered",
                     name,
                     email,
+                    phone_num,
                     password,
                     password2,
                 });
@@ -105,7 +107,7 @@ router.post("/register", (req, res) => {
                             password = hash;
 
                             // Create new user record
-                            User.create({ name, email, password })
+                            User.create({ name, email, phone_num, password })
                                 .then((user) => {
                                     alertMessage(
                                         res,
@@ -114,7 +116,7 @@ router.post("/register", (req, res) => {
                                         "fas fa-sign-in-alt",
                                         true
                                     );
-                                    res.redirect("/showLogin");
+                                    res.redirect("/profile");
                                 })
                                 .catch((err) => console.log(err));
                         }
