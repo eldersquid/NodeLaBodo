@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
-
-const Reservation = db.define('Signup', {
+const Signup = db.define('Signup', {
     name: {
         type: Sequelize.STRING
     },

@@ -3,6 +3,9 @@ const router = express.Router();
 const fastJson = require('fast-json-stringify');
 const bodyParser = require('body-parser');
 const Reservation = require('../models/Reservation');
+const User = require('../models/Signup');
+var multer = require('multer');
+var bcrypt = require('bcryptjs');
 
 
 router.get('/', (req, res) => {
@@ -60,12 +63,17 @@ router.get('/galleryCancelBooking', (req, res) => {
 router.get('/signup', (req, res) => {
     res.render('login/signup') //
 });
-
-router.post("/signup", (req, res) => {
+var uploadnone = multer();
+router.post("/signup", uploadnone.none(), (req, res) => {
     let errors = [];
     // Retrieves fields from register page from request body
-    let { name, email, phone_num, password2 } = req.body;
+    let { name, email, phone_num, password, password2 } = req.body;
     // Checks if both passwords entered are the same
+    console.log("hello");
+    console.log(name);
+
+    console.log(password);
+    console.log(password);
     if (password !== password2) {
         errors.push({ text: "Passwords do not match" });
     }
@@ -116,7 +124,7 @@ router.post("/signup", (req, res) => {
                                         "fas fa-sign-in-alt",
                                         true
                                     );
-                                    res.redirect("/profile");
+                                    Res.render('/profile', { user: req.user.dataValues });
                                 })
                                 .catch((err) => console.log(err));
                         }
