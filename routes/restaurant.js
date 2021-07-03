@@ -22,6 +22,25 @@ router.post('/createReservation', (req, res) => {
     let cust_time = req.body.cust_time
     let cust_message = req.body.cust_message
 
+    // //VALIDATION
+    // function validate()
+    // {
+    //     var fname = document.getElementById("cust_fname");
+    //     var lname = document.getElementById("cust_lname");
+    //     var email = document.getElementById("cust_email");
+    //     var phone = document.getElementById("cust_phone");
+    //     var guests = document.getElementById("number_guest");
+    //     var date = document.getElementById("cust_date");
+    //     var time = document.getElementById("cust_time");
+    //     var message = document.getElementById("cust_message");
+
+    //     if(fname.value == "" || lname.value == "" || email.value == "" || phone.value == "" || guests.value == ""
+    //         || date.value == "" || time.value == "" || message.value == "")
+    //     {
+    //         alert("Field is required !")
+    //     }
+    // }
+
     Reservation.create({
         cust_fname,
         cust_lname,
