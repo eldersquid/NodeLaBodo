@@ -3,6 +3,7 @@ const router = express.Router();
 const alertMessage = require('../helpers/messenger.js');
 const Signup = require('../models/Signup');
 
+
 // Display the Profile
 router.get('/profile', (req, res) => {
     const title = 'View User Profile';
@@ -14,3 +15,24 @@ router.get('/profile', (req, res) => {
 });
 
 // Edit Profile
+router.put('/update/:id', (req, res) => {
+    let name = req.body.name;
+    let email = req.body.email;
+    let phone_num = req.body.phone_num;
+    let password = req.body.password;
+    let package_deal = req.body.package_deal;
+
+    Signup.update({
+        name,
+        email,
+        phone_num,
+        password,
+        package_deal
+    }, {
+        where: {
+            id: req.params.id
+        }
+    }).then((user) => {
+        res.redirect('/login/profile');
+    }).catch(err => console.log(err));
+});
