@@ -206,7 +206,10 @@ router.post("/login/signup", (req, res) => {
 });
 
 
-
+// Login
+router.get("/login", (req, res) => {
+    res.render("login/login") //
+});
 
 // Profile
 router.get("/profile", (req, res) => {
