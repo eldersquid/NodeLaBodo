@@ -17,6 +17,7 @@ router.get('/profile', (req, res) => {
 // Edit Profile
 router.put('/update/:id', (req, res) => {
     let name = req.body.name;
+    let username = req.body.username;
     let email = req.body.email;
     let phone_num = req.body.phone_num;
     let password = req.body.password;
@@ -24,6 +25,7 @@ router.put('/update/:id', (req, res) => {
 
     Signup.update({
         name,
+        username,
         email,
         phone_num,
         password,
