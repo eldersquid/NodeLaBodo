@@ -1,11 +1,10 @@
-<head></head>
-
 <!-- Main style sheet -->
 <link href="/teststuff/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/teststuff/css/templatemo-style.css">
 <link rel="stylesheet" href="/teststuff/css/hero-slider.css">
 <link rel="stylesheet" href="/teststuff/css/owl-carousel.css">
-{{!-- <link rel="stylesheet" href="/teststuff/css/bootstrap-datepicker.css"> --}}
+{{!--
+<link rel="stylesheet" href="/teststuff/css/bootstrap-datepicker.css"> --}}
 <link rel="stylesheet" href="/teststuff/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <link rel="stylesheet" href="/teststuff/css/bootstrap.css">
@@ -16,6 +15,7 @@
 <link rel="stylesheet" href="/teststuff/css/theme-color/default-theme.css">
 <!-- Gallery Lightbox -->
 <link rel="stylesheet" href="/teststuff/css/magnific-popup.css">
+<link rel="stylesheet" href="/sweetalert2/dist/sweetalert2.min.css">
 
 
 
@@ -70,61 +70,60 @@
             </div>
             <div class="col-lg-6">
                 <div class="contact-form">
-                    <form id="contact" action="createReservation" method="post">
+                    <form id="contact" action="createReservation" method="post" name="contact">
                         <div class="row">
                             <div class="col-lg-12">
                                 <h4>Table Reservation</h4>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_fname" type="text" id="cust_fname" placeholder="First Name*" required />
+                                    <input name="cust_fname" type="text" id="cust_fname" placeholder="First Name*">
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*" required="" >
+                                    <input name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*">
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
                                     <input name="cust_email" type="text" id="cust_email" pattern="[^ @]*@[^ @]*"
-                                        placeholder="Your Email Address*" required="">
+                                        placeholder="Your Email Address*">
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_phone" type="text" id="cust_phone" placeholder="Phone Number*"
-                                        required="">
+                                    <input name="cust_phone" type="text" id="cust_phone" placeholder="Phone Number*">
                                 </fieldset>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <fieldset>
                                     <input name="number_guest" type="text" id="number_guest" placeholder="No Of Guests*"
-                                        value="{{reservation.number_guest}}" required="">
+                                        value="{{reservation.number_guest}}">
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
                                 <fieldset>
                                     <input name="cust_date" type="date2" id="cust_date" class="far fa-calendar"
-                                        value="{{reservation.cust_date}}" placeholder="Date*" required="">
+                                        value="{{reservation.cust_date}}" placeholder="Date*">
                                 </fieldset>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <fieldset>
                                     <input name="cust_time" type="time" id="cust_time" placeholder="Time*"
-                                        value="{{reservation.cust_time}}" required="">
+                                        value="{{reservation.cust_time}}">
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <textarea name="cust_message" rows="6" id="cust_message" placeholder="Message"
-                                        required=""></textarea>
+                                    <textarea name="cust_message" rows="6" id="cust_message"
+                                        placeholder="Message"></textarea>
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#exampleModal" id="modalsubmit">
+                                    <button type="button" "btn btn-primary btn-sm" onclick=""
+                                        data-toggle="modal" data-target="#exampleModal" id="modalsubmit">
                                         Make A Reservation
                                     </button>
                                     <!-- Modal -->
@@ -149,8 +148,9 @@
                                                     <h6 id="modal_body"></h6>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-success btn-sm"
-                                                        data-toggle="modal" data-target="#exampleModal" >
+                                                    <button type="submit" onclick=""
+                                                        class="btn btn-success btn-sm" data-toggle="modal"
+                                                        data-target="#exampleModal">
                                                         Submit
                                                     </button>
                                                 </div>
@@ -462,21 +462,29 @@
     integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
 
+<script> src = "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.2/sweetalert2.all.min.js"</script>
+
 <script src="/teststuff/js/jquery.min.js"></script>
 <script src="/teststuff/js/jquery.magnific-popup.min.js"></script>
 <script src="/teststuff/js/custom.js"></script>
 <script src="/teststuff/js/bootstrap.js"></script>
 <script src="/teststuff/js/simple-animated-counter.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
-{{!-- <script src="/teststuff/js/bootstrap-datepicker.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
+
+{{!--
+<script src="/teststuff/js/bootstrap-datepicker.js"></script> --}}
 <script src="/teststuff/js/bootstrap-datetimepicker.min.js"></script>
 <script src="/teststuff/js/slick.js"></script>
 <script src="/teststuff/js/app.js"></script>
 
+<script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
 <script src="/js/popper.min.js"></script>
 <script src="/js/plugins.js"></script>
-{{!-- <script src="/js/newcustom_thalia.js"></script> --}}
+{{!--
+<script src="/js/newcustom_thalia.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<script> src = "https://smtpjs.com/v3/smtp.js"</script>
 
 
 
@@ -561,15 +569,193 @@
     });
 
     $(function () {
-              var minDate = new Date();
-              var maxDate = new Date();
+        var minDate = new Date();
+        var maxDate = new Date();
 
-              minDate.setDate(minDate.getDate()); // set days - mean previous date from current date + mean future date from current date
-              maxDate.setDate(maxDate.getDate()+14);
-                $('#cust_date').datetimepicker({
-                  format: 'YYYY-MM-DD',
-                  minDate: minDate,
-                  maxDate: maxDate,
+        minDate.setDate(minDate.getDate()); // set days - mean previous date from current date + mean future date from current date
+        maxDate.setDate(maxDate.getDate() + 14);
+        $('#cust_date').datetimepicker({
+            format: 'YYYY-MM-DD',
+            minDate: minDate,
+            maxDate: maxDate,
         });
     });
+
+    $("#modalSubmit").click(function () {
+        $("#exampleModal").submit()
+    });
 </script>
+
+{{!-- <script>
+    function sendEmail() {
+        var fname = $("#cust_fname").val();
+        var fname = $("#cust_fname").val();
+        var email = $("#cust_email").val();
+        var phone = $("#cust_phone").val();
+        var guest = $("#number_guest").val();
+        var date = $("#cust_date").val();
+        var time = $("#cust_time").val();
+        var msg = $("#cust_message").val();
+
+        var body = "Hello " + fname + " " + lname + ", <br\>"
+            + "Thank you for making a reservation with Restaurant La bodo, please check whether the details below is correct. Any enquires please contact us at +65 87583945. <br\>"
+            + "Number of Guests: " + guest + "<br\>"
+            + "Date: " + date + "<br\>"
+            + "Time: " + time + "<br\>"
+            + "Message: " + msg + "<br\>"
+        Email.send({
+            SecureToken: "965deb00-84fc-4c94-b930-0005f52c3d1b",
+            To: 'geraldkhoo20@gmail.com',
+            From: "geraldkhoo10@gmail.com",
+            Subject: "Confirmation",
+            Body: body
+        }).then(
+            message => alert(message)
+        );
+    }
+</script> --}}
+
+{{!--
+<script>
+    const isValidEmail = (email) => {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    const isValidPhone = (phone) => {
+        const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+        return re.test(String(phone).toLowerCase());
+    }
+    const form = document.querySelector("form");
+    const fnameInput = document.querySelector('input[name="cust_fname"]');
+    const lnameInput = document.querySelector('input[name="cust_lname"]');
+    const emailInput = document.querySelector('input[name="cust_email"]');
+    const phoneInput = document.querySelector('input[name="cust_phone"]');
+    const guestInput = document.querySelector('input[name="number_guest"]');
+    const dateInput = document.querySelector('input[name="cust_date"]');
+    const timeInput = document.querySelector('input[name="cust_time"]');
+
+
+    const inputs = [fnameInput, lnameInput, emailInput, phoneInput, guestInput, dateInput, timeInput];
+
+    let isFormValid = false;
+    let isValidationOn = false;
+
+    const validateInputs = () => {
+        if (!isValidationOn) return;
+
+        isFormValid = true;
+        if (fnameInput.value) {
+            isFormValid = false;
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+        }
+        if (!lnameInput.value) {
+            isFormValid = false;
+            Swal.fire({
+                title: 'Error!',
+                text: 'Last Name Field is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+        }
+
+        if (!isValidEmail(emailInput.value)) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name Field is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+            isFormValid = false;
+        }
+
+        if (!isValidPhone(phoneInput.value)) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+            isFormValid = false;
+        }
+
+        if (!guestInput(guestInput.value)) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name Field is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+            isFormValid = false;
+        }
+
+        if (!dateInput(dateInput.value)) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name Field is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+            isFormValid = false;
+        }
+
+        if (!timeInput(timeInput.value)) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name Field is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+            isFormValid = false;
+        }
+    };
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        isValidationOn = true;
+        validateInputs();
+        if (isFormValid) {
+            Swal.fire(
+                'Confirmed!',
+                'Table Reserved!',
+                'success'
+            )
+        }
+    });
+
+    inputFields.forEach((input) => input.addEventListener("input", validateInputs));
+</script> --}}
+
+<script>
+    function confirm() {
+        Swal.fire(
+                'Confirmed!',
+                'Table Reserved!',
+                'success'
+            )
+    }
+</script>
+
+
+{{!-- function {
+const fname = document.getElementById("cust_fname").value;
+const lname = document.getElementById("cust_lname").value;
+const email = document.getElementById("cust_email").value;
+var regx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/
+
+if (fname.value === '' || fname.value == null) {
+alert('Name is Required.');
+}
+} --}}
+
+{{!-- var email = document.getElementById('cust_email').val();
+var phone = document.getElementById('cust_phone').val();
+var guest = document.getElementById('number_guest').val();
+var date = document.getElementById('cust_date').val();
+var time = document.getElementById('cust_time').val();
+var msg = document.getElementById('cust_message').val(); --}}
