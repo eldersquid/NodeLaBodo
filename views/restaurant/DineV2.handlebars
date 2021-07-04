@@ -116,17 +116,16 @@
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <textarea name="cust_message" rows="6" id="cust_message" placeholder="Message"
-                                        required=""></textarea>
+                                    <textarea name="cust_message" rows="6" id="cust_message"
+                                        placeholder="Message"></textarea>
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <button type="submit" "btn btn-primary btn-sm" onclick="validate()"
+                                    <button type="button" "btn btn-primary btn-sm" onclick=""
                                         data-toggle="modal" data-target="#exampleModal" id="modalsubmit">
                                         Make A Reservation
                                     </button>
-                                    {{!--
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -149,7 +148,7 @@
                                                     <h6 id="modal_body"></h6>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" onclick="sendEmail()"
+                                                    <button type="submit" onclick=""
                                                         class="btn btn-success btn-sm" data-toggle="modal"
                                                         data-target="#exampleModal">
                                                         Submit
@@ -157,7 +156,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                 </fieldset>
                             </div>
                         </div>
@@ -587,7 +586,7 @@
     });
 </script>
 
-<script>
+{{!-- <script>
     function sendEmail() {
         var fname = $("#cust_fname").val();
         var fname = $("#cust_fname").val();
@@ -614,32 +613,133 @@
             message => alert(message)
         );
     }
-</script>
+</script> --}}
+
+{{!--
+<script>
+    const isValidEmail = (email) => {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    const isValidPhone = (phone) => {
+        const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+        return re.test(String(phone).toLowerCase());
+    }
+    const form = document.querySelector("form");
+    const fnameInput = document.querySelector('input[name="cust_fname"]');
+    const lnameInput = document.querySelector('input[name="cust_lname"]');
+    const emailInput = document.querySelector('input[name="cust_email"]');
+    const phoneInput = document.querySelector('input[name="cust_phone"]');
+    const guestInput = document.querySelector('input[name="number_guest"]');
+    const dateInput = document.querySelector('input[name="cust_date"]');
+    const timeInput = document.querySelector('input[name="cust_time"]');
+
+
+    const inputs = [fnameInput, lnameInput, emailInput, phoneInput, guestInput, dateInput, timeInput];
+
+    let isFormValid = false;
+    let isValidationOn = false;
+
+    const validateInputs = () => {
+        if (!isValidationOn) return;
+
+        isFormValid = true;
+        if (fnameInput.value) {
+            isFormValid = false;
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+        }
+        if (!lnameInput.value) {
+            isFormValid = false;
+            Swal.fire({
+                title: 'Error!',
+                text: 'Last Name Field is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+        }
+
+        if (!isValidEmail(emailInput.value)) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name Field is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+            isFormValid = false;
+        }
+
+        if (!isValidPhone(phoneInput.value)) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+            isFormValid = false;
+        }
+
+        if (!guestInput(guestInput.value)) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name Field is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+            isFormValid = false;
+        }
+
+        if (!dateInput(dateInput.value)) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name Field is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+            isFormValid = false;
+        }
+
+        if (!timeInput(timeInput.value)) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'First Name Field is Required!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            })
+            isFormValid = false;
+        }
+    };
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        isValidationOn = true;
+        validateInputs();
+        if (isFormValid) {
+            Swal.fire(
+                'Confirmed!',
+                'Table Reserved!',
+                'success'
+            )
+        }
+    });
+
+    inputFields.forEach((input) => input.addEventListener("input", validateInputs));
+</script> --}}
 
 <script>
-    function validate() {
-        var fname = document.getElementById('cust_fname').val();
-        var lname = document.getElementById('cust_lname').val();
-        var email = document.getElementById('cust_email').val();
-        var phone = document.getElementById('cust_phone').val();
-        var guest = document.getElementById('number_guest').val();
-        var date = document.getElementById('cust_date').val();
-        var time = document.getElementById('cust_time').val();
-        var msg = document.getElementById('cust_message').val();
-
-        if (fname === '' || lname === '' || email == '' || phone == '' || guest == '' || date == '' || time == '') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-                footer: '<a href="">Why do I have this issue?</a>'
-            })
-        } else {
-            Swal.fire('Confirmed!', 'Table Reserved!', 'success');
-        }
+    function confirm() {
+        Swal.fire(
+                'Confirmed!',
+                'Table Reserved!',
+                'success'
+            )
     }
 </script>
-
 
 
 {{!-- function {
@@ -653,9 +753,9 @@ alert('Name is Required.');
 }
 } --}}
 
-var email = document.getElementById('cust_email').val();
+{{!-- var email = document.getElementById('cust_email').val();
 var phone = document.getElementById('cust_phone').val();
 var guest = document.getElementById('number_guest').val();
 var date = document.getElementById('cust_date').val();
 var time = document.getElementById('cust_time').val();
-var msg = document.getElementById('cust_message').val();
+var msg = document.getElementById('cust_message').val(); --}}
