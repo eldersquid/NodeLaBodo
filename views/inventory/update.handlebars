@@ -2,10 +2,11 @@
     <h1 class="display-5">Update Inventory</h1>
 
     <form method="POST" action="/inventory/update/{{inventory.id}}?_method=PUT">
+    
         <div class="form-group">
 
             <label for="item_name">Item Name</label>
-            <input class="form-control" id="item_name" name="item_name" required type="text" value="">
+            <input class="form-control" id="item_name" name="item_name" required type="text" placeholder="{{item_name}}" value="">
 
 
         </div>
@@ -29,8 +30,8 @@
             <label for="product_name">Product Name</label>
             <select class="form-control" id="product_name" name="product_name" required>
                 <option value="none" selected disabled hidden></option>
-                {{#if supplier}}
-                {{#each supplier}}
+                {{#if productcat}}
+                {{#each productcat}}
                 <option value="{{product_name}}" style="text-transform: capitalize;">{{product_name}}</option>
                 {{/each}}
                 {{/if}}

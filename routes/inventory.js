@@ -69,8 +69,8 @@ router.get('/showCreate', async (req, res) => {
     res.render('inventory/create', {
         layout: "admin",
         title: title,
-        productcat: await getProductcatData(),
-        supplier: await getSupplierData()
+        supplier: await getSupplierData(),
+        productcat: await getProductcatData()
     }); 
 });
 
@@ -90,47 +90,57 @@ router.post('/create', (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.get('/showUpdate/:id', (req, res) => {
+router.get('/showUpdate/:id', async (req, res) => {
     const title = 'Inventory';
 
-    Inventory.findOne({
-        where: {
-            id: req.params.id
-        }
-    }).then((inventory) => {
+    const getProductcatData = () => {
+        const productcat = Productcat.findAll({
+            where: {
+                // adminId: req.admin.id
+            },
+            order: [
+                ['id', 'ASC']
+            ],
+            raw: true
+        })
+        return productcat
+    };
+
+    const getSupplierData = () => {
+        const supplier = Supplier.findAll({
+            where: {
+                // adminId: req.admin.id
+            },
+            order: [
+                ['id', 'ASC']
+            ],
+            raw: true
+        })
+        return supplier
+    };
+
+    const getInventoryData = () => {
+        const inventory = Inventory.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
         if (!inventory) { // check inventory first because it could be null.
             alertMessage(res, 'info', 'No such Inventory', 'fas fa-exclamation-circle', true);
             res.redirect('/inventory/view');
         } else {
-            // Only authorised admin who is owner of inventory can edit it
-            // if (req.admin.id === inventory.adminId) {
-            //     checkOptions(inventory);
-                Supplier.findAll({
-                    where: {
-                        // adminId: req.admin.id
-                    },
-                    order: [
-                        ['id', 'ASC']
-                    ],
-                    raw: true
-                })
-                    .then((supplier) => {
-                        // pass object to listSupplier.handlebar
-                        res.render('inventory/update', { // call views/inventory/editSupplier.handlebar to render the edit supplier page
-                            layout: "admin",
-                            title: title,
-                            supplier: supplier,
-                            inventory
-                        });
-                    })
-                    .catch(err => console.log(err));
-        
-            // } else {
-            //     alertMessage(res, 'danger', 'Unauthorised access to Inventory', 'fas fa-exclamation-circle', true);
-            //     res.redirect('/logout');
-            // }
+            return inventory
         }
-    }).catch(err => console.log(err)); // To catch no inventory ID
+    };
+
+    res.render('inventory/update', { // call views/inventory/editSupplier.handlebar to render the edit supplier page
+        layout: "admin",
+        title: title,
+        supplier: await getSupplierData(),
+        productcat: await getProductcatData(),
+        inventory: await getInventoryData()
+    })
+    .catch(err => console.log(err));
 });
 
 router.put('/update/:id', (req, res) => {
