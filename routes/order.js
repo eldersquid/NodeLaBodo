@@ -4,17 +4,48 @@ const Inventory = require('../models/Inventory');
 const Supplier = require('../models/Supplier');
 const Order = require('../models/Order');
 const alertMessage = require('../helpers/messenger.js');
-var nodemailer = require('nodemailer');
 
-// router.get('/view', (req, res) => {
-//     const title = 'Order';
+const nodemailer = require('nodemailer')
+const { google } = require('googleapis')
 
-//     res.render('order/view', {
-//         layout: "admin",
-//         title: title
-//     });
+const CLIENT_ID = '188467906173-a5cq8hviitnaanin3cmag7el6kkqrcru.apps.googleusercontent.com'
+const CLIENT_SECRET = '9bCtMjwKlgz9oAd9H4kPS8pF'
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04w61SdIzEEevCgYIARAAGAQSNwF-L9Irq1f5Kwus8Gn_JiA1z3eOEmVHksRI4tcigkjYRJM6S14axPwDou9ugcLb08Z7wS6_cbI';
 
-// });
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+async function sendMail(supplier, item_name, quantity, remarks) {
+    try {
+        const accessToken = await oAuth2Client.getAccessToken();
+
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                type: 'OAuth2',
+                user: 'hotel.la.bodo@gmail.com',
+                clientId: CLIENT_ID,
+                clientSecret: CLIENT_SECRET,
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken
+            }
+        });
+
+        const mailOptions = {
+            from: 'Hotel La Bodo <hotel.la.bodo@gmail.com>',
+            to: 'ziyuan2497@gmail.com',
+            subject: 'Order from Hotel La Bodo',
+            text: 'Dear ' + supplier + ',\n' + '\nWe would like to order another ' + quantity + ' of ' + item_name + '.\n\nAdditional Remarks:' + '\n' + remarks + '\n\nWe hope to hear from you soon!\n' + 'Sincerely,\nHotel La Bodo'
+        };
+
+        const result = await transport.sendMail(mailOptions);
+        return result;
+
+    } catch (error) {
+        return error
+    }
+};
 
 router.get('/view', (req, res) => {
     const title = 'Order';
@@ -81,30 +112,8 @@ router.post('/create', (req, res) => {
     let quantity = req.body.quantity;
     let remarks = req.body.remarks;
 
-    // var nodemailer = require('nodemailer');
-
-    // var transporter = nodemailer.createTransport({
-    //     service: 'gmail',
-    //     auth: {
-    //         user: 'hotel.la.bodo@gmail.com',
-    //         pass: 'Admin-123'
-    //     }
-    // });
-
-    // var mailOptions = {
-    //     from: 'hotel.la.bodo@gmail.com',
-    //     to: 'ziyuan2497@gmail.com',
-    //     subject: 'Order From Hotel La Bodo',
-    //     text: 'Dear ' + supplier + ',\n' + '\nWe would like to order another ' + quantity + ' of ' + item_name + '.\n\nAdditional Remarks:' + '\n' + remarks + '\n\nWe hope to hear from you soon!\n' + 'Sincerely,\nHotel La Bodo'
-    // };
-
-    // transporter.sendMail(mailOptions, function (error, info) {
-    //     if (error) {
-    //         console.log(error);
-    //     } else {
-    //         console.log('Email sent: ' + info.response);
-    //     }
-    // });
+    sendMail(supplier, item_name, quantity, remarks).then(result => console.log('Email sent...', result))
+        .catch(error => console.log(error.message));
 
     Order.create({
         supplier,
