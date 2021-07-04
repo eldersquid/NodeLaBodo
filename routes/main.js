@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const passport = require('passport');
 const fastJson = require("fast-json-stringify");
 const bodyParser = require("body-parser");
 const Reservation = require("../models/Reservation");
 const SignUpModel = require("../models/Signup");
 var multer = require("multer");
-var bcrypt = require("bcryptjs");
+var bcrypt = require('bcryptjs');
 
 router.get("/", (req, res) => {
     const title = "Home Page";
@@ -215,8 +216,15 @@ router.get("/profile", (req, res) => {
 });
 
 // Login
-router.get('/login', (req, res, next) => {
-    res.render("login/login"); //
+router.post('/login/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/view/home',
+        failureRedirect: '/login',
+        failureFlash: true
+            /* Setting the failureFlash option to true instructs Passport to flash an error message using the
+       message given by the strategy's verify callback, if any. When a failure occur passport passes the message
+       object as error */
+    })(req, res, next);
 });
 
 // Logout User
