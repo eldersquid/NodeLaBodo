@@ -140,7 +140,6 @@ router.get('/showUpdate/:id', async (req, res) => {
         productcat: await getProductcatData(),
         inventory: await getInventoryData()
     })
-    .catch(err => console.log(err));
 });
 
 router.put('/update/:id', (req, res) => {
