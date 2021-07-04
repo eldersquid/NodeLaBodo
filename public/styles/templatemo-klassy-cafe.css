@@ -1298,11 +1298,13 @@ reservation
   margin-bottom: 15px;
 }
 
+
 .contact-form input:focus,
 .contact-form textarea:focus,
 .contact-form select:focus {
   border-color: #fb5849;
 }
+
 
 .contact-form button {
   margin-top: -10px;

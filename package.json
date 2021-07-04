@@ -34,6 +34,7 @@
         "request": "^2.88.2",
         "sequelize": "^6.6.4",
         "session": "^0.1.0",
+        "sweetalert2": "^11.0.18",
         "url-parse": "^1.5.1"
     },
     "devDependencies": {
