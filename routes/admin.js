@@ -15,8 +15,10 @@ const upload = require('../helpers/img');
 const Hospital = require('../models/Hospital');
 const moment = require('moment');
 const methodOverride = require('method-override');
+const Swal = require('sweetalert2');
 // Method override middleware to use other HTTP methods such as PUT and DELETE
 app.use(methodOverride('_method'));
+
 
 
 
@@ -33,6 +35,7 @@ app.use(cors());
 
 router.get('/hospitalList', (req, res) => {
 	const title = "Hospitals";
+	
 	Hospital.findAll({
 	
 	order: [
@@ -56,7 +59,8 @@ router.get('/hospitalSearch', cors(), (req, res) => {
 	const title = "Search Hospital";
 	res.render('admin/hospital/hospital_search', {
 		layout: "admin",
-		title: title
+		title: title,
+		Swal : Swal
 	});
 	
 
