@@ -34,6 +34,8 @@ const orderRoute = require('./routes/order');
 
 const adminDB = require('./config/DBConnection');
 
+const Swal = require('sweetalert2')
+
 
 
 // Library to use MySQL to store session objects
