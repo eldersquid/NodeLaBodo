@@ -133,7 +133,7 @@ router.get("/signup", (req, res) => {
 
 router.post("/login/signup", (req, res) => {
     console.log("Retrieving the sign up form.");
-    let { name, email, phone_num, password, password2, package_deal } = req.body;
+    let { name, username, email, phone_num, password, password2, package_deal } = req.body;
     let errors = [];
     // validation
     if (password.length < 4) {
@@ -145,6 +145,7 @@ router.post("/login/signup", (req, res) => {
         res.render("login/signup", {
             errors,
             name,
+            username,
             email,
             phone_num,
             password,
@@ -164,6 +165,7 @@ router.post("/login/signup", (req, res) => {
                     res.render("login/signup", {
                         error: signup.email + " already registered",
                         name,
+                        username,
                         email,
                         phone_num,
                         password,
@@ -173,7 +175,7 @@ router.post("/login/signup", (req, res) => {
                 } else {
                     console.log("User is available to create");
 
-                    // password encryption herer
+                    // password encryption here
                     bcrypt.genSalt(10, function(err, salt) {
                         bcrypt.hash(password, salt, function(err, hash) {
                             // store has in your password DB.
@@ -182,7 +184,7 @@ router.post("/login/signup", (req, res) => {
                             } else {
                                 password = hash;
                                 console.log("Creating the user's account");
-                                SignUpModel.create({ name, email, phone_num, password, package_deal })
+                                SignUpModel.create({ name, username, email, phone_num, password, package_deal })
                                     .then(successfull => {
                                         // alertMessage(
                                         //     res,
@@ -213,15 +215,8 @@ router.get("/profile", (req, res) => {
 });
 
 // Login
-router.post('/login', (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/home', // Route to /video/listVideos URL
-        failureRedirect: '/login/login', // Route to /login URL
-        failureFlash: true
-            /* Setting the failureFlash option to true instructs Passport to flash an error message using the
-       message given by the strategy's verify callback, if any. When a failure occur passport passes the message
-       object as error */
-    })(req, res, next);
+router.get('/login', (req, res, next) => {
+    res.render("login/login"); //
 });
 
 // Logout User
