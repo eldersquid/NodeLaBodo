@@ -68,7 +68,6 @@ router.put('/update/:id', (req, res) => {
     }).then((signup) => {
         res.redirect('/login/userprofile');
     }).catch(err => console.log(err));
-
 });
 
 module.exports = router;

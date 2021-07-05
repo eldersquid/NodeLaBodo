@@ -34,7 +34,15 @@ const orderRoute = require('./routes/order');
 
 const adminDB = require('./config/DBConnection');
 
-const Swal = require('sweetalert2')
+const Swal = require('sweetalert2');
+
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+
+const Handlebars = require('handlebars');
+
+const SignupRoute = require('./routes/profile');
+
+
 
 const SignupRoute = require('./routes/profile')
 
@@ -46,7 +54,6 @@ const db = require('./config/db');
 // Messaging libraries
 const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger');
-const Handlebars = require('handlebars');
 // const Reservation = require('./models/Reservation');
 
 // 1. Danish's Route
@@ -57,8 +64,6 @@ const Handlebars = require('handlebars');
  * in Node JS.
  */
 const app = express();
-
-const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 
 adminDB.setUpDB(false); // Set up database with new tables (true)
@@ -165,6 +170,8 @@ app.use('/profile', SignupRoute);
 // 2. roomsRoute is declared to point to routes/rooms.js
 // This route maps the rooms URL to any path defined in rooms.js
 app.use('/rooms', roomsRoute);
+
+app.use('/profile', SignupRoute);
 
 
 

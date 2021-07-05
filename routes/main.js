@@ -7,6 +7,7 @@ const Reservation = require("../models/Reservation");
 const SignUpModel = require("../models/Signup");
 var multer = require("multer");
 var bcrypt = require('bcryptjs');
+const Signup = require('../models/Signup');
 
 router.get("/", (req, res) => {
     const title = "Home Page";
@@ -208,7 +209,25 @@ router.post("/login/signup", (req, res) => {
     }
 });
 
+// Display the Profile
+// router.get("/profile/:id", (req, res) => {
+//     const title = "Edit Profile";
+//     Signup.findOne({
+//             where: {
+//                 id: req.params.id,
+//             },
+//         })
+//         .then((signup) => {
+//             // call views/video/editVideo.handlebar to render the edit video page
+//             res.render("login/userprofile", {
+//                 signup, // passes video object to handlebar
+//                 layout: "blank",
+//                 title: title,
 
+//             });
+//         })
+//         .catch((err) => console.log(err)); // To catch no video ID
+// });
 
 
 // Login
