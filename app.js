@@ -44,7 +44,7 @@ const SignupRoute = require('./routes/profile');
 
 
 
-const SignupRoute = require('./routes/profile')
+
 
 
 // Library to use MySQL to store session objects
