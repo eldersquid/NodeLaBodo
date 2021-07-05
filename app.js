@@ -40,6 +40,10 @@ const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-ac
 
 const Handlebars = require('handlebars');
 
+const SignupRoute = require('./routes/profile');
+
+
+
 
 
 // Library to use MySQL to store session objects
@@ -163,6 +167,8 @@ app.use('/order', orderRoute);
 // 2. roomsRoute is declared to point to routes/rooms.js
 // This route maps the rooms URL to any path defined in rooms.js
 app.use('/rooms', roomsRoute);
+
+app.use('/profile', SignupRoute);
 
 
 
