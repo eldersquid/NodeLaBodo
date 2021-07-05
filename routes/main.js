@@ -196,7 +196,7 @@ router.post("/login/signup", (req, res) => {
                                         //     true
                                         // );
                                         // , { user: req.user.dataValues }
-                                        res.render("login/profile");
+                                        res.render("login/userprofile");
                                     }).catch(err => console.log(err));
 
                             }

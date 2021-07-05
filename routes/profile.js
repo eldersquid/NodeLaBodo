@@ -66,7 +66,7 @@ router.put('/update/:id', (req, res) => {
             id: req.params.id
         }
     }).then((signup) => {
-        res.redirect('/login/profile');
+        res.redirect('/login/userprofile');
     }).catch(err => console.log(err));
 
 });
