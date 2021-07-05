@@ -210,10 +210,6 @@ router.post("/login/signup", (req, res) => {
 
 
 
-// Profile
-router.get("/profile", (req, res) => {
-    res.render("login/profile"); //
-});
 
 // Login
 router.post('/login/login', (req, res, next) => {

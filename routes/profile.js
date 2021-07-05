@@ -5,14 +5,45 @@ const Signup = require('../models/Signup');
 
 
 // Display the Profile
-router.get('/profile', (req, res) => {
-    const title = 'View User Profile';
-    res.render('login/profile', {
-        layout: "blank",
-        title: title
-    });
+router.get("/profile/:id", (req, res) => {
+    const title = "Edit Profile";
+    Signup.findOne({
+            where: {
+                id: req.params.id,
+            },
+        })
+        .then((signup) => {
+            // call views/video/editVideo.handlebar to render the edit video page
+            res.render("login/userprofile", {
+                signup, // passes video object to handlebar
+                layout: "blank",
+                title: title,
 
+            });
+        })
+        .catch((err) => console.log(err)); // To catch no video ID
 });
+
+// Edit
+router.get("/Editprofile/:id", (req, res) => {
+    const title = "Edit Profile";
+    Signup.findOne({
+            where: {
+                id: req.params.id,
+            },
+        })
+        .then((signup) => {
+            // call views/video/editVideo.handlebar to render the edit video page
+            res.render("/login/profile", {
+                signup, // passes video object to handlebar
+                layout: "blank",
+                title: title,
+
+            });
+        })
+        .catch((err) => console.log(err)); // To catch no video ID
+});
+
 
 // Edit Profile
 router.put('/update/:id', (req, res) => {
@@ -34,7 +65,7 @@ router.put('/update/:id', (req, res) => {
         where: {
             id: req.params.id
         }
-    }).then((user) => {
+    }).then((signup) => {
         res.redirect('/login/profile');
     }).catch(err => console.log(err));
 });
