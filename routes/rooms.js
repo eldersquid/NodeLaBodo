@@ -4,13 +4,17 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
 	const title = 'Hotel Rooms';
-	res.render('rooms/hotel_rooms', {title: title
+	res.render('rooms/hotel_rooms', {
+		title: title,
+		layout : "thalia",
 	    }) // renders views/index.handlebars
 });
 
 router.get('/apartment', (req, res) => {
 	const title = 'Apartment';
-	res.render('rooms/apartment', {title: title
+	res.render('rooms/apartment', {
+		title: title,
+		layout : "thalia",
 	    }) // renders views/index.handlebars
 });
 

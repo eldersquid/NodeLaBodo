@@ -69,3 +69,5 @@ router.put('/update/:id', (req, res) => {
         res.redirect('/login/profile');
     }).catch(err => console.log(err));
 });
+
+module.exports = router;

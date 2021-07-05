@@ -60,8 +60,8 @@
                                     <table class="table table-bordered table-hover" id="hospitalTable" width="100%" cellspacing="1">
                                         <thead>
                                             <tr>
-                                                <th></th>
-                                                <th></th>
+                                                <th>Logo</th>
+                                                
                                                 <th>Hospital Name</th>
                                                 <th>Address</th>
                                                 <th>Contact Number</th>
@@ -71,30 +71,18 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
-                                            <tr>
-                                              <th></th>
-                                              <th></th>
-                                              <th>Hospital Name</th>
-                                              <th>Address</th>
-                                              <th>Contact Number</th>
-                                              <th>Website</th>
-                                              <th></th>
-                                              <th></th>
-                                              <th></th>
-                                            </tr>
-                                        </tfoot>
+                                        
                                         <tbody>
                                           {{#if hospitals }}
                                             
                                             {{#each hospitals }}
                                             <tr>
                                               <td>
-                                                {{photo}}
+                                            <img id="hospital_image" src="{{photo}}" alt=""class="border img-thumbnail img-fluid"style="height:80%;width:90%">
+                                                
+                                              
                                               </td>
-                                              <td>
-                                                {{@index}}
-                                              </td>
+                                              
                                               <td>
                                                 {{hospitalName}}
                                               </td>
