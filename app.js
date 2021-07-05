@@ -34,7 +34,11 @@ const orderRoute = require('./routes/order');
 
 const adminDB = require('./config/DBConnection');
 
-const Swal = require('sweetalert2')
+const Swal = require('sweetalert2');
+
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+
+const Handlebars = require('handlebars');
 
 
 
@@ -70,7 +74,8 @@ adminDB.setUpDB(false); // Set up database with new tables (true)
  *
  * */
 app.engine('handlebars', exphbs({
-    defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
+    defaultLayout: 'main', // Specify default template views/layout/main.handlebar 
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
 }));
 app.set('view engine', 'handlebars');
 
