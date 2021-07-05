@@ -187,7 +187,7 @@ router.post("/login/signup", (req, res) => {
                                 password = hash;
                                 console.log("Creating the user's account");
                                 SignUpModel.create({ name, username, email, phone_num, password, package_deal })
-                                    .then(successfull => {
+                                    .then((signup) => {
                                         // alertMessage(
                                         //     res,
                                         //     "success",
@@ -197,7 +197,7 @@ router.post("/login/signup", (req, res) => {
                                         //     true
                                         // );
                                         // , { user: req.user.dataValues }
-                                        res.render("login/userprofile");
+                                        res.redirect("/profile/profile/" + signup.id);
                                     }).catch(err => console.log(err));
 
                             }
