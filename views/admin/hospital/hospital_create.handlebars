@@ -54,13 +54,13 @@
                                             </div>
                                           </div>
                                           <div class="col-lg-3">
-                                            {{!—-Poster image --}}
+                                            {{!—-Hospital image --}}
                                             <label for="hospital_image">Hospital Logo</label>
-                                            <input type="file" id="photoUpload" name="photoUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
-                                            <img id="hospital_image" src="/img/g.png" alt=""class="border img-thumbnail img-fluid"style="height:80%;width:90%">
-                                            <input id="photoURL"type="hidden"name="photoURL">
+                                            <input type="file" id="photoUpload" name="photoUpload" accept="image/png,image/jpeg,image/jpg">
+                                            <img id="hospital_image" src="/img/hospital.jpeg" alt=""class="border img-thumbnail img-fluid"style="height:80%;width:90%">
+                                            <input id="photoURL" type="hidden" name="photoURL" value="">
                                             </div>
-                                            <div class="font-weight-bold text-danger small" id="photoError" style="display:none"></div>
+                                            <div class="font-weight-bold text-danger small" id="photoErr" style="display:none">Error occurred.</div>
 
                                         </div>
                                         <div class="row mt-3">
@@ -159,6 +159,7 @@
   ></script>
   <script src="/js/google_map.js"></script>
   <script src="/js/googlemaps_fetch.js"></script>
+   <script src="/js/logoUpload.js"></script>
   {{!-- <script src="../js/natgeowild.js"></script> --}}
   
 

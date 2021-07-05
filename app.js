@@ -45,6 +45,7 @@ const db = require('./config/db');
 // Messaging libraries
 const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger');
+const Handlebars = require('handlebars');
 // const Reservation = require('./models/Reservation');
 
 // 1. Danish's Route
@@ -55,6 +56,8 @@ const FlashMessenger = require('flash-messenger');
  * in Node JS.
  */
 const app = express();
+
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 
 adminDB.setUpDB(false); // Set up database with new tables (true)
@@ -70,7 +73,8 @@ adminDB.setUpDB(false); // Set up database with new tables (true)
  *
  * */
 app.engine('handlebars', exphbs({
-    defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
+    defaultLayout: 'main', // Specify default template views/layout/main.handlebar 
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
 }));
 app.set('view engine', 'handlebars');
 
