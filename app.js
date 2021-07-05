@@ -36,6 +36,7 @@ const adminDB = require('./config/DBConnection');
 
 const Swal = require('sweetalert2')
 
+const SignupRoute = require('./routes/profile')
 
 
 // Library to use MySQL to store session objects
@@ -158,6 +159,8 @@ app.use('/supplier', supplierRoute);
 app.use('/inventory', inventoryRoute);
 
 app.use('/order', orderRoute);
+
+app.use('/profile', SignupRoute);
 
 // 2. roomsRoute is declared to point to routes/rooms.js
 // This route maps the rooms URL to any path defined in rooms.js
