@@ -3,15 +3,6 @@ const router = express.Router();
 const Productcat = require('../models/Productcat');
 const alertMessage = require('../helpers/messenger.js');
 
-// router.get('/view', (req, res) => {
-//     const title = 'Product Category';
-
-//     res.render('productcat/view', {
-//         layout: "admin",
-//         title: title
-//     });
-
-// });
 
 router.get('/view', (req, res) => {
     const title = 'Product Category';

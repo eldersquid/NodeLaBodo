@@ -82,7 +82,8 @@ router.get('/showUpdate/:id', (req, res) => {
     Supplier.findOne({
         where: {
             id: req.params.id
-        }
+        },
+        raw: true
     }).then((supplier) => {
         if (!supplier) { // check supplier first because it could be null.
             alertMessage(res, 'info', 'No such Supplier', 'fas fa-exclamation-circle', true);

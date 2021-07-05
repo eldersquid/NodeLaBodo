@@ -123,7 +123,8 @@ router.get('/showUpdate/:id', async (req, res) => {
         const inventory = Inventory.findOne({
             where: {
                 id: req.params.id
-            }
+            },
+            raw: true
         })
         if (!inventory) { // check inventory first because it could be null.
             alertMessage(res, 'info', 'No such Inventory', 'fas fa-exclamation-circle', true);

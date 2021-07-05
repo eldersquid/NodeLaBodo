@@ -111,6 +111,7 @@ router.post('/create', (req, res) => {
     let item_name = req.body.item_name;
     let quantity = req.body.quantity;
     let remarks = req.body.remarks;
+    let status = req.body.status;
 
     sendMail(supplier, item_name, quantity, remarks).then(result => console.log('Email sent...', result))
         .catch(error => console.log(error.message));
@@ -119,10 +120,62 @@ router.post('/create', (req, res) => {
         supplier,
         item_name,
         quantity,
-        remarks
+        remarks,
+        status
     }).then((order) => {
         res.redirect('/order/view');
     }).catch(err => console.log(err))
+});
+
+router.get('/showUpdate/:id', (req, res) => {
+    const title = "Update Order";
+    Order.findOne({
+        where: {
+            id: req.params.id
+        },
+        raw: true
+    }).then((order) => {
+        if (!order) { // check video first because it could be null.
+            alertMessage(res, 'info', 'No such video', 'fas fa-exclamation-circle', true);
+            res.redirect('/order/view');
+        } else {
+            // Only authorised user who is owner of video can edit it
+            // if (req.user.id === video.userId) {
+            //     checkOptions(video);
+                res.render('order/update', { // call views/video/editVideo.handlebar to render the edit video page
+                    title: title,
+                    layout: "admin",
+                    order
+                });
+            // } else {
+            //     alertMessage(res, 'danger', 'Unauthorised access to video', 'fas fa-exclamation-circle', true);
+            //     res.redirect('/logout');
+            // }
+        }
+    }).catch(err => console.log(err)); // To catch no video ID
+});
+
+router.put('/update/:id', (req, res) => {
+    let supplier = req.body.supplier;
+    let item_name = req.body.item_name;
+    let quantity = req.body.quantity;
+    let remarks = req.body.remarks;
+    let status = req.body.status;
+
+    Order.update({
+        supplier,
+        item_name,
+        quantity,
+        remarks,
+        status
+    }, {
+        where: {
+            id: req.params.id
+        }
+    }).then((order) => {
+        res.redirect('/order/view'); // redirect to call router.get(/listInventory...) to retrieve all updated
+        // inventory
+    }).catch(err => console.log(err));
 });
 
 module.exports = router;

@@ -15,6 +15,7 @@
                             <th>Quantity</th>
                             <th>Remarks</th>
                             <th>Status</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -25,6 +26,7 @@
                             <th>Quantity</th>
                             <th>Remarks</th>
                             <th>Status</th>
+                            <th></th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -36,15 +38,9 @@
                             <td style="text-transform: capitalize;">{{item_name}}</td>
                             <td>{{quantity}}</td>
                             <td style="text-transform: capitalize;">{{remarks}}</td>
-                            <td style="width: 279px;">
-                                <select name="cars" id="cars">
-                                    <option value="1">Ordered Placed</option>
-                                    <option value="2">Ordered has been confirmed</option>
-                                    <option value="3">Supplier is preparing your order</option>
-                                    <option value="4">Supplier is out for delivery</option>
-                                    <option value="5">Parcel has been delivered</option>
-                                </select>
-                            </td>
+                            <td style="width: 279px;">{{status}}</td>
+                            <td><a href="/order/showUpdate/{{id}}" style="display: flex; justify-content: center;"
+                                    class="btn btn-warning">Update</a></td>
                         </tr>
                         {{/each}}
                         {{/if}}

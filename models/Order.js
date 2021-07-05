@@ -13,6 +13,9 @@ const Order = db.define('order', {
     },
     remarks: {
         type: Sequelize.STRING
+    },
+    status: {
+        type: Sequelize.STRING
     }
 });
 
