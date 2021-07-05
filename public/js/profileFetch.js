@@ -43,6 +43,17 @@ window.onload = function profile_fetch() {
           document.getElementById("review3").innerHTML = test["result"]["reviews"][2]["text"];
           document.getElementById("review4").innerHTML = test["result"]["reviews"][3]["text"];
           document.getElementById("review5").innerHTML = test["result"]["reviews"][4]["text"];
+          document.getElementById("avatar1").src = test["result"]["reviews"][0]["profile_photo_url"];
+          document.getElementById("avatar2").src = test["result"]["reviews"][1]["profile_photo_url"];
+          document.getElementById("avatar3").src = test["result"]["reviews"][2]["profile_photo_url"];
+          document.getElementById("avatar4").src = test["result"]["reviews"][3]["profile_photo_url"];
+          document.getElementById("avatar5").src = test["result"]["reviews"][4]["profile_photo_url"];
+          document.getElementById("coord_lat").innerHTML = test["result"]["geometry"]["location"]["lat"];
+          document.getElementById("coord_lng").innerHTML = test["result"]["geometry"]["location"]["lng"];
+          document.getElementById("type1").innerHTML = test["result"]["types"][0];
+          document.getElementById("type2").innerHTML = test["result"]["types"][1];
+          document.getElementById("type3").innerHTML = test["result"]["types"][2];
+          document.getElementById("type4").innerHTML = test["result"]["types"][3];
         }
       }) 
       .catch((error) => {

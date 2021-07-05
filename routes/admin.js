@@ -11,7 +11,7 @@ const queryParse = require('query-string');
 const urlParse = require('url-parse');
 const { trafficdirector } = require('googleapis/build/src/apis/trafficdirector');
 const fs = require('fs');
-const upload = require('../helpers/img');
+const upload = require('../helpers/hospitalLogo');
 const Hospital = require('../models/Hospital');
 const moment = require('moment');
 const methodOverride = require('method-override');
@@ -117,15 +117,14 @@ router.get("/hospitalProfile/:id", (req, res) => {
   })
     .then((hospital) => {
       let place_ID = hospital.placeID;
-      // call views/video/editVideo.handlebar to render the edit video page
       res.render("admin/hospital/hospitalProfile", {
-        hospital, // passes video object to handlebar
+        hospital, 
         layout: "admin",
         title: title,
 		place_ID : place_ID
       });
     })
-    .catch((err) => console.log(err)); // To catch no video ID
+    .catch((err) => console.log(err)); 
 });
 
 router.get("/hospitalEdit/:id", (req, res) => {
@@ -176,18 +175,20 @@ router.put('/hospitalEdited/:id', (req, res) => {
 
 
 router.post('/hospitalLogoUpload', (req, res) => {
+	let js_data = res.body;
+	console.log(js_data);
 	// Creates user id directory for upload if not exist
-	if (!fs.existsSync('./public/uploads/' + req.hospital.id)){
-	fs.mkdirSync('./public/uploads/' + req.hospital.id);
+	if (!fs.existsSync("./public/hospitalLogos/")){
+	fs.mkdirSync("./public/hospitalLogos/");
 	}
 	upload(req, res, (err) => {
 	if (err) {
-	res.json({file: '/img/g.png', err: err});
+	res.json({file: '/img/hospital.jpeg', err: err});
 	} else {
 	if (req.file === undefined) {
-	res.json({file: '/img/g.png', err: err});
+	res.json({file: '/img/hospital.jpeg', err: err});
 	} else {
-	res.json({file: `/uploads/${req.hospital.id}/${req.file.filename}`});
+	res.json({file: `/hospitalLogos/${req.file.filename}`});
 	}
 	}
 	});
