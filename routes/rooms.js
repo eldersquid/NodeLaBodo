@@ -229,7 +229,7 @@ router.get('/paySuccess/:id', (req, res) => {
 		} else {
 			console.log("Get Payment Response");
 			console.log(JSON.stringify(payment));
-			res.send('Success');
+			res.redirect('/rooms/success');
 		}
 	});
 	})
@@ -240,6 +240,14 @@ router.get('/paySuccess/:id', (req, res) => {
 
 
 
+});
+
+router.get('/success', (req, res) => {
+	const title = 'Success!';
+	res.render('rooms/success', {
+		title: title,
+		layout : "blank",
+	    })
 });
 
 
