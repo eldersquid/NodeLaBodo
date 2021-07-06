@@ -77,41 +77,41 @@
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_fname" type="text" id="cust_fname" placeholder="First Name*">
+                                    <input name="cust_fname" type="text" id="cust_fname" placeholder="First Name*" required/>
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*">
+                                    <input name="cust_lname" type="text" id="cust_lname" placeholder="Last Name*" required/>
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
                                     <input name="cust_email" type="text" id="cust_email" pattern="[^ @]*@[^ @]*"
-                                        placeholder="Your Email Address*">
+                                        placeholder="Your Email Address*" required/>
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_phone" type="text" id="cust_phone" placeholder="Phone Number*">
+                                    <input name="cust_phone" type="text" id="cust_phone" placeholder="Phone Number*" required/>
                                 </fieldset>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <fieldset>
                                     <input name="number_guest" type="text" id="number_guest" placeholder="No Of Guests*"
-                                        value="{{reservation.number_guest}}">
+                                        value="{{reservation.number_guest}}" required/>
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
                                 <fieldset>
                                     <input name="cust_date" type="date2" id="cust_date" class="far fa-calendar"
-                                        value="{{reservation.cust_date}}" placeholder="Date*">
+                                        value="{{reservation.cust_date}}" placeholder="Date*" required/>
                                 </fieldset>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <fieldset>
                                     <input name="cust_time" type="time" id="cust_time" placeholder="Time*"
-                                        value="{{reservation.cust_time}}">
+                                        value="{{reservation.cust_time}}" required/>
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
@@ -122,10 +122,11 @@
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <button type="button" "btn btn-primary btn-sm" onclick=""
-                                        data-toggle="modal" data-target="#exampleModal" id="modalsubmit">
+                                    <button type="submit" "btn btn-primary btn-sm"  data-toggle="modal"
+                                        data-target="#exampleModal" id="modalsubmit">
                                         Make A Reservation
                                     </button>
+                                    {{!--
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -148,15 +149,14 @@
                                                     <h6 id="modal_body"></h6>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" onclick=""
-                                                        class="btn btn-success btn-sm" data-toggle="modal"
-                                                        data-target="#exampleModal">
+                                                    <button type="submit" onclick="" class="btn btn-success btn-sm"
+                                                        data-toggle="modal" data-target="#exampleModal">
                                                         Submit
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </fieldset>
                             </div>
                         </div>
@@ -586,7 +586,34 @@
     });
 </script>
 
-{{!-- <script>
+<script>
+    $(function () {
+        $('#modalSubmit').click(function (e) {
+            e.preventDefault();
+            var valid = this.form.checkvalidity();
+
+            var fname = $("#cust_fname").val();
+            var fname = $("#cust_fname").val();
+            var email = $("#cust_email").val();
+            var phone = $("#cust_phone").val();
+            var guest = $("#number_guest").val();
+            var date = $("#cust_date").val();
+            var time = $("#cust_time").val();
+            var msg = $("#cust_message").val();
+
+
+            
+        });
+        Swal.fire(
+            'Confirmed!',
+            'Table Reserved!',
+            'success'
+        )
+    });
+</script>
+
+{{!--
+<script>
     function sendEmail() {
         var fname = $("#cust_fname").val();
         var fname = $("#cust_fname").val();
@@ -731,27 +758,7 @@
     inputFields.forEach((input) => input.addEventListener("input", validateInputs));
 </script> --}}
 
-<script>
-    function confirm() {
-        Swal.fire(
-                'Confirmed!',
-                'Table Reserved!',
-                'success'
-            )
-    }
-</script>
 
-
-{{!-- function {
-const fname = document.getElementById("cust_fname").value;
-const lname = document.getElementById("cust_lname").value;
-const email = document.getElementById("cust_email").value;
-var regx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/
-
-if (fname.value === '' || fname.value == null) {
-alert('Name is Required.');
-}
-} --}}
 
 {{!-- var email = document.getElementById('cust_email').val();
 var phone = document.getElementById('cust_phone').val();
