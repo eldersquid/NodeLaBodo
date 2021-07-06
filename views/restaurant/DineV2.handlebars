@@ -126,7 +126,7 @@
                             <div class="col-lg-12">
                                 <fieldset>
                                     <button type="submit" "btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#exampleModal" id="modalsubmit">
+                                        data-target="#exampleModal" id="modalSubmit">
                                         Make A Reservation
                                     </button>
                                     {{!--
@@ -624,8 +624,7 @@
 </script>
 
 <script>
-    $(function () {
-        $('#modalSubmit').click(function (e) {
+    $( "#modalSubmit" ).click(function(e) {
             e.preventDefault();
 
             var fname = $("#cust_fname").val();
@@ -636,16 +635,11 @@
             var date = $("#cust_date").val();
             var time = $("#cust_time").val();
             var msg = $("#cust_message").val();
-
-
-
-        });
-        Swal.fire(
+            Swal.fire(
             'Confirmed!',
             'Table Reserved!',
-            'success'
-        )
-    });
+            'success');
+});
 </script>
 
 <script>
