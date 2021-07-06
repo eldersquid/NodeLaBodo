@@ -26,6 +26,12 @@ const Room = db.define('room', {
     roomNo: {
         type: Sequelize.INTEGER
     },
+    price : {
+        type : Sequelize.FLOAT
+    },
+    paid : {
+        type : Sequelize.BOOLEAN
+    }
 });
 
 module.exports = Room;
