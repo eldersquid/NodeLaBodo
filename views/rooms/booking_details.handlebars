@@ -21,19 +21,19 @@
                     <img src="/img/pyramid.webp" alt="">
                 </div>
                 <div class="signup-form">
-                    <form method="POST" class="register-form" id="register-form">
+                    <form method="POST" action="/rooms/booked" class="register-form" id="register-form">
 
                         <h2>Additional Guest Information</h2>
 
                         <div class="form-row">
                           <div class="form-group">
                               <label for="address">Check In Date</label>
-                              <input type="text" name="read" id="read" value="{{BookInDate}}"  readonly/>
+                              <input type="text" name="bookInDate" id="bookInDate" value="{{BookInDate}}"  readonly/>
 
                           </div>
                           <div class="form-group">
                               <label for="address">Check Out Date</label>
-                              <input type="text" name="read" id="read" value="{{BookOutDate}}"  readonly/>
+                              <input type="text" name="bookOutDate" id="bookOutDate" value="{{BookOutDate}}"  readonly/>
 
                           </div>
                         </div>
@@ -41,19 +41,19 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="address">Deal Selected</label>
-                                <input type="text" name="read" id="read" value="" readonly/>
+                                <input type="text" name="package_deal" id="package_deal" value="Zoo Mama" readonly/>
 
                             </div>
                             <div class="form-group">
                                 <label for="address">Username</label>
-                                <input type="text" name="read" id="read" value="" readonly/>
+                                <input type="text" name="username" id="username" value="yunashin102" readonly/>
 
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="address">Name</label>
-                            <input type="text" name="read" id="read" value="" readonly/>
+                            <input type="text" name="name" id="name" value="Shin Yuna" readonly/>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -74,12 +74,12 @@
                         <div class="form-row">
                         <div class="form-group">
                             <label for="address">Room Allocated</label>
-                            <input type="text" name="read" id="read" value=""  readonly/>
+                            <input type="text" name="roomType" id="roomType" value="Apartment"  readonly/>
 
                         </div>
                         <div class="form-group">
                             <label for="address">Room Number</label>
-                            <input type="text" name="read" id="read" value=""  readonly/>
+                            <input type="text" name="roomNo" id="roomNo" value="912"  readonly/>
 
                         </div>
                         </div>
