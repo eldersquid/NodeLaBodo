@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Reservation = require('../models/Reservation');
 const alertMessage = require('../helpers/messenger.js');
+const Contact = require('../models/Contact');
 
 router.get('/viewReservation', (req,res) => {
     const title = 'Reservation';
@@ -16,7 +17,7 @@ router.get('/viewReservation', (req,res) => {
     })
         .then((reservation) => {
             console.log(reservation);
-            res.render('reservation/viewReservation', {
+            res.render('admRestaurant/viewReservation', {
                 layout: "admin",
                 title: title,
                 reservation:reservation
@@ -39,7 +40,7 @@ router.get('/updateReservation/:id', (req,res) => {
     })
         .then((reservation) => {
             console.log(reservation);
-            res.render('reservation/updateReservation', {
+            res.render('admRestaurant/updateReservation', {
                 layout: "admin",
                 title: title,
                 reservation:reservation
@@ -71,7 +72,7 @@ router.post('/updateReservation/:id', (req, res) => {
             id: req.params.id
         }
     }).then(() => {
-        res.redirect('/reservation/viewReservation'); // redirect to call router.get(/listSupplier...) to retrieve all updated
+        res.redirect('/admRestaurant/viewReservation'); // redirect to call router.get(/listSupplier...) to retrieve all updated
         // reservation
     }).catch(err => console.log(err));
 });
@@ -92,7 +93,7 @@ router.get('/deleteReservation/:id', (req, res) => {
                     id: id
                 }
             }).then(() => {
-                res.redirect('/reservation/viewReservation'); // To retrieve all videos again
+                res.redirect('/admRestaurant/viewReservation'); // To retrieve all videos again
             }).catch(err => console.log(err));
         } else {
             alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
@@ -102,5 +103,52 @@ router.get('/deleteReservation/:id', (req, res) => {
 });
 
 
+// view Contact Us
+router.get('/viewContact', (req,res) => {
+    const title = 'Contact';
+    Contact.findAll({
+        where: {
+            // adminId: req.params.id
+        },
+        order: [
+            // [reservation.id, 'ASC']
+        ],
+        raw: true
+    })
+        .then((contact) => {
+            console.log(contact);
+            res.render('admRestaurant/viewContact', {
+                layout: "admin",
+                title: title,
+                contact:contact
+            });
+        })
+        .catch(err => console.log(err));
+})
+
+router.get('/deleteContact/:id', (req, res) => {
+    let id = req.params.id;
+    // Select * from videos where videos.id=videoID and videos.userId=userID
+    Contact.findOne({
+        where: {
+            id: id,
+        },
+        attributes: ['id']
+    }).then((contact) => {
+        // if record is found, user is owner of video
+        if (contact != null) {
+            contact.destroy({
+                where: {
+                    id: id
+                }
+            }).then(() => {
+                res.redirect('/admRestaurant/viewContact'); // To retrieve all videos again
+            }).catch(err => console.log(err));
+        } else {
+            alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+            
+        }
+    });
+});
 
 module.exports = router;
