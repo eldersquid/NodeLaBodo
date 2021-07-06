@@ -72,9 +72,9 @@
                                 AR 15, Face Shield V2
                             </div>
                             <div class="sub_header">
-                                Book In Date : {{BookInDate}}
+                                Book In Date : {{bookInDate}}
                                 <br>
-                                Book Out Date : {{BookOutDate}}
+                                Book Out Date : {{bookOutDate}}
                             </div>
                         </div>
                         <!-- <div class="qty">
@@ -86,7 +86,7 @@
                             </div>
                         </div> -->
                         <div class="price">
-                            <div class="current_price">$500</div>
+                            <div class="current_price">$600</div>
                             <!-- <div class="normal_price">$30</div>
                             <div class="discount">15% OFF</div> -->
                         </div>
@@ -178,50 +178,52 @@
                 </div>
             </div>
         </div>
+        <form action="/rooms/payPal/{{room.id}}" method="post">
+            <div class="wrapper_amount">
+                <div class="header_title">
+                    <div class="title">
+                        BOOKING DETAILS:
+                    </div>
+                    <div class="amount">
+                        <b>$ 500</b>
+                    </div>
+                </div>
+                <div class="price_details">
+                    <div class="item">
+                        <p>Apartment </p>
+                        <p>$600</p>
+                    </div>
+                    <div class="item">
+                        <p>Zoo Mama Deal Discount</p>
+                        <p class="green">-$100</p>
+                    </div>
 
-        <div class="wrapper_amount">
-            <div class="header_title">
-                <div class="title">
-                    BOOKING DETAILS:
+                    <!-- <div class="item">
+                        <p>Order Total :</p>
+                        <p>$25</p>
+                    </div>
+                    <div class="item">
+                        <p>Delivery Charges :</p>
+                        <p><span style="text-decoration: line-through;"></span>$5 <span class="green">FREE</span></p>
+                    </div> -->
+                    <div class="coupon">
+                        <p>Coupon Discount :</p>
+                        <p><a href="#">Apply Coupon</a></p>
+                    </div>
+                    <div class="total">
+                        <p>Total :</p>
+                        <p>$500</p>
+                    </div>
                 </div>
-                <div class="amount">
-                    <b>$ 400</b>
+                <div class="checkout">
+                    <a href="#" role="button" class="checkout_btn">Pay</a>
                 </div>
-            </div>
-            <div class="price_details">
-                <div class="item">
-                    <p>Apartment </p>
-                    <p>$500</p>
-                </div>
-                <div class="item">
-                    <p>Zoo Mama Deal Discount</p>
-                    <p class="green">-$100</p>
-                </div>
-
-                <!-- <div class="item">
-                    <p>Order Total :</p>
-                    <p>$25</p>
-                </div>
-                <div class="item">
-                    <p>Delivery Charges :</p>
-                    <p><span style="text-decoration: line-through;"></span>$5 <span class="green">FREE</span></p>
-                </div> -->
-                <div class="coupon">
-                    <p>Coupon Discount :</p>
-                    <p><a href="#">Apply Coupon</a></p>
-                </div>
-                <div class="total">
-                    <p>Total :</p>
-                    <p>$400</p>
+                <div class="checkout">
+                    <input type="submit" value="Pay by PayPal" class="checkout_btn">
+                    
                 </div>
             </div>
-            <div class="checkout">
-                <a href="#" role="button" class="checkout_btn">Pay</a>
-            </div>
-            <div class="checkout">
-                <a href="#" role="button" class="checkout_btn">Pay by PayPal</a>
-            </div>
-        </div>
+        </form>
     </div>
 </body>
 
