@@ -154,23 +154,23 @@ router.post('/payPal/:id', (req,res) => {
 				if (error) {
 					throw error;
 				} else {
-					
+					let paid = 1;
+					Room.update({
+						paid
+					}, {
+					where: {
+					id: req.params.id
+					}
+					}).then(() => {
+					// After saving, redirect to router.get(/listVideos...) to retrieve all updated
+					// videos
 					for (var i = 0; i < payment.links.length;i++) {
 						if (payment.links[i].rel === "approval_url"){
 							console.log("Create Payment Response");
 							console.log(payment);
-							let paid = 1;
-							Room.update({
-								paid
-							}, {
-							where: {
-							id: req.params.id
-							}
-							}).then(() => {
-							// After saving, redirect to router.get(/listVideos...) to retrieve all updated
-							// videos
 							res.redirect(payment.links[i].href);
-							})
+							
+							
 							
 
 
@@ -180,6 +180,8 @@ router.post('/payPal/:id', (req,res) => {
 
 
 					}
+					});
+					
 					
 					
 				}

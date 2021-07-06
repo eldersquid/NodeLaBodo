@@ -638,7 +638,11 @@
             Swal.fire(
             'Confirmed!',
             'Table Reserved!',
-            'success');
+            'success').then((result) => {
+                if (result.isConfirmed) {
+                    $("#contact").submit();
+                }
+                });
 });
 </script>
 
