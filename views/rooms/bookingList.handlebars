@@ -22,8 +22,7 @@
                   <a class="btn btn-outline-secondary ml-1" href="vehicleList">Vehicles</a>
                   <a class="btn btn-outline-secondary ml-1" href="requestList">Requests</a>
                   <div class="col d-flex justify-content-end">
-                    <a class="btn btn-outline-secondary ml-1" href="hospitalSearch"><i class="fas fa-plus-circle"></i> Create New Hospital </a>
-                    <a class="btn btn-outline-secondary ml-1" href="hospitalSearch"><i class="fas fa-plus-circle"></i> Upload Excel File </a>
+                    <a class="btn btn-outline-secondary ml-1" href="/rooms">Rooms </a>
                   </div>
                 </div>
                 
@@ -123,11 +122,11 @@
                                                         </button>
                                                       </div>
                                                       <div class="modal-body">
-                                                        Do you really want to delete this hospital? This process cannot be undone.
+                                                        Do you really want to delete this booking? There will be no refunds.
                                                       </div>
                                                       <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <a href="/admin/hospitalDelete/{{id}}"  class="btn btn-danger">Delete</a>
+                                                        <a href="/rooms/bookingDelete/{{id}}"  class="btn btn-danger">Delete</a>
                                                       </div>
                                                     </div>
                                                   </div>

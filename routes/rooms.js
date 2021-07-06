@@ -284,5 +284,29 @@ router.get('/bookingList', (req, res) => {
 	});
 
 
+	router.get('/bookingDelete/:id', (req, res) => {
+		let id = req.params.id;
+		Room.findOne({
+			where: {
+				id: id,
+			},
+			attributes: ['id']
+		}).then((room) => {
+			// if record is found, user is owner of video
+			if (room != null) {
+				Room.destroy({
+					where: {
+						id: id
+					}
+				}).then(() => {
+					res.redirect('/rooms/bookingList'); // To retrieve all videos again
+				}).catch(err => console.log(err));
+			} else {
+				alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+				
+			}
+		});
+	});
+
 
 module.exports = router;
