@@ -48,12 +48,23 @@ router.post('/bookingDetails', (req, res) => {
 	let BookInDate = req.body.BookInDate;
 	let BookOutDate = req.body.BookOutDate;
 	let price = req.body.price;
+	let roomType = req.body.roomType;
+	if (roomType == "Apartment") {
+		var roomNo = Math.floor(Math.random() * 100) + 201;
+	  } else if (roomType == "Small Room") {
+		var roomNo = Math.floor(Math.random() * 101) + 100;
+	  } else if (roomType == "Big Apartment") {
+		var roomNo = Math.floor(Math.random() * 100) + 301;
+	  } else if (roomType == "Villa") {
+		var roomNo = Math.floor(Math.random() * 100) + 401;
+	  }
 	console.log(BookInDate);
 	res.render('rooms/booking_details', {title: title,
 		layout : "blank",
 		BookInDate : BookInDate,
 		BookOutDate : BookOutDate,
-		price : price
+		price : price,
+		roomNo : roomNo
 	    }) // renders views/index.handlebars
 });
 
@@ -147,7 +158,7 @@ router.post('/payPal/:id', (req,res) => {
 						"currency": "SGD",
 						"total": price
 					},
-					"description": "Test PayPal payment."
+					"description": "Hotel Booking Payment using PayPal"
 				}]
 			};
 			paypal.payment.create(create_payment_json, function (error, payment) {
@@ -229,7 +240,7 @@ router.get('/paySuccess/:id', (req, res) => {
 		} else {
 			console.log("Get Payment Response");
 			console.log(JSON.stringify(payment));
-			res.send('Success');
+			res.redirect('/rooms/success');
 		}
 	});
 	})
@@ -240,6 +251,14 @@ router.get('/paySuccess/:id', (req, res) => {
 
 
 
+});
+
+router.get('/success', (req, res) => {
+	const title = 'Success!';
+	res.render('rooms/success', {
+		title: title,
+		layout : "blank",
+	    })
 });
 
 
