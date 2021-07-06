@@ -261,6 +261,28 @@ router.get('/success', (req, res) => {
 	    })
 });
 
+router.get('/bookingList', (req, res) => {
+	const title = "Room Booking List";
+	
+	Room.findAll({
+	
+	order: [
+	['id', 'ASC']
+	],
+	raw: true
+	})
+	.then((room) => {
+	
+	// pass object to listVideos.handlebar
+	res.render('rooms/bookingList', {
+	layout : "admin",
+	title : title,
+	room: room
+	});
+	})
+	.catch(err => console.log(err));
+	});
+
 
 
 module.exports = router;
