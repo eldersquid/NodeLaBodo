@@ -4,7 +4,7 @@ const Reservation = require('../models/Reservation');
 const alertMessage = require('../helpers/messenger.js');
 const Swal = require('sweetalert2');
 const Contact = require('../models/Contact');
-
+// const Response = require('../models/Response');
 
 // User View Restaurant 
 router.get('/DineV2', (req, res) => {
@@ -34,6 +34,8 @@ router.post('/createReservation', (req, res) => {
         cust_time,
         cust_message
     }).then((reservation) => {
+         console.log("THIS IS FNAME", cust_fname);
+        console.log("THIS IS PHONE",cust_phone);
         res.redirect('/restaurant/DineV2');
     }).catch(err => console.log(err))
 });

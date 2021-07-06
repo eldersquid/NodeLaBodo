@@ -1,16 +1,16 @@
-<head>
+{{!-- <head>
   <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
 </head>
 
 <div class="container-fluid">
-  <h1 class="display-4">View Contact Us</h1>
+  <h1 class="display-4">View Response</h1>
   <div>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Contact ID</th>
-          <th>Name</th>
-          <th>Email</th>
+          <th>Response ID</th>
+          <th>To</th>
+          <th>FROM</th>
           <th>Subject</th>
           <th>Message</th>
           <th></th>
@@ -22,15 +22,16 @@
         {{#each contact}}
         <tr>
           <td>{{this.id}}</td>
-          <td>{{this.contact_name}}</td>
-          <td>{{this.contact_email}}</td>
-          <td>{{this.contact_subject}}</td>
-          <td>{{this.contact_message}}</td>
+          <td>{{this.toEmail}}</td>
+          <td>{{this.fromEmail}}</td>
+          <td>{{this.toSubject}}</td>
+          <td>{{this.toMessage}}</td>
+          <td><a href="/admRestaurant/createResponse/{{this.id}}" class="btn btn-warning">Reply</a>
           </td>
           <td>
-            <form action="/admRestaurant/deleteContact/{{contact.id}}" method="POST"></form>
+            <form action="" method="POST"></form>
 
-            <!-- Modal -->
+            {{!-- <!-- Modal -->
             <div class="modal fade" id="myModal_{{this.id}}" tabindex="-1" role="dialog"
               aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -50,9 +51,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> --}}
 
-            <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#myModal_{{id}}">
+           {{!-- <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#myModal_{{id}}">
 
               <span>Delete</span>
             </button>
@@ -65,4 +66,4 @@
       </tbody>
     </table>
   </div>
-</div> 
+</div> --}}
