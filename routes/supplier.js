@@ -14,26 +14,42 @@ const alertMessage = require('../helpers/messenger.js');
 
 // });
 
-router.get('/view', (req, res) => {
+router.get('/view', async (req, res) => {
     const title = 'Supplier';
-    Supplier.findAll({
-        where: {
-            // adminId: req.admin.id
-        },
-        order: [
-            ['id', 'ASC']
-        ],
-        raw: true
-    })
-        .then((supplier) => {
-            // pass object to listSupplier.handlebar
-            res.render('supplier/view', {
-                layout: "admin",
-                title: title,
-                supplier: supplier
-            });
+
+    const getProductcatData = () => {
+        const productcat = Productcat.findAll({
+            where: {
+                // adminId: req.admin.id
+            },
+            order: [
+                ['id', 'ASC']
+            ],
+            raw: true
         })
-        .catch(err => console.log(err));
+        return productcat
+    };
+
+    const getSupplierData = () => {
+        const supplier = Supplier.findAll({
+            where: {
+                // adminId: req.admin.id
+            },
+            order: [
+                ['id', 'ASC']
+            ],
+            raw: true
+        })
+        return supplier
+    };
+
+    res.render('supplier/view', {
+        layout: "admin",
+        title: title,
+        supplier: await getSupplierData(),
+        productcat: await getProductcatData()
+    });
+
 });
 
 router.get('/showCreate', (req, res) => {

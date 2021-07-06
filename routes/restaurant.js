@@ -3,6 +3,7 @@ const router = express.Router();
 const Reservation = require('../models/Reservation');
 const alertMessage = require('../helpers/messenger.js');
 const Swal = require('sweetalert2');
+const Contact = require('../models/Contact');
 
 
 // User View Restaurant 
@@ -23,25 +24,6 @@ router.post('/createReservation', (req, res) => {
     let cust_time = req.body.cust_time
     let cust_message = req.body.cust_message
 
-    // //VALIDATION
-    // function validate()
-    // {
-    //     var fname = document.getElementById("cust_fname");
-    //     var lname = document.getElementById("cust_lname");
-    //     var email = document.getElementById("cust_email");
-    //     var phone = document.getElementById("cust_phone");
-    //     var guests = document.getElementById("number_guest");
-    //     var date = document.getElementById("cust_date");
-    //     var time = document.getElementById("cust_time");
-    //     var message = document.getElementById("cust_message");
-
-    //     if(fname.value == "" || lname.value == "" || email.value == "" || phone.value == "" || guests.value == ""
-    //         || date.value == "" || time.value == "" || message.value == "")
-    //     {
-    //         alert("Field is required !")
-    //     }
-    // }
-
     Reservation.create({
         cust_fname,
         cust_lname,
@@ -56,6 +38,24 @@ router.post('/createReservation', (req, res) => {
     }).catch(err => console.log(err))
 });
 
+// Create Contact Form
+
+router.post('/createContact', (req,res) => {
+    let contact_name = req.body.contact_name
+    let contact_email = req.body.contact_email
+    let contact_subject = req.body.contact_subject
+    let contact_message = req.body.contact_message
+
+    Contact.create({
+        contact_name,
+        contact_email,
+        contact_subject,
+        contact_message
+    }).then((contact) => {
+        res.redirect('/restaurant/DineV2');
+    }).catch(err => console.log(err))
+
+});
 
 
 

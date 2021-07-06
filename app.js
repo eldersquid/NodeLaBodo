@@ -18,7 +18,7 @@ const mainRoute = require('./routes/main');
 
 const restaurantRoute = require('./routes/restaurant');
 
-const reservationRoute = require('./routes/adm_restaurant');
+const admRestaurantRoute = require('./routes/admRestaurant');
 
 const adminRoute = require('./routes/admin');
 
@@ -155,7 +155,7 @@ app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.
 
 app.use('/restaurant', restaurantRoute);
 
-app.use('/reservation', reservationRoute);
+app.use('/admRestaurant', admRestaurantRoute);
 
 app.use('/productcat', productcatRoute);
 
