@@ -34,8 +34,6 @@ router.post('/createReservation', (req, res) => {
         cust_time,
         cust_message
     }).then((reservation) => {
-         console.log("THIS IS FNAME", cust_fname);
-        console.log("THIS IS PHONE",cust_phone);
         res.redirect('/restaurant/DineV2');
     }).catch(err => console.log(err))
 });
@@ -47,6 +45,7 @@ router.post('/createContact', (req,res) => {
     let contact_email = req.body.contact_email
     let contact_subject = req.body.contact_subject
     let contact_message = req.body.contact_message
+    console.log("NAME: ", contact_name);
 
     Contact.create({
         contact_name,

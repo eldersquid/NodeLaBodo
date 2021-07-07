@@ -3369,7 +3369,7 @@ input[type="button"].btn-block {
   .nav-link:hover, .nav-link:focus {
     text-decoration: none; }
   .nav-link.disabled {
-    color: #6c757d;
+    color:white;
     pointer-events: none;
     cursor: default; }
 
@@ -8162,7 +8162,7 @@ h1, h2, h3, h4, h5,
   background: #f1bc31 !important; }
 
 .ftco-section {
-  padding: 7em 0; }
+  padding:0; }
 
 .ftco-no-pt {
   padding-top: 0; }

@@ -19,7 +19,7 @@
 
 
 
-{{!-- {{>_navfood}} --}}
+{{>_navbar}} 
 
 <section class="banner">
     <div class="container">
@@ -125,12 +125,12 @@
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <button type="button" "btn btn-primary btn-sm" data-toggle="modal"
+                                    <button type="submit" "btn btn-primary btn-sm" data-toggle="modal"
                                         data-target="#exampleModal" id="modalsubmit">
                                         Make A Reservation
                                     </button>
                                 
-                                    <!-- Modal -->
+                                    {{!-- <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
 
@@ -159,7 +159,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>  --}}
                                 </fieldset>
                             </div>
                         </div>
@@ -562,7 +562,7 @@
     }
 </script>
 
-<script type="text/javascript">
+{{!-- <script type="text/javascript">
     $("#modalsubmit").click(function () {
 
         var fname = $("#cust_fname").val();
@@ -586,7 +586,7 @@
             + "we will be sending these details to your email."
         $("#modal_body").html(str);
     });
-</script> 
+</script>  --}}
 
 <script>
     $(function () {
@@ -623,10 +623,9 @@
     });
 </script>
 
-{{!-- <script>
-    $("#revSubmit").click(function (e) {
+<script>
+    $("#modalsubmit").click(function (e) {
         e.preventDefault();
-        alert("hello");
         var fname = $("#cust_fname").val();
         var lname = $("#cust_lname").val();
         var email = $("#cust_email").val();
@@ -635,7 +634,6 @@
         var date = $("#cust_date").val();
         var time = $("#cust_time").val();
         var msg = $("#cust_message").val();
-        alert(fname);
         Swal.fire(
             'Confirmed!',
             'Table Reserved!',
@@ -643,7 +641,7 @@
                 if (result.isConfirmed) {
                     $("#contact").submit();
                 }
-                });
+            });
 });
 </script>
 
@@ -658,7 +656,11 @@
         Swal.fire(
             'Submitted!',
             'Respone Recieved!',
-            'success');
+            'success').then((result) => {
+                if (result.isConfirmed) {
+                    $("contact2").submit();
+                }
+            });
     });
 </script>
 

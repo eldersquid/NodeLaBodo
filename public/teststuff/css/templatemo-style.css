@@ -103,56 +103,7 @@ p {
     text-align: left;
 }
 
-.nav {
-	list-style:none;
-    position:relative;
-    left:50%;
-}
 
-.navbar-nav li {
-	margin: 0px 20px;
-}
-
-.navbar-nav li a {
-	font-family: 'Roboto', sans-serif;
-	font-size: 13px;
-	text-transform: uppercase;
-	color: #363e50!important;
-	letter-spacing: 0.5px;
-}
-
-.header.active {
-    background-color: #eaf0ff;
-}
-.navbar-inverse {
-	background-image: none;
-	background-color: transparent;
-}
-.header .navbar {
-    margin: 0;
-    border: none;
-}
-.navbar-inverse .navbar-toggle {
-	margin-top: 22px;
-    border-color: #f2745f;
-    background-color: #f2745f;
-}
-.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
-	background-color: #f2745f;
-}
-/* bootstrap.min.css:5
-.navbar-toggle {
-    position: relative;
-    float: right;
-    padding: 9px 10px;
-    margin-top: 15px!important;
-    margin-right: 15px;
-    margin-bottom: 8px;
-    background-color: transparent;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-} */
 
 
 .banner {
