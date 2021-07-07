@@ -7,7 +7,7 @@ const Supplier = db.define('supplier', {
 		type: Sequelize.STRING
 	},
 	uen_number: {
-		type: Sequelize.STRING
+		type: Sequelize.INTEGER
 	},
 	email: {
 		type: Sequelize.STRING

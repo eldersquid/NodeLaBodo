@@ -79,12 +79,16 @@ router.post('/create', (req, res) => {
     let supplier = req.body.supplier;
     let product_name = req.body.product_name;
     let quantity = req.body.quantity;
+    let selling_price = req.body.selling_price;
+    let cost_price = req.body.cost_price;
 
     Inventory.create({
         item_name,
         supplier,
         product_name,
-        quantity
+        quantity,
+        selling_price,
+        cost_price
     }).then((inventory) => {
         res.redirect('/inventory/view');
     }).catch(err => console.log(err))
@@ -148,12 +152,17 @@ router.put('/update/:id', (req, res) => {
     let supplier = req.body.supplier;
     let product_name = req.body.product_name;
     let quantity = req.body.quantity;
+    let selling_price = req.body.selling_price;
+    let cost_price = req.body.cost_price;
+    
 
     Inventory.update({
         item_name,
         supplier,
         product_name,
-        quantity
+        quantity,
+        selling_price,
+        cost_price
     }, {
         where: {
             id: req.params.id
