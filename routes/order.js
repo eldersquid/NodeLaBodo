@@ -85,7 +85,7 @@ router.get('/supplierView', (req, res) => {
         .then((order) => {
             // pass object to listOrder.handlebar
             res.render('order/supplierview', {
-                layout: "admin",
+                layout: "supplier",
                 title: title,
                 order: order
             });
