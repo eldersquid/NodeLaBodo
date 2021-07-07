@@ -219,6 +219,15 @@ router.get('/hospitalDelete/:id', (req, res) => {
 		});
 	});
 
+router.post('/hospitalReset', (req, res) => {
+		// Select * from videos where videos.id=videoID and videos.userId=userID
+		Hospital.destroy({
+			truncate : true
+		}).then(() => {
+			res.redirect('/admin/hospitalList');
+		});
+	});
+
 
 router.get('/VehicleList', (req, res) => {
 	const title = 'Vehicles';
