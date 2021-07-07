@@ -1,3 +1,17 @@
+<script>
+    function elimCompany(el){
+        companyName = el.value;
+        products = document.getElementById('product_name').children;
+        for (var i = 0; i < products.length; i++){
+            var product = products[i];
+            if (product.value !== companyName){
+                product.style.display = 'none';
+            } else {
+                product.style.display = 'block';
+            }
+        }
+    }
+</script>
 <div class="container-fluid">
     <h1 class="display-5">Create New Item</h1>
 
@@ -12,7 +26,7 @@
         <div class="form-group">
 
             <label for="supplier">Supplier</label>
-            <select class="form-control" id="supplier" name="supplier" required>
+            <select class="form-control" id="supplier" name="supplier"  onchange="elimCompany(this)"required>
                 <option value="none" selected disabled hidden></option>
                 {{#if supplier}}
                 {{#each supplier}}
@@ -29,9 +43,9 @@
             <label for="product_name">Product Name</label>
             <select class="form-control" id="product_name" name="product_name" required>
                 <option value="none" selected disabled hidden></option>
-                {{#if productcat}}
-                {{#each productcat}}
-                <option value="{{product_name}}" style="text-transform: capitalize;">{{product_name}}</option>
+                {{#if supplier}}
+                {{#each supplier}}
+                <option id="{{product_name}}" value="{{company_name}}" style="text-transform: capitalize;">{{product_name}}</option>
                 {{/each}}
                 {{/if}}
 
@@ -63,3 +77,11 @@
         <input type="submit" value="Submit" class="btn btn-primary" />
     </form>
 </div>
+
+{{!-- <script>
+    $("#supplier").on("change", ()=>{
+        company_name = this.value;
+        var items = $("#product_name").children().value;
+        console.log($(this).text);
+    })
+</script> --}}
