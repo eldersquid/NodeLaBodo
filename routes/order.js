@@ -43,6 +43,7 @@ async function sendMail(supplier, item_name, quantity, remarks) {
         return result;
 
     } catch (error) {
+        
         return error
     }
 };
@@ -137,9 +138,6 @@ router.post('/create', (req, res) => {
     let remarks = req.body.remarks;
     let status = req.body.status;
 
-    sendMail(supplier, item_name, quantity, remarks).then(result => console.log('Email sent...', result))
-        .catch(error => console.log(error.message));
-
     Order.create({
         supplier,
         item_name,
@@ -147,6 +145,8 @@ router.post('/create', (req, res) => {
         remarks,
         status
     }).then((order) => {
+        sendMail(supplier, item_name, quantity, remarks).then(result => console.log('Email sent...', result))
+            .catch(error => console.log(error.message));
         res.redirect('/order/view');
     }).catch(err => console.log(err))
 });
@@ -168,7 +168,7 @@ router.get('/showUpdate/:id', (req, res) => {
             //     checkOptions(video);
                 res.render('order/update', { // call views/video/editVideo.handlebar to render the edit video page
                     title: title,
-                    layout: "admin",
+                    layout: "supplier",
                     order
                 });
             // } else {
