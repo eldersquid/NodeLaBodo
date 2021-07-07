@@ -71,9 +71,11 @@ router.get('/view', (req, res) => {
 
 router.get('/supplierView', (req, res) => {
     const title = 'Order';
+
     Order.findAll({
         where: {
-            // adminId: req.admin.id
+            // supplierId: req.supplier.id
+            // supplierName: req.supplier
         },
         order: [
             ['id', 'ASC']
