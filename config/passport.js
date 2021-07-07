@@ -4,19 +4,24 @@ const bcrypt = require('bcryptjs');
 const SignupModel = require('../models/Signup');
 
 function localStrategy(passport) {
-    passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password,
-        done) => {
+    console.log("pls work rhjkdfngeksjrnsr");
+    passport.use(new LocalStrategy({ emailField: 'email' }, (email, password, done) => {
+        console.log("This is the email: ", email);
+        console.log("This is the password: ", password);
         SignupModel.findOne({ where: { email: email } })
             .then(signup => {
                 if (!signup) {
+                    console.log("Can't find user");
                     return done(null, false, { message: 'No User Found' });
                 }
                 // Match password
                 bcrypt.compare(password, signup.password, (err, isMatch) => {
                     if (err) throw err;
                     if (isMatch) {
-                        return done(null, user);
+                        console.log("user found");
+                        return done(null, signup);
                     } else {
+                        console.log("password incorrect");
                         return done(null, false, {
                             message: 'Password incorrect'
                         });
@@ -26,13 +31,13 @@ function localStrategy(passport) {
     }));
     // Serializes (stores) user id into session upon successful
     // authentication
-    passport.serializeUser((signup, done) => {
-        done(null, signup.id); // user.id is used to identify authenticated user
+    passport.serializeUser((Signup, done) => {
+        done(null, Signup.id); // user.id is used to identify authenticated user
     });
     // User object is retrieved by userId from session and
     // put into req.user
-    passport.deserializeUser((signupid, done) => {
-        User.findByPk(signupid)
+    passport.deserializeUser((email, done) => {
+        User.findByPk(email)
             .then((signup) => {
                 done(null, signup); // user object saved in req.session
             })
