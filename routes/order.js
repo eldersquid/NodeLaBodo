@@ -71,9 +71,11 @@ router.get('/view', (req, res) => {
 
 router.get('/supplierView', (req, res) => {
     const title = 'Order';
+
     Order.findAll({
         where: {
-            // adminId: req.admin.id
+            // supplierId: req.supplier.id
+            // supplierName: req.supplier
         },
         order: [
             ['id', 'ASC']
@@ -83,7 +85,7 @@ router.get('/supplierView', (req, res) => {
         .then((order) => {
             // pass object to listOrder.handlebar
             res.render('order/supplierview', {
-                layout: "admin",
+                layout: "supplier",
                 title: title,
                 order: order
             });

@@ -19,7 +19,7 @@
 
 
 
-{{!-- {{>_navfood}} --}}
+{{>_navbar}} 
 
 <section class="banner">
     <div class="container">
@@ -126,11 +126,11 @@
                             <div class="col-lg-12">
                                 <fieldset>
                                     <button type="submit" "btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#exampleModal" id="modalSubmit">
+                                        data-target="#exampleModal" id="modalsubmit">
                                         Make A Reservation
                                     </button>
-                                    {{!--
-                                    <!-- Modal -->
+                                
+                                    {{!-- <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
 
@@ -159,7 +159,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>  --}}
                                 </fieldset>
                             </div>
                         </div>
@@ -363,33 +363,32 @@
                             <div class="col-md-6">
                                 <div class="mu-contact-left">
                                     <!-- Start contact form -->
-                                    <form id="contact" method="post" action="createContact"
-                                        class="mu-contact-form">
+                                    <form id="contact2" method="post" action="createContact" class="mu-contact-form">
                                         <div class="form-group">
-                                            <label for="name">Your Name</label>
+                                            <label for="contact_name">Your Name</label>
                                             <input type="text" class="form-control" id="contact_name"
                                                 name="contact_name" placeholder="Name" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="email">Email address</label>
+                                            <label for="contact_email">Email address</label>
                                             <input type="email" class="form-control" id="contact_email"
                                                 name="contact_email" placeholder="Email" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="subject">Subject</label>
+                                            <label for="contact_subject">Subject</label>
                                             <input type="text" class="form-control" id="contact_subject"
                                                 name="contact_subject" placeholder="Subject" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="message">Message</label>
+                                            <label for="contact_message">Message</label>
                                             <textarea class="form-control" id="contact_message" name="contact_message"
                                                 cols="30" rows="10" placeholder="Type Your Message" required></textarea>
                                         </div>
-                                        <button type="button" id="contactSubmit" data-toggle="modal"
+                                        <button type="submit" id="contactSubmit" data-toggle="modal"
                                             data-target="#modalContact" class="mu-send-btn">Send
                                             Message</button>
 
-
+{{!-- 
                                         <!-- Modal -->
                                         <div class="modal fade" id="modalContact" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -419,7 +418,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </form>
                                 </div>
                             </div>
@@ -563,8 +562,9 @@
     }
 </script>
 
-<script type="text/javascript">
+{{!-- <script type="text/javascript">
     $("#modalsubmit").click(function () {
+
         var fname = $("#cust_fname").val();
         var lname = $("#cust_lname").val();
         var email = $("#cust_email").val();
@@ -586,7 +586,7 @@
             + "we will be sending these details to your email."
         $("#modal_body").html(str);
     });
-</script>
+</script>  --}}
 
 <script>
     $(function () {
@@ -624,38 +624,43 @@
 </script>
 
 <script>
-    $( "#modalSubmit" ).click(function(e) {
-            e.preventDefault();
-
-            var fname = $("#cust_fname").val();
-            var fname = $("#cust_fname").val();
-            var email = $("#cust_email").val();
-            var phone = $("#cust_phone").val();
-            var guest = $("#number_guest").val();
-            var date = $("#cust_date").val();
-            var time = $("#cust_time").val();
-            var msg = $("#cust_message").val();
-            Swal.fire(
+    $("#modalsubmit").click(function (e) {
+        e.preventDefault();
+        var fname = $("#cust_fname").val();
+        var lname = $("#cust_lname").val();
+        var email = $("#cust_email").val();
+        var phone = $("#cust_phone").val();
+        var guest = $("#number_guest").val();
+        var date = $("#cust_date").val();
+        var time = $("#cust_time").val();
+        var msg = $("#cust_message").val();
+        Swal.fire(
             'Confirmed!',
             'Table Reserved!',
             'success').then((result) => {
                 if (result.isConfirmed) {
                     $("#contact").submit();
                 }
-                });
+            });
 });
 </script>
 
 <script>
     $("#contactSubmit").click(function (e) {
-        e.preventDefault(); 
+        e.preventDefault();
+
         var name = $("#contact_name").val();
-        var email = $("#contact_email").val();
+        var cont_email = $("#contact_email").val();
         var subject = $("#contact_subject").val();
-        var message = $("#contact_message").val();
-        var str = "Thank you " + name + ", " +
-            "your response have been submitted!"
-        $("#modal_body").html(str);
+        var cont_message = $("#contact_message").val();
+        Swal.fire(
+            'Submitted!',
+            'Respone Recieved!',
+            'success').then((result) => {
+                if (result.isConfirmed) {
+                    $("contact2").submit();
+                }
+            });
     });
 </script>
 

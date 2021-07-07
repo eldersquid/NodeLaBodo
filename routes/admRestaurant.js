@@ -3,6 +3,7 @@ const router = express.Router();
 const Reservation = require('../models/Reservation');
 const alertMessage = require('../helpers/messenger.js');
 const Contact = require('../models/Contact');
+// const Response = require('../models/Response');
 
 router.get('/viewReservation', (req,res) => {
     const title = 'Reservation';
@@ -150,5 +151,46 @@ router.get('/deleteContact/:id', (req, res) => {
         }
     });
 });
+
+// Create Response
+// router.post('/createResponse', (req,res) => {
+//     let toEmail = req.body.toEmail
+//     let fromEmail = req.body.fromEmail
+//     let toSubject = req.body.toSubject
+//     let toMessage = req.body.toMessage
+
+//     Response.create({
+//         toEmail,
+//         fromEmail,
+//         toSubject,
+//         toMessage
+//     }).then((response) => {
+//         res.redirect('/admRestaurant/viewContact');
+//     }).catch(err => console.log(err))
+
+// });
+
+// // view Contact Us
+// router.get('/viewResponse', (req,res) => {
+//     const title = 'Response';
+//     Contact.findAll({
+//         where: {
+//             // adminId: req.params.id
+//         },
+//         order: [
+//             // [reservation.id, 'ASC']
+//         ],
+//         raw: true
+//     })
+//         .then((response) => {
+//             console.log(response);
+//             res.render('admRestaurant/viewResponse', {
+//                 layout: "admin",
+//                 title: title,
+//                 response:response
+//             });
+//         })
+//         .catch(err => console.log(err));
+// })
 
 module.exports = router;

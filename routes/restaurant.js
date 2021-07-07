@@ -4,7 +4,7 @@ const Reservation = require('../models/Reservation');
 const alertMessage = require('../helpers/messenger.js');
 const Swal = require('sweetalert2');
 const Contact = require('../models/Contact');
-
+// const Response = require('../models/Response');
 
 // User View Restaurant 
 router.get('/DineV2', (req, res) => {
@@ -45,6 +45,7 @@ router.post('/createContact', (req,res) => {
     let contact_email = req.body.contact_email
     let contact_subject = req.body.contact_subject
     let contact_message = req.body.contact_message
+    console.log("NAME: ", contact_name);
 
     Contact.create({
         contact_name,
