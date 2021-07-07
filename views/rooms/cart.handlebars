@@ -72,9 +72,9 @@
                                 AR 15, Face Shield V2
                             </div>
                             <div class="sub_header">
-                                Book In Date : {{bookInDate}}
+                                Book In Date : {{room.bookInDate}}
                                 <br>
-                                Book Out Date : {{bookOutDate}}
+                                Book Out Date : {{room.bookOutDate}}
                             </div>
                         </div>
                         <!-- <div class="qty">
@@ -86,7 +86,7 @@
                             </div>
                         </div> -->
                         <div class="price">
-                            <div class="current_price">$600</div>
+                            <div class="current_price">$500</div>
                             <!-- <div class="normal_price">$30</div>
                             <div class="discount">15% OFF</div> -->
                         </div>
@@ -190,12 +190,12 @@
                 </div>
                 <div class="price_details">
                     <div class="item">
-                        <p>Apartment </p>
-                        <p>$600</p>
+                        <p>{{room.roomType}} </p>
+                        <p>$500</p>
                     </div>
                     <div class="item">
-                        <p>Zoo Mama Deal Discount</p>
-                        <p class="green">-$100</p>
+                        <p>{{room.package_deal}}</p>
+                        <p class="green">-$0</p>
                     </div>
 
                     <!-- <div class="item">
