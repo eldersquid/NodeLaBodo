@@ -60,7 +60,29 @@ router.get('/view', (req, res) => {
     })
         .then((order) => {
             // pass object to listOrder.handlebar
-            res.render('order/view', {
+            res.render('order/adminview', {
+                layout: "admin",
+                title: title,
+                order: order
+            });
+        })
+        .catch(err => console.log(err));
+});
+
+router.get('/supplierView', (req, res) => {
+    const title = 'Order';
+    Order.findAll({
+        where: {
+            // adminId: req.admin.id
+        },
+        order: [
+            ['id', 'ASC']
+        ],
+        raw: true
+    })
+        .then((order) => {
+            // pass object to listOrder.handlebar
+            res.render('order/supplierview', {
                 layout: "admin",
                 title: title,
                 order: order
