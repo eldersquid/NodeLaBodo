@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 // Load user model
-const Signup = require('../models/Signup');
+const SignupModel = require('../models/Signup');
 
 function localStrategy(passport) {
     passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password,
@@ -31,8 +31,8 @@ function localStrategy(passport) {
     });
     // User object is retrieved by userId from session and
     // put into req.user
-    passport.deserializeUser((signupId, done) => {
-        User.findByPk(signupId)
+    passport.deserializeUser((signupid, done) => {
+        User.findByPk(signupid)
             .then((signup) => {
                 done(null, signup); // user object saved in req.session
             })
