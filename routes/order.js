@@ -69,7 +69,7 @@ router.get('/view', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/retrieve', (req, res) => {
+router.get('/supplierView', (req, res) => {
     const title = 'Order';
     Order.findAll({
         where: {
