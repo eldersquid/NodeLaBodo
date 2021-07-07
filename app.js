@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const cors = require('cors');
+const passport = require('passport');
 /*
  * Loads routes file main.js in routes directory. The main.js determines which function
  * will be called based on the HTTP request and URL.
@@ -124,6 +125,9 @@ app.use(session({
 // Two flash messenging libraries - Flash (connect-flash) and Flash Messenger
 app.use(flash());
 app.use(FlashMessenger.middleware);
+const authenticate = require('./config/passport');
+authenticate.localStrategy(passport);
+
 
 
 // Global variables
@@ -171,7 +175,12 @@ app.use('/profile', SignupRoute);
 // This route maps the rooms URL to any path defined in rooms.js
 app.use('/rooms', roomsRoute);
 
-app.use('/profile', SignupRoute);
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 
 

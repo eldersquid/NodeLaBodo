@@ -34,7 +34,7 @@ router.get("/Editprofile/:id", (req, res) => {
         })
         .then((signup) => {
             // call views/video/editVideo.handlebar to render the edit video page
-            res.render("/login/profile", {
+            res.render("login/Editprofile", {
                 signup, // passes video object to handlebar
                 layout: "blank",
                 title: title,
