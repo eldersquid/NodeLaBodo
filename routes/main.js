@@ -8,6 +8,7 @@ const SignUpModel = require("../models/Signup");
 var multer = require("multer");
 var bcrypt = require('bcryptjs');
 const Signup = require('../models/Signup');
+const alertMessage = require('../helpers/messenger');
 
 
 router.get("/", (req, res) => {
@@ -237,11 +238,17 @@ router.get('/mainlogin', (req, res) => {
 });
 
 router.post('/login', (req, res, next) => {
+    let email = req.body.email;
+    let password = req.body.password;
+    console.log("This is the email: ", email);
+    console.log("This is the password: ", password);
+    console.log("Trying to authenticate");
     passport.authenticate('local', {
-        successRedirect: '/views/home', // Route to /video/listVideos URL
-        failureRedirect: '/mainlogin', // Route to /login URL
-        failureFlash: true
-            /* Setting the failureFlash option to true instructs Passport to flash an error message using the
+        successRedirect: '/', // Route to /video/listVideos URL
+        failureRedirect: '/rooms/apartment', // Route to /login URL
+        failureFlash: true,
+        //signupProperty: req.signup
+        /* Setting the failureFlash option to true instructs Passport to flash an error message using the
        message given by the strategy's verify callback, if any. When a failure occur passport passes the message
        object as error */
     })(req, res, next);
