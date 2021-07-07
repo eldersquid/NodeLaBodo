@@ -12,7 +12,13 @@ const Inventory = db.define('inventory', {
         type: Sequelize.STRING
     },
     quantity: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
+    },
+    selling_price: {
+        type: Sequelize.INTEGER
+    },
+    cost_price: {
+        type: Sequelize.INTEGER
     }
 });
 
