@@ -1,12 +1,12 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 // Load user model
-const User = require('../models/Signup');
+const Signup = require('../models/Signup');
 
 function localStrategy(passport) {
-    passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password,
+    passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password,
         done) => {
-        User.findOne({ where: { username: username } })
+        SignupModel.findOne({ where: { email: email } })
             .then(signup => {
                 if (!signup) {
                     return done(null, false, { message: 'No User Found' });

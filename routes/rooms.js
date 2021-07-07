@@ -261,6 +261,52 @@ router.get('/success', (req, res) => {
 	    })
 });
 
+router.get('/bookingList', (req, res) => {
+	const title = "Room Booking List";
+	
+	Room.findAll({
+	
+	order: [
+	['id', 'ASC']
+	],
+	raw: true
+	})
+	.then((room) => {
+	
+	// pass object to listVideos.handlebar
+	res.render('rooms/bookingList', {
+	layout : "admin",
+	title : title,
+	room: room
+	});
+	})
+	.catch(err => console.log(err));
+	});
+
+
+	router.get('/bookingDelete/:id', (req, res) => {
+		let id = req.params.id;
+		Room.findOne({
+			where: {
+				id: id,
+			},
+			attributes: ['id']
+		}).then((room) => {
+			// if record is found, user is owner of video
+			if (room != null) {
+				Room.destroy({
+					where: {
+						id: id
+					}
+				}).then(() => {
+					res.redirect('/rooms/bookingList'); // To retrieve all videos again
+				}).catch(err => console.log(err));
+			} else {
+				alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+				
+			}
+		});
+	});
 
 
 module.exports = router;
