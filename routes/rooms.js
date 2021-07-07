@@ -1,10 +1,15 @@
 const express = require('express');
+const app = express();
 const router = express.Router();
 const Supplier = require('../models/Supplier');
 const Productcat = require('../models/Productcat');
 const Inventory = require('../models/Inventory');
 const Room = require('../models/Room');
 const paypal = require('paypal-rest-sdk');
+const methodOverride = require('method-override');
+const Swal = require('sweetalert2');
+// Method override middleware to use other HTTP methods such as PUT and DELETE
+app.use(methodOverride('_method'));
 
 paypal.configure({
 	'mode': 'sandbox', //sandbox or live
@@ -108,7 +113,6 @@ router.get('/bookingCart/:id', (req, res) => {
 		},
 	  })
 		.then((room) => {
-		  
 		  res.render("rooms/cart", {
 			room, 
 			layout: "blank",
@@ -292,14 +296,14 @@ router.get('/bookingList', (req, res) => {
 			},
 			attributes: ['id']
 		}).then((room) => {
-			// if record is found, user is owner of video
+			
 			if (room != null) {
 				Room.destroy({
 					where: {
 						id: id
 					}
 				}).then(() => {
-					res.redirect('/rooms/bookingList'); // To retrieve all videos again
+					res.redirect('/rooms/bookingList');
 				}).catch(err => console.log(err));
 			} else {
 				alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
@@ -308,5 +312,44 @@ router.get('/bookingList', (req, res) => {
 		});
 	});
 
+router.get("/bookingEdit/:id", (req, res) => {
+	const title = "Edit BookingDetails";
+	Room.findOne({
+	  where: {
+		id: req.params.id,
+	  },
+	})
+	  .then((room) => {
+		res.render("rooms/bookingEdit", {
+		  room,
+		  layout: "admin",
+		  title: title,
+		});
+	  })
+	  .catch((err) => console.log(err)); // To catch no video ID
+  });
+
+  router.put('/bookingEdited/:id', (req, res) => {
+	let addItems = req.body.addItems;
+	let roomNo = req.body.roomNo;
+	let paid = req.body.paid;
+	let bookInDate = req.body.bookInDate;
+	let bookOutDate = req.body.bookOutDate;
+	Room.update({
+		bookInDate,
+		bookOutDate,
+		addItems,
+		roomNo,
+		paid
+	}, {
+	where: {
+	id: req.params.id
+	}
+	}).then(() => {
+	// After saving, redirect to router.get(/listVideos...) to retrieve all updated
+	// videos
+	res.redirect('/rooms/bookingList');
+	}).catch(err => console.log(err));
+	});
 
 module.exports = router;
