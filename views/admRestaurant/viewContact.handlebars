@@ -26,6 +26,7 @@
           <td>{{this.contact_email}}</td>
           <td>{{this.contact_subject}}</td>
           <td>{{this.contact_message}}</td>
+          <td><a href="/admRestaurant/createResponse/{{this.id}}" class="btn btn-warning">Reply</a>
           </td>
           <td>
             <form action="/admRestaurant/deleteContact/{{contact.id}}" method="POST"></form>

@@ -1,4 +1,4 @@
-{{!-- <head>
+<head>
   <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
 </head>
 
@@ -18,20 +18,19 @@
         </tr>
       </thead>
       <tbody>
-        {{#if contact}}
-        {{#each contact}}
+        {{#if response}}
+        {{#each response}}
         <tr>
           <td>{{this.id}}</td>
           <td>{{this.toEmail}}</td>
           <td>{{this.fromEmail}}</td>
           <td>{{this.toSubject}}</td>
           <td>{{this.toMessage}}</td>
-          <td><a href="/admRestaurant/createResponse/{{this.id}}" class="btn btn-warning">Reply</a>
           </td>
           <td>
-            <form action="" method="POST"></form>
 
-            {{!-- <!-- Modal -->
+            <form action="/admRestaurant/deleteResponse/{{contact.id}}" method="POST"></form>
+            <!-- Modal -->
             <div class="modal fade" id="myModal_{{this.id}}" tabindex="-1" role="dialog"
               aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -43,17 +42,17 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    Do you really want to delete this Enquiry? This process cannot be undone.
+                    Do you really want to delete this Response? This process cannot be undone.
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a href="/admRestaurant/deleteContact/{{id}}" class="btn btn-danger">Delete</a>
+                    <a href="/admRestaurant/deleteResponse/{{id}}" class="btn btn-danger">Delete</a>
                   </div>
                 </div>
               </div>
-            </div> --}}
+            </div>
 
-           {{!-- <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#myModal_{{id}}">
+            <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#myModal_{{id}}">
 
               <span>Delete</span>
             </button>
@@ -66,4 +65,4 @@
       </tbody>
     </table>
   </div>
-</div> --}}
+</div>

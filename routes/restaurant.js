@@ -58,6 +58,10 @@ router.post('/createContact', (req,res) => {
 
 });
 
-
+router.get('/Menu', (req, res) => {
+    res.render('restaurant/Menu', {
+        layout: "blank",
+    });
+});
 
 module.exports = router;
