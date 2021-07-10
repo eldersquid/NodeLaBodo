@@ -15,9 +15,9 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                   <div class="col d-flex justify-content">
-                  <a class="btn btn-outline-secondary ml-1" href="">Guest Details</a>
+                  
                   <a class="btn btn-secondary ml-1">Hospitals</a>
-                  <a class="btn btn-outline-secondary ml-1" href="">Occupations</a>
+                  <a class="btn btn-outline-secondary ml-1" href="/rooms/bookingList">Bookings</a>
                   <a class="btn btn-outline-secondary ml-1" href="vehicleList">Vehicles</a>
                   <a class="btn btn-outline-secondary ml-1" href="requestList">Requests</a>
                   <div class="col d-flex justify-content-end">
@@ -148,7 +148,7 @@
 
                               <div class="col-4">
 
-                                <form action="" method="POST">
+                                <form action="/admin/hospitalReset" method="POST">
                                   <!-- Modal -->
                                   <div class="modal fade" id="resetDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -160,7 +160,7 @@
                                           </button>
                                         </div>
                                         <div class="modal-body">
-                                          Do you want to reset all hospitals to default values?
+                                          Do you want to reset all hospitals?
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

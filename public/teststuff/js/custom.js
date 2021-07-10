@@ -200,13 +200,13 @@ jQuery(function($){
 
   //Check to see if the window is top if not then display button
 
-    jQuery(window).scroll(function(){
-      if (jQuery(this).scrollTop() > 300) {
-        jQuery('.scrollToTop').fadeIn();
-      } else {
-        jQuery('.scrollToTop').fadeOut();
-      }
-    });
+    // jQuery(window).scroll(function(){
+    //   if (jQuery(this).scrollTop() > 300) {
+    //     jQuery('.scrollToTop').fadeIn();
+    //   } else {
+    //     jQuery('.scrollToTop').fadeOut();
+    //   }
+    // });
      
     //Click event to scroll to top
 

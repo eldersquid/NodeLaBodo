@@ -15,6 +15,12 @@ const alertMessage = require('../helpers/messenger.js');
 
 // });
 
+function checkOptions(inventory) {
+    for (var i in i) {
+
+    }
+}
+
 router.get('/view', (req, res) => {
     const title = 'Inventory';
     Inventory.findAll({

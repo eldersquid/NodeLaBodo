@@ -1,10 +1,11 @@
 <head>
     <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/sweetalert2/dist/sweetalert2.min.css">
 </head>
 
 <div class="container-fluid">
     <h1 class="display-4">Update Reservation</h1>
-    <form id="contact" action="/admRestaurant/updateReservation/{{reservation.id}}" method="post">
+    <form id="contact4" action="/admRestaurant/updateReservation/{{reservation.id}}" method="post">
 
         <div class="form-group">
             <fieldset>
@@ -65,21 +66,30 @@
             </fieldset>
         </div>
         <div class="col d-flex justify-content-end">
-            <button class="btn btn-primary" type="button" data-target="#modalUpdate" data-toggle="modal">Update</button>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    
-                    <div class="modal-body">
-                        <h5>Reservation Updated Successfully!</h5>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalUpdate">
-                        Ok
-                    </button>
-                </div>
-            </div>
+            <button class="btn btn-primary" type="submit" id="modalUpdate">Update</button>
         </div>
     </form>
+
+    <script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script>
+        $("#modalUpdate").click(function (e) {
+            e.preventDefault();
+
+            var cust_fname = $("#cust_fname").val();
+            var cust_lname = $("#cust_lname").val();
+            var cust_email = $("#cust_email").val();
+            var cust_phone = $("#cust_phone").val();
+            var number_guest = $("#number_guest").val();
+            var cust_date = $("#cust_date").val();
+            var cust_time = $("#cust_time").val();
+            var cust_message = $("#cust_message").val();
+            Swal.fire(
+                'Update!',
+                'Updated Successfully!',
+                'success').then((result) => {
+                    if (result.isConfirmed) {
+                        $("#contact4").submit();
+                    }
+                });
+        });
+    </script>

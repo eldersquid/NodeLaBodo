@@ -3,7 +3,7 @@ const router = express.Router();
 const Reservation = require('../models/Reservation');
 const alertMessage = require('../helpers/messenger.js');
 const Contact = require('../models/Contact');
-// const Response = require('../models/Response');
+const Response = require('../models/Response');
 
 router.get('/viewReservation', (req,res) => {
     const title = 'Reservation';
@@ -152,45 +152,95 @@ router.get('/deleteContact/:id', (req, res) => {
     });
 });
 
+router.get('/createResponse/:id', (req,res) => {
+    const title = 'contact';
+    console.log(req.params.id)
+    Contact.findOne({
+        where: {
+            id: req.params.id
+        },
+        order: [
+            // [reservation.id, 'ASC']
+        ],
+        raw: true
+    })
+        .then((contact) => {
+            console.log(contact);
+            res.render('admRestaurant/createResponse', {
+                layout: "admin",
+                title: title,
+                contact:contact
+            });
+        }).catch(err => console.log(err));
+})
+
+
+
 // Create Response
-// router.post('/createResponse', (req,res) => {
-//     let toEmail = req.body.toEmail
-//     let fromEmail = req.body.fromEmail
-//     let toSubject = req.body.toSubject
-//     let toMessage = req.body.toMessage
+router.post('/createResponse', (req,res) => {
+    let toEmail = req.body.toEmail
+    let fromEmail = req.body.fromEmail
+    let toSubject = req.body.toSubject
+    let toMessage = req.body.toMessage
 
-//     Response.create({
-//         toEmail,
-//         fromEmail,
-//         toSubject,
-//         toMessage
-//     }).then((response) => {
-//         res.redirect('/admRestaurant/viewContact');
-//     }).catch(err => console.log(err))
+    Response.create({
+        toEmail,
+        fromEmail,
+        toSubject,
+        toMessage
+    }).then((response) => {
+        res.redirect('/admRestaurant/viewResponse');
+    }).catch(err => console.log(err))
 
-// });
+});
 
-// // view Contact Us
-// router.get('/viewResponse', (req,res) => {
-//     const title = 'Response';
-//     Contact.findAll({
-//         where: {
-//             // adminId: req.params.id
-//         },
-//         order: [
-//             // [reservation.id, 'ASC']
-//         ],
-//         raw: true
-//     })
-//         .then((response) => {
-//             console.log(response);
-//             res.render('admRestaurant/viewResponse', {
-//                 layout: "admin",
-//                 title: title,
-//                 response:response
-//             });
-//         })
-//         .catch(err => console.log(err));
-// })
+// view Contact Us
+router.get('/viewResponse', (req,res) => {
+    const title = 'Response';
+    Response.findAll({
+        where: {
+            // adminId: req.params.id
+        },
+        order: [
+            // [reservation.id, 'ASC']
+        ],
+        raw: true
+    })
+        .then((response) => {
+            console.log(response);
+            res.render('admRestaurant/viewResponse', {
+                layout: "admin",
+                title: title,
+                response:response
+            });
+        })
+        .catch(err => console.log(err));
+})
+
+// Delete Response
+router.get('/deleteResponse/:id', (req, res) => {
+    let id = req.params.id;
+    // Select * from videos where videos.id=videoID and videos.userId=userID
+    Response.findOne({
+        where: {
+            id: id,
+        },
+        attributes: ['id']
+    }).then((response) => {
+        // if record is found, user is owner of video
+        if (response != null) {
+            response.destroy({
+                where: {
+                    id: id
+                }
+            }).then(() => {
+                res.redirect('/admRestaurant/viewResponse'); // To retrieve all videos again
+            }).catch(err => console.log(err));
+        } else {
+            alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+            
+        }
+    });
+});
 
 module.exports = router;
