@@ -2,6 +2,7 @@ const mySQLDB = require('./DBConfig');
 // const user = require('../models/User');
 // const video = require('../models/Video');
 // const productcat = require('../models/Productcat.js');
+// const product_name = require('../models/product_name.js');
 // const supplier = require('../models/Supplier.js');
 // const inventory = require('../models/Inventory.js');
 // const order = require('../models/Order.js');
