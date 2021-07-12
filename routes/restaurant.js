@@ -13,6 +13,13 @@ router.get('/DineV2', (req, res) => {
     });
 });
 
+// User View Menu
+router.get('/Menu', (req, res) => {
+    res.render('restaurant/Menu', {
+        layout: "blank",
+    });
+});
+
 //Create reservation 
 router.post('/createReservation', (req, res) => {
     let cust_fname = req.body.cust_fname
@@ -58,10 +65,6 @@ router.post('/createContact', (req,res) => {
 
 });
 
-router.get('/Menu', (req, res) => {
-    res.render('restaurant/Menu', {
-        layout: "blank",
-    });
-});
+
 
 module.exports = router;
