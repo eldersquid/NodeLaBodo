@@ -9,7 +9,7 @@ var multer = require("multer");
 var bcrypt = require('bcryptjs');
 const Signup = require('../models/Signup');
 const alertMessage = require('../helpers/messenger');
-s
+
 
 router.get("/", (req, res) => {
     const title = "Home Page";

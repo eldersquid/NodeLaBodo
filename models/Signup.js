@@ -19,10 +19,6 @@ const Signup = db.define('signup', {
     package_deal: {
         type: Sequelize.STRING
     },
-    adminAcc: {
-        type: Sequelize.INTEGER,
-        defaultvalue: 0
-    }
 });
 
 module.exports = Signup;
