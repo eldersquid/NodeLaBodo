@@ -47,7 +47,7 @@ const SignupRoute = require('./routes/profile');
 
 
 
-
+const { replaceCommas } = require('./helpers/hbs');
 // Library to use MySQL to store session objects
 const MySQLStore = require('express-mysql-session');
 const db = require('./config/db');
@@ -80,12 +80,14 @@ adminDB.setUpDB(false); // Set up database with new tables (true)
  *
  * */
 app.engine('handlebars', exphbs({
+    helpers: {
+        replaceCommas: replaceCommas
+    },
     defaultLayout: 'main', // Specify default template views/layout/main.handlebar 
     handlebars: allowInsecurePrototypeAccess(Handlebars)
 }));
+
 app.set('view engine', 'handlebars');
-
-
 // Body parser middleware to parse HTTP body in order to read HTTP data
 app.use(bodyParser.urlencoded({
     extended: false
