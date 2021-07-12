@@ -10,6 +10,8 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const cors = require('cors');
+
+
 const passport = require('passport');
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
@@ -40,8 +42,8 @@ async function sendMail() {
             from: 'GABE :) <gabewungkana5@gmail.com>',
             to: 'progenji81@gmail.com',
             subject: "Reset Password",
-            text: "Your new password is lollol",
-            html: "<h1>Your new password is lollol</h1>",
+            text: 'Dear ' + name + ',\n\nThis is your new password, lololol.   \n Sincerely,\nHotel La Bodo'
+
         };
 
         const result = await transport.sendMail(mailOptions);

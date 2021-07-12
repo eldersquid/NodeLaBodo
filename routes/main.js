@@ -8,6 +8,7 @@ const SignUpModel = require("../models/Signup");
 var multer = require("multer");
 var bcrypt = require('bcryptjs');
 const Signup = require('../models/Signup');
+const Staff = require('../models/Staff')
 const alertMessage = require('../helpers/messenger');
 
 
@@ -254,6 +255,15 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+// Staff Sign Up
+router.get('/staffsignup', (req, res) => {
+    res.render('login/staffsignup') // 
+});
+
+// Staff Login
+router.get('/stafflogin', (req, res) => {
+    res.render('login/stafflogin') // 
+});
 
 // Logout User
 router.get("/logout", (req, res) => {
