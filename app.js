@@ -42,7 +42,7 @@ async function sendMail() {
             from: 'GABE :) <gabewungkana5@gmail.com>',
             to: 'progenji81@gmail.com',
             subject: "Reset Password",
-            text: 'Dear ' + name + ',\n\nThis is your new password, lololol.   \n Sincerely,\nHotel La Bodo'
+            text: 'Dear  ,\n\nThis is your new password, lololol.   \n Sincerely,\nHotel La Bodo'
 
         };
 
@@ -111,6 +111,7 @@ const FlashMessenger = require('flash-messenger');
 const app = express();
 
 
+
 adminDB.setUpDB(false); // Set up database with new tables (true)
 
 // Handlebars Middleware
@@ -132,6 +133,10 @@ app.engine('handlebars', exphbs({
 }));
 
 app.set('view engine', 'handlebars');
+app.set('view engine', 'ejs');
+
+
+
 // Body parser middleware to parse HTTP body in order to read HTTP data
 app.use(bodyParser.urlencoded({
     extended: false

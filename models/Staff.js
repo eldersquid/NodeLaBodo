@@ -4,7 +4,7 @@ const Staff = db.define('staff', {
     staff_name: {
         type: Sequelize.STRING
     },
-    ID: {
+    staff_ID: {
         type: Sequelize.INTEGER
     },
     staff_email: {
