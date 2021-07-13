@@ -10,7 +10,7 @@ const Staff = db.define('staff', {
     staff_email: {
         type: Sequelize.STRING
     },
-    password: {
+    staff_password: {
         type: Sequelize.STRING
     },
 });
