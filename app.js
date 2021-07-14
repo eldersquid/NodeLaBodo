@@ -133,7 +133,7 @@ app.engine('handlebars', exphbs({
 }));
 
 app.set('view engine', 'handlebars');
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 
 
 
