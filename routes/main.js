@@ -255,10 +255,7 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-// Staff Sign Up
-router.get('/staffsignup', (req, res) => {
-    res.render('login/staffsignup') // 
-});
+
 
 // Staff Login
 router.get('/stafflogin', (req, res) => {
