@@ -8,7 +8,7 @@ const SignUpModel = require("../models/Signup");
 var multer = require("multer");
 var bcrypt = require('bcryptjs');
 const Signup = require('../models/Signup');
-const Staff = require('../models/Staff')
+// const Staff = require('../models/Staff')
 const alertMessage = require('../helpers/messenger');
 
 

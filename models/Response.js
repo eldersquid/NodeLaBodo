@@ -5,9 +5,6 @@ const Response = db.define('response', {
     toEmail: {
         type: Sequelize.STRING
     },
-    fromEmail: {
-        type: Sequelize.STRING
-    },
     toSubject: {
         type: Sequelize.STRING
     },
