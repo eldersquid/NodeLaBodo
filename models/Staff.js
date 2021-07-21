@@ -15,4 +15,4 @@ const Staff = db.define('staff', {
     },
 });
 
-module.exports = Staff;
+// module.exports = Staff;

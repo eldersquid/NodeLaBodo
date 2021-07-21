@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const SignupModel = require('../models/Signup');
 
 function localStrategy(passport) {
-    console.log("pls work rhjkdfngeksjrnsr");
     passport.use(new LocalStrategy({ emailField: 'email' }, (email, password, done) => {
         console.log("This is the email: ", email);
         console.log("This is the password: ", password);

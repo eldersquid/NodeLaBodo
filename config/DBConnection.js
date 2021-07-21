@@ -1,8 +1,8 @@
+const { admin } = require('googleapis/build/src/apis/admin');
 const mySQLDB = require('./DBConfig');
 // const user = require('../models/User');
-// const video = require('../models/Video');
+// const admin = require('../models/Admin.js');
 // const productcat = require('../models/Productcat.js');
-// const product_name = require('../models/product_name.js');
 // const supplier = require('../models/Supplier.js');
 // const inventory = require('../models/Inventory.js');
 // const order = require('../models/Order.js');
@@ -19,6 +19,37 @@ const setUpDB = (drop) => {
             in video.
             */
             // user.hasMany(video);
+
+            // Supplier
+            admin.hasMany(Supplier, {foreignKey: 'supplier_id'});
+            supplier.belongsTo(Admin, {foreignKey: 'supplier_id'});
+
+            supplier.hasMany(Productcat, {foreignKey: 'productcat_id'});
+            productcat.belongsTo(Supplier, {foreignKey: 'productcat_id'});
+
+            supplier.hasMany(Inventory, { foreignKey: 'inventory_id' });
+            inventory.belongsTo(Supplier, { foreignKey: 'inventory_id' });
+
+            // Inventory
+            admin.hasMany(Inventory, {foreignKey: 'inventory_id'});
+            inventory.belongsTo(Admin, {foreignKey: 'inventory_id'});
+
+            inventory.hasOne(Productcat, { foreignKey: 'productcat_id' });
+            productcat.belongsTo(Inventory, { foreignKey: 'productcat_id' });
+
+            inventory.hasOne(Supplier, { foreignKey: 'supplier_id' });
+            supplier.belongsTo(Inventory, { foreignKey: 'supplier_id' });
+
+            // Orders
+            admin.hasMany(Order, { foreignKey: 'order_id' });
+            order.belongsTo(Admin, { foreignKey: 'order_id' });
+
+            order.hasOne(Supplier, { foreignKey: 'supplier_id' });
+            supplier.belongsTo(Order, { foreignKey: 'supplier_id' });
+
+            order.hasOne(Inventory, { foreignKey: 'inventory_id' });
+            inventory.belongsTo(Order, { foreignKey: 'inventory_id' });
+            
             mySQLDB.sync({ // Creates table if none exists
                 force: drop
             }).then(() => {

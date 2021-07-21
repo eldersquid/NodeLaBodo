@@ -65,6 +65,26 @@ router.post('/createContact', (req,res) => {
 
 });
 
-
+router.get('/uploadFoodPic/:id', (req,res) => {
+    const title = 'foodgallery';
+    console.log(req.params.id)
+    FoodGallery.findAll({
+        where: {
+            // id: req.params.id
+        },
+        order: [
+            // [reservation.id, 'ASC']
+        ],
+        raw: true
+    })
+        .then((foodgallery) => {
+            console.log(foodgallery);
+            res.render('restaurant/DinV2', {
+                layout: "blank",
+                title: title,
+                foodgallery:foodgallery
+            });
+        }).catch(err => console.log(err));
+})
 
 module.exports = router;

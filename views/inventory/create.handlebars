@@ -1,3 +1,5 @@
+<script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="../../public/sweetalert2/dist/sweetalert2.css">
 <script>
     function elimCompany(el){
         companyName = el.value;
@@ -15,7 +17,7 @@
 <div class="container-fluid">
     <h1 class="display-5">Create New Item</h1>
 
-    <form method="POST" action="/inventory/create">
+    <form method="POST" action="/inventory/create" id="form" >
         <div class="form-group">
 
             <label for="item_name">Item Name</label>
@@ -26,11 +28,11 @@
         <div class="form-group">
 
             <label for="supplier">Supplier</label>
-            <select class="form-control" id="supplier" name="supplier"  onchange="elimCompany(this)"required>
+            <select class="form-control" id="supplier" name="supplier"  onchange="elimCompany(this)" required>
                 <option value="none" selected disabled hidden></option>
                 {{#if supplier}}
                 {{#each supplier}}
-                <option value="{{company_name}}" style="text-transform: capitalize;">{{company_name}}</option>
+                <option value="{{email}}" style="text-transform: capitalize;">{{email}}</option>
                 {{/each}}
                 {{/if}}
 
@@ -45,7 +47,7 @@
                 <option value="none" selected disabled hidden></option>
                 {{#if supplier}}
                 {{#each supplier}}
-                <option id="{{product_name}}" value="{{company_name}}" style="text-transform: capitalize;">{{product_name}}</option>
+                <option id="{{product_name}}" value="{{email}}" style="text-transform: capitalize;">{{product_name}}</option>
                 {{/each}}
                 {{/if}}
 
@@ -74,14 +76,47 @@
         
         
         </div>
-        <input type="submit" value="Submit" class="btn btn-primary" />
+        <button type="submit" value="Submit" id="submit-btn" data-toggle="modal" data-target="#modalReply"
+            class="btn btn-primary">Submit</button>
     </form>
 </div>
+<script>
+    $("#submit-btn").click(function (e) {
+        e.preventDefault();
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
 
-{{!-- <script>
-    $("#supplier").on("change", ()=>{
-        company_name = this.value;
-        var items = $("#product_name").children().value;
-        console.log($(this).text);
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "Confirm to add the new Item?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Comfirm',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    'Added!',
+                    'New Item has been added.',
+                    'success'
+                )
+                $("#form").submit()
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Item has not been added.',
+                    'error'
+                )
+            }
+        })
     })
-</script> --}}
+</script>
