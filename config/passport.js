@@ -37,7 +37,7 @@ function localStrategy(passport) {
     // User object is retrieved by userId from session and
     // put into req.user
     passport.deserializeUser((email, done) => {
-        User.findByPk(email)
+        SignupModel.findByPk(email)
             .then((signup) => {
                 done(null, signup); // user object saved in req.session
             })

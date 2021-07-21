@@ -8,7 +8,7 @@ const SignUpModel = require("../models/Signup");
 var multer = require("multer");
 var bcrypt = require('bcryptjs');
 const Signup = require('../models/Signup');
-// const Staff = require('../models/Staff')
+const Staff = require('../models/Staff')
 const alertMessage = require('../helpers/messenger');
 
 
@@ -62,78 +62,10 @@ router.get("/galleryCancelBooking", (req, res) => {
     res.render("user/facilities/facilities_cancelbooking"); //
 });
 
-// Sign Up
+// User Sign Up
 router.get("/signup", (req, res) => {
     res.render("login/signup"); //
 });
-// //var uploadnone = multer();
-// router.post("/login/signup", (req, res) => {
-//     let errors = [];
-//     // Retrieves fields from register page from request body
-//     let { name, email, phone_num, password, password2, package_deal } = req.body;
-//     // Checks if both passwords entered are the same
-//     if (password !== password2) {
-//         errors.push({ text: "Passwords do not match" });
-//     }
-//     // Checks that password length is more than 4
-//     if (password.length < 4) {
-//         errors.push({ text: "Password must be at least 4 characters" });
-//     }
-//     if (errors.length > 0) {
-//         res.render("login/signup", {
-//             errors,
-//             name,
-//             email,
-//             phone_num,
-//             password,
-//             password2,
-//         });
-//     } else {
-//         // If all is well, checks if user is already registered
-//         SignUpModel.findAll({ where: { email: email } }).then((signup) => {
-//             if (signup) {
-//                 // If user is found, that means email has already been
-//                 // registered
-//                 res.render("login/signup", {
-//                     error: signup.email + " already registered",
-//                     name,
-//                     email,
-//                     phone_num,
-//                     password,
-//                     password2,
-//                     package_deal
-//                 });
-//             } else {
-//                 // Encrypt the password
-
-//                 bcrypt.genSalt(10, function(err, salt) {
-//                     bcrypt.hash(password, salt, function(err, hash) {
-//                         // Store hash in your password DB.
-//                         if (err) {
-//                             throw err;
-//                         } else {
-//                             password = hash;
-
-//                             // Create new user record
-//                             SignUpModel.create({ name, email, phone_num, password, password2, package_deal })
-//                                 .then((signup) => {
-//                                     alertMessage(
-//                                         res,
-//                                         "success",
-//                                         signup.name + " added.Please login",
-//                                         "fas fa-sign-in-alt",
-//                                         true
-//                                     );
-//                                     Res.render("/profile", { user: req.user.dataValues });
-//                                 })
-//                                 .catch((err) => console.log(err));
-//                         }
-//                     });
-//                 });
-//             }
-//         });
-//     }
-// });
 
 
 router.post("/login/signup", (req, res) => {
@@ -191,15 +123,6 @@ router.post("/login/signup", (req, res) => {
                                 console.log("Creating the user's account");
                                 SignUpModel.create({ name, username, email, phone_num, password, package_deal })
                                     .then((signup) => {
-                                        // alertMessage(
-                                        //     res,
-                                        //     "success",
-                                        //     // if successfull.name doesnt work just put name instead
-                                        //     successfull.name + " added. Please login.",
-                                        //     "fas fa-sign-in-alt",
-                                        //     true
-                                        // );
-                                        // , { user: req.user.dataValues }
                                         res.redirect("/profile/profile/" + signup.id);
                                     }).catch(err => console.log(err));
 
@@ -212,28 +135,8 @@ router.post("/login/signup", (req, res) => {
     }
 });
 
-// Display the Profile
-// router.get("/profile/:id", (req, res) => {
-//     const title = "Edit Profile";
-//     Signup.findOne({
-//             where: {
-//                 id: req.params.id,
-//             },
-//         })
-//         .then((signup) => {
-//             // call views/video/editVideo.handlebar to render the edit video page
-//             res.render("login/userprofile", {
-//                 signup, // passes video object to handlebar
-//                 layout: "blank",
-//                 title: title,
 
-//             });
-//         })
-//         .catch((err) => console.log(err)); // To catch no video ID
-// });
-
-
-// Login
+// User Login
 router.get('/mainlogin', (req, res) => {
     res.render('login/mainlogin') // 
 });
@@ -245,8 +148,8 @@ router.post('/login', (req, res, next) => {
     console.log("This is the password: ", password);
     console.log("Trying to authenticate");
     passport.authenticate('local', {
-        successRedirect: '/', // Route to /video/listVideos URL
-        failureRedirect: '/rooms/apartment', // Route to /login URL
+        successRedirect: '/home', // Route to /video/listVideos URL
+        failureRedirect: '/', // Route to /login URL
         failureFlash: true,
         //signupProperty: req.signup
         /* Setting the failureFlash option to true instructs Passport to flash an error message using the
@@ -255,11 +158,84 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+// Staff Signup
+router.get("/staffsignup", (req, res) => {
+    res.render("login/staffsignup"); //
+});
+
+router.post('/login/staffsignup', (req, res) => {
+    let errors = [];
+    // Retrieves fields from register page from request body
+    let { staff_name, staff_ID, staff_email, staff_password, staff_repeat } = req.body;
+    // Checks if both passwords entered are the same
+    if (staff_password !== staff_repeat) {
+        errors.push({ text: 'Passwords do not match' });
+    }
+    // Checks that password length is more than 4
+    if (staff_password.length < 4) {
+        errors.push({ text: 'Password must be at least 4 characters' });
+    }
+    if (errors.length > 0) {
+        res.render('login/staffsignup', {
+            errors,
+            staff_name,
+            staff_ID,
+            staff_email,
+            staff_password,
+            staff_repeat
+        });
+    } else {
+        // If all is well, checks if user is already registered
+        Staff.findOne({ where: { staff_email: req.body.staff_email } })
+            .then(staff => {
+                if (staff) {
+                    // If user is found, that means email has already been
+                    // registered
+                    res.render('login/staffsignup', {
+                        error: staff.email + ' already registered',
+                        staff_name,
+                        staff_ID,
+                        staff_email,
+                        staff_password,
+                        staff_repeat,
+                    });
+                } else {
+                    // Encrypt the password
+                    bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(staff_password, salt, function(err, hash) {
+                            // Store hash in your password DB.
+                            if (err) {
+                                throw err;
+                            } else {
+                                staff_password = hash;
+
+                                // Create new user record
+                                Staff.create({ staff_name, staff_ID, staff_email, staff_password })
+                                    .then(staff => {
+                                        alertMessage(res, 'success', staff.staff_name + ' added.Please login', 'fas fa-sign-in-alt', true);
+                                        res.redirect('/stafflogin');
+                                    })
+                                    .catch(err => console.log(err));
+                            }
+                        });
+                    });
+                }
+            });
+    }
+});
 
 
 // Staff Login
+
 router.get('/stafflogin', (req, res) => {
     res.render('login/stafflogin') // 
+});
+router.post('/login/stafflogin', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/admin/hospitalList', // Route to /video/listVideos URL
+        failureRedirect: '/stafflogin', // Route to /login URL
+        failureFlash: true
+    })(req, res, next);
 });
 
 // Logout User

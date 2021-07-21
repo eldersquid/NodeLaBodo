@@ -7,38 +7,38 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
-                        <form method="POST" class="register-form" id="register-form">
+                        <form action='/login/staffsignup'method="post" class="register-form" id="register-form">
                             <div class="form-group">
                                 <label for="ID"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" class="form-control" name="staff_name" value="{{staff_name}}" placeholder="Name">
                             </div>
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" class="form-control" name="ID" value="{{ID}}" placeholder="001">
+                                <input type="text" class="form-control" name="staff_ID" value="{{staff_ID}}" placeholder="001">
                             </div>
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="text" class="form-control" name="staff_email" value="{{staff_email}}" placeholder="Name">
+                                <input type="text" class="form-control" name="staff_email" value="{{staff_email}}" placeholder="Email">
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" class="form-control" name="staff_password" value="{{staff_password}}" placeholder="">
+                                <input type="password" class="form-control" name="staff_password" value="{{staff_password}}" placeholder="Password">
                             </div>
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" class="form-control" name="staff_repeat" value="{{staff_repeat}}" placeholder="">
+                                <input type="password" class="form-control" name="staff_repeat" value="{{staff_repeat}}" placeholder="Repeat Password">
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree to the  <a href="#" class="term-service">Terms Of Service</a></label>
+                                <label for="agree-term" class="label-agree-term"></span></span>I agree to the  <a href="#" class="term-service">Terms Of Service</a></label>
                             </div>
                             <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                                 <button type="submit" class="btn btn-secondary submit p-3">Register</button>
                             </div>
                         </form>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="img/images/signup-image.jpg" alt="sign up image"></figure>
+                        <figure><img src="img/signup-image.jpg" alt="sign up image"></figure>
                     </div>
                 </div>
             </div>
