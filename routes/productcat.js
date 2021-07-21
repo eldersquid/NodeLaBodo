@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Productcat = require('../models/Productcat');
 const alertMessage = require('../helpers/messenger.js');
-
+const Swal = require('sweetalert2');
 
 router.get('/view', (req, res) => {
     const title = 'Product Category';

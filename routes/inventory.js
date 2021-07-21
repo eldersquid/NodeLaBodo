@@ -3,23 +3,8 @@ const router = express.Router();
 const Supplier = require('../models/Supplier');
 const Productcat = require('../models/Productcat');
 const Inventory = require('../models/Inventory');
-const alertMessage = require('../helpers/messenger.js');
+const Swal = require('sweetalert2');
 
-// router.get('/view', (req, res) => {
-//     const title = 'Inventory';
-
-//     res.render('inventory/view', {
-//         layout: "admin",
-//         title: title
-//     });
-
-// });
-
-function checkOptions(inventory) {
-    for (var i in i) {
-
-    }
-}
 
 router.get('/view', (req, res) => {
     const title = 'Inventory';
@@ -46,38 +31,23 @@ router.get('/view', (req, res) => {
 router.get('/showCreate', async (req, res) => {
     const title = 'Inventory';
 
-    const getProductcatData = () => {
-        const productcat = Productcat.findAll({
-            where: {
-                // adminId: req.admin.id
-            },
-            order: [
-                ['id', 'ASC']
-            ],
+    Supplier.findAll({
+        where: {
+            // adminId: req.admin.id
+        },
+        order: [
+            ['id', 'ASC']
+        ],
             raw: true
-        })
-        return productcat
-    };
-
-    const getSupplierData = () => {
-        const supplier = Supplier.findAll({
-            where: {
-                // adminId: req.admin.id
-            },
-            order: [
-                ['id', 'ASC']
-            ],
-            raw: true
-        })
-        return supplier
-    };
-
-    res.render('inventory/create', {
-        layout: "admin",
-        title: title,
-        supplier: await getSupplierData(),
-        productcat: await getProductcatData()
-    }); 
+    })
+        .then((supplier) => {
+            res.render('inventory/create', {
+                layout: "admin",
+                title: title,
+                    supplier: supplier
+                });
+            }
+        )
 });
 
 router.post('/create', (req, res) => {

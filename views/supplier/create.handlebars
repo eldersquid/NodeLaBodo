@@ -1,7 +1,9 @@
+<script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="../../public/sweetalert2/dist/sweetalert2.css">
 <div class="container-fluid">
     <h1 class="display-5">Create New Supplier</h1>
 
-    <form method="POST" action="/supplier/create">
+    <form method="POST" action="/supplier/create" id="form">
         <div class="form-group">
 
             <label for="company_name">Company Name</label>
@@ -43,6 +45,47 @@
             </select>
 
         </div>
-        <input type="submit" value="Submit" class="btn btn-primary" />
+        <button type="submit" value="Submit" id="submit-btn" data-toggle="modal" data-target="#modalReply"
+            class="btn btn-primary">Submit</button>
     </form>
 </div>
+<script>
+    $("#submit-btn").click(function (e) {
+        e.preventDefault();
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "Confirm to add the new Supplier?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Comfirm',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    'Added!',
+                    'New Supplier has been added.',
+                    'success'
+                )
+                $("#form").submit()
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Supplier has not been added.',
+                    'error'
+                )
+            }
+        })
+    })
+</script>

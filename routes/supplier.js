@@ -4,31 +4,8 @@ const Supplier = require('../models/Supplier');
 const Productcat = require('../models/Productcat');
 const alertMessage = require('../helpers/messenger.js');
 
-// router.get('/view', (req, res) => {
-//     const title = 'Supplier';
-
-//     res.render('supplier/view', {
-//         layout: "admin",
-//         title: title
-//     });
-
-// });
-
 router.get('/view', async (req, res) => {
     const title = 'Supplier';
-
-    const getProductcatData = () => {
-        const productcat = Productcat.findAll({
-            where: {
-                // adminId: req.admin.id
-            },
-            order: [
-                ['id', 'ASC']
-            ],
-            raw: true
-        })
-        return productcat
-    };
 
     const getSupplierData = () => {
         const supplier = Supplier.findAll({
@@ -46,8 +23,7 @@ router.get('/view', async (req, res) => {
     res.render('supplier/view', {
         layout: "admin",
         title: title,
-        supplier: await getSupplierData(),
-        productcat: await getProductcatData()
+        supplier: await getSupplierData()
     });
 
 });
