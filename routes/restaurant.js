@@ -13,6 +13,13 @@ router.get('/DineV2', (req, res) => {
     });
 });
 
+// User View Menu
+router.get('/Menu', (req, res) => {
+    res.render('restaurant/Menu', {
+        layout: "blank",
+    });
+});
+
 //Create reservation 
 router.post('/createReservation', (req, res) => {
     let cust_fname = req.body.cust_fname
@@ -58,10 +65,26 @@ router.post('/createContact', (req,res) => {
 
 });
 
-router.get('/Menu', (req, res) => {
-    res.render('restaurant/Menu', {
-        layout: "blank",
-    });
-});
+router.get('/uploadFoodPic/:id', (req,res) => {
+    const title = 'foodgallery';
+    console.log(req.params.id)
+    FoodGallery.findAll({
+        where: {
+            // id: req.params.id
+        },
+        order: [
+            // [reservation.id, 'ASC']
+        ],
+        raw: true
+    })
+        .then((foodgallery) => {
+            console.log(foodgallery);
+            res.render('restaurant/DinV2', {
+                layout: "blank",
+                title: title,
+                foodgallery:foodgallery
+            });
+        }).catch(err => console.log(err));
+})
 
 module.exports = router;

@@ -1,11 +1,13 @@
 
   <link rel="stylesheet" href="/teststuff/css/book.css"/>
-  <link rel="stylesheet" href="/teststuff/css/booking_colors.css"/>
   <link rel="stylesheet" href="/teststuff/css/jquery.fancybox.min.css"/>
-  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/teststuff/css/owl.carousel.css"/>
+  <link rel="stylesheet" href="/teststuff/css/owl.transitions.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"/>
+  <link rel="stylesheet" href="/teststuff/css/Addcart.css"/>
 
 
-
+ {{>_navbar}}  
 
 
 <br>
@@ -14,7 +16,7 @@
 <br>
 <!-- Modal -->
 <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" id="cart">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" style="max-width:40%;" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Cart</h5>
@@ -52,7 +54,7 @@
       <div class="row">
             <div class="col">
                 <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="static/image/pasta.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/pasta.jpg" alt="Card image cap">
                     <div class="card-block">
                         <h4 class="card-title">Pasta</h4>
                         <p class="card-text">Price: $15</p>
@@ -62,7 +64,7 @@
             </div>
             <div class="col">
                 <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="static/image/pizza.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/pizza.jpg" alt="Card image cap">
                     <div class="card-block">
                         <h4 class="card-title">Pizza</h4>
                         <p class="card-text">Price: $16</p>
@@ -73,7 +75,7 @@
 
             <div class="col">
                 <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="static/image/Fried_noodle.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/Fried_noodle.jpg" alt="Card image cap">
                     <div class="card-block">
                         <h4 class="card-title">Fried Noodle</h4>
                         <p class="card-text">Price: $14</p>
@@ -86,7 +88,7 @@
       <div class="row">
             <div class="col">
                 <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="static/image/chicken_rice.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/chicken_rice.jpg" alt="Card image cap">
                     <div class="card-block">
                         <h4 class="card-title">Chicken Rice</h4>
                         <p class="card-text">Price: $12</p>
@@ -96,7 +98,7 @@
             </div>
             <div class="col">
                 <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="static/image/Baked_Rice.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/Baked_Rice.jpg" alt="Card image cap">
                     <div class="card-block">
                         <h4 class="card-title">Baked Rice</h4>
                         <p class="card-text">Price: $14</p>
@@ -107,7 +109,7 @@
 
             <div class="col">
                 <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="static/image/fried_rice.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/fried_rice.jpg" alt="Card image cap">
                     <div class="card-block">
                         <h4 class="card-title">Fried Rice</h4>
                         <p class="card-text">Price: $20</p>
@@ -120,7 +122,7 @@
       <div class="row">
             <div class="col">
                 <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="static/image/mushroom_soup.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/mushroom_soup.jpg" alt="Card image cap">
                     <div class="card-block">
                         <h4 class="card-title">Mushroom Soup</h4>
                         <p class="card-text">Price: $10</p>
@@ -130,7 +132,7 @@
             </div>
             <div class="col">
                 <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="static/image/steak.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/steak.jpg" alt="Card image cap">
                     <div class="card-block">
                         <h4 class="card-title">Steak</h4>
                         <p class="card-text">Price: $30</p>
@@ -141,7 +143,7 @@
 
             <div class="col">
                 <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="static/image/Burger.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/Burger.jpg" alt="Card image cap">
                     <div class="card-block">
                         <h4 class="card-title">Burger</h4>
                         <p class="card-text">Price: $25</p>

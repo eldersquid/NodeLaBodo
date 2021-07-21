@@ -6,19 +6,19 @@
     <form method="POST" action="/admRestaurant/createResponse/{{Contact.id}}" id="response">
         <div class="form-group">
             <label for="toEmail">To: </label>
-            <input class="form-control" id="toEmail" name="toEmail" required type="email" value="{{contact.contact_email}}">
+            <input class="form-control" id="toEmail" name="toEmail"  type="email" value="{{contact.contact_email}}" readonly>
         </div>
         <div class="form-group" hidden>
 
             <label for="fromEmail">From: </label>
-            <input class="form-control" id="fromEmail" name="fromEmail" required type="email" value="HotelLaBodo@gmail.com">
+            <input class="form-control" id="fromEmail" name="fromEmail" required type="email" value="Hotel.La.Bodo@gmail.com">
 
 
         </div>
         <div class="form-group">
 
             <label for="toSubject">Subject: </label>
-            <input class="form-control" id="toSubject" name="toSubject" required type="text" value="">
+            <input class="form-control" id="toSubject" name="toSubject" required type="text" value="{{contact.contact_subject}}" readonly>
 
 
         </div>
@@ -41,10 +41,7 @@
     $("#replySubmit").click(function (e) {
         e.preventDefault();
 
-        var toEmail = $("#toEmail").val();
-        var fromEmail = $("#fromEmail").val();
-        var toSubject = $("#toSubject").val();
-        var toMessage = $("#toMessage").val();
+       
         Swal.fire(
             'Submitted!',
             'Respone Recieved!',

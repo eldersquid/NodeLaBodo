@@ -10,7 +10,52 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const cors = require('cors');
+
+
+
 const passport = require('passport');
+const nodemailer = require('nodemailer')
+const { google } = require('googleapis')
+const CLIENT_ID = '855734212452-4ti1go2pp7ks8os3o98ragh1k8gh2mtb.apps.googleusercontent.com'
+const CLIENT_SECRET = '6Wm2bPALLsbf2s_H_R-jJpa1'
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04wi_I-DuOpscCgYIARAAGAQSNwF-L9Ir2mNKa0_6ofjTLeipoCL6YqO2WPMgFOHd9rNC8RLr4TPBVj4PGQJU5B0i1V-2qsrqnAw';
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
+
+async function sendMail() {
+
+    try {
+        const accessToken = await oAuth2Client.getAccessToken();
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                type: 'OAuth2',
+                user: 'gabewungkana5@gmail.com',
+                clientId: CLIENT_ID,
+                clientSecret: CLIENT_SECRET,
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken
+            }
+        })
+
+        const mailOptions = {
+            from: 'GABE :) <gabewungkana5@gmail.com>',
+            to: 'progenji81@gmail.com',
+            subject: "Reset Password",
+            text: 'Dear  ,\n\nThis is your new password, lololol.   \n Sincerely,\nHotel La Bodo'
+
+        };
+
+        const result = await transport.sendMail(mailOptions);
+        return result;
+
+    } catch (error) {
+        return error
+    }
+}
+sendMail().then(result => console.log('Email sent...', result))
+    .catch(error => console.log(error.message));
 /*
  * Loads routes file main.js in routes directory. The main.js determines which function
  * will be called based on the HTTP request and URL.
@@ -67,6 +112,7 @@ const FlashMessenger = require('flash-messenger');
 const app = express();
 
 
+
 adminDB.setUpDB(false); // Set up database with new tables (true)
 
 // Handlebars Middleware
@@ -88,6 +134,10 @@ app.engine('handlebars', exphbs({
 }));
 
 app.set('view engine', 'handlebars');
+// app.set('view engine', 'ejs');
+
+
+
 // Body parser middleware to parse HTTP body in order to read HTTP data
 app.use(bodyParser.urlencoded({
     extended: false
@@ -128,6 +178,7 @@ app.use(session({
 app.use(flash());
 app.use(FlashMessenger.middleware);
 const authenticate = require('./config/passport');
+const SendmailTransport = require('nodemailer/lib/sendmail-transport');
 authenticate.localStrategy(passport);
 
 
