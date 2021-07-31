@@ -51,7 +51,24 @@
           </div>
       </div>
 <hr>
+
+
       <div class="row">
+        {{#if foodcart }}
+                                            
+            {{#each foodcart }}
+               <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="{{cardPhoto}}" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">{{cardName}}</h4>  
+                        <p class="card-text">Price: ${{cardPrice}}</p>
+                      <button type="button" data-name="{{cardName}}" data-price="{{cardPrice}}" class="add-to-cart btn btn-primary">Add to cart</button>
+                   </div>
+                </div>
+            </div> 
+            {{/each}}
+        {{/if}}
             <div class="col">
                 <div class="card" style="width: 20rem;">
                     <img class="card-img-top" src="/img/pasta.jpg" alt="Card image cap">
