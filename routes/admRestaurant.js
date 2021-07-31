@@ -5,7 +5,7 @@ const alertMessage = require('../helpers/messenger.js');
 const foodPic = require('../helpers/foodPicture.js');
 const Contact = require('../models/Contact');
 const Response = require('../models/Response');
-
+const FoodCart = require('../models/FoodCart');
 const multer = require('multer');
 const path = require('path');
 // Required for file upload
@@ -354,6 +354,23 @@ router.post('/foodPic', (req, res) => {
     });
 });
 
+// Update Picture
+router.post('/updateFoodPic/:id', (req, res) => {
+    let foodPhoto = req.body.foodPhoto;
+
+    FoodGallery.update({
+
+    }, {
+        where: {
+            id: req.params.id
+        }
+    }).then(() => {
+        res.redirect('/admRestaurant/viewFoodGallery'); 
+as
+    }).catch(err => console.log(err));
+});
+
+
 // View Uploaded Images 
 router.get('/viewFoodGallery', (req,res) => {
     const title = 'FoodGallery';
@@ -433,5 +450,45 @@ const storage = multer.diskStorage({
 	filename: (req, file, callback) => {
 		callback(null, req.user.id + '-' + Date.now() + path.extname(file.originalname));
 	}
+});
+
+// View Uploaded Images for Menu
+router.get('/viewFoodCart', (req,res) => {
+    const title = 'FoodCart';
+    FoodCart.findAll({
+        where: {
+            // adminId: req.params.id
+        },
+        order: [
+            // [reservation.id, 'ASC']
+        ],
+        raw: true
+    })
+        .then((foodcart) => {
+            res.render('admRestaurant/viewFoodCart', {
+                layout: "admin",
+                title: title,
+                foodcart:foodcart
+            });
+        })
+        .catch(err => console.log(err));
+});
+
+// Upload Picture
+router.post('/UploadMenu', (req, res) => {
+	let cardPhoto_data = req.body.trueFilePicture;
+    let cardName = req.body.cardName
+    let cardPrice = req.body.cardPrice
+	const title = "Upload Food Menu";
+    FoodMenu.create({
+        cardName,
+        cardPrice,
+        cardPhoto : cardPhoto_data
+
+    }).then((foodcart) => {
+            res.redirect('/admRestaurant/viewFoodCart');
+        }).catch(err => console.log(err));
+
+
 });
 module.exports = router;

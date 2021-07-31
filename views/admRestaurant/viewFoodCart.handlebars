@@ -5,21 +5,37 @@
 <link href="/teststuff/style.css" rel="stylesheet"> --}}
 
 <div class="container-fluid">
-    <h1 style="font-size = 3.5rem;">View Food Gallery</h1>
+    <h1 style="font-size = 3.5rem;">View Menu</h1>
     <hr>
     <div class="card-body">
         <p></p>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPictures" name="addPictures"
-            value="addPictures">Add Image</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMenu" name="addMenu"
+            value="addMenu">Add Food Items</button>
     </div>
-    <!-- Start Gallery -->
+    <!-- Start Menu -->
     <section>
         <div class="row d-flex " style="width: 1000px;">
-            {{#if foodgallery}}
-            {{#each foodgallery}}
+            {{#if foodcart}}
+            {{#each foodcart}}
             <div class="col-sm-4 mt-3">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="col">
+                        <div class="card" style="width: 20rem;">    
+                            <img class="card-img-top" src="{{cardPhoto}}" alt="Card image cap">
+                            <div class="card-block">
+                                <h4 class="card-title">{{cardName}}</h4>
+                                <p class="card-text">Price: {{cardPrice}}</p>
+                                {{!-- <button type="button" data-name="{{cardName}}" data-price="15"
+                                    class="add-to-cart btn btn-primary">Add to cart</button> --}}
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#uploadMenuPic_{{id}}" name="uploadMenuPic">Edit</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#deleteMenuPictures_{{id}}" name="deleteMenuPictures"
+                                    value="deleteMenuPictures">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{!-- <div class="card-body">
                         <img class="card-img-top" src="{{foodPhoto}}">
                         <br>
                         <br>
@@ -28,16 +44,16 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal"
                             data-target="#deletePictures_{{id}}" name="deletePictures"
                             value="deletePictures">Delete</button>
-                    </div>
+                    </div> --}}
                     <!-- ADD -->
-                    <form class="block-register" action="/admRestaurant/Foodupload" method="POST">
+                    <form class="block-register" action="/admRestaurant/UploadMenu" method="POST">
                         <!-- Modal -->
-                        <div class="modal fade" id="addPictures" tabindex="-1" role="dialog"
-                            aria-labelledby="addPictureslabel" aria-hidden="true">
+                        <div class="modal fade" id="addMenu" tabindex="-1" role="dialog" aria-labelledby="addMenulabel"
+                            aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="addPictureslabel">Add Photos</h5>
+                                        <h5 class="modal-title" id="addMenulabel">Add Menu</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -50,9 +66,11 @@
                                                 <img id='pictureThumbnail' name="pictureThumbnail"
                                                     src="/foodPictures/9.jpg" width="240" height="135" class="border">
                                                 <div style="position:relative; "></div>
+                                                Name: {{cardName}}
+                                                Price: {{cardPrice}}
                                                 <input type="file" accept="image/png,image/jpeg,image/jpg"
                                                     name="picUpload" id="picUpload">
-                                                <input type="hidden" id='trueFilePicture' name="trueFilePicture">
+                                                <input type="hidden" id='trueMenuPicture' name="trueMenuPicture">
                                                 <div class="font-weight-bold text-danger small" id="picErr"
                                                     style`="display:none">
                                                 </div>
@@ -73,44 +91,43 @@
                     <!-- ============================================================== -->
 
                     <!-- Update -->
-                        <!-- Modal -->
-                        <div class="modal fade" id="uploadPic_{{id}}" tabindex="-1" role="dialog"
-                            aria-labelledby="addPictureslabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="addPictureslabel">Add Photos</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group form-row">
-                                            <div class="col-md-6">
-                                                <label>Update your image here</label>
-                                                <br>
-                                                <img id='existPic' name="existPic" src="{{foodPhoto}}" width="240"
-                                                    height="135" class="border">
-                                                <div style="position:relative; "></div>
-                                                <input type="file" accept="image/png,image/jpeg,image/jpg"
-                                                    name="picUpload" id="picUpload">
-                                                <input type="hidden" id='trueFilePicture' name="trueFilePicture">
-                                                <div class="font-weight-bold text-danger small" id="picErr"
-                                                    style`="display:none">
-                                                </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="uploadMenuPic_{{id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="addMenulabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addMenulabel">Update Menu</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label>Update Menu image here</label>
+                                            <br>
+                                            <img id='existPic' name="existPic" src="{{cardPhoto}}" width="240"
+                                                height="135" class="border">
+                                            <div style="position:relative; "></div>
+                                            <input type="file" accept="image/png,image/jpeg,image/jpg" name="picUpload"
+                                                id="picUpload">
+                                            <input type="hidden" id='trueMenuPicture' name="trueMenuPicture">
+                                            <div class="font-weight-bold text-danger small" id="picErr"
+                                                style`="display:none">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                        <a href="/admRestaurant/updateFoodPic/{{id}}" class="btn btn-primary">Upload
-                                            Image</a>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <a href="/admRestaurant/updateFoodPic/{{id}}" class="btn btn-primary">Upload
+                                        Image</a>
                                 </div>
                             </div>
                         </div>
-                        <!-- end -->
+                    </div>
+                    <!-- end -->
                     <!-- ============================================================== -->
                     <!-- DELETE -->
 
@@ -143,7 +160,7 @@
         </div>
     </section>
     {{else}}
-    <h3>~ No Pictures Uploaded ~</h3>
+    <h3>~ No Menu ~</h3>
     {{/if}}
 </div>
 <!-- End Gallery -->
@@ -173,7 +190,7 @@
                 console.log(data.path);
                 $('#pictureThumbnail').attr('src', data.path);
                 $('#existPic').attr('src', data.path);
-                $('#trueFilePicture').attr('value', data.path);
+                $('#trueMenuPicture').attr('value', data.path);
 
                 if (data.err) {
                     $('#picErr').show();

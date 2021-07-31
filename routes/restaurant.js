@@ -60,6 +60,23 @@ router.post('/createContact', (req,res) => {
         contact_subject,
         contact_message
     }).then((contact) => {
+        if (contact_name == contact_name | contact_email == contact_email | contact_subject == contact_subject | contact_message == contact_message){
+            Swal.fire(
+                'Submitted!',
+                'Respone Recieved!',
+                'success').then((result) => {
+                    if (result.isConfirmed) {
+                        $("#contact2").submit();
+                    }
+                });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                button: 'Ok'
+            });
+        }
         res.redirect('/restaurant/DineV2');
     }).catch(err => console.log(err))
 
