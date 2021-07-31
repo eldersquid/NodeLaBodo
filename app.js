@@ -231,13 +231,67 @@ app.use('/profile', SignupRoute);
 // This route maps the rooms URL to any path defined in rooms.js
 app.use('/rooms', roomsRoute);
 
+// google login
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+passport.serializeUser((user, done) => {
+    done(null, user.googleId || user.id);
+});
+
+passport.deserializeUser((user, done) => {
+    User.findOne({ googleId: googleId }, function(err, user) {
+        done(null, user);
+
+    });
+});
+
+passport.use(
+    new GoogleStrategy({
+            clientID: '807209658055-3n1acfo5en7l80ul66vl65dblbs3tu21.apps.googleusercontent.com',
+            clientSecret: 'ZfmnW-e0It9zyp-IxiqbS5ZM',
+            callbackURL: "http://localhost:5000/googleauth/google/home"
+        },
+        function(accessToken, refreshToken, profile, cb) {
+            // Register User 
+            console.log(profile);
+            cb(null, profile);
+        }
+    ));
 
 app.use(passport.initialize());
+
 app.use(passport.session());
 
 
+app.get('/googleauth/google', passport.authenticate('google', { scope: ['profile'] }));
 
+app.get('/googleauth/google/home', passport.authenticate('google', { failureRedirect: '/mainlogin' }), (req, res) => {
+    res.redirect('/rooms/apartment');
+    res.end('Login Successful');
+})
+
+// facebook login
+const FacebookStrategy = require("passport-facebook").Strategy;
+passport.use(new FacebookStrategy({
+        clientID: '157881506323867',
+        clientSecret: '4ffba1b702ebb0e004d0a63f9dae0ff0',
+        callbackURL: "http://localhost:5000/fbauth/facebook/home"
+    },
+    function(accessToken, refreshToken, profile, cb) {
+        console.log(profile);
+        cb(null, profile);
+    }
+));
+
+app.get('/fbauth/facebook', passport.authenticate('facebook'));
+app.get('/fbauth/facebook/home',
+    passport.authenticate('facebook', {
+        failureRedirect: '/login/stafflogin'
+    }),
+    function(req, res) {
+        res.redirect('/rooms/apartment')
+    }
+);
 
 
 /*

@@ -9,9 +9,9 @@ const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 
 const CLIENT_ID = '188467906173-a5cq8hviitnaanin3cmag7el6kkqrcru.apps.googleusercontent.com'
-const CLIENT_SECRET = '9bCtMjwKlgz9oAd9H4kPS8pF'
+const CLIENT_SECRET = 'uJwKO7Pc693-lYfqgWNbIVNB'
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04w61SdIzEEevCgYIARAAGAQSNwF-L9Irq1f5Kwus8Gn_JiA1z3eOEmVHksRI4tcigkjYRJM6S14axPwDou9ugcLb08Z7wS6_cbI';
+const REFRESH_TOKEN = '1//04goyDW9VwTk1CgYIARAAGAQSNwF-L9Ir8jbqSzj8hPVf93ZpstMmAGADCAshC-AfNtXjgj0J1rvrTBRhNxVwTQ5FpgtE8PuEJ-o';
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
@@ -34,9 +34,9 @@ async function sendMail(supplier, item_name, quantity, remarks) {
 
         const mailOptions = {
             from: 'Hotel La Bodo <hotel.la.bodo@gmail.com>',
-            to: 'ziyuan2497@gmail.com',
+            to: supplier,
             subject: 'Order from Hotel La Bodo',
-            text: 'Dear ' + supplier + ',\n' + '\nWe would like to order another ' + quantity + ' of ' + item_name + '.\n\nAdditional Remarks:' + '\n' + remarks + '\n\nWe hope to hear from you soon!\n' + 'Sincerely,\nHotel La Bodo'
+            text: 'Dear Valued Supplier ' + ',\n' + '\nWe would like to order another ' + quantity + ' of ' + item_name + '.\n\nAdditional Remarks:' + '\n' + remarks + '\n\nWe hope to hear from you soon!\n' + 'Sincerely,\nHotel La Bodo'
         };
 
         const result = await transport.sendMail(mailOptions);
