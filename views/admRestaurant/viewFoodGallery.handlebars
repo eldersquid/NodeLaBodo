@@ -157,6 +157,7 @@
         var file = $("#picUpload")[0].files[0];
         var formdata = new FormData();
         formdata.append('picUpload', file);
+        console.log("here")
         //alert(file.name)
         //document.getElementById("imgFilename") = file.name;
         //$('#imgFilename') = "XCoder";
@@ -172,7 +173,7 @@
                 console.log(data);
                 console.log(data.path);
                 $('#pictureThumbnail').attr('src', data.path);
-                $('#existPic').attr('src', data.path);
+                $('#existPic').attr('src', data.path); 
                 $('#trueFilePicture').attr('value', data.path);
 
                 if (data.err) {

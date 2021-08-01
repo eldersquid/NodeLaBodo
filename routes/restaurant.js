@@ -4,14 +4,15 @@ const Reservation = require('../models/Reservation');
 const alertMessage = require('../helpers/messenger.js');
 const Swal = require('sweetalert2');
 const Contact = require('../models/Contact');
+const FoodGallery = require('../models/FoodGallery');
 // const Response = require('../models/Response');
 
 // User View Restaurant 
-router.get('/DineV2', (req, res) => {
-    res.render('restaurant/DineV2', {
-        layout: "blank",
-    });
-});
+// router.get('/DineV2', (req, res) => {
+//     res.render('restaurant/DineV2', {
+//         layout: "blank",
+//     });
+// });
 
 // User View Menu
 router.get('/Menu', (req, res) => {
@@ -82,21 +83,19 @@ router.post('/createContact', (req,res) => {
 
 });
 
-router.get('/uploadFoodPic/:id', (req,res) => {
+router.get('/DineV2', (req,res) => {
     const title = 'foodgallery';
-    console.log(req.params.id)
     FoodGallery.findAll({
-        where: {
-            // id: req.params.id
-        },
-        order: [
-            // [reservation.id, 'ASC']
-        ],
         raw: true
     })
         .then((foodgallery) => {
-            console.log(foodgallery);
-            res.render('restaurant/DinV2', {
+            console.log("hello",foodgallery);
+            const gallleryList = [];
+            for (var i in foodgallery){
+                gallleryList.push(foodgallery[i]);
+                console.log(gallleryList);
+            }
+            res.render('restaurant/DineV2', {
                 layout: "blank",
                 title: title,
                 foodgallery:foodgallery

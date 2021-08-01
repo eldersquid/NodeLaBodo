@@ -188,17 +188,17 @@
                         <span class="mu-subtitle">Discover</span>
                         <h2>Our Gallery</h2>
                     </div>
-                    {{!-- {{#if foodgallery}}
-                    {{#each foodgallery}} --}}
+                    {{!-- {{#if foodgallery}} --}}
                     <div class="mu-gallery-content">
                         <!-- Start gallery image -->
                         <div class="mu-gallery-body">
                             <!-- start single gallery image -->
+                            {{#each foodgallery}}
                             <div class="mu-single-gallery col-md-4">
                                 <div class="mu-single-gallery-item">
                                     <figure class="mu-single-gallery-img">
-                                        <a class="mu-imglink" href="/teststuff/img/gallery/bread1.jpg">
-                                            <img alt="img" src="/teststuff/img/gallery/bread1.jpg">
+                                        <a class="mu-imglink" href="{{foodPhoto}}">
+                                            <img alt="img" src="{{foodPhoto}}">
                                             <div class="mu-single-gallery-info">
                                                 <img class="mu-view-btn" src="/teststuff/img/plus.png"
                                                     alt="plus icon img">
@@ -207,11 +207,11 @@
                                     </figure>
                                 </div>
                             </div>
+                            {{/each}}
                             <!-- End single gallery image -->
                         </div>
                     </div>
-                    {{!-- {{/each}}
-                    {{/if}} --}}
+                    {{!-- {{/if}} --}}
                 </div>
             </div>
         </div>

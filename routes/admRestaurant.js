@@ -391,29 +391,7 @@ router.get('/viewFoodGallery', (req,res) => {
             });
         })
         .catch(err => console.log(err));
-})
-
-// router.get('/uploadFoodPic/:id', (req,res) => {
-//     const title = 'foodgallery';
-//     console.log(req.params.id)
-//     FoodGallery.findAll({
-//         where: {
-//             // id: req.params.id
-//         },
-//         order: [
-//             // [reservation.id, 'ASC']
-//         ],
-//         raw: true
-//     })
-//         .then((foodgallery) => {
-//             console.log(foodgallery);
-//             res.render('restaurant/DinV2', {
-//                 layout: "admin",
-//                 title: title,
-//                 foodgallery:foodgallery
-//             });
-//         }).catch(err => console.log(err));
-// })
+});
 
 
 
@@ -480,7 +458,7 @@ router.post('/UploadMenu', (req, res) => {
     let cardName = req.body.cardName
     let cardPrice = req.body.cardPrice
 	const title = "Upload Food Menu";
-    FoodMenu.create({
+    FoodCart.create({
         cardName,
         cardPrice,
         cardPhoto : cardPhoto_data
