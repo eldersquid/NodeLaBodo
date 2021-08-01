@@ -4,7 +4,7 @@ const Reservation = require('../models/Reservation');
 const alertMessage = require('../helpers/messenger.js');
 const Swal = require('sweetalert2');
 const Contact = require('../models/Contact');
-const FoodGallery = require('../models/FoodGallery');
+const FoodCart = require('../models/FoodCart');
 // const Response = require('../models/Response');
 
 // User View Restaurant 
@@ -15,11 +15,24 @@ const FoodGallery = require('../models/FoodGallery');
 // });
 
 // User View Menu
-router.get('/Menu', (req, res) => {
-    res.render('restaurant/Menu', {
-        layout: "blank",
-    });
-});
+
+router.get("/Menu", (req, res) => {
+    const title = "Menu";
+  
+    FoodCart.findAll({
+      order: [["id", "ASC"]],
+      raw: true,
+    })
+      .then((foodcart) => {
+        // pass object to listVideos.handlebar
+        res.render("restaurant/Menu", {
+          layout: "blank",
+          title: title,
+          foodcart: foodcart,
+        });
+      })
+      .catch((err) => console.log(err));
+  });
 
 //Create reservation 
 router.post('/createReservation', (req, res) => {
