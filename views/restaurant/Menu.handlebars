@@ -51,12 +51,29 @@
           </div>
       </div>
 <hr>
+
+
       <div class="row">
+        {{#if foodcart }}
+                                            
+            {{#each foodcart }}
+               <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="{{cardPhoto}}" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">{{cardName}}</h4>  
+                        <p class="card-text">Price: ${{cardPrice}}</p>
+                      <button type="button" data-name="{{cardName}}" data-price="{{cardPrice}}" class="add-to-cart btn btn-primary">Add to cart</button>
+                   </div>
+                </div>
+            </div> 
+            {{/each}}
+        {{/if}}
             <div class="col">
                 <div class="card" style="width: 20rem;">
                     <img class="card-img-top" src="/img/pasta.jpg" alt="Card image cap">
                     <div class="card-block">
-                        <h4 class="card-title">Pasta</h4>
+                        <h4 class="card-title">Pasta</h4>  
                         <p class="card-text">Price: $15</p>
                       <button type="button" data-name="Pasta" data-price="15" class="add-to-cart btn btn-primary">Add to cart</button>
                    </div>
@@ -162,3 +179,24 @@
 <br>
 <br>
 <script src="/teststuff/js/Addtocart.js"></script>
+
+<script>
+    function getPaynow(){
+        const id = document.getElementById('id');
+        const name = document.getElementById('name');
+        const email = document.getElementById('email'); 
+        const phone = document.getElementById('phone');
+        const amount = document.getElementById('amount');
+        const currency = document.getElementById('currency');
+        const status = document.getElementById('status');
+        const purpose = document.getElementById('purpose');
+        const reference_number = document.getElementById('reference_number');
+        const payment_methods = document.getElementById('payment_methods');
+        fetch('https://api.sandbox.hit-pay.com/v1/payment-requests' + 'd4b3a6ec6acb9c243071571fcca2be3e25850829dbd1499529bd4f9467e5aba9')
+            .then((res) => {
+                return res.json();
+            }).then((data) => {
+                console.log(data);
+            })
+    }
+</script>

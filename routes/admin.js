@@ -33,26 +33,23 @@ app.use(cors());
 
 
 
-router.get('/hospitalList', (req, res) => {
-	const title = "Hospitals";
-	
-	Hospital.findAll({
-	
-	order: [
-	['id', 'ASC']
-	],
-	raw: true
-	})
-	.then((hospitals) => {
-	// pass object to listVideos.handlebar
-	res.render('admin/hospital/hospital_list', {
-	layout : "admin",
-	title : title,
-	hospitals: hospitals
-	});
-	})
-	.catch(err => console.log(err));
-	});
+router.get("/hospitalList", (req, res) => {
+  const title = "Hospitals";
+
+  Hospital.findAll({
+    order: [["id", "ASC"]],
+    raw: true,
+  })
+    .then((hospitals) => {
+      // pass object to listVideos.handlebar
+      res.render("admin/hospital/hospital_list", {
+        layout: "admin",
+        title: title,
+        hospitals: hospitals,
+      });
+    })
+    .catch((err) => console.log(err));
+});
 	
 
 router.get('/hospitalSearch', cors(), (req, res) => {
