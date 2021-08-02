@@ -255,6 +255,30 @@ passport.use(
             // Register User 
             console.log(profile);
             cb(null, profile);
+
+            // User.findOne({ where: { username: profile.id, google_id: profile.id, usertype: 'customer' } })
+            // .then(Customer => {
+            // 	if (Customer) {
+            // 		cb(null, Customer);
+            // 	}
+            // 	else {
+            // 		console.log(profile);
+            // 		let firstname = profile.displayName.split(' ')[0];
+            // 		let lastname = profile.displayName.split(' ')[1];
+            // 		var password = generator.generate({
+            // 			length: 10,
+            // 			numbers: true
+            // 		});
+            // 		// console.log('passsssssworrrdddd',password);
+            // 		bcrypt.genSalt(10, (err, salt) => {
+            // 			bcrypt.hash(password, salt, (err, hash) => {
+            // 				if (err) throw err;
+            // 				password = hash;
+            // 				User.create({ username: profile.id, firstname: firstname, lastname: lastname, google_id: profile.id, usertype: 'customer', password: password })
+            // 					.then(user => {
+            // 						cb(null, user);
+            // 					})
+            // 					.catch(err => console.log(err));
         }
     ));
 
@@ -272,6 +296,7 @@ app.get('/googleauth/google/home', passport.authenticate('google', { failureRedi
 
 // facebook login
 const FacebookStrategy = require("passport-facebook").Strategy;
+const Signup = require('./models/Signup');
 passport.use(new FacebookStrategy({
         clientID: '157881506323867',
         clientSecret: '4ffba1b702ebb0e004d0a63f9dae0ff0',
@@ -280,8 +305,43 @@ passport.use(new FacebookStrategy({
     function(accessToken, refreshToken, profile, cb) {
         console.log(profile);
         cb(null, profile);
+
+        //     function(accessToken, refreshToken, profile, done) {
+        //         console.log('facebook-->', profile);
+
+        //         Signup.findOne({ where: { facebook_id: profile.id, usertype: 'signup' } })
+        //             .then(Signup => {
+        //                 if (Signup) {
+        //                     done(null, Signup);
+        //                 } else {
+        //                     let firstname = profile.displayName.split(' ')[0];
+        //                     let lastname = profile.displayName.split(' ')[1];
+        //                     var password = generator.generate({
+        //                         length: 10,
+        //                         numbers: true
+        //                     });
+        //                     bcrypt.genSalt(10, (err, salt) => {
+        //                         bcrypt.hash(password, salt, (err, hash) => {
+        //                             if (err) throw err;
+        //                             password = hash;
+        //                             User.create({ username: profile.id, firstname: firstname, lastname: lastname, facebook_id: profile.id, usertype: 'customer', password: password })
+        //                                 .then(user => {
+        //                                     // alertMessage(res, 'success', user.username + ' Please proceed to login', 'fas fa-sign-in-alt', true);
+        //                                     // res.redirect('customer/homecust');
+        //                                     done(null, user);
+        //                                 })
+        //                                 .catch(err => console.log(err));
+        //                         })
+        //                     });
+        //                 }
+        //             });
     }
 ));
+
+
+
+
+
 
 app.get('/fbauth/facebook', passport.authenticate('facebook'));
 app.get('/fbauth/facebook/home',

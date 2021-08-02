@@ -7,8 +7,8 @@ const Reservation = require("../models/Reservation");
 const SignUpModel = require("../models/Signup");
 var multer = require("multer");
 var bcrypt = require('bcryptjs');
-const Signup = require('../models/Signup');
-const Staff = require('../models/Staff')
+// const Signup = require('../models/Signup');
+const StaffModel = require('../models/Staff')
 const alertMessage = require('../helpers/messenger');
 
 
@@ -111,7 +111,6 @@ router.post("/login/signup", (req, res) => {
                     });
                 } else {
                     console.log("User is available to create");
-
                     // password encryption here
                     bcrypt.genSalt(10, function(err, salt) {
                         bcrypt.hash(password, salt, function(err, hash) {
@@ -148,7 +147,7 @@ router.post('/login', (req, res, next) => {
     console.log("This is the password: ", password);
     console.log("Trying to authenticate");
     passport.authenticate('local', {
-        successRedirect: '/home', // Route to /video/listVideos URL
+        successRedirect: '/rooms/apartment', // Route to /video/listVideos URL
         failureRedirect: '/', // Route to /login URL
         failureFlash: true,
         //signupProperty: req.signup
@@ -186,7 +185,16 @@ router.post('/login/staffsignup', (req, res) => {
         });
     } else {
         // If all is well, checks if user is already registered
-        Staff.findOne({ where: { staff_email: req.body.staff_email } })
+        // StaffModel.findOne({
+        //         where: {
+        //             staff_email: staff_email
+        //         }
+        //     })
+        StaffModel.findOne({
+                where: {
+                    staff_email: staff_email
+                }
+            })
             .then(staff => {
                 if (staff) {
                     // If user is found, that means email has already been
@@ -210,7 +218,7 @@ router.post('/login/staffsignup', (req, res) => {
                                 staff_password = hash;
 
                                 // Create new user record
-                                Staff.create({ staff_name, staff_ID, staff_email, staff_password })
+                                StaffModel.create({ staff_name, staff_ID, staff_email, staff_password })
                                     .then(staff => {
                                         alertMessage(res, 'success', staff.staff_name + ' added.Please login', 'fas fa-sign-in-alt', true);
                                         res.redirect('/stafflogin');
@@ -232,8 +240,8 @@ router.get('/stafflogin', (req, res) => {
 });
 router.post('/login/stafflogin', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/admin/hospitalList', // Route to /video/listVideos URL
-        failureRedirect: '/stafflogin', // Route to /login URL
+        successRedirect: '/admin/hospitalList',
+        failureRedirect: '/stafflogin',
         failureFlash: true
     })(req, res, next);
 });
@@ -242,6 +250,12 @@ router.post('/login/stafflogin', (req, res, next) => {
 router.get("/logout", (req, res) => {
     req.logout();
     res.redirect("/");
+});
+
+// Logout User
+router.get('/stafflogout', (req, res) => {
+    req.logout();
+    res.redirect('/stafflogin');
 });
 
 module.exports = router;

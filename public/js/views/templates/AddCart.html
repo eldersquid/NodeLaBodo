@@ -1,0 +1,204 @@
+{% extends "user_base.html" %}
+{% block title %}Library Loan System - Cart {% endblock %}
+
+{% block css %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/jquery.fancybox.min.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/owl.carousel.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/owl.transitions.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/book.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/booking_colors.css') }}"/>
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
+
+{% endblock %}
+
+
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<!-- Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" id="cart">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="show-cart">
+                <li>???????</li>
+            </ul>
+            <div>You have <span class="total-count">X</span> items in your cart</div>
+            <div>Total Cart:$<span class="total-cart"></span></div>
+      </div>
+      <div class="modal-footer">
+          <button class="clear-cart btn btn-danger">Clear Cart</button>
+        <button type="submit" class="btn btn-primary" id="pay_now" data-target="#cartModal" data-dismiss="modal">Check Out</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Main -->
+<form method="POST">
+    <div class="container">
+      <div class="row">
+          <div class="col">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cartModal" >Cart (<span class="total-count"></span>)</button>
+          </div>
+      </div>
+<hr>
+      <div class="row">
+            <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="static/image/pasta.jpg" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">Pasta</h4>
+                        <p class="card-text">Price: $15</p>
+                      <button type="button" data-name="Pasta" data-price="15" class="add-to-cart btn btn-primary">Add to cart</button>
+                   </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="static/image/pizza.jpg" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">Pizza</h4>
+                        <p class="card-text">Price: $16</p>
+                        <button name="add_cart" data-name="Pizza" data-price="16" class="add-to-cart btn btn-primary">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="static/image/Fried_noodle.jpg" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">Fried Noodle</h4>
+                        <p class="card-text">Price: $14</p>
+                        <button name="add_cart" data-name="FriedNoodle" data-price="14" class="add-to-cart btn btn-primary">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+      </div>
+        <hr>
+      <div class="row">
+            <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="static/image/chicken_rice.jpg" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">Chicken Rice</h4>
+                        <p class="card-text">Price: $12</p>
+                      <button type="button" data-name="ChickenRice" data-price="12" class="add-to-cart btn btn-primary">Add to cart</button>
+                   </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="static/image/Baked_Rice.jpg" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">Baked Rice</h4>
+                        <p class="card-text">Price: $14</p>
+                        <button name="add_cart" data-name="BakedRice" data-price="14" class="add-to-cart btn btn-primary">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="static/image/fried_rice.jpg" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">Fried Rice</h4>
+                        <p class="card-text">Price: $20</p>
+                        <button name="add_cart" data-name="FriedRice" data-price="20" class="add-to-cart btn btn-primary">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+      </div>
+      <hr>
+      <div class="row">
+            <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="static/image/mushroom_soup.jpg" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">Mushroom Soup</h4>
+                        <p class="card-text">Price: $10</p>
+                      <button type="button" data-name="MushroomSoup" data-price="10" class="add-to-cart btn btn-primary">Add to cart</button>
+                   </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="static/image/steak.jpg" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">Steak</h4>
+                        <p class="card-text">Price: $30</p>
+                        <button name="add_cart" data-name="Steak" data-price="30" class="add-to-cart btn btn-primary">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="static/image/Burger.jpg" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">Burger</h4>
+                        <p class="card-text">Price: $25</p>
+                        <button name="add_cart" data-name="Burger" data-price="25" class="add-to-cart btn btn-primary">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+      </div>
+
+
+</div>
+</form>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="section padding-top-bottom-small background-black over-hide footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 text-center text-md-left">
+					<img src="img/logo.png" alt="">
+					<p class="color-grey mt-4">180 Ang Mo Kio Ave 8,<br>Singapore 569830</p>
+				</div>
+				<div class="col-md-4 text-center text-md-left">
+					<h6 class="color-white mb-3">information</h6>
+					<a href="tandc.html">terms &amp; conditions</a>
+					<a href="services.html">services</a>
+					<a href="restaurant.html">restaurant</a>
+					<a href="testimonials.html">testimonials</a>
+					<a href="gallery.html">gallery &amp; images</a>
+				</div>
+				<div class="col-md-5 mt-4 mt-md-0 text-center text-md-left logos-footer">
+					<h6 class="color-white mb-3">about us</h6>
+					<p class="color-grey mb-4">You're not supposed to read this. Go away!</p>
+					<img src="img/logos/1.png" alt="">
+					<img src="img/logos/2.png" alt="">
+					<img src="img/logos/3.png" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+    {% block scripts %}
+      {{ super() }}
+      <script src="{{url_for('static', filename='js/Addtocart.js')}}"></script>
+
+
+    {%endblock%}

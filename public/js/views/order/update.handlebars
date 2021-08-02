@@ -1,0 +1,85 @@
+<script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="../../public/sweetalert2/dist/sweetalert2.css">
+<div class="container-fluid">
+    <h1 class="display-5">Update Order Form</h1>
+
+    <form action="/order/update/{{order.id}}?_method=PUT" method="POST" id="form">
+        <div class="form-group">
+            <label for="supplier">Supplier</label>
+            <input id="supplier" type="text" class="form-control" value="{{order.supplier}}" name="supplier" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="item_name">Item Name</label>
+            <input id="item_name" type="text" class="form-control" name="item_name" value="{{order.item_name}}" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input class="form-control" id="quantity" name="quantity" required type="number" value="{{order.quantity}}">
+        </div>
+
+        <div id="prof">
+            <div class="form-group">
+                <label for="remarks">Remarks</label>
+                <textarea class="form-control" id="remarks" name="remarks" value="{{order.remarks}}" disabled></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select class="form-control" id="status" name="status" required>
+                <option value="none" selected disabled hidden></option>
+                <option value="Ordered Placed">Ordered Placed</option>
+                <option value="Ordered has been confirmed">Ordered has been confirmed</option>
+                <option value="Supplier is preparing your order">Supplier is preparing your order</option>
+                <option value="Supplier is out for delivery">Supplier is out for delivery</option>
+                <option value="Parcel has been delivered">Parcel has been delivered</option>
+                <option value="Order Cancel">Order Cancel</option>
+            </select>
+        </div>
+
+        <button type="submit" value="Submit" id="submit-btn" data-toggle="modal" data-target="#modalReply"
+            class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script>
+    $("#submit-btn").click(function (e) {
+        e.preventDefault();
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "Confirm to update the Order?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Comfirm',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    'Updated!',
+                    'Order has been updated.',
+                    'success'
+                )
+                $("#form").submit()
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Order has not been updated.',
+                    'error'
+                )
+            }
+        })
+    })
+</script>

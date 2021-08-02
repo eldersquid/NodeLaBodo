@@ -1,0 +1,174 @@
+
+  <link rel="stylesheet" href="/vendor/datatables/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+
+
+</head>
+
+
+<body id="page-top">
+
+
+                <!-- Begin Page Content -->
+              <div class="container-fluid">
+
+                    <!-- Page Heading -->
+
+                  <div class="row">
+
+
+                    <div class="col d-flex">
+                        <a class="btn btn-outline-secondary" href="">Guest Details</a>
+                        <a class="btn btn-outline-secondary ml-1" href="">Hospitals</a>
+                        <a class="btn btn-outline-secondary ml-1" href="">Occupations</a>
+                        <a class="btn btn-outline-secondary ml-1" href="">Vehicles</a>
+                        <a class="btn btn-secondary ml-1">Requests</a>
+
+
+
+                      <div class="col d-flex justify-content-end">
+                        <a class="btn btn-outline-secondary ml-1" href=""><i class="fas fa-plus-circle"></i> Create New Request </a>
+                        <a class="btn btn-outline-secondary ml-1" href=""><i class="fas fa-plus-circle"></i> Upload Excel File </a>
+                      </div>
+                    </div>
+                  </div>
+
+
+                    <hr>
+
+
+                    <!-- DataTales Example -->
+                  <div class="row">
+                    <div class="col-12 card shadow mb-4">
+                        <div class="card-body">
+                          <h5 class="card-title my-2">Current Requests</h5>
+
+                            <div class="table-responsive my-6">
+                                <table class="table table-bordered table-hover" id="HotelRooms" width="100%" cellspacing="1">
+                                    <thead>
+                                        <tr>
+                                            <th>Room Number</th>
+                                            <th>Guest Name</th>
+                                            <th>Request Type</th>
+                                            <th>Request Topic</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Room Number</th>
+                                            <th>Guest Name</th>
+                                            <th>Request Type</th>
+                                            <th>Request Topic</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+
+                                    <tbody>
+                                      
+                                        <tr>
+                                          <td>  </td>
+                                          <td>  </td>
+                                          <td>  </td>
+                                          <td>  </td>
+                                          <td><a href="/edit-request/" class="btn btn-warning">Update</a></td>
+                                          <td>
+                                            <form action=""method="POST">
+
+                                              <!-- Modal -->
+                                              <div class="modal fade" id="deleteModal_" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                  <div class="modal-content">
+                                                    <div class="modal-header">
+                                                      <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                      Mark this request as done?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                      <input type="submit" value="Done" class="btn btn-danger">
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+
+
+
+                                            <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#deleteModal">
+
+                                            <span>Mark as Done</span>
+                                          </button>
+                                          </form>
+                                        </td>
+                                        </tr>
+                                        
+
+
+
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                  </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+  <!--  <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a> -->
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- Page level plugins -->
+        <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js" charset="utf-8"></script>
+
+        <!-- Page level custom scripts -->
+        <script src="/js/datatables-demo.js"></script>
+  

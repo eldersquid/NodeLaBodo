@@ -1,0 +1,68 @@
+<head>
+  <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
+</head>
+
+<div class="container-fluid">
+  <h1 class="display-4">View Response</h1>
+  <div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Response ID</th>
+          <th>To</th>
+          <th>FROM</th>
+          <th>Subject</th>
+          <th>Message</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#if response}}
+        {{#each response}}
+        <tr>
+          <td>{{this.id}}</td>
+          <td>{{this.toEmail}}</td>
+          <td>hotel.la.bodo@gmail.com</td>
+          <td>RE: {{this.toSubject}}</td>
+          <td>{{this.toMessage}}</td>
+          </td>
+          <td>
+
+            <form action="/admRestaurant/deleteResponse/{{contact.id}}" method="POST"></form>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal_{{this.id}}" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Do you really want to delete this Response? This process cannot be undone.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="/admRestaurant/deleteResponse/{{id}}" class="btn btn-danger">Delete</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#myModal_{{id}}">
+
+              <span>Delete</span>
+            </button>
+            </form>
+
+          </td>
+        </tr>
+        {{/each}}
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+</div>

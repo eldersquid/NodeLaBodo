@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/styles/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="/styles/wowni.css">
+
+</head>
+
+
+
+<body>
+
+    <div class="main">
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-img">
+                    <img src="/img/pyramid.webp" alt="">
+                </div>
+                <div class="signup-form">
+                    <form method="POST" action="/rooms/booked" class="register-form" id="register-form">
+
+                        <h2>Additional Guest Information</h2>
+
+                        <div class="form-row">
+                          <div class="form-group">
+                              <label for="address">Check In Date</label>
+                              <input type="text" name="bookInDate" id="bookInDate" value="{{BookInDate}}"  readonly/>
+
+                          </div>
+                          <div class="form-group">
+                              <label for="address">Check Out Date</label>
+                              <input type="text" name="bookOutDate" id="bookOutDate" value="{{BookOutDate}}"  readonly/>
+
+                          </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="address">Deal Selected</label>
+                                <input type="text" name="package_deal" id="package_deal" value="Zoo Mama" />
+
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Username</label>
+                                <input type="text" name="username" id="username" value="yunashin102" />
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Name</label>
+                            <input type="text" name="name" id="name" value="Shin Yuna" />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                
+                            </div>
+                            <div class="form-group">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            
+                        </div>
+                        <div class="form-group">
+
+                            
+                        
+                        </div>
+                        <div class="form-row">
+                        <div class="form-group">
+                            <label for="address">Room Type Allocated</label>
+                            <input type="text" name="roomType" id="roomType" value="Apartment"  readonly/>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Room Number</label>
+                            <input type="text" name="roomNo" id="roomNo" value="{{roomNo}}"  />
+
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Room Price</label>
+                            <input type="text" name="price" id="price" value="{{price}}"  readonly/>
+
+                        </div>
+                        </div>
+                        <div class="form-submit">
+
+                            <input type="submit" value="Submit Form" class="submit" name="submit" id="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+</html>

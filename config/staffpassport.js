@@ -1,12 +1,14 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 // Load user model
-const Staff = require('../models/Staff');
+const StaffModel = require('../models/Staff');
 
 function localStrategy(passport) {
-    passport.use(new LocalStrategy({ usernameField: 'staff_ID' }, (staff_ID, password,
+    passport.use(new LocalStrategy({ emailField: 'staff_ID' }, (staff_email, staff_password,
         done) => {
-        Staff.findOne({ where: { staff_ID: staff_ID } })
+        console.log("This is the email: ", staff_email);
+        console.log("This is the password: ", staff_password);
+        StaffModel.findOne({ where: { staff_email: staff_email } })
             .then(staff => {
                 if (!staff) {
                     return done(null, false, { message: 'No User Found' });
@@ -26,13 +28,13 @@ function localStrategy(passport) {
     }));
     // Serializes (stores) user id into session upon successful
     // authentication
-    passport.serializeUser((staff, done) => {
-        done(null, staff.id); // user.id is used to identify authenticated user
+    passport.serializeUser((Staff, done) => {
+        done(null, Staff.id); // user.id is used to identify authenticated user
     });
     // User object is retrieved by userId from session and
     // put into req.user
-    passport.deserializeUser((staffId, done) => {
-        User.findByPk(staffId)
+    passport.deserializeUser((staff_email, done) => {
+        StaffModel.findByPk(staff_email)
             .then((staff) => {
                 done(null, staff); // user object saved in req.session
             })

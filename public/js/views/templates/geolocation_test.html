@@ -1,0 +1,161 @@
+{% extends "server_base.html" %}
+
+{% block title %} Create Hospital {% endblock %}
+
+{% block css %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/g_map.css') }}">
+{% endblock %}
+
+{% block content %}
+
+
+{% from "includes/_formHelper.html" import render_field %}
+
+<body id="page-top">
+              <div class="container-fluid">
+                <a class="btn btn-outline-secondary" href="{{ url_for('server_guests') }}">Guest Details</a>
+                <button type="button" class="btn btn-secondary">Hospitals</button>
+                <button type="button" class="btn btn-outline-secondary">Occupations</button>
+                <button type="button" class="btn btn-outline-secondary">Industries</button>
+                <button type="button" class="btn btn-outline-secondary">Vehicles</button>
+                <button type="button" class="btn btn-outline-secondary">Edit required fields</button>
+                <hr>
+
+              </div>
+
+
+                <div id="map"></div>
+                <br>
+
+                <div class="container-fluid">
+
+                <div class="row flex-lg-nowrap">
+                  <div class="col">
+                    <div class="row">
+                      <div class="col mb-3">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="e-profile">
+                              <div class="row">
+                                <div class="col col-sm-auto mb-3">
+                                </div>
+                              </div>
+                              <ul class="nav nav-tabs">
+                                <li class="nav-item"><a href="" class="active nav-link">Information</a></li>
+                              </ul>
+                              <div class="tab-content pt-3">
+                                <div class="tab-pane active">
+                                  <form method="POST" action="">
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="row">
+                                          <div class="col">
+                                            <div class="form-group">
+                                              {{ render_field(form.hospital_name, class="form-control controls", id="pac-input") }}
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col">
+                                            <div class="form-group">
+                                              {{ render_field(form.hospital_address, class="form-control") }}
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col">
+                                            <div class="form-group">
+                                              {{ render_field(form.hospital_contact, class="form-control") }}
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col">
+                                            <div class="form-group">
+                                              {{ render_field(form.hospital_beds, class="form-control") }}
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col d-flex">
+                                        <button type="button" class="btn btn-secondary">Link Vehicles</button>
+                                      </div>
+                                      <div class="col d-flex justify-content-end">
+                                        <button class="btn btn-primary" type="submit">Create</button>
+                                      </div>
+                                    </div>
+                                  </form>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-md-3 mb-3">
+                        <div class="card mb-3">
+                          <div class="card-body">
+                            <div class="px-xl-3">
+                              <button class="btn btn-block btn-secondary">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>Add</span>
+                              </button>
+                              <button class="btn btn-block btn-outline-info">
+                                <i class="fas fa-edit"></i>
+                                <span>Edit</span>
+                              </button>
+                              <button class="btn btn-block btn-outline-danger">
+                                <i class="far fa-times-circle"></i>
+                                <span>Delete</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block script %}
+  {{ super() }}
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO5-kE5NU-8iLRbhk-nG5vgcWedjXgPMg&callback=initAutocomplete&libraries=places&v=weekly"
+    defer
+  ></script>
+  <script src="{{ url_for('static',filename='js/google_map.js') }}"></script>
+
+{% endblock %}

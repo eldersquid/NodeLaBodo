@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}HOTEL LÃ BODO - Create Order Form{% endblock %}
+
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+
+<div class="container-fluid">
+    <h1 class="display-5">Create New Order Form</h1>
+
+    <form method="POST" action="">
+        <div class="form-group">
+            {{ render_field(form.item_name, class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.product_name, class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.supplier, class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.quantity, class="form-control") }}
+        </div>
+        <div id="prof">
+            <div class="form-group">
+                {{ render_field(form.remarks, class="form-control") }}
+            </div>
+        </div>
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+    </form>
+</div>
+
+{% endblock %}

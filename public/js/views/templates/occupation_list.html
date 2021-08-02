@@ -1,0 +1,258 @@
+{% extends "server_base.html" %}
+
+
+{% block css %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static',filename='vendor/datatables/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+{% endblock %}
+
+{% block title %} Occupation List {% endblock %}
+
+{% block content %}
+<body id="page-top">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                  <a class="btn btn-outline-secondary" href="{{ url_for('server_guests') }}">Guest Details</a>
+                  <a class="btn btn-outline-secondary" href="{{ url_for('hospital_list') }}">Hospitals</a>
+                  <a class="btn btn-secondary">Occupations</a>
+                  <a class="btn btn-outline-secondary"  href="{{ url_for('vehicle_list') }}">Vehicles</a>
+                  <a class="btn btn-outline-secondary" href="{{ url_for('request_list') }}">Requests</a>
+
+
+
+  <hr>
+  <div class="col d-flex justify-content-end">
+    <a class="btn btn-outline-secondary ml-1" href="{{ url_for('occupation_create') }}"><i class="fas fa-plus-circle"></i> Create new Occupation </a>
+    <a class="btn btn-outline-secondary ml-1" href="{{ url_for('industry_create') }}"><i class="fas fa-plus-circle"></i> Create new Industry </a>
+  </div>
+                    <!-- Page Heading -->
+
+<!-- Modal -->
+<div class="modal fade" id="deleteDesu" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you really want to delete these records? This process cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+                  <br>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="occupationTable" width="100%" cellspacing="1">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Occupation</th>
+                                            <th>Industry</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                          <th>ID</th>
+                                          <th>Occupation</th>
+                                          <th>Industry</th>
+                                          <th></th>
+                                          <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                      {% for occupation in occupation_list %}
+                                      <tr>
+                                        <td>{{ occupation.get_occupation_id() }}</td>
+                                        <td> {{ occupation.get_occupation() }} </td>
+                                        <td>{{ occupation.get_industry() }}</td>
+                                        <td><a href="/occupation-edit/{{occupation.get_occupation_id()}}" class="btn btn-warning">Update</a></td>
+                                        <td>
+                                          <form action="{{url_for('delete_occupation', id=occupation.get_occupation_id())}}" method="POST">
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="deleteModal_{{ occupation.get_occupation_id() }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    Do you really want to delete this occupation? This process cannot be undone.
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+
+                                          <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#deleteModal_{{ occupation.get_occupation_id() }}">
+
+                                          <span>Delete</span>
+                                        </button>
+                                        </form>
+                                      </td>
+
+
+                                      </tr>
+                                      {% endfor %}
+
+                                    </tbody>
+                                </table>
+
+
+
+
+
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col-4">
+
+                        <form action="{{url_for('occupation_reset')}}" method="POST">
+                          <!-- Modal -->
+                          <div class="modal fade" id="resetDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="ResetModalTitle">Are you sure?</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  Do you want to reset all occupations to default values?
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" value="Reset" class="btn btn-info">
+
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+
+                        <button type="button" class="btn btn-block btn-info" data-toggle="modal" data-target="#resetDefault">
+
+                        <span>Reset</span>
+                        </button>
+                        </form>
+                      </div>
+
+                            <div class="col-4">
+
+
+                              <!-- Modal -->
+                              <div class="modal fade" id="deleteModal_multiOccupation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Do you really want to delete selected Occupations? This process cannot be undone.
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" id="deleteMulti" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_multiOccupation" data-dismiss="modal"><i class="far fa-times-circle"></i>Delete</button>
+
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+
+
+                            <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#deleteModal_multiOccupation">
+                            <i class="far fa-times-circle"></i>
+                            <span>Delete</span>
+                            </button>
+
+                          </div>
+                        </div>
+
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+  <!--  <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a> -->
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+{% endblock %}
+
+    {% block script %}
+       {{ super() }}
+       <!-- Page level plugins -->
+       <script src="{{ url_for('static',filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
+       <script src="{{ url_for('static',filename='vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+       <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js" charset="utf-8"></script>
+
+       <!-- Page level custom scripts -->
+       <script src="{{ url_for('static',filename='js/datatables-demo.js') }}"></script>
+     {% endblock %}

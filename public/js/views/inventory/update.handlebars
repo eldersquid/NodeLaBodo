@@ -1,0 +1,123 @@
+<script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="../../public/sweetalert2/dist/sweetalert2.css">
+<script>
+    function elimCompany(el) {
+        companyName = el.value;
+        products = document.getElementById('product_name').children;
+        for (var i = 0; i < products.length; i++) {
+            var product = products[i];
+            if (product.value !== companyName) {
+                product.style.display = 'none';
+            } else {
+                product.style.display = 'block';
+            }
+        }
+    }
+</script>
+<div class="container-fluid">
+    <h1 class="display-5">Update Inventory</h1>
+
+    <form method="POST" action="/inventory/update/{{inventory.id}}?_method=PUT" id="form">
+    
+        <div class="form-group">
+
+            <label for="item_name">Item Name</label>
+            <input class="form-control" id="item_name" name="item_name" required type="text" value="{{inventory.item_name}}">
+
+
+        </div>
+        <div class="form-group">
+
+            <label for="supplier">Supplier</label>
+            <select class="form-control" id="supplier" name="supplier" onchange="elimCompany(this)" required>
+                <option value="none" selected disabled hidden></option>
+                {{#if supplier}}
+                {{#each supplier}}
+                <option value="{{email}}" style="text-transform: capitalize;">{{email}}</option>
+                {{/each}}
+                {{/if}}
+
+            </select>
+
+
+        </div>
+        <div class="form-group">
+
+            <label for="product_name">Product Name</label>
+            <select class="form-control" id="product_name" name="product_name" required>
+                <option value="none" selected disabled hidden></option>
+                {{#if productcat}}
+                {{#each productcat}}
+                <option id="{{product_name}}" value="{{email}}" style="text-transform: capitalize;">{{product_name}}</option>
+                {{/each}}
+                {{/if}}
+
+            </select>
+
+
+        </div>
+        <div class="form-group">
+
+            <label for="quantity">Quantity</label>
+            <input class="form-control" id="quantity" name="quantity" required type="number" value="{{inventory.quantity}}">
+
+
+        </div>
+        <div class="form-group">
+        
+            <label for="selling_price">Selling Price</label>
+            <input class="form-control" id="selling_price" name="selling_price" required type="number" value="">
+        
+        
+        </div>
+        <div class="form-group">
+        
+            <label for="cost_price">Cost Price</label>
+            <input class="form-control" id="cost_price" name="cost_price" required type="number" value="">
+        
+        
+        </div>
+        <button type="submit" value="Submit" id="submit-btn" data-toggle="modal" data-target="#modalReply"
+            class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script>
+    $("#submit-btn").click(function (e) {
+        e.preventDefault();
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "Confirm to add the new Item?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Comfirm',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    'Updated!',
+                    'New Item has been updated.',
+                    'success'
+                )
+                $("#form").submit()
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Item is not updated.',
+                    'error'
+                )
+            }
+        })
+    })
+</script>
