@@ -11,7 +11,7 @@ router.get('/view', (req, res) => {
             // adminId: req.admin.id
         },
         order: [
-            ['id', 'ASC']
+            ['product_name', 'ASC']
         ],
         raw: true
     })
@@ -44,21 +44,21 @@ router.post('/create', (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.post('/delete/:id', (req, res) => {
-    let productcatId = req.params.id;
+router.post('/delete/:product_name', (req, res) => {
+    let product_name = req.params.product_name;
     // let adminId = req.admin.id;
     Productcat.findOne({
         where: {
-            id: productcatId,
+            product_name,
             // adminId: adminId
         },
         // attributes: ['id', 'adminId']
-        attributes: ['id']
+        attributes: ['']
     }).then((productcat) => {
         if (productcat != null) {
             Productcat.destroy({
                 where: {
-                    id: productcatId
+                    product_name
                 }
             }).then(() => {
                 alertMessage(res, 'info', 'Product Category deleted', 'far fa-trash-alt', true);

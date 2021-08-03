@@ -30,13 +30,13 @@
                         {{#if order}}
                         {{#each order}}
                         <tr>
-                            <td>{{id}}</td>
+                            <td>{{order_id}}</td>
                             <td style="text-transform: capitalize;">{{supplier}}</td>
                             <td style="text-transform: capitalize;">{{item_name}}</td>
                             <td>{{quantity}}</td>
                             <td style="text-transform: capitalize;">{{remarks}}</td>
                             <td style="width: 279px;">{{status}}</td>
-                            <td><a href="/order/showUpdate/{{id}}" style="display: flex; justify-content: center;"
+                            <td><a href="/order/showUpdate/{{order_id}}" style="display: flex; justify-content: center;"
                                     class="btn btn-warning">Update</a></td>
                         </tr>
                         {{/each}}

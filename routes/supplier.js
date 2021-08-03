@@ -13,7 +13,7 @@ router.get('/view', async (req, res) => {
                 // adminId: req.admin.id
             },
             order: [
-                ['id', 'ASC']
+                ['supplier_id', 'ASC']
             ],
             raw: true
         })
@@ -35,7 +35,7 @@ router.get('/showCreate', (req, res) => {
             // adminId: req.admin.id
         },
         order: [
-            ['id', 'ASC']
+            ['supplier_id', 'ASC']
         ],
         raw: true
     })
@@ -68,12 +68,12 @@ router.post('/create', (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.get('/showUpdate/:id', (req, res) => {
+router.get('/showUpdate/:supplier_id', (req, res) => {
     const title = 'Supplier';
 
     Supplier.findOne({
         where: {
-            id: req.params.id
+            supplier_id: req.params.supplier_id
         },
         raw: true
     }).then((supplier) => {
@@ -89,7 +89,7 @@ router.get('/showUpdate/:id', (req, res) => {
                         // adminId: req.admin.id
                     },
                     order: [
-                        ['id', 'ASC']
+                        ['product_name', 'ASC']
                     ],
                     raw: true
                 })
@@ -98,7 +98,7 @@ router.get('/showUpdate/:id', (req, res) => {
                         res.render('supplier/update', { // call views/supplier/editSupplier.handlebar to render the edit supplier page
                             layout: "admin",
                             title: title,
-                            productcat: productcat,
+                            productcat,
                             supplier
                         });
                     })
@@ -112,7 +112,7 @@ router.get('/showUpdate/:id', (req, res) => {
     }).catch(err => console.log(err)); // To catch no supplier ID
 });
 
-router.put('/update/:id', (req, res) => {
+router.put('/update/:supplier_id', (req, res) => {
     let company_name = req.body.company_name;
     let uen_number = req.body.uen_number;
     let email = req.body.email;
@@ -127,7 +127,7 @@ router.put('/update/:id', (req, res) => {
         product_name
     }, {
         where: {
-            id: req.params.id
+            supplier_id: req.params.supplier_id
         }
     }).then((supplier) => {
         res.redirect('/supplier/view'); // redirect to call router.get(/listSupplier...) to retrieve all updated
@@ -135,23 +135,23 @@ router.put('/update/:id', (req, res) => {
     }).catch(err => console.log(err));
 });
 
-router.post('/delete/:id', (req, res) => {
-    let supplierId = req.params.id;
+router.post('/delete/:supplier_id', (req, res) => {
+    let supplier_id = req.params.supplier_id;
     // let adminId = req.admin.id;
     // Select * from supplier where supplier.id=supplierID and supplier.adminId=adminID
     Supplier.findOne({
         where: {
-            id: supplierId,
+            supplier_id,
             // adminId: adminId
         },
         // attributes: ['id', 'adminId']
-        attributes: ['id']
+        attributes: ['supplier_id']
     }).then((supplier) => {
         // if record is found, admin is owner of supplier
         if (supplier != null) {
             Supplier.destroy({
                 where: {
-                    id: supplierId
+                    supplier_id
                 }
             }).then(() => {
                 alertMessage(res, 'info', 'Supplier deleted', 'far fa-trash-alt', true);

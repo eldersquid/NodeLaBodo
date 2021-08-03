@@ -13,7 +13,7 @@ router.get('/view', (req, res) => {
             // adminId: req.admin.id
         },
         order: [
-            ['id', 'ASC']
+            ['inventory_id', 'ASC']
         ],
         raw: true
     })
@@ -36,7 +36,7 @@ router.get('/showCreate', async (req, res) => {
             // adminId: req.admin.id
         },
         order: [
-            ['id', 'ASC']
+            ['supplier_id', 'ASC']
         ],
             raw: true
     })
@@ -79,7 +79,7 @@ router.get('/showUpdate/:id', async (req, res) => {
                 // adminId: req.admin.id
             },
             order: [
-                ['id', 'ASC']
+                ['product_name', 'ASC']
             ],
             raw: true
         })
@@ -92,7 +92,7 @@ router.get('/showUpdate/:id', async (req, res) => {
                 // adminId: req.admin.id
             },
             order: [
-                ['id', 'ASC']
+                ['supplier_id', 'ASC']
             ],
             raw: true
         })
@@ -102,7 +102,7 @@ router.get('/showUpdate/:id', async (req, res) => {
     const getInventoryData = () => {
         const inventory = Inventory.findOne({
             where: {
-                id: req.params.id
+                inventory_id: req.params.inventory_id
             },
             raw: true
         })
@@ -123,7 +123,7 @@ router.get('/showUpdate/:id', async (req, res) => {
     })
 });
 
-router.put('/update/:id', (req, res) => {
+router.put('/update/:inventory_id', (req, res) => {
     let item_name = req.body.item_name;
     let supplier = req.body.supplier;
     let product_name = req.body.product_name;
@@ -141,7 +141,7 @@ router.put('/update/:id', (req, res) => {
         cost_price
     }, {
         where: {
-            id: req.params.id
+            inventory_id: req.params.inventory_id
         }
     }).then((inventory) => {
         res.redirect('/inventory/view'); // redirect to call router.get(/listInventory...) to retrieve all updated
@@ -149,23 +149,23 @@ router.put('/update/:id', (req, res) => {
     }).catch(err => console.log(err));
 });
 
-router.post('/delete/:id', (req, res) => {
-    let inventoryId = req.params.id;
+router.post('/delete/:inventory_id', (req, res) => {
+    let inventory_id = req.params.inventory_id;
     // let adminId = req.admin.id;
     // Select * from inventory where inventory.id=inventoryID and inventory.adminId=adminID
     Inventory.findOne({
         where: {
-            id: inventoryId,
+            inventory_id,
             // adminId: adminId
         },
         // attributes: ['id', 'adminId']
-        attributes: ['id']
+        attributes: ['inventory_id']
     }).then((inventory) => {
         // if record is found, admin is owner of inventory
         if (inventory != null) {
             Inventory.destroy({
                 where: {
-                    id: inventoryId
+                    inventory_id
                 }
             }).then(() => {
                 alertMessage(res, 'info', 'Inventory deleted', 'far fa-trash-alt', true);

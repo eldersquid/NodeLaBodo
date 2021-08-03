@@ -39,20 +39,20 @@
                             {{#if inventory}}
                             {{#each inventory}}
                             <tr>
-                                <td>{{id}}</td>
+                                <td>{{inventory_id}}</td>
                                 <td style="text-transform: capitalize;">{{item_name}}</td>
                                 <td style="text-transform: capitalize;">{{supplier}}</td>
                                 <td style="text-transform: capitalize;">{{product_name}}</td>
                                 <td>{{quantity}}</td>
                                 <td>{{selling_price}}</td>
                                 <td>{{cost_price}}</td>
-                                <td><a href="/inventory/showUpdate/{{id}}" style="display: flex; justify-content: center;"
+                                <td><a href="/inventory/showUpdate/{{inventory_id}}" style="display: flex; justify-content: center;"
                                         class="btn btn-warning">Update</a></td>
                                 <td>
-                                    <form action="/inventory/delete/{{id}}" method="POST">
+                                    <form action="/inventory/delete/{{inventory_id}}" method="POST">
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" role="dialog"
+                                        <div class="modal fade" id="deleteModal_{{inventory_id}}" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
@@ -78,7 +78,7 @@
                                             </div>
                                         </div>
                                         <button type="button" class="btn btn-block btn-danger" data-toggle="modal"
-                                            data-target="#deleteModal_{{id}}">
+                                            data-target="#deleteModal_{{inventory_id}}">
                                             <span>Delete</span>
                                         </button>
                                     </form>

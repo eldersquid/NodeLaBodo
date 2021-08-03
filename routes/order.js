@@ -55,7 +55,7 @@ router.get('/view', (req, res) => {
             // adminId: req.admin.id
         },
         order: [
-            ['id', 'ASC']
+            ['order_id', 'ASC']
         ],
         raw: true
     })
@@ -79,7 +79,7 @@ router.get('/supplierView', (req, res) => {
             // supplierName: req.supplier
         },
         order: [
-            ['id', 'ASC']
+            ['order_id', 'ASC']
         ],
         raw: true
     })
@@ -103,7 +103,7 @@ router.get('/showCreate', async (req, res) => {
                 // adminId: req.admin.id
             },
             order: [
-                ['id', 'ASC']
+                ['inventory_id', 'ASC']
             ],
             raw: true
         })
@@ -116,7 +116,7 @@ router.get('/showCreate', async (req, res) => {
                 // adminId: req.admin.id
             },
             order: [
-                ['id', 'ASC']
+                ['supplier_id', 'ASC']
             ],
             raw: true
         })
@@ -151,11 +151,11 @@ router.post('/create', (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.get('/showUpdate/:id', (req, res) => {
+router.get('/showUpdate/:order_id', (req, res) => {
     const title = "Update Order";
     Order.findOne({
         where: {
-            id: req.params.id
+            order_id: req.params.order_id
         },
         raw: true
     }).then((order) => {
@@ -179,7 +179,7 @@ router.get('/showUpdate/:id', (req, res) => {
     }).catch(err => console.log(err)); // To catch no video ID
 });
 
-router.put('/update/:id', (req, res) => {
+router.put('/update/:order_id', (req, res) => {
     let supplier = req.body.supplier;
     let item_name = req.body.item_name;
     let quantity = req.body.quantity;
@@ -194,7 +194,7 @@ router.put('/update/:id', (req, res) => {
         status
     }, {
         where: {
-            id: req.params.id
+            order_id: req.params.order_id
         }
     }).then((order) => {
         res.redirect('/order/view'); // redirect to call router.get(/listInventory...) to retrieve all updated

@@ -33,19 +33,19 @@
                             {{#if supplier}}
                             {{#each supplier}}
                             <tr>
-                                <td>{{id}}</td>
+                                <td>{{supplier_id}}</td>
                                 <td>{{company_name}}</td>
                                 <td>{{uen_number}}</td>
                                 <td>{{email}}</td>
                                 <td>{{office_number}}</td>
                                 <td style="text-transform: capitalize;">{{product_name}}</td>
-                                <td><a href="/supplier/showUpdate/{{id}}" style="display: flex; justify-content: center;"
+                                <td><a href="/supplier/showUpdate/{{supplier_id}}" style="display: flex; justify-content: center;"
                                         class="btn btn-warning">Update</a></td>
                                 <td>
-                                    <form action="/supplier/delete/{{id}}" method="POST">
+                                    <form action="/supplier/delete/{{supplier_id}}" method="POST">
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" role="dialog"
+                                        <div class="modal fade" id="deleteModal_{{supplier_id}}" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
@@ -71,7 +71,7 @@
                                             </div>
                                         </div>
                                         <button type="button" class="btn btn-block btn-danger" data-toggle="modal"
-                                            data-target="#deleteModal_{{id}}">
+                                            data-target="#deleteModal_{{supplier_id}}">
                                             <span>Delete</span>
                                         </button>
                                     </form>

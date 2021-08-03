@@ -15,14 +15,12 @@
                 <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="1">
                     <thead>
                         <tr>
-                            <th>Category ID</th>
                             <th>Product Category</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Category ID</th>
                             <th>Product Category</th>
                             <th></th>
                         </tr>
@@ -31,12 +29,11 @@
                         {{#if productcat}}
                         {{#each productcat}}
                         <tr>
-                            <td>{{id}}</td>
                             <td style="text-transform: capitalize;">{{product_name}}</td>
                             <td>
-                                <form action="/productcat/delete/{{id}}" method="POST">
+                                <form action="/productcat/delete/{{product_name}}" method="POST">
                                     <!-- Modal -->
-                                    <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" role="dialog"
+                                    <div class="modal fade" id="deleteModal_{{product_name}}" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
@@ -60,7 +57,7 @@
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-block btn-danger" data-toggle="modal"
-                                        data-target="#deleteModal_{{id}}">
+                                        data-target="#deleteModal_{{product_name}}">
                                         <span>Delete</span>
                                     </button>
                                 </form>

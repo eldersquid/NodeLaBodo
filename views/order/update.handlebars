@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <h1 class="display-5">Update Order Form</h1>
 
-    <form action="/order/update/{{order.id}}?_method=PUT" method="POST" id="form">
+    <form action="/order/update/{{order.order_id}}?_method=PUT" method="POST" id="form">
         <div class="form-group">
             <label for="supplier">Supplier</label>
             <input id="supplier" type="text" class="form-control" value="{{order.supplier}}" name="supplier" disabled>
