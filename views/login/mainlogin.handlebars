@@ -3,7 +3,7 @@
 <div class="d-lg-flex half">
   <div
     class="bg order-1 order-md-2"
-    style="background-image: url('img/bg_1.jpg');"
+    style="background-image: url('img/HotelLaBodo.jpeg');"
   ></div>
   <div class="contents order-2 order-md-1">
 
@@ -11,11 +11,10 @@
       <div class="row align-items-center justify-content-center">
         <div class="col-md-7">
           <h3>Login to <strong>Hotel La Bodo</strong></h3>
-          <p class="mb-4">Hello I am Babatunde and I have AIDS, STDs and
-            Chlamydia- I mean welcome to Hotel La Bodo!</p>
+          <p class="mb-4">Welcome to Hotel La Bodo!</p>
           <form action="/login" method="post">
             <div class="form-group first">
-              <label for="username">Email</label>
+              
               <input
                 type="text"
                 class="form-control"
@@ -25,7 +24,7 @@
               />
             </div>
             <div class="form-group last mb-3">
-              <label for="password">Password</label>
+              
               <input
                 type="password"
                 class="form-control"
@@ -42,8 +41,9 @@
                 <input type="checkbox" checked="checked" />
                 <div class="control__indicator"></div>
               </label>
-              <span class="ml-auto"><a href="#" class="forgot-pass">Forgot
-                  Password</a></span>
+              </label>
+                <span class="ml-auto"><a href="/app.js" class="forgot-pass">Forgot Password</a></span>
+                
             </div>
 
             <input
@@ -57,9 +57,28 @@
           
 
           <div class="w-100 text-center">
-            <p class="mt-4">An Admin user?<a href="/login/stafflogin">
+            <p class="mt-4">An Admin user?<a href="/stafflogin">
                 Click Here</a></p>
           </div>
+
+          
+                      <div class="card-body">
+                        <a class="btn btn-block btn-social btn-google" href="/googleauth/google" role="button">
+                          <i class="fab fa-google"></i>
+                                Login with Google
+                        </a>
+                                                    <a class="btn btn-block btn-social btn-facebook"
+                                                        href="/fbauth/facebook" role="button">
+                                                        <i class="fab fa-facebook"></i>
+                                                        Login with Facebook
+                                                    </a>
+                                                </div>
+                                            </div>
+      </div>                        
+                                            
+                                            
+                                          
+                                            
         </div>
       </div>
     </div>

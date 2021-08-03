@@ -11,7 +11,13 @@ const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const cors = require('cors');
 
+if (process.env.NODE_ENV !== 'production'){
+    require('dotenv').config()
+}
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 
+console.log(stripeSecretKey, stripePublicKey)
 
 const passport = require('passport');
 // const nodemailer = require('nodemailer')
@@ -231,13 +237,127 @@ app.use('/profile', SignupRoute);
 // This route maps the rooms URL to any path defined in rooms.js
 app.use('/rooms', roomsRoute);
 
+// google login
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+passport.serializeUser((user, done) => {
+    done(null, user.googleId || user.id);
+});
+
+passport.deserializeUser((user, done) => {
+    User.findOne({ googleId: googleId }, function(err, user) {
+        done(null, user);
+
+    });
+});
+
+passport.use(
+    new GoogleStrategy({
+            clientID: '807209658055-3n1acfo5en7l80ul66vl65dblbs3tu21.apps.googleusercontent.com',
+            clientSecret: 'ZfmnW-e0It9zyp-IxiqbS5ZM',
+            callbackURL: "http://localhost:5000/googleauth/google/home"
+        },
+        function(accessToken, refreshToken, profile, cb) {
+            // Register User 
+            console.log(profile);
+            cb(null, profile);
+
+            // User.findOne({ where: { username: profile.id, google_id: profile.id, usertype: 'customer' } })
+            // .then(Customer => {
+            // 	if (Customer) {
+            // 		cb(null, Customer);
+            // 	}
+            // 	else {
+            // 		console.log(profile);
+            // 		let firstname = profile.displayName.split(' ')[0];
+            // 		let lastname = profile.displayName.split(' ')[1];
+            // 		var password = generator.generate({
+            // 			length: 10,
+            // 			numbers: true
+            // 		});
+            // 		// console.log('passsssssworrrdddd',password);
+            // 		bcrypt.genSalt(10, (err, salt) => {
+            // 			bcrypt.hash(password, salt, (err, hash) => {
+            // 				if (err) throw err;
+            // 				password = hash;
+            // 				User.create({ username: profile.id, firstname: firstname, lastname: lastname, google_id: profile.id, usertype: 'customer', password: password })
+            // 					.then(user => {
+            // 						cb(null, user);
+            // 					})
+            // 					.catch(err => console.log(err));
+        }
+    ));
 
 app.use(passport.initialize());
+
 app.use(passport.session());
 
 
+app.get('/googleauth/google', passport.authenticate('google', { scope: ['profile'] }));
 
+app.get('/googleauth/google/home', passport.authenticate('google', { failureRedirect: '/mainlogin' }), (req, res) => {
+    res.redirect('/rooms/apartment');
+    res.end('Login Successful');
+})
+
+// facebook login
+const FacebookStrategy = require("passport-facebook").Strategy;
+const Signup = require('./models/Signup');
+passport.use(new FacebookStrategy({
+        clientID: '157881506323867',
+        clientSecret: '4ffba1b702ebb0e004d0a63f9dae0ff0',
+        callbackURL: "http://localhost:5000/fbauth/facebook/home"
+    },
+    function(accessToken, refreshToken, profile, cb) {
+        console.log(profile);
+        cb(null, profile);
+
+        //     function(accessToken, refreshToken, profile, done) {
+        //         console.log('facebook-->', profile);
+
+        //         Signup.findOne({ where: { facebook_id: profile.id, usertype: 'signup' } })
+        //             .then(Signup => {
+        //                 if (Signup) {
+        //                     done(null, Signup);
+        //                 } else {
+        //                     let firstname = profile.displayName.split(' ')[0];
+        //                     let lastname = profile.displayName.split(' ')[1];
+        //                     var password = generator.generate({
+        //                         length: 10,
+        //                         numbers: true
+        //                     });
+        //                     bcrypt.genSalt(10, (err, salt) => {
+        //                         bcrypt.hash(password, salt, (err, hash) => {
+        //                             if (err) throw err;
+        //                             password = hash;
+        //                             User.create({ username: profile.id, firstname: firstname, lastname: lastname, facebook_id: profile.id, usertype: 'customer', password: password })
+        //                                 .then(user => {
+        //                                     // alertMessage(res, 'success', user.username + ' Please proceed to login', 'fas fa-sign-in-alt', true);
+        //                                     // res.redirect('customer/homecust');
+        //                                     done(null, user);
+        //                                 })
+        //                                 .catch(err => console.log(err));
+        //                         })
+        //                     });
+        //                 }
+        //             });
+    }
+));
+
+
+
+
+
+
+app.get('/fbauth/facebook', passport.authenticate('facebook'));
+app.get('/fbauth/facebook/home',
+    passport.authenticate('facebook', {
+        failureRedirect: '/login/stafflogin'
+    }),
+    function(req, res) {
+        res.redirect('/rooms/apartment')
+    }
+);
 
 
 /*

@@ -32,7 +32,7 @@
                 <p>Quisque nec nibh id lacus fringilla eleifend sed sit amet sem. Donec lectus odio, mollis a nisl non,
                     tempor interdum nisl.</p>
                 <div class="primary-button">
-                    <a href="#reservation" class="scroll-link" data-id="book-table">Book a Table</a>
+                    <a href="#reservation" class="scroll-link" data-id="book-table">view Menu</a>
                 </div>
             </div>
         </div>
@@ -177,8 +177,6 @@
 
 
 
-
-
 <!-- Start Gallery -->
 <section id="mu-gallery">
     <div class="container">
@@ -190,16 +188,17 @@
                         <span class="mu-subtitle">Discover</span>
                         <h2>Our Gallery</h2>
                     </div>
-                    
+                    {{!-- {{#if foodgallery}} --}}
                     <div class="mu-gallery-content">
                         <!-- Start gallery image -->
                         <div class="mu-gallery-body">
                             <!-- start single gallery image -->
+                            {{#each foodgallery}}
                             <div class="mu-single-gallery col-md-4">
                                 <div class="mu-single-gallery-item">
                                     <figure class="mu-single-gallery-img">
-                                        <a class="mu-imglink" href="/teststuff/img/gallery/bread1.jpg">
-                                            <img alt="img" src="/teststuff/img/gallery/bread1.jpg">
+                                        <a class="mu-imglink" href="{{foodPhoto}}">
+                                            <img alt="img" src="{{foodPhoto}}">
                                             <div class="mu-single-gallery-info">
                                                 <img class="mu-view-btn" src="/teststuff/img/plus.png"
                                                     alt="plus icon img">
@@ -208,14 +207,41 @@
                                     </figure>
                                 </div>
                             </div>
+                            {{/each}}
                             <!-- End single gallery image -->
                         </div>
                     </div>
+                    {{!-- {{/if}} --}}
                 </div>
             </div>
         </div>
 </section>
 <!-- End Gallery -->
+
+<!-- Start Menu -->
+<section id="mu-gallery">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mu-gallery-area">
+                    <div class="mu-title">
+                        <span class="mu-subtitle">View</span>
+                        <h2>Our Menu</h2>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="primary-button">
+                            <a href="/restaurant/Menu">view Menu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- End Menu -->
 
 <!-- Start Contact section -->
 <section id="mu-contact">
@@ -239,23 +265,22 @@
                                         <div class="form-group">
                                             <label for="contact_name">Your Name</label>
                                             <input type="text" class="form-control" id="contact_name"
-                                                name="contact_name" placeholder="Name*" required>
+                                                name="contact_name" placeholder="Name*">
                                         </div>
                                         <div class="form-group">
                                             <label for="contact_email">Email address</label>
                                             <input type="email" class="form-control" id="contact_email"
-                                                name="contact_email" placeholder="Email*" required>
+                                                name="contact_email" placeholder="Email*">
                                         </div>
                                         <div class="form-group">
                                             <label for="contact_subject">Subject</label>
                                             <input type="text" class="form-control" id="contact_subject"
-                                                name="contact_subject" placeholder="Subject*" required>
+                                                name="contact_subject" placeholder="Subject*">
                                         </div>
                                         <div class="form-group">
                                             <label for="contact_message">Message</label>
                                             <textarea class="form-control" id="contact_message" name="contact_message"
-                                                cols="30" rows="10" placeholder="Type Your Message*"
-                                                required></textarea>
+                                                cols="30" rows="10" placeholder="Type Your Message*"></textarea>
                                         </div>
                                         <button type="submit" id="contactSubmit" data-toggle="modal"
                                             data-target="#modalContact" class="mu-send-btn">Send
@@ -318,7 +343,7 @@
                         <a href="#"><span class="fa fa-youtube"></span></a>
                     </div>
                     <div class="mu-footer-copyright">
-                        <p>&copy; Copyright <a rel="nofollow" href="http://markups.io">markups.io</a>. All right
+                        <p>&copy; Copyright <a rel="nofollow" href="http://markups.io">HotelLaBodo</a>. All right
                             reserved.</p>
                     </div>
                 </div>
@@ -467,6 +492,8 @@
         var contact_email = $("#contact_email").val();
         var contact_subject = $("#contact_subject").val();
         var contact_message = $("#contact_message").val();
+
+        if (contact_name == contact_name | contact_email == contact_email | contact_subject == contact_subject | contact_message = contact_message){
         Swal.fire(
             'Submitted!',
             'Respone Recieved!',
@@ -475,5 +502,13 @@
                     $("#contact2").submit();
                 }
             });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            button: 'Ok'
+        });
     });
+}
 </script>

@@ -4,21 +4,35 @@ const Reservation = require('../models/Reservation');
 const alertMessage = require('../helpers/messenger.js');
 const Swal = require('sweetalert2');
 const Contact = require('../models/Contact');
+const FoodCart = require('../models/FoodCart');
 // const Response = require('../models/Response');
 
 // User View Restaurant 
-router.get('/DineV2', (req, res) => {
-    res.render('restaurant/DineV2', {
-        layout: "blank",
-    });
-});
+// router.get('/DineV2', (req, res) => {
+//     res.render('restaurant/DineV2', {
+//         layout: "blank",
+//     });
+// });
 
 // User View Menu
-router.get('/Menu', (req, res) => {
-    res.render('restaurant/Menu', {
-        layout: "blank",
-    });
-});
+
+router.get("/Menu", (req, res) => {
+    const title = "Menu";
+  
+    FoodCart.findAll({
+      order: [["id", "ASC"]],
+      raw: true,
+    })
+      .then((foodcart) => {
+        // pass object to listVideos.handlebar
+        res.render("restaurant/Menu", {
+          layout: "blank",
+          title: title,
+          foodcart: foodcart,
+        });
+      })
+      .catch((err) => console.log(err));
+  });
 
 //Create reservation 
 router.post('/createReservation', (req, res) => {
@@ -60,26 +74,41 @@ router.post('/createContact', (req,res) => {
         contact_subject,
         contact_message
     }).then((contact) => {
+        if (contact_name == contact_name | contact_email == contact_email | contact_subject == contact_subject | contact_message == contact_message){
+            Swal.fire(
+                'Submitted!',
+                'Respone Recieved!',
+                'success').then((result) => {
+                    if (result.isConfirmed) {
+                        $("#contact2").submit();
+                    }
+                });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                button: 'Ok'
+            });
+        }
         res.redirect('/restaurant/DineV2');
     }).catch(err => console.log(err))
 
 });
 
-router.get('/uploadFoodPic/:id', (req,res) => {
+router.get('/DineV2', (req,res) => {
     const title = 'foodgallery';
-    console.log(req.params.id)
     FoodGallery.findAll({
-        where: {
-            // id: req.params.id
-        },
-        order: [
-            // [reservation.id, 'ASC']
-        ],
         raw: true
     })
         .then((foodgallery) => {
-            console.log(foodgallery);
-            res.render('restaurant/DinV2', {
+            console.log("hello",foodgallery);
+            const gallleryList = [];
+            for (var i in foodgallery){
+                gallleryList.push(foodgallery[i]);
+                console.log(gallleryList);
+            }
+            res.render('restaurant/DineV2', {
                 layout: "blank",
                 title: title,
                 foodgallery:foodgallery

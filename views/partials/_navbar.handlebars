@@ -30,6 +30,7 @@
         </form>
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav mr-auto">
+				{{#if signup}}
             <img style= "width:90px;"src="https://cdn.discordapp.com/attachments/720848887920984115/860856627283099648/HotelLaBodo-removebg-preview.png" alt="">
 	        	<li class="nav-item"><a href="" class="nav-link">Home</a></li>
 				<li class="nav-item"><a href="/restaurant/DineV2" class="nav-link">Dining&Bars</a></li>
@@ -40,13 +41,18 @@
 				</div> --}}
 				</li>
 	        	<li class="nav-item"><a href="#" class="nav-link">Facilities</a></li>
+	          <li class="nav-item"><a href="/admRestaurant/viewFoodGallery" class="nav-link">Gallery</a></li>
+            <li class="nav-item"><a href="/rooms" class="nav-link">Rooms</a></li>
+			<li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+
+			{{else}}
+			<li class="nav-item"><a href="#" class="nav-link">Facilities</a></li>
 	          <li class="nav-item"><a href="#" class="nav-link">Gallery</a></li>
             <li class="nav-item"><a href="/rooms" class="nav-link">Rooms</a></li>
 			<li class="nav-item"><a href="/signup" class="nav-link">Sign Up</a></li>
 			<li class="nav-item"><a href="/mainlogin" class="nav-link">Login</a></li>
-				<li class="nav-item">
-				<a class="nav-link" href="/admin/hospitalList" >Admin</a>
-			</li>
+			{{/if}}
+			
 	        </ul>
 	      </div>
 	    </div>

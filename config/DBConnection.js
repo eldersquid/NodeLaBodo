@@ -20,33 +20,36 @@ const setUpDB = (drop) => {
             */
             // user.hasMany(video);
 
-            // Supplier
-            // admin.hasMany(Supplier, {foreignKey: 'supplier_id'});
-            // supplier.belongsTo(Admin, {foreignKey: 'supplier_id'});
+            Supplier
+            admin.hasMany(Supplier, {foreignKey: 'supplier_id'});
+            supplier.belongsTo(Admin, {foreignKey: 'supplier_id'});
 
-            Supplier.hasMany(Productcat, { foreignKey: 'supplierId', as: "supplierID" });
-            Productcat.belongsTo(Supplier, { foreignKey: 'supplierId', as: "supplierID" });
+            supplier.hasMany(Productcat, {foreignKey: 'productcat_id'});
+            productcat.belongsTo(Supplier, {foreignKey: 'productcat_id'});
 
-            Supplier.hasMany(Inventory, { foreignKey: 'supplierId' , as: "SupplierID" });
-            Inventory.belongsTo(Supplier, { foreignKey: 'supplierId', as: "SupplierID" });
-
-            Supplier.hasMany(Order, { foreignKey: 'supplierId', as: "Supplier_ID" });
-            Order.belongsTo(Supplier, { foreignKey: 'supplierId', as: "Supplier_ID" });
+            supplier.hasMany(Inventory, { foreignKey: 'inventory_id' });
+            inventory.belongsTo(Supplier, { foreignKey: 'inventory_id' });
 
             // Inventory
-            // admin.hasMany(Inventory, {foreignKey: 'inventory_id'});
-            // inventory.belongsTo(Admin, {foreignKey: 'inventory_id'});
+            admin.hasMany(Inventory, {foreignKey: 'inventory_id'});
+            inventory.belongsTo(Admin, {foreignKey: 'inventory_id'});
 
-            Inventory.hasOne(Productcat, { foreignKey: 'inventoryId', as: "inventoryID" });
-            Productcat.belongsTo(Inventory, { foreignKey: 'inventoryId', as: "inventoryID" });
+            inventory.hasOne(Productcat, { foreignKey: 'productcat_id' });
+            productcat.belongsTo(Inventory, { foreignKey: 'productcat_id' });
+
+            inventory.hasOne(Supplier, { foreignKey: 'supplier_id' });
+            supplier.belongsTo(Inventory, { foreignKey: 'supplier_id' });
 
             // Orders
-            // admin.hasMany(Order, { foreignKey: 'order_id' });
-            // order.belongsTo(Admin, { foreignKey: 'order_id' });
+            admin.hasMany(Order, { foreignKey: 'order_id' });
+            order.belongsTo(Admin, { foreignKey: 'order_id' });
 
-            Order.hasOne(Inventory, { foreignKey: 'orderId', as: "OrderID" });
-            Inventory.belongsTo(Order, { foreignKey: 'orderId', as: "OrderID" });
-            
+            order.hasOne(Supplier, { foreignKey: 'supplier_id' });
+            supplier.belongsTo(Order, { foreignKey: 'supplier_id' });
+
+            order.hasOne(Inventory, { foreignKey: 'inventory_id' });
+            inventory.belongsTo(Order, { foreignKey: 'inventory_id' });
+
             mySQLDB.sync({ // Creates table if none exists
                 force: drop
             }).then(() => {

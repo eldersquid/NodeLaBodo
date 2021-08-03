@@ -107,6 +107,7 @@
                     <a class="collapse-item" href="/admRestaurant/viewContact">View Contact Us</a>
                     <a class="collapse-item" href="/admRestaurant/viewResponse">View Response</a>
                     <a class="collapse-item" href="/admRestaurant/viewFoodGallery">View Food Gallery</a>
+                    <a class="collapse-item" href="/admRestaurant/viewFoodCart">View Food Menu</a>
                 </div>
             </div>
         </li>
@@ -141,6 +142,14 @@
                     <a class="collapse-item" href="">Update</a>
                 </div>
             </div>
+        </li>
+
+         <li class="nav-item">
+            <a class="nav-link collapsed" href="/stafflogout" data-toggle="collapse" data-target="#collapseLogout"
+                aria-expanded="true" aria-controls="collapseLogout">
+                <i class="fas fa-handshake"></i>
+                <span>Logout</span>
+            </a>
         </li>
 
         <!-- Divider -->
@@ -328,7 +337,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <p>Welcome Back , </p>
+                            <p>Welcome Back , {{staff_name}} </p>
                             <span></span>
                             <img class="img-profile rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60">
                         </a>
