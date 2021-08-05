@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Supplier = require('../models/Supplier');
-const Productcat = require('../models/Productcat');
 const Inventory = require('../models/Inventory');
 const Swal = require('sweetalert2');
 
@@ -53,7 +52,6 @@ router.get('/showCreate', async (req, res) => {
 router.post('/create', (req, res) => {
     let item_name = req.body.item_name;
     let supplier = req.body.supplier;
-    let product_name = req.body.product_name;
     let quantity = req.body.quantity;
     let selling_price = req.body.selling_price;
     let cost_price = req.body.cost_price;
@@ -61,7 +59,6 @@ router.post('/create', (req, res) => {
     Inventory.create({
         item_name,
         supplier,
-        product_name,
         quantity,
         selling_price,
         cost_price
@@ -70,21 +67,8 @@ router.post('/create', (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.get('/showUpdate/:id', async (req, res) => {
+router.get('/showUpdate/:inventory_id/:quantity', async (req, res) => {
     const title = 'Inventory';
-
-    const getProductcatData = () => {
-        const productcat = Productcat.findAll({
-            where: {
-                // adminId: req.admin.id
-            },
-            order: [
-                ['product_name', 'ASC']
-            ],
-            raw: true
-        })
-        return productcat
-    };
 
     const getSupplierData = () => {
         const supplier = Supplier.findAll({
@@ -118,16 +102,16 @@ router.get('/showUpdate/:id', async (req, res) => {
         layout: "admin",
         title: title,
         supplier: await getSupplierData(),
-        productcat: await getProductcatData(),
         inventory: await getInventoryData()
     })
 });
 
-router.put('/update/:inventory_id', (req, res) => {
+router.put('/update/:inventory_id/:quantity', (req, res) => {
     let item_name = req.body.item_name;
     let supplier = req.body.supplier;
-    let product_name = req.body.product_name;
-    let quantity = req.body.quantity;
+    let updateQuantity = parseInt(req.body.quantity);
+    let currQuantity = parseInt(req.params.quantity);
+    var quantity = updateQuantity + currQuantity;
     let selling_price = req.body.selling_price;
     let cost_price = req.body.cost_price;
     
@@ -135,7 +119,6 @@ router.put('/update/:inventory_id', (req, res) => {
     Inventory.update({
         item_name,
         supplier,
-        product_name,
         quantity,
         selling_price,
         cost_price

@@ -2,7 +2,6 @@ const { admin } = require('googleapis/build/src/apis/admin');
 const mySQLDB = require('./DBConfig');
 // const user = require('../models/User');
 // const Admin = require('../models/Admin.js');
-const Productcat = require('../models/Productcat.js');
 const Supplier = require('../models/Supplier.js');
 const Inventory = require('../models/Inventory.js');
 const Order = require('../models/Order.js');
@@ -21,9 +20,6 @@ const setUpDB = (drop) => {
             // user.hasMany(video);
 
             // Supplier
-            Supplier.hasMany(Productcat, { foreignKey: 'supplierId', as: "supplierID" });
-            Productcat.belongsTo(Supplier, { foreignKey: 'supplierId', as: "supplierID" });
-
             Supplier.hasMany(Inventory, { foreignKey: 'supplierId', as: "SupplierID" });
             Inventory.belongsTo(Supplier, { foreignKey: 'supplierId', as: "SupplierID" });
 
@@ -33,9 +29,6 @@ const setUpDB = (drop) => {
             // Inventory
             // admin.hasMany(Inventory, {foreignKey: 'inventory_id'});
             // inventory.belongsTo(Admin, {foreignKey: 'inventory_id'});
-
-            Inventory.hasOne(Productcat, { foreignKey: 'inventoryId', as: "inventoryID" });
-            Productcat.belongsTo(Inventory, { foreignKey: 'inventoryId', as: "inventoryID" });
 
             // Orders
             // admin.hasMany(Order, { foreignKey: 'order_id' });

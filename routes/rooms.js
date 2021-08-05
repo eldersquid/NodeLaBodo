@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const Supplier = require('../models/Supplier');
-const Productcat = require('../models/Productcat');
 const Inventory = require('../models/Inventory');
 const Room = require('../models/Room');
 const paypal = require('paypal-rest-sdk');

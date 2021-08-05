@@ -11,10 +11,8 @@
                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="1">
                         <thead>
                             <tr>
-                                <th>Inventory ID</th>
                                 <th>Item Name</th>
                                 <th>Supplier</th>
-                                <th>Product Name</th>
                                 <th>Quantity</th>
                                 <th>Selling Price</th>
                                 <th>Cost Price</th>
@@ -24,10 +22,8 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Inventory ID</th>
                                 <th>Item Name</th>
                                 <th>Supplier</th>
-                                <th>Product Name</th>
                                 <th>Quantity</th>
                                 <th>Selling Price</th>
                                 <th>Cost Price</th>
@@ -39,14 +35,12 @@
                             {{#if inventory}}
                             {{#each inventory}}
                             <tr>
-                                <td>{{inventory_id}}</td>
                                 <td style="text-transform: capitalize;">{{item_name}}</td>
                                 <td style="text-transform: capitalize;">{{supplier}}</td>
-                                <td style="text-transform: capitalize;">{{product_name}}</td>
                                 <td>{{quantity}}</td>
                                 <td>{{selling_price}}</td>
                                 <td>{{cost_price}}</td>
-                                <td><a href="/inventory/showUpdate/{{inventory_id}}" style="display: flex; justify-content: center;"
+                                <td><a href="/inventory/showUpdate/{{inventory_id}}/{{quantity}}" style="display: flex; justify-content: center;"
                                         class="btn btn-warning">Update</a></td>
                                 <td>
                                     <form action="/inventory/delete/{{inventory_id}}" method="POST">
@@ -67,7 +61,7 @@
                                                         Are you sure you want to delete Item Name: <span
                                                             style="color:red;">{{item_name}}</span>,
                                                         Supplier:
-                                                        <span style="color:red;">{{supplier}}</span>, Product Category: <span style="color:red;">{{product_name}}</span>?
+                                                        <span style="color:red;">{{supplier}}</span>?
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"

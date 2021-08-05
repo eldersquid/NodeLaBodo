@@ -3,6 +3,7 @@
 <script>
     function elimSupplier(el) {
         supplier = el.value;
+        itemofSupplier = [];
         items = document.getElementById('item_name').children;
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
@@ -10,7 +11,12 @@
                 item.style.display = 'none';
             } else {
                 item.style.display = 'block';
+                itemofSupplier.push(item);
             }
+        }
+        currItem = document.getElementById('item_name').value;
+        if (!itemofSupplier.includes(currItem)){
+            document.getElementById('item_name').value = "none";
         }
     }
 </script>

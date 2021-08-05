@@ -32,22 +32,7 @@
                 <option value="none" selected disabled hidden></option>
                 {{#if supplier}}
                 {{#each supplier}}
-                <option value="{{email}}" style="text-transform: capitalize;">{{email}}</option>
-                {{/each}}
-                {{/if}}
-
-            </select>
-
-
-        </div>
-        <div class="form-group">
-
-            <label for="product_name">Product Name</label>
-            <select class="form-control" id="product_name" name="product_name" required>
-                <option value="none" selected disabled hidden></option>
-                {{#if supplier}}
-                {{#each supplier}}
-                <option id="{{product_name}}" value="{{email}}" style="text-transform: capitalize;">{{product_name}}</option>
+                <option value="{{company_name}}">{{company_name}}</option>
                 {{/each}}
                 {{/if}}
 

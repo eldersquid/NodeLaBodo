@@ -76,8 +76,6 @@ const adminRoute = require('./routes/admin');
 
 const roomsRoute = require('./routes/rooms');
 
-const productcatRoute = require('./routes/productcat');
-
 const supplierRoute = require('./routes/supplier');
 
 const inventoryRoute = require('./routes/inventory');
@@ -119,7 +117,7 @@ const app = express();
 
 
 
-adminDB.setUpDB(true); // Set up database with new tables (true)
+adminDB.setUpDB(false); // Set up database with new tables (true)
 
 // Handlebars Middleware
 /*
@@ -222,9 +220,6 @@ app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.
 app.use('/restaurant', restaurantRoute);
 
 app.use('/admRestaurant', admRestaurantRoute);
-
-app.use('/productcat', productcatRoute);
-
 app.use('/supplier', supplierRoute);
 
 app.use('/inventory', inventoryRoute);

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Supplier = require('../models/Supplier');
-const Productcat = require('../models/Productcat');
 const alertMessage = require('../helpers/messenger.js');
 
 router.get('/view', async (req, res) => {
@@ -30,24 +29,10 @@ router.get('/view', async (req, res) => {
 
 router.get('/showCreate', (req, res) => {
     const title = 'Supplier';
-    Productcat.findAll({
-        where: {
-            // adminId: req.admin.id
-        },
-        order: [
-            ['supplier_id', 'ASC']
-        ],
-        raw: true
-    })
-        .then((productcat) => {
-            // pass object to listSupplier.handlebar
-            res.render('supplier/create', {
-                layout: "admin",
-                title: title,
-                productcat: productcat
-            });
+        res.render('supplier/create', {
+            layout: "admin",
+            title: title
         })
-        .catch(err => console.log(err));
 });
 
 router.post('/create', (req, res) => {
@@ -55,14 +40,12 @@ router.post('/create', (req, res) => {
     let uen_number = req.body.uen_number;
     let email = req.body.email;
     let office_number = req.body.office_number;
-    let product_name = req.body.product_name;
 
     Supplier.create({
         company_name,
         uen_number,
         email,
-        office_number,
-        product_name
+        office_number
     }).then((supplier) => {
         res.redirect('/supplier/view');
     }).catch(err => console.log(err))
@@ -84,23 +67,10 @@ router.get('/showUpdate/:supplier_id', (req, res) => {
             // Only authorised admin who is owner of supplier can edit it
             // if (req.admin.id === supplier.adminId) {
             //     checkOptions(supplier);
-                Productcat.findAll({
-                    where: {
-                        // adminId: req.admin.id
-                    },
-                    order: [
-                        ['product_name', 'ASC']
-                    ],
-                    raw: true
-                })
-                    .then((productcat) => {
-                        // pass object to listSupplier.handlebar
-                        res.render('supplier/update', { // call views/supplier/editSupplier.handlebar to render the edit supplier page
-                            layout: "admin",
-                            title: title,
-                            productcat,
-                            supplier
-                        });
+                    res.render('supplier/update', { // call views/supplier/editSupplier.handlebar to render the edit supplier page
+                        layout: "admin",
+                        title: title,
+                        supplier
                     })
                     .catch(err => console.log(err));
                 
@@ -117,14 +87,12 @@ router.put('/update/:supplier_id', (req, res) => {
     let uen_number = req.body.uen_number;
     let email = req.body.email;
     let office_number = req.body.office_number;
-    let product_name = req.body.product_name;
 
     Supplier.update({
         company_name,
         uen_number,
         email,
-        office_number,
-        product_name
+        office_number
     }, {
         where: {
             supplier_id: req.params.supplier_id
