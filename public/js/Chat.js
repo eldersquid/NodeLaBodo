@@ -7,7 +7,11 @@ var possibleReponses = [
     {message : "how are you?", response : "im fine"},
     {message : "do you love chuu?", response : "chuu is my wife"},
     {message : "olivia hye or chuu?", response : "gowon lol"},
-
+    {message : "i want to eat", response : "our restaurant is very nice!"},
+    {message : "what to recommend to rank A?", response : "dont come in pls no covid"},
+    {message : "what to recommend to rank B?", response : "only 2nd floor"},
+    {message : "what to recommend to rank C?", response : "dont waste our time la"},
+    {message : "i wan work here", response : "lai pay is 500 only"},
 ]
 
 class InteractiveChatbox {
