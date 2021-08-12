@@ -17,19 +17,19 @@
 <div class="container-fluid">
     <h1 class="display-5">Update Inventory</h1>
 
-    <form method="POST" action="/inventory/update/{{inventory.inventory_id}}?_method=PUT" id="form">
+    <form method="POST" action="/inventory/update/{{inventory.inventory_id}}/{{inventory.quantity}}?_method=PUT" id="form">
     
         <div class="form-group">
 
             <label for="item_name">Item Name</label>
-            <input class="form-control" id="item_name" name="item_name" required type="text" value="{{inventory.item_name}}">
+            <input class="form-control" id="item_name" name="item_name" required type="text" value="{{inventory.item_name}}" readonly>
 
 
         </div>
         <div class="form-group">
 
             <label for="supplier">Supplier</label>
-            <select class="form-control" id="supplier" name="supplier" onchange="elimCompany(this)" required>
+            {{!-- <select class="form-control" id="supplier" name="supplier" onchange="elimCompany(this)" required>
                 <option value="none" selected disabled hidden></option>
                 {{#if supplier}}
                 {{#each supplier}}
@@ -37,28 +37,30 @@
                 {{/each}}
                 {{/if}}
 
-            </select>
+            </select> --}}
+            <input class="form-control" id="supplier" name="supplier" type="text" value="{{inventory.supplier}}" readonly>
 
 
         </div>
         <div class="form-group">
 
             <label for="quantity">Quantity</label>
-            <input class="form-control" id="quantity" name="quantity" required type="number" value="{{inventory.quantity}}">
+            <input class="form-control" id="quantity" name="quantity" required type="number">
+            <span style="font-style: italic; font-size: small;">* Amount will be automatically added to the current quantity</span>
 
 
         </div>
         <div class="form-group">
         
             <label for="selling_price">Selling Price</label>
-            <input class="form-control" id="selling_price" name="selling_price" required type="number" value="">
+            <input class="form-control" id="selling_price" name="selling_price" required type="number" value="{{inventory.selling_price}}">
         
         
         </div>
         <div class="form-group">
         
             <label for="cost_price">Cost Price</label>
-            <input class="form-control" id="cost_price" name="cost_price" required type="number" value="">
+            <input class="form-control" id="cost_price" name="cost_price" required type="number" value="{{inventory.cost_price}}">
         
         
         </div>
