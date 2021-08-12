@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h1 class="display-5">Order</h1>
+    <h1 class="display-5">Orders</h1>
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
@@ -27,16 +27,16 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        {{#if order}}
-                        {{#each order}}
+                        {{#if orders}}
+                        {{#each orders}}
                         <tr>
-                            <td>{{order_id}}</td>
+                            <td>{{orders_id}}</td>
                             <td style="text-transform: capitalize;">{{supplier}}</td>
                             <td style="text-transform: capitalize;">{{item_name}}</td>
                             <td>{{quantity}}</td>
                             <td style="text-transform: capitalize;">{{remarks}}</td>
                             <td style="width: 279px;">{{status}}</td>
-                            <td><a href="/order/showUpdate/{{order_id}}" style="display: flex; justify-content: center;"
+                            <td><a href="/order/showUpdate/{{orders_id}}" style="display: flex; justify-content: center;"
                                     class="btn btn-warning">Update</a></td>
                         </tr>
                         {{/each}}

@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
-const Order = db.define('order', {
-    order_id: {
+const Orders = db.define('orders', {
+    orders_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
@@ -25,4 +25,4 @@ const Order = db.define('order', {
     }
 });
 
-module.exports = Order;
+module.exports = Orders;

@@ -20,6 +20,9 @@ const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 console.log(stripeSecretKey, stripePublicKey)
 
 const passport = require('passport');
+// Messaging libraries
+const flash = require('connect-flash');
+const FlashMessenger = require('flash-messenger');
 // const nodemailer = require('nodemailer')
 // const { google } = require('googleapis')
 // const CLIENT_ID = '855734212452-4ti1go2pp7ks8os3o98ragh1k8gh2mtb.apps.googleusercontent.com'
@@ -80,7 +83,7 @@ const supplierRoute = require('./routes/supplier');
 
 const inventoryRoute = require('./routes/inventory');
 
-const orderRoute = require('./routes/order');
+const ordersRoute = require('./routes/orders');
 
 const adminDB = require('./config/DBConnection');
 
@@ -101,9 +104,6 @@ const { replaceCommas } = require('./helpers/hbs');
 const MySQLStore = require('express-mysql-session');
 const db = require('./config/db');
 
-// Messaging libraries
-const flash = require('connect-flash');
-const FlashMessenger = require('flash-messenger');
 // const Reservation = require('./models/Reservation');
 
 // 1. Danish's Route
@@ -224,7 +224,7 @@ app.use('/supplier', supplierRoute);
 
 app.use('/inventory', inventoryRoute);
 
-app.use('/order', orderRoute);
+app.use('/orders', ordersRoute);
 
 app.use('/profile', SignupRoute);
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Supplier = require('../models/Supplier');
-const alertMessage = require('../helpers/messenger.js');
+const alertMessage = require('../helpers/messenger');
 
 router.get('/view', async (req, res) => {
     const title = 'Supplier';
@@ -29,10 +29,10 @@ router.get('/view', async (req, res) => {
 
 router.get('/showCreate', (req, res) => {
     const title = 'Supplier';
-        res.render('supplier/create', {
-            layout: "admin",
-            title: title
-        })
+    res.render('supplier/create', {
+        layout: "admin",
+        title: title
+    })
 });
 
 router.post('/create', (req, res) => {
@@ -41,14 +41,31 @@ router.post('/create', (req, res) => {
     let email = req.body.email;
     let office_number = req.body.office_number;
 
-    Supplier.create({
-        company_name,
-        uen_number,
-        email,
-        office_number
-    }).then((supplier) => {
-        res.redirect('/supplier/view');
-    }).catch(err => console.log(err))
+    Supplier.findOne({
+        where: {
+            uen_number
+        }
+    }).then(supplier => {
+        if (supplier){
+            const title = 'Supplier';
+            res.render('supplier/create', {
+                layout: "admin",
+                title: title,
+                error: alertMessage(res, 'danger', '' + supplier.company_name + ' is already a supplier.', 'fas fa-exclamation-circle', true)
+            })
+            
+        } else {
+            Supplier.create({
+                company_name,
+                uen_number,
+                email,
+                office_number
+            }).then(supplier => {
+                alertMessage(res, 'success', ' ' + supplier.company_name + ' has been added. Please inform ' + supplier.company_name + ' to create account using ' + supplier.supplier_id + '.', 'fas fa-sign-in-alt', true);
+                res.redirect('/supplier/view');
+            }).catch(err => console.log(err))
+        }
+    })
 });
 
 router.get('/showUpdate/:supplier_id', (req, res) => {
@@ -61,7 +78,7 @@ router.get('/showUpdate/:supplier_id', (req, res) => {
         raw: true
     }).then((supplier) => {
         if (!supplier) { // check supplier first because it could be null.
-            alertMessage(res, 'info', 'No such Supplier', 'fas fa-exclamation-circle', true);
+            alertMessage(res, 'info', 'No such supplier', 'fas fa-exclamation-circle', true);
             res.redirect('/supplier/view');
         } else {
             // Only authorised admin who is owner of supplier can edit it
@@ -70,7 +87,7 @@ router.get('/showUpdate/:supplier_id', (req, res) => {
                     res.render('supplier/update', { // call views/supplier/editSupplier.handlebar to render the edit supplier page
                         layout: "admin",
                         title: title,
-                        supplier
+                        supplier: supplier
                     })
                     .catch(err => console.log(err));
                 
@@ -98,8 +115,8 @@ router.put('/update/:supplier_id', (req, res) => {
             supplier_id: req.params.supplier_id
         }
     }).then((supplier) => {
-        res.redirect('/supplier/view'); // redirect to call router.get(/listSupplier...) to retrieve all updated
-        // supplier
+        alertMessage(res, 'success', ' ' + supplier.company_name + ' has been updated.', 'fas fa-sign-in-alt', true);
+        res.redirect('/supplier/view');
     }).catch(err => console.log(err));
 });
 
@@ -122,7 +139,7 @@ router.post('/delete/:supplier_id', (req, res) => {
                     supplier_id
                 }
             }).then(() => {
-                alertMessage(res, 'info', 'Supplier deleted', 'far fa-trash-alt', true);
+                alertMessage(res, 'info', 'Supplier has been deleted', 'far fa-trash-alt', true);
                 res.redirect('/supplier/view'); // To retrieve all supplier again
             }).catch(err => console.log(err));
         } else {

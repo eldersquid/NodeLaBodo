@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Inventory = require('../models/Inventory');
 const Supplier = require('../models/Supplier');
-const Order = require('../models/Order');
+const Orders = require('../models/Orders');
 const alertMessage = require('../helpers/messenger.js');
 
 const nodemailer = require('nodemailer')
@@ -35,7 +35,7 @@ async function sendMail(supplier, item_name, quantity, remarks) {
         const mailOptions = {
             from: 'Hotel La Bodo <hotel.la.bodo@gmail.com>',
             to: supplier,
-            subject: 'Order from Hotel La Bodo',
+            subject: 'New Order from Hotel La Bodo',
             text: 'Dear Valued Supplier ' + ',\n' + '\nWe would like to order another ' + quantity + ' of ' + item_name + '.\n\nAdditional Remarks:' + '\n' + remarks + '\n\nWe hope to hear from you soon!\n' + 'Sincerely,\nHotel La Bodo'
         };
 
@@ -49,53 +49,55 @@ async function sendMail(supplier, item_name, quantity, remarks) {
 };
 
 router.get('/view', (req, res) => {
-    const title = 'Order';
-    Order.findAll({
+    const title = 'Orders';
+
+    Orders.findAll({
         where: {
             // adminId: req.admin.id
         },
         order: [
-            ['order_id', 'ASC']
+            ['orders_id', 'ASC']
         ],
         raw: true
     })
-        .then((order) => {
-            // pass object to listOrder.handlebar
-            res.render('order/adminview', {
+        .then((orders) => {
+            // pass object to listVideos.handlebar
+            res.render('orders/adminview', {
                 layout: "admin",
                 title: title,
-                order: order
+                orders: orders
             });
         })
         .catch(err => console.log(err));
+
 });
 
 router.get('/supplierView', (req, res) => {
-    const title = 'Order';
+    const title = 'Orders';
 
-    Order.findAll({
+    Orders.findAll({
         where: {
             // supplierId: req.supplier.id
             // supplierName: req.supplier
         },
         order: [
-            ['order_id', 'ASC']
+            ['orders_id', 'ASC']
         ],
         raw: true
     })
-        .then((order) => {
+        .then((orders) => {
             // pass object to listOrder.handlebar
-            res.render('order/supplierview', {
+            res.render('orders/supplierview', {
                 layout: "supplier",
                 title: title,
-                order: order
+                orders: orders
             });
         })
         .catch(err => console.log(err));
 });
 
 router.get('/showCreate', async (req, res) => {
-    const title = 'Order';
+    const title = 'Orders';
 
     const getInventoryData = () => {
         const inventory = Inventory.findAll({
@@ -110,24 +112,10 @@ router.get('/showCreate', async (req, res) => {
         return inventory
     };
 
-    const getSupplierData = () => {
-        const supplier = Supplier.findAll({
-            where: {
-                // adminId: req.admin.id
-            },
-            order: [
-                ['supplier_id', 'ASC']
-            ],
-            raw: true
-        })
-        return supplier
-    };
-
-    res.render('order/create', {
+    res.render('orders/create', {
         layout: "admin",
         title: title,
-        inventory: await getInventoryData(),
-        supplier: await getSupplierData()
+        inventory: await getInventoryData()
     });
 });
 
@@ -138,39 +126,41 @@ router.post('/create', (req, res) => {
     let remarks = req.body.remarks;
     let status = req.body.status;
 
-    Order.create({
+    Orders.create({
         supplier,
         item_name,
         quantity,
         remarks,
         status
-    }).then((order) => {
-        sendMail(supplier, item_name, quantity, remarks).then(result => console.log('Email sent...', result))
+    }).then((orders) => {
+        sendMail(supplier, item_name, quantity, remarks).then(result => console.log(result))
             .catch(error => console.log(error.message));
-        res.redirect('/order/view');
+        res.redirect('/orders/view');
     }).catch(err => console.log(err))
 });
 
-router.get('/showUpdate/:order_id', (req, res) => {
-    const title = "Update Order";
-    Order.findOne({
+router.get('/showUpdate/:orders_id', (req, res) => {
+    const title = "Update Orders";
+
+    Orders.findOne({
         where: {
-            order_id: req.params.order_id
+            orders_id: req.params.orders_id
         },
         raw: true
-    }).then((order) => {
-        if (!order) { // check video first because it could be null.
-            alertMessage(res, 'info', 'No such video', 'fas fa-exclamation-circle', true);
-            res.redirect('/order/view');
+    }).then((orders) => {
+        if (!orders) { // check video first because it could be null.
+            alertMessage(res, 'info', 'No such order', 'fas fa-exclamation-circle', true);
+            res.redirect('/orders/view');
         } else {
             // Only authorised user who is owner of video can edit it
             // if (req.user.id === video.userId) {
             //     checkOptions(video);
-                res.render('order/update', { // call views/video/editVideo.handlebar to render the edit video page
+                res.render('orders/update', { // call views/video/editVideo.handlebar to render the edit video page
                     title: title,
                     layout: "supplier",
-                    order
-                });
+                    orders: orders
+                })
+                .catch(err => console.log(err));
             // } else {
             //     alertMessage(res, 'danger', 'Unauthorised access to video', 'fas fa-exclamation-circle', true);
             //     res.redirect('/logout');
@@ -179,14 +169,14 @@ router.get('/showUpdate/:order_id', (req, res) => {
     }).catch(err => console.log(err)); // To catch no video ID
 });
 
-router.put('/update/:order_id', (req, res) => {
+router.put('/update/:orders_id', (req, res) => {
     let supplier = req.body.supplier;
     let item_name = req.body.item_name;
     let quantity = req.body.quantity;
     let remarks = req.body.remarks;
     let status = req.body.status;
 
-    Order.update({
+    Orders.update({
         supplier,
         item_name,
         quantity,
@@ -194,11 +184,11 @@ router.put('/update/:order_id', (req, res) => {
         status
     }, {
         where: {
-            order_id: req.params.order_id
+            orders_id: req.params.orders_id
         }
-    }).then((order) => {
-        res.redirect('/order/view'); // redirect to call router.get(/listInventory...) to retrieve all updated
-        // inventory
+    }).then((orders) => {
+        alertMessage(res, 'success', ' Status for ' + orders.supplier + ' has been updated.', 'fas fa-sign-in-alt', true);
+        res.redirect('/orders/view');
     }).catch(err => console.log(err));
 });
 
