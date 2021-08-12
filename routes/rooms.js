@@ -31,7 +31,7 @@ router.get('/apartment', (req, res) => {
             // adminId: req.admin.id
         },
         order: [
-            ['id', 'ASC']
+            ['inventory_id', 'ASC']
         ],
         raw: true
     })

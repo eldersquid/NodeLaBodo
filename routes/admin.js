@@ -41,7 +41,6 @@ router.get("/hospitalList", (req, res) => {
     raw: true,
   })
     .then((hospitals) => {
-      // pass object to listVideos.handlebar
       res.render("admin/hospital/hospital_list", {
         layout: "admin",
         title: title,
