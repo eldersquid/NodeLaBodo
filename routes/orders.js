@@ -11,7 +11,7 @@ const { google } = require('googleapis')
 const CLIENT_ID = '188467906173-a5cq8hviitnaanin3cmag7el6kkqrcru.apps.googleusercontent.com'
 const CLIENT_SECRET = 'uJwKO7Pc693-lYfqgWNbIVNB'
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04goyDW9VwTk1CgYIARAAGAQSNwF-L9Ir8jbqSzj8hPVf93ZpstMmAGADCAshC-AfNtXjgj0J1rvrTBRhNxVwTQ5FpgtE8PuEJ-o';
+const REFRESH_TOKEN = '1//04Tt7yjfGWpdQCgYIARAAGAQSNwF-L9Ir_wKE_gHmQitcazwILvpG0TVhGDTssYZSZUOjozi05MfSKJrBjCcw4VE32AgEiL3cfcs';
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
@@ -135,6 +135,7 @@ router.post('/create', (req, res) => {
     }).then((orders) => {
         sendMail(supplier, item_name, quantity, remarks).then(result => console.log(result))
             .catch(error => console.log(error.message));
+        alertMessage(res, 'success', ' Order has been sent successfully.', 'fas fa-sign-in-alt', true);
         res.redirect('/orders/view');
     }).catch(err => console.log(err))
 });
