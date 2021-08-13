@@ -1,0 +1,149 @@
+
+
+<body id="page-top">
+              <div class="container-fluid">
+                <a class="btn btn-outline-secondary" href="">Guest Details</a>
+                <button type="button" class="btn btn-secondary">Hospitals</button>
+                <button type="button" class="btn btn-outline-secondary">Occupations</button>
+                
+                <button type="button" class="btn btn-outline-secondary">Vehicles</button>
+                
+                <hr>
+
+              </div>
+                <!-- Begin Page Content -->
+                <br>
+                <div class="container-fluid">
+                <div class="row flex-lg-nowrap">
+                 
+                  <div class="col">
+                    <div class="row">
+                      <div class="col mb-3">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="e-profile">
+                              <ul class="nav nav-tabs">
+                                <li class="nav-item"><a href="" class="active nav-link">Information</a></li>
+                              </ul>
+                              <div class="tab-content pt-3">
+                                <div class="tab-pane active">
+                                  <form method="POST" action="typeCreated">
+                                                            
+                                    <div class="row">
+                                      <div class="col">
+                                       
+                                        <div class="row">
+                                          <div class="col-lg-9">
+                                            <div class="form-group">
+                                             <label for="name">Room Type</label>
+                                             <input type="text" class="form-control" name="type" id="type" value="" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="address">Room Name</label>
+                                             <input type="text" class="form-control" name="roomName" id="roomName" value="" required>
+                                            </div>
+                                          </div>
+                                          <div class="col-lg-3">
+                                            {{!—-Hospital image --}}
+                                            <label for="hospital_image">Room Image</label>
+                                            <input type="file" id="photoUpload" name="photoUpload" accept="image/png,image/jpeg,image/jpg">
+                                            <img id="hospital_image" src="/img/botAvatar.png" alt=""class="border img-thumbnail img-fluid"style="height:80%;width:90%">
+                                            <input id="photoURL" type="hidden" name="photoURL" value="">
+                                            </div>
+                                            <div class="font-weight-bold text-danger small" id="photoErr" style="display:none">Error occurred.</div>
+
+                                        </div>
+                                        <div class="row mt-3">
+                                          <div class="col">
+                                            <div class="form-group">
+                                             <label for="contact">Description</label>
+                                             <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                                             
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="col">
+                                            <div class="form-group">
+                                             <label for="website">Room Price</label>
+                                             <input type="text" class="form-control" name="roomPrice" id="roomPrice" value="" required>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        
+
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      
+                                      <div class="col d-flex justify-content-start">
+                                        <button class="btn btn-primary" type="submit">Create</button>
+                                      </div>
+                                    </div>
+                                  </form>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+            <!-- End of Main Content -->
+
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+  <!--  <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a> -->
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+   <script src="/js/logoUpload.js"></script>
+  {{!-- <script src="../js/natgeowild.js"></script> --}}
+  
+
+

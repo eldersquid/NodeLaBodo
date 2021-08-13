@@ -4,11 +4,15 @@ const router = express.Router();
 const Supplier = require('../models/Supplier');
 const Inventory = require('../models/Inventory');
 const Room = require('../models/Room');
+const RoomType = require('../models/RoomType');
 const paypal = require('paypal-rest-sdk');
 const methodOverride = require('method-override');
 const Swal = require('sweetalert2');
+var thesaurus = require('thesaurus');
+
 // Method override middleware to use other HTTP methods such as PUT and DELETE
 app.use(methodOverride('_method'));
+
 
 paypal.configure({
 	'mode': 'sandbox', //sandbox or live
@@ -17,11 +21,27 @@ paypal.configure({
   });
 
 router.get('/', (req, res) => {
-	const title = 'Hotel Rooms';
-	res.render('rooms/hotel_rooms', {
-		title: title,
-		layout : "thalia",
-	    }) // renders views/index.handlebars
+    const title = 'Hotel Rooms';
+
+    RoomType.findAll({
+        where: {
+            // adminId: req.admin.id
+        },
+        order: [
+            ['type_id', 'ASC']
+        ],
+        raw: true
+    })
+        .then((roomType) => {
+            // pass object to listVideos.handlebar
+            res.render('rooms/hotel_rooms', {
+                layout: "thalia",
+                title: title,
+                roomType
+            });
+        })
+        .catch(err => console.log(err));
+
 });
 
 router.get('/apartment', (req, res) => {
@@ -350,5 +370,7 @@ router.get("/bookingEdit/:id", (req, res) => {
 	res.redirect('/rooms/bookingList');
 	}).catch(err => console.log(err));
 	});
+
+console.log(thesaurus.find(''));
 
 module.exports = router;

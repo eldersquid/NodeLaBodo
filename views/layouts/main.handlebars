@@ -35,7 +35,11 @@
 	<link rel="stylesheet" href="/teststuff/css/bootstrap-theme.min.css">
 
 
-
+    	{{!-- Chatbot css --}}
+	    <link rel="stylesheet" href="/styles/chat.css">
+    	<link rel="stylesheet" href="/styles/chatBot.css">
+    	<link rel="stylesheet" href="/styles/typing.css">
+	<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
 
 
 	<title>Hotel La Bodo - {{title}} </title>
@@ -45,8 +49,41 @@
 <body>
 	{{>_navbar}}
 	{{{body}}}
+	<div class="container">
+        <div class="chatbox">
+            <div class="chatbox__support">
+                <div class="chatbox__header">
+                    <div class="chatbox__image--header">
+                        <img src="/img/botAvatarSmall.png" alt="image">
+                    </div>
+                    <div class="chatbox__content--header">
+                        <h4 class="chatbox__heading--header">Chuu Bot</h4>
+                        <p class="chatbox__description--header">A personal search assistant to navigate Hotel La Bodo.</p>
+                    </div>
+                </div>
+                <div class="chatbox__messages" id="ChatBot_message">
+                    <div id="ChatBot_messages">
+                        <div class="messages__item messages__item--visitor">
+                            I’m Chuu, your Hotel La Bodo virtual assistant! Here to assist you with your query on our services!
+                        </div>
+                    </div>
+                </div>
+                <div class="chatbox__footer">
+                    <input type="text" id="textbox" placeholder="Write a message...">
+					<button id="sendBtn" type="button" class="btn btn-primary">Send</button>
+                    
+                </div>
+            </div>
+            <div class="chatbox__button">
+                <button>button</button>
+            </div>
+        </div>
+    </div>
 
 	<!-- Optional JavaScript -->
+		<!-- Optional JavaScript -->
+	<script src="/js/Chat.js"></script>
+    <script src="/js/chatActivate.js"></script>
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="/js/jquery-2.1.0.min.js"></script> 
 	<script src="/js/jquery.min.js"></script>

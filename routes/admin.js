@@ -13,9 +13,11 @@ const { trafficdirector } = require('googleapis/build/src/apis/trafficdirector')
 const fs = require('fs');
 const upload = require('../helpers/hospitalLogo');
 const Hospital = require('../models/Hospital');
+const RoomType = require('../models/RoomType');
 const moment = require('moment');
 const methodOverride = require('method-override');
 const Swal = require('sweetalert2');
+const alertMessage = require('../helpers/messenger');
 // Method override middleware to use other HTTP methods such as PUT and DELETE
 app.use(methodOverride('_method'));
 
@@ -49,6 +51,23 @@ router.get("/hospitalList", (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+
+router.get("/typeList", (req, res) => {
+	const title = "Room Type";
+  
+	RoomType.findAll({
+	  order: [["type_id", "ASC"]],
+	  raw: true,
+	})
+	  .then((roomType) => {
+		res.render("admin/roomType/roomType_list", {
+		  layout: "admin",
+		  title: title,
+		  roomType,
+		});
+	  })
+	  .catch((err) => console.log(err));
+  });
 	
 
 router.get('/hospitalSearch', cors(), (req, res) => {
@@ -76,6 +95,55 @@ router.post('/hospitalCreate', cors(), (req, res) => {
 	});
 
 
+});
+
+router.get('/typeCreate', cors(), (req, res) => {
+	const title = "Create Room Type";
+	res.render('admin/roomType/type_create', { 
+		layout: "admin",
+		title: title,
+		RoomType
+	});
+
+
+});
+
+router.post('/typeCreated', (req, res) => {
+    let type = req.body.type;
+	console.log("This is room type : ");
+	console.log(type);
+    let roomName = req.body.roomName;
+    let description = req.body.description;
+    let roomPrice = req.body.roomPrice;
+    let photo = req.body.photoURL;
+
+    RoomType.findOne({
+        where: {
+            type
+        }
+    }).then(roomType => {
+        if (roomType) {
+            const title = 'Create Room Type';
+            res.render('admin/roomType/type_create', {
+                layout: "admin",
+                title: title,
+                error: alertMessage(res, 'danger', ' ' + roomType.type + ' already available. ', 'fas fa-exclamation-circle', true)
+            })
+
+        } else {
+			console.log("Else statement")
+            RoomType.create({
+                type,
+                roomName,
+                description,
+                roomPrice,
+                photo
+            }).then(roomType => {
+                alertMessage(res, 'success', ' ' + roomType.type + ' created. ', 'fas fa-sign-in-alt', true);
+                res.redirect('/admin/typeList');
+            }).catch(err => console.log(err))
+        }
+    })
 });
 
 router.post('/hospitalCreated', cors(), (req, res) => {
