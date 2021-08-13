@@ -23,7 +23,12 @@ const RoomType = db.define('roomType', {
     roomPrice: {
         type: Sequelize.INTEGER
     },
-    
+    minRoomNo: {
+        type: Sequelize.INTEGER
+    },
+    maxRoomNo: {
+        type: Sequelize.INTEGER
+    }
 
 
 

@@ -44,6 +44,50 @@ router.get('/', (req, res) => {
 
 });
 
+router.get('/details/:type_id', (req, res) => {
+    const title = "Room Details";
+
+    RoomType.findOne({
+        where: {
+            type_id: req.params.type_id
+        },
+        raw: true
+    }).then((roomType) => {
+        if (!roomType) { // check video first because it could be null.
+            alertMessage(res, 'info', 'No such room found', 'fas fa-exclamation-circle', true);
+            res.redirect('/');
+        } else {
+			Inventory.findAll({
+				where: {
+					// adminId: req.admin.id
+				},
+				order: [
+					['inventory_id', 'ASC']
+				],
+				raw: true
+			})
+				.then((inventory) => {
+					
+					res.render('rooms/roomDetails', {
+						title: title,
+						layout : "thalia",
+						inventory,
+						roomType
+						});
+					
+				})
+				.catch(err => console.log(err));
+            // Only authorised user who is owner of video can edit it
+            // if (req.user.id === video.userId) {
+            //     checkOptions(video);
+            // } else {
+            //     alertMessage(res, 'danger', 'Unauthorised access to video', 'fas fa-exclamation-circle', true);
+            //     res.redirect('/logout');
+            // }
+        }
+    }).catch(err => console.log(err)); // To catch no video ID
+});
+
 router.get('/apartment', (req, res) => {
 	const title = 'Apartment';
 	Inventory.findAll({

@@ -116,7 +116,8 @@ router.post('/typeCreated', (req, res) => {
     let description = req.body.description;
     let roomPrice = req.body.roomPrice;
     let photo = req.body.photoURL;
-
+	let minRoomNo = req.body.minRoomNo;
+	let maxRoomNo = req.body.maxRoomNo;
     RoomType.findOne({
         where: {
             type
@@ -137,7 +138,9 @@ router.post('/typeCreated', (req, res) => {
                 roomName,
                 description,
                 roomPrice,
-                photo
+                photo,
+				minRoomNo,
+				maxRoomNo
             }).then(roomType => {
                 alertMessage(res, 'success', ' ' + roomType.type + ' created. ', 'fas fa-sign-in-alt', true);
                 res.redirect('/admin/typeList');

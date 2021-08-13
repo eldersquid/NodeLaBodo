@@ -159,8 +159,8 @@ app.use(cookieParser());
 
 // To store session information. By default it is stored as a cookie on browser
 app.use(session({
-    key: 'vidjot_session',
-    secret: 'tojiv',
+    key: 'hotel_session',
+    secret: 'bodo',
     store: new MySQLStore({
         host: db.host,
         port: 3306,
