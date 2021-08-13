@@ -1,0 +1,194 @@
+{{!--
+<link rel="stylesheet" href="/styles/templatemo-klassy-cafe.css"> --}}
+<link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
+{{!--
+<link href="/teststuff/style.css" rel="stylesheet"> --}}
+
+<div class="container-fluid">
+    <h1 style="font-size = 3.5rem;">View Food Gallery</h1>
+    <hr>
+    <div class="card-body">
+        <p></p>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPictures" name="addPictures"
+            value="addPictures">Add Image</button>
+    </div>
+    <!-- Start Gallery -->
+    <section>
+        <div class="row d-flex " style="width: 1000px;">
+            {{#if foodgallery}}
+            {{#each foodgallery}}
+            <div class="col-sm-4 mt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <img class="card-img-top" src="{{foodPhoto}}">
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#uploadPic_{{id}}" name="uploadPic">Edit</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#deletePictures_{{id}}" name="deletePictures"
+                            value="deletePictures">Delete</button>
+                    </div>
+                    <!-- ADD -->
+                    <form class="block-register" action="/admRestaurant/Foodupload" method="POST">
+                        <!-- Modal -->
+                        <div class="modal fade" id="addPictures" tabindex="-1" role="dialog"
+                            aria-labelledby="addPictureslabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addPictureslabel">Add Photos</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group form-row">
+                                            <div class="col-md-6">
+                                                <label>Upload your image here</label>
+                                                <br>
+                                                <img id='pictureThumbnail' name="pictureThumbnail"
+                                                    src="/foodPictures/9.jpg" width="240" height="135" class="border">
+                                                <div style="position:relative; "></div>
+                                                <input type="file" accept="image/png,image/jpeg,image/jpg"
+                                                    name="picUpload" id="picUpload">
+                                                <input type="hidden" id='trueFilePicture' name="trueFilePicture">
+                                                <div class="font-weight-bold text-danger small" id="picErr"
+                                                    style`="display:none">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Upload Image</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end -->
+                    </form>
+
+                    <!-- ============================================================== -->
+
+                    <!-- Update -->
+                        <!-- Modal -->
+                        <div class="modal fade" id="uploadPic_{{id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="addPictureslabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addPictureslabel">Add Photos</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group form-row">
+                                            <div class="col-md-6">
+                                                <label>Update your image here</label>
+                                                <br>
+                                                <img id='existPic' name="existPic" src="{{foodPhoto}}" width="240"
+                                                    height="135" class="border">
+                                                <div style="position:relative; "></div>
+                                                <input type="file" accept="image/png,image/jpeg,image/jpg"
+                                                    name="picUpload" id="picUpload">
+                                                <input type="hidden" id='trueFilePicture' name="trueFilePicture">
+                                                <div class="font-weight-bold text-danger small" id="picErr"
+                                                    style`="display:none">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <a href="/admRestaurant/updateFoodPic/{{id}}" class="btn btn-primary">Upload
+                                            Image</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end -->
+                    <!-- ============================================================== -->
+                    <!-- DELETE -->
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="deletePictures_{{id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Do you really want to delete this Picture?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <a href="/admRestaurant/deleteFoodGallery/{{id}}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            {{!-- {{/if}} --}}
+        </div>
+    </section>
+    {{else}}
+    <h3>~ No Pictures Uploaded ~</h3>
+    {{/if}}
+</div>
+<!-- End Gallery -->
+
+
+
+
+<script>
+    $('#picUpload').on('change', function () {
+        alert("hello");
+        var file = $("#picUpload")[0].files[0];
+        var formdata = new FormData();
+        formdata.append('picUpload', file);
+        console.log("here")
+        //alert(file.name)
+        //document.getElementById("imgFilename") = file.name;
+        //$('#imgFilename') = "XCoder";
+        //$('#imgFilename').attr('value', file.name);
+
+        $.ajax({
+            url: '/admRestaurant/foodPic',
+            data: formdata,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            'success': (data) => {
+                console.log(data);
+                console.log(data.path);
+                $('#pictureThumbnail').attr('src', data.path);
+                $('#existPic').attr('src', data.path); 
+                $('#trueFilePicture').attr('value', data.path);
+
+                if (data.err) {
+                    $('#picErr').show();
+                    $('#picErr').text(data.err.message);
+                }
+                else {
+                    $('#picErr').hide();
+                }
+            },
+            error: function (xhr, errorType, exception) {
+                alert("Error", errorType);
+            }
+
+
+        });
+    });
+</script>
