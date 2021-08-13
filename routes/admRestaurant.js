@@ -321,15 +321,11 @@ router.get('/deleteResponse/:id', (req, res) => {
 // Upload Picture
 router.post('/Foodupload', (req, res) => {
 	let foodpic_data = req.body.trueFilePicture;
+    console.log("THis is foodpic data", foodpic_data);
 	const title = "Upload Food Pictures";
     FoodGallery.create({
         foodPhoto:foodpic_data
     })
-	// res.render('admRestaurant/viewFoodGallery', { 
-	// 	layout: "admin",
-	// 	title: title,
-	// 	foodpic_data : foodpic_data
-	// });
         .then((foodgallery) => {
             res.redirect('/admRestaurant/viewFoodGallery');
         }).catch(err => console.log(err));
@@ -364,7 +360,7 @@ router.post('/updateFoodPic/:id', (req, res) => {
         where: {
             id: req.params.id
         }
-    }).then(() => {
+    }).then((foodgallery) => {
         res.redirect('/admRestaurant/viewFoodGallery'); 
 as
     }).catch(err => console.log(err));
@@ -454,7 +450,7 @@ router.get('/viewFoodCart', (req,res) => {
 
 // Upload Picture
 router.post('/UploadMenu', (req, res) => {
-	let cardPhoto_data = req.body.trueFilePicture;
+	let cardPhoto_data = req.body.trueMenuPicture;
     let cardName = req.body.cardName
     let cardPrice = req.body.cardPrice
 	const title = "Upload Food Menu";

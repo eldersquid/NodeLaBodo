@@ -5,7 +5,8 @@ const alertMessage = require('../helpers/messenger.js');
 const Swal = require('sweetalert2');
 const Contact = require('../models/Contact');
 const FoodCart = require('../models/FoodCart');
-// const Response = require('../models/Response');
+const Response = require('../models/Response');
+const FoodGallery = require('../models/FoodGallery');
 
 // User View Restaurant 
 // router.get('/DineV2', (req, res) => {

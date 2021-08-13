@@ -15,10 +15,10 @@
     <!-- Start Gallery -->
     <section>
         <div class="row d-flex " style="width: 1000px;">
-            {{#if foodgallery}}
-            {{#each foodgallery}}
             <div class="col-sm-4 mt-3">
                 <div class="card">
+                    {{#if foodgallery}}
+                    {{#each foodgallery}}
                     <div class="card-body">
                         <img class="card-img-top" src="{{foodPhoto}}">
                         <br>
@@ -29,6 +29,10 @@
                             data-target="#deletePictures_{{id}}" name="deletePictures"
                             value="deletePictures">Delete</button>
                     </div>
+                    {{/each}}
+                    {{else}}
+                    <h3>~ No Pictures Uploaded ~</h3>
+                    {{/if}}
                     <!-- ADD -->
                     <form class="block-register" action="/admRestaurant/Foodupload" method="POST">
                         <!-- Modal -->
@@ -73,44 +77,43 @@
                     <!-- ============================================================== -->
 
                     <!-- Update -->
-                        <!-- Modal -->
-                        <div class="modal fade" id="uploadPic_{{id}}" tabindex="-1" role="dialog"
-                            aria-labelledby="addPictureslabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="addPictureslabel">Add Photos</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group form-row">
-                                            <div class="col-md-6">
-                                                <label>Update your image here</label>
-                                                <br>
-                                                <img id='existPic' name="existPic" src="{{foodPhoto}}" width="240"
-                                                    height="135" class="border">
-                                                <div style="position:relative; "></div>
-                                                <input type="file" accept="image/png,image/jpeg,image/jpg"
-                                                    name="picUpload" id="picUpload">
-                                                <input type="hidden" id='trueFilePicture' name="trueFilePicture">
-                                                <div class="font-weight-bold text-danger small" id="picErr"
-                                                    style`="display:none">
-                                                </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="uploadPic_{{id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="addPictureslabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addPictureslabel">Add Photos</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label>Update your image here</label>
+                                            <br>
+                                            <img id='existPic' name="existPic" src="{{foodPhoto}}" width="240"
+                                                height="135" class="border">
+                                            <div style="position:relative; "></div>
+                                            <input type="file" accept="image/png,image/jpeg,image/jpg" name="picUpload"
+                                                id="picUpload">
+                                            <input type="hidden" id='trueFilePicture' name="trueFilePicture">
+                                            <div class="font-weight-bold text-danger small" id="picErr"
+                                                style`="display:none">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                        <a href="/admRestaurant/updateFoodPic/{{id}}" class="btn btn-primary">Upload
-                                            Image</a>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <a href="/admRestaurant/updateFoodPic/{{id}}" class="btn btn-primary">Upload
+                                        Image</a>
                                 </div>
                             </div>
                         </div>
-                        <!-- end -->
+                    </div>
+                    <!-- end -->
                     <!-- ============================================================== -->
                     <!-- DELETE -->
 
@@ -138,13 +141,9 @@
                     </div>
                 </div>
             </div>
-            {{/each}}
             {{!-- {{/if}} --}}
         </div>
     </section>
-    {{else}}
-    <h3>~ No Pictures Uploaded ~</h3>
-    {{/if}}
 </div>
 <!-- End Gallery -->
 
@@ -173,7 +172,7 @@
                 console.log(data);
                 console.log(data.path);
                 $('#pictureThumbnail').attr('src', data.path);
-                $('#existPic').attr('src', data.path); 
+                $('#existPic').attr('src', data.path);
                 $('#trueFilePicture').attr('value', data.path);
 
                 if (data.err) {
