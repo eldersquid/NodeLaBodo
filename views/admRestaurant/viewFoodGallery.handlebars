@@ -1,5 +1,5 @@
-{{!--
-<link rel="stylesheet" href="/styles/templatemo-klassy-cafe.css"> --}}
+
+{{!-- <link rel="stylesheet" href="/styles/templatemo-klassy-cafe.css">  --}}
 <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
 {{!--
 <link href="/teststuff/style.css" rel="stylesheet"> --}}
@@ -29,6 +29,7 @@
                             data-target="#deletePictures_{{id}}" name="deletePictures"
                             value="deletePictures">Delete</button>
                     </div>
+  
                     <!-- ADD -->
                     <form class="block-register" action="/admRestaurant/Foodupload" method="POST">
                         <!-- Modal -->
@@ -234,41 +235,3 @@
         });
     });
 </script>
-{{!-- $('#picUpload2').on('change', function () {
-alert("hello");
-var file = $("#picUpload2")[0].files[0];
-var formdata = new FormData();
-formdata.append('picUpload', file);
-console.log("here")
-//alert(file.name)
-//document.getElementById("imgFilename") = file.name;
-//$('#imgFilename') = "XCoder";
-//$('#imgFilename').attr('value', file.name);
-
-$.ajax({
-url: '/admRestaurant/menuPic',
-data: formdata,
-contentType: false,
-processData: false,
-type: 'POST',
-'success': (data) => {
-console.log(data);
-console.log(data.path);
-$('#existPic2').attr('src', data.path);
-$('#trueFilePicture2').attr('value', data.path);
-
-if (data.err) {
-$('#picErr').show();
-$('#picErr').text(data.err.message);
-}
-else {
-$('#picErr').hide();
-}
-},
-error: function (xhr, errorType, exception) {
-alert("Error", errorType);
-}
-
-
-});
-}); --}}
