@@ -1,22 +1,22 @@
 <div class="container" id="container">
     <div class="form-container sign-up-container">
-        <form action="/supplier/signup">
+        <form method="POST" action="/supplier/signup" id="form">
             <h1>Sign Up</h1>
             <input class="form-control" id="supplier_id" name="supplier_id" required type="text" value="{{supplier_id}}" placeholder="Supplier ID">
             <input class="form-control" id="company_name" name="company_name" required type="text" value="{{company_name}}" placeholder="Company Name">
             <input class="form-control" id="uen_number" name="uen_number" required type="text" value="{{uen_number}}" placeholder="UEN Number">
             <input class="form-control" id="password" name="password" required type="password" value="{{password}}" placeholder="Password">
             <input class="form-control" id="password2" name="password2" required type="password" value="{{password2}}" placeholder="Repeat Password">
-            <button>Sign Up</button>
+            <button type="submit" value="Submit" id="submit-btn" data-toggle="modal" data-target="#modalReply">Sign Up</button>
         </form>
     </div>
     <div class="form-container sign-in-container">
-        <form action="/supplier/login">
+        <form method="POST" action="/supplier/login" id="form">
             <h1>Login</h1>
             <input class="form-control" id="uen_number" name="uen_number" required type="text" value="{{uen_number}}" placeholder="UEN Number">
             <input class="form-control" id="password" name="password" required type="password" value="{{password}}" placeholder="Password">
             <a href="#">Forgot your password?</a>
-            <button>Sign In</button>
+            <button type="submit" value="Submit" id="submit-btn" data-toggle="modal" data-target="#modalReply">Sign In</button>
         </form>
     </div>
     <div class="overlay-container">

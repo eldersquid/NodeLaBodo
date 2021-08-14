@@ -108,57 +108,92 @@ function wordFilter(word){
 
 }
 
-function chuuResponse(userMessage){
-    var responseMessage = "";
-    var userArray = userMessage.split(" ");
-
-    if (userMessage.length > 1 ){ //question for bot
-        var result = possibleResponses.filter(keyword=>keyword.message.toLowerCase().includes(userMessage.toLowerCase()))
-        for (let i=0; i<userArray.length; i++){
-            wordFilter(userArray[i]);
-            
-
-        }
-        console.log(result);
-
-        if (result.length > 0) {
-            responseMessage=result[0].response;
-
-        } else {
-            responseMessage = "Hi! Please enter your question and I will do my best to help you!"
-            
-        }
-
-    } else {
-        responseMessage = "Maybe I had misunderstood your question. Please rephrase and try again."
-        
+function chuuResponse(responseMessage){
+    
+    var response_array = responseMessage.split(" ");
+    var link="";
+    
+    if (response_array.includes("<link>")) {
+        var link = response_array[(response_array.length)-1];
+        response_array.pop((response_array.length)-1)
+        response_array.pop((response_array.length)-1)
+        console.log(link);
+        responseMessage = response_array.join(" ");
+        console.log(responseMessage);
     }
 
     var ChatContain = document.createElement('div');
     ChatContain.classList.add("messages__item");
     ChatContain.classList.add("messages__item--visitor");
-    ChatContain.innerHTML = "<span>" + responseMessage + "</span>"
+    if (link !=""){
+        
+        var chatLink = document.createElement('a');
+        chatLink.innerText = "Here";
+        chatLink.setAttribute("href",link)
+        
+        ChatContain.innerHTML = "<span>" + responseMessage + "</span>"
+    } else {
+        ChatContain.innerHTML = "<span>" + responseMessage + "</span>"
+
+    }
     setTimeout(() => { loading() }, 1000)
     setTimeout(() => { 
         ChatContain.animate([{easing:"ease-in",opacity:0.0},{opacity:1}],{duration:500})
         chatContainer.appendChild(ChatContain);
+        if (link !=""){
+            chatContainer.appendChild(chatLink);
+
+        }
         document.getElementById("test").scrollTop = document.getElementById("test").scrollHeight;
     }, 2000)
+    
     
 
 
 
 }
 
+function chuuSend(userMessage){
+    // var url= 'rooms/chuuSend';
+    var test_data = {"chuuMessage" : userMessage};
+    var test_data2 =JSON.stringify(test_data);
+    console.log("test data is ",test_data)
+    console.log("abc",userMessage)
+    $.ajax({
+		url: '/rooms/chuuSend',
+		data: test_data2,
+        contentType: 'application/json',
+        dataType : 'json',
+		type: 'POST'
+	}).done(function(result) {
+        chuuResponse(result.reply);
+        console.log(result);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.log("fail: ",textStatus, errorThrown);
+    });
+    // fetch(url, {
+    //     method : "POST",
+    //     body : userMessage
+
+
+    // }).then(res => res.json())
+    // .then(response =>{
+    //     console.log(response);
+    // });
+
+        
+    }
+
+
 
 sendBtn.addEventListener('click',function(e){
     var userMessage = textBox.value;
     if (!userMessage == ""){
         user.message = userMessage.trim();
-        textBox.value = "";
         sendMessage(userMessage.trim());
-        chuuResponse(userMessage.trim());
-        
+        // chuuResponse(userMessage.trim());
+        chuuSend(userMessage);
+        textBox.value = "";
     }
 
 
