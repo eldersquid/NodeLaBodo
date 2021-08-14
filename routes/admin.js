@@ -20,7 +20,21 @@ const Swal = require('sweetalert2');
 const alertMessage = require('../helpers/messenger');
 // Method override middleware to use other HTTP methods such as PUT and DELETE
 app.use(methodOverride('_method'));
+const dialogflow = require('@google-cloud/dialogflow');
+var thesaurus = require('thesaurus');
+const CREDENTIALS = JSON.parse(fs.readFileSync('credentials/hotel-la-bodo-5338d4f99b8b.json'));
+const PROJECTID = CREDENTIALS.project_id;
 
+
+const CONFIGURATION = {
+	credentials : {
+		private_key : CREDENTIALS['private_key'],
+		client_email : CREDENTIALS['client_email']
+
+	}
+
+
+}
 
 
 
@@ -295,60 +309,87 @@ router.post('/hospitalReset', (req, res) => {
 		});
 	});
 
+// [START dialogflow_create_intent]
 
-router.get('/VehicleList', (req, res) => {
-	const title = 'Vehicles';
+/**
+ * TODO(developer): Uncomment the following lines before running the sample.
+ */
+// const projectId = 'The Project ID to use, e.g. 'YOUR_GCP_ID';
+// const displayName = 'The display name of the intent, e.g. 'MAKE_RESERVATION';
+// const trainingPhrasesParts = 'Training phrases, e.g. 'How many people are staying?';
+// const messageTexts = 'Message texts for the agent's response when the intent is detected, e.g. 'Your reservation has been confirmed';
 
-	res.render('admin/vehicles/vehicle_list', {
-		layout: "admin",
-		title: title
+// Imports the Dialogflow library
+
+// Instantiates the Intent Client
+
+
+
+// trainingPhrasesParts = [
+//     'Hello, What is weather today?',
+//     'How is the weather today?',
+//   ],
+//   messageTexts = ['Rainy', 'Sunny']
+
+async function createIntent(PROJECTID,displayName,trainingPhrasesParts,messageTexts) {
+	// Construct request
+	const intentsClient = new dialogflow.IntentsClient(CONFIGURATION);
+	// The path to identify the agent that owns the created intent.
+	const agentPath = intentsClient.projectAgentPath(PROJECTID);
+
+	const trainingPhrases = [];
+
+	trainingPhrasesParts.forEach(trainingPhrasesPart => {
+	const part = {
+		text: trainingPhrasesPart,
+	};
+
+	// Here we create a new training phrase for each provided part.
+	const trainingPhrase = {
+		type: 'EXAMPLE',
+		parts: [part],
+	};
+
+	trainingPhrases.push(trainingPhrase);
 	});
 
-});
+	const messageText = {
+	text: messageTexts,
+	};
 
-router.get('/vehicleCreate', (req, res) => {
-	const title = "Create Vehicle";
-	res.render('admin/vehicles/vehicle_create', {
-		layout: "admin",
-		title: title
-	});
+	const message = {
+	text: messageText,
+	};
 
+	const intent = {
+	displayName: displayName,
+	trainingPhrases: trainingPhrases,
+	messages: [message],
+	};
 
-});
+	const createIntentRequest = {
+	parent: agentPath,
+	intent: intent,
+	};
 
-router.get('/vehicleCreated', (req, res) => {
-	res.render('admin/vehicles/vehicle_list',
-		{ layout: "admin" });
-
-
-});
-
-router.get('/requestList', (req, res) => {
-	const title = 'Requests';
-
-	res.render('admin/requests/request_list', {
-		layout: "admin",
-		title: title
-	});
-
-});
-
-router.get('/requestCreate', (req, res) => {
-	const title = "Create Vehicle";
-	res.render('admin/requests/request_create', {
-		layout: "admin",
-		title: title
-	});
+	// Create the intent
+	const [response] = await intentsClient.createIntent(createIntentRequest);
+	console.log(`Intent ${response.name} created`);
+}
 
 
-});
 
-router.get('/requestCreated', (req, res) => {
-	res.render('admin/requests/request_list',
-		{ layout: "admin" });
+// createIntent(PROJECTID,"MAKE_RESERVATION",["Where to get reservation?","I wanna eat bitch","GIMME FOOD LOL"],["Shut up nibbas"]);
 
 
-});
+
+
+
+
+
+
+
+
 
 router.get('/galleryList', (req, res) => {
 	const title = 'View Gallery';
