@@ -75,6 +75,7 @@ function sendMessage(userMessage){
     ChatContain.classList.add("messages__item--operator");
     ChatContain.innerHTML = "<span>" + userMessage + "</span>"
     chatContainer.appendChild(ChatContain);
+    document.getElementById("test").scrollTop = document.getElementById("test").scrollHeight;
 
 
 
@@ -121,6 +122,7 @@ function chuuResponse(userMessage){
     setTimeout(() => { 
         ChatContain.animate([{easing:"ease-in",opacity:0.0},{opacity:1}],{duration:500})
         chatContainer.appendChild(ChatContain);
+        document.getElementById("test").scrollTop = document.getElementById("test").scrollHeight;
     }, 2000)
     
 

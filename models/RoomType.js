@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
+const Room = require('../models/Room');
 
 const RoomType = db.define('roomType', {
     type_id: {
@@ -31,6 +32,13 @@ const RoomType = db.define('roomType', {
     }
 
 
+
+});
+
+RoomType.hasMany(Room, {
+    foreignKey : "roomTypeID",
+    onDelete : "CASCADE",
+    onUpdate : "CASCADE"
 
 });
 

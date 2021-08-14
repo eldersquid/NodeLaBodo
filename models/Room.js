@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
+const RoomType = require('../models/RoomType');
 
 const Room = db.define('room', {
     id: {
@@ -13,9 +14,6 @@ const Room = db.define('room', {
     },
     bookOutDate: {
         type: Sequelize.DATEONLY
-    },
-    roomType: {
-        type: Sequelize.STRING
     },
     addItems: {
         type: Sequelize.STRING
@@ -39,5 +37,6 @@ const Room = db.define('room', {
         type : Sequelize.BOOLEAN
     }
 });
+
 
 module.exports = Room;

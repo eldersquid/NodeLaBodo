@@ -14,6 +14,8 @@ var thesaurus = require('thesaurus');
 app.use(methodOverride('_method'));
 
 
+
+
 paypal.configure({
 	'mode': 'sandbox', //sandbox or live
 	'client_id': 'Ac9YmuteFWmcjwxa_RCQzbn-XMY_FhJ6rS-beZ7UeVhOQ8WX3wQ8VsuJ7rUS8u5Fv1yVaMdk_RhYCXph',
@@ -116,31 +118,32 @@ router.post('/bookingDetails', (req, res) => {
 	let BookInDate = req.body.BookInDate;
 	let BookOutDate = req.body.BookOutDate;
 	let price = req.body.price;
-	let roomType = req.body.roomType;
-	if (roomType == "Apartment") {
-		var roomNo = Math.floor(Math.random() * 100) + 201;
-	  } else if (roomType == "Small Room") {
-		var roomNo = Math.floor(Math.random() * 101) + 100;
-	  } else if (roomType == "Big Apartment") {
-		var roomNo = Math.floor(Math.random() * 100) + 301;
-	  } else if (roomType == "Villa") {
-		var roomNo = Math.floor(Math.random() * 100) + 401;
-	  }
+	let type = req.body.type;
+	let type_id = req.body.type_id;
+	let minRoomNo = req.body.minRoomNo;
+	let maxRoomNo = req.body.maxRoomNo;
+	console.log(type_id);
+	let roomImage = req.body.roomImage;
+	let roomNo = Math.floor(Math.random() * (maxRoomNo - minRoomNo + 1)+ minRoomNo)
 	console.log(BookInDate);
 	res.render('rooms/booking_details', {title: title,
 		layout : "blank",
 		BookInDate : BookInDate,
 		BookOutDate : BookOutDate,
 		price : price,
-		roomNo : roomNo
+		roomNo : roomNo,
+		roomImage : roomImage,
+		type : type,
+		type_id : type_id
 	    }) // renders views/index.handlebars
 });
 
 router.post('/booked', (req, res) => {
 	let bookInDate = req.body.bookInDate;
 	let bookOutDate = req.body.bookOutDate;
-	let roomType = req.body.roomType;
+	let type = req.body.type;
 	// let addItems = req.body.addItems;
+	let type_id = req.body.type_id;
 	let name = req.body.name;
 	let username = req.body.username;
 	let package_deal = req.body.package_deal;
@@ -151,13 +154,14 @@ router.post('/booked', (req, res) => {
 	Room.create({
 		bookInDate,
 		bookOutDate,
-		roomType,
+		type,
 		name,
 		username,
 		package_deal,
 		roomNo,
 		price,
-		paid
+		paid,
+		roomTypeID : type_id
 
 	}).then((room)=> {
 		res.redirect('/rooms/bookingCart/' + room.id);
