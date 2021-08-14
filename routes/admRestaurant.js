@@ -425,7 +425,6 @@ const storage = multer.diskStorage({
 
 
 
-
 // MENU
 
 // Upload Picture
@@ -489,6 +488,31 @@ router.get('/viewFoodCart', (req,res) => {
 router.get('/deleteFoodCart/:id', (req, res) => {
     let id = req.params.id;
     Foodcart.findOne({
+        where: {
+            id: id,
+        },
+        attributes: ['id']
+    }).then((foodcart) => {
+        // if record is found, user is owner of video
+        if (foodcart != null) {
+            foodcart.destroy({
+                where: {
+                    id: id
+                }
+            }).then(() => {
+                res.redirect('/admRestaurant/viewFoodCart'); // To retrieve all videos again
+            }).catch(err => console.log(err));
+        } else {
+            alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+            
+        }
+    });
+});
+
+// Delete Picture
+router.get('/deleteMenu/:id', (req, res) => {
+    let id = req.params.id;
+    FoodCart.findOne({
         where: {
             id: id,
         },
