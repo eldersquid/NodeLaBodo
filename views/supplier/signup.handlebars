@@ -1,0 +1,57 @@
+<div class="container" id="container">
+    <div class="form-container sign-in-container">
+        <form id="upload-form" action="/supplier/signup" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+
+                <label for="supplier_id">Supplier ID</label>
+                <input class="form-control" id="supplier_id" name="supplier_id" required type="supplier_id"
+                    value="{{supplier_id}}">
+
+
+            </div>
+            <div class="form-group">
+
+                <label for="company_name">Company Name</label>
+                <input class="form-control" id="company_name" name="company_name" required type="text"
+                    value="{{company_name}}">
+
+
+            </div>
+            <div class="form-group">
+
+                <label for="uen_number">UEN Number</label>
+                <input class="form-control" id="uen_number" name="uen_number" required type="number"
+                    value="{{uen_number}}">
+
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="password">Password</label>
+                <input class="form-control" id="password" name="password" required type="password" value="{{password}}">
+
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="password2">Repeat Password</label>
+                <input class="form-control" id="password2" name="password2" required type="password"
+                    value="{{password2}}">
+
+
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-right">
+                <h1>Supplier Sign Up</h1>
+                <p>Please ask for Supplier ID from the Hotel La Bodo staff to signup.</p>
+                <a href="/supplier/showLogin"><button id="signIn">Click here to Login</button></a>
+            </div>
+        </div>
+    </div>
+</div>

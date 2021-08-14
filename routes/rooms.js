@@ -7,13 +7,18 @@ const Room = require('../models/Room');
 const RoomType = require('../models/RoomType');
 const paypal = require('paypal-rest-sdk');
 const methodOverride = require('method-override');
-const Swal = require('sweetalert2');
-var thesaurus = require('thesaurus');
+
+
 
 // Method override middleware to use other HTTP methods such as PUT and DELETE
 app.use(methodOverride('_method'));
 
+//440621396466-esnk2ehi54ki6fkoh4scomu9r285iolg.apps.googleusercontent.com remember to delete this
 
+//KH6OEAEGnreCHUPn7EV0KJKO remember to delete this
+
+//https://cors-anywhere.herokuapp.com/
+// go here every day or when the day of testing comes to enable api calls!!
 
 
 paypal.configure({
@@ -418,7 +423,5 @@ router.get("/bookingEdit/:id", (req, res) => {
 	res.redirect('/rooms/bookingList');
 	}).catch(err => console.log(err));
 	});
-
-console.log(thesaurus.find(''));
 
 module.exports = router;

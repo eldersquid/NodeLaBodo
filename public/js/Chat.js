@@ -42,10 +42,12 @@ class InteractiveChatbox {
         if(this.state) {
             chatbox.classList.add('chatbox--active')
             chatbox.style.display = "block";
+            chatbox.style.transition = "all .5s ease-in-out;"
             this.toggleIcon(true, button);
         } else if (!this.state) {
             chatbox.classList.remove('chatbox--active')
             chatbox.style.display = "none";
+            chatbox.style.transition = "all .5s ease-in-out;"
             this.toggleIcon(false, button);
         }
     }
@@ -94,11 +96,29 @@ function loading(){
 
 }
 
+
+function wordFilter(word){
+    var removePunctuation = word.replace(/\b[-.,()&$#!\[\]{}"']+\B|\B[-.,()&$#!\[\]{}"']+\b/g, "");
+    var LowerCaseWord = removePunctuation.toLowerCase();
+    console.log(removePunctuation);
+    
+
+
+
+
+}
+
 function chuuResponse(userMessage){
     var responseMessage = "";
+    var userArray = userMessage.split(" ");
 
     if (userMessage.length > 1 ){ //question for bot
         var result = possibleResponses.filter(keyword=>keyword.message.toLowerCase().includes(userMessage.toLowerCase()))
+        for (let i=0; i<userArray.length; i++){
+            wordFilter(userArray[i]);
+            
+
+        }
         console.log(result);
 
         if (result.length > 0) {
@@ -129,6 +149,7 @@ function chuuResponse(userMessage){
 
 
 }
+
 
 sendBtn.addEventListener('click',function(e){
     var userMessage = textBox.value;
