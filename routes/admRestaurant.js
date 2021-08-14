@@ -350,30 +350,30 @@ router.get('/viewFoodGallery', (req,res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/updateFoodPic/:id', (req,res) => {
-    const title = 'updatePicture';
-    console.log(req.params.id)
-    FoodGallery.findOne({
-        where: {
-            id: req.params.id
-        },
-        order: [
-            // [reservation.id, 'ASC']
-        ],
-        raw: true
-    })
-        .then((foodgallery) => {
-            console.log(foodgallery);
-            res.render('admRestaurant/viewFoodGallery', {
-                layout: "admin",
-                title: title,
-                foodgallery:foodgallery
-            });
-        }).catch(err => console.log(err));
-});
+// router.get('/UpdateFoodPic/:id', (req,res) => {
+//     const title = 'updatePicture';
+//     console.log(req.params.id)
+//     FoodGallery.findOne({
+//         where: {
+//             id: req.params.id
+//         },
+//         order: [
+//             // [reservation.id, 'ASC']
+//         ],
+//         raw: true
+//     })
+//         .then((foodgallery) => {
+//             console.log(foodgallery);
+//             res.render('admRestaurant/viewFoodGallery', {
+//                 layout: "admin",
+//                 title: title,
+//                 foodgallery:foodgallery
+//             });
+//         }).catch(err => console.log(err));
+// });
 
 // Update Picture
-router.post('/updateFoodPic/:id', (req, res) => {
+router.post('/UpdateFoodPic/:id', (req, res) => {
     let foodpic_data = req.body.trueFilePicture2;
     // console.log(trueFilePicture2);
     FoodGallery.update({
