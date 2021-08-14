@@ -80,6 +80,8 @@ const roomsRoute = require('./routes/rooms');
 
 const supplierRoute = require('./routes/supplier');
 
+const supplierLoginRoute = require('./routes/supplierLogin');
+
 const inventoryRoute = require('./routes/inventory');
 
 const ordersRoute = require('./routes/orders');
@@ -223,7 +225,10 @@ app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.
 app.use('/restaurant', restaurantRoute);
 
 app.use('/admRestaurant', admRestaurantRoute);
+
 app.use('/supplier', supplierRoute);
+
+app.use('/supplier', supplierLoginRoute);
 
 app.use('/inventory', inventoryRoute);
 

@@ -1,0 +1,36 @@
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form action="/supplier/signup">
+            <h1>Sign Up</h1>
+            <input class="form-control" id="supplier_id" name="supplier_id" required type="text" value="{{supplier_id}}" placeholder="Supplier ID">
+            <input class="form-control" id="company_name" name="company_name" required type="text" value="{{company_name}}" placeholder="Company Name">
+            <input class="form-control" id="uen_number" name="uen_number" required type="text" value="{{uen_number}}" placeholder="UEN Number">
+            <input class="form-control" id="password" name="password" required type="password" value="{{password}}" placeholder="Password">
+            <input class="form-control" id="password2" name="password2" required type="password" value="{{password2}}" placeholder="Repeat Password">
+            <button>Sign Up</button>
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
+        <form action="/supplier/login">
+            <h1>Login</h1>
+            <input class="form-control" id="uen_number" name="uen_number" required type="text" value="{{uen_number}}" placeholder="UEN Number">
+            <input class="form-control" id="password" name="password" required type="password" value="{{password}}" placeholder="Password">
+            <a href="#">Forgot your password?</a>
+            <button>Sign In</button>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Sign Up</h1>
+                <p>Supplier ID is given to you by Hotel La Bodo. Remember to ask for it if you do not have it.</p>
+                <button class="ghost" id="signIn">Click here to Login</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Login</h1>
+                <p>Please login with registered details.</p>
+                <button class="ghost" id="signUp">Click here to Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
