@@ -15,24 +15,20 @@
     <!-- Start Gallery -->
     <section>
         <div class="row d-flex " style="width: 1000px;">
+            {{#if foodgallery}}
+            {{#each foodgallery}}
             <div class="col-sm-4 mt-3">
                 <div class="card">
-                    {{#if foodgallery}}
-                    {{#each foodgallery}}
                     <div class="card-body">
                         <img class="card-img-top" src="{{foodPhoto}}">
                         <br>
                         <br>
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#uploadPic_{{id}}" name="uploadPic">Edit</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadPic_{{id}}"
+                            name="uploadPic">Edit</button>
                         <button type="button" class="btn btn-primary" data-toggle="modal"
                             data-target="#deletePictures_{{id}}" name="deletePictures"
                             value="deletePictures">Delete</button>
                     </div>
-                    {{/each}}
-                    {{else}}
-                    <h3>~ No Pictures Uploaded ~</h3>
-                    {{/if}}
                     <!-- ADD -->
                     <form class="block-register" action="/admRestaurant/Foodupload" method="POST">
                         <!-- Modal -->
@@ -78,41 +74,44 @@
 
                     <!-- Update -->
                     <!-- Modal -->
-                    <div class="modal fade" id="uploadPic_{{id}}" tabindex="-1" role="dialog"
-                        aria-labelledby="addPictureslabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addPictureslabel">Add Photos</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group form-row">
-                                        <div class="col-md-6">
-                                            <label>Update your image here</label>
-                                            <br>
-                                            <img id='existPic' name="existPic" src="{{foodPhoto}}" width="240"
-                                                height="135" class="border">
-                                            <div style="position:relative; "></div>
-                                            <input type="file" accept="image/png,image/jpeg,image/jpg" name="picUpload"
-                                                id="picUpload">
-                                            <input type="hidden" id='trueFilePicture' name="trueFilePicture">
-                                            <div class="font-weight-bold text-danger small" id="picErr"
-                                                style`="display:none">
+                    <form class="block-register" action="/admRestaurant/UpdateFoodPic/{{id}}" method="POST">
+                        <div class="modal fade" id="uploadPic_{{id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="addPictureslabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addPictureslabel">Add Photos</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group form-row">
+                                            <div class="col-md-6">
+                                                <label>Update your image here</label>
+                                                <br>
+                                                <img id='existPic' name="existPic" src="{{foodPhoto}}" width="240"
+                                                    height="135" class="border">
+                                                <div style="position:relative; "></div>
+                                                <input type="file" accept="image/png,image/jpeg,image/jpg"
+                                                    name="picUpload2" id="picUpload2">
+                                                <input type="hidden" id='trueFilePicture2' name="trueFilePicture2">
+                                                <div class="font-weight-bold text-danger small" id="picErr2"
+                                                    style`="display:none">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <a href="/admRestaurant/updateFoodPic/{{id}}" class="btn btn-primary">Upload
-                                        Image</a>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Upload
+                                            Image </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                     <!-- end -->
                     <!-- ============================================================== -->
                     <!-- DELETE -->
@@ -141,18 +140,20 @@
                     </div>
                 </div>
             </div>
+            {{/each}}
             {{!-- {{/if}} --}}
         </div>
     </section>
+    {{else}}
+    <h3>~ No Pictures Uploaded ~</h3>
+    {{/if}}
 </div>
 <!-- End Gallery -->
 
 
 
-    <script
-			  src="https://code.jquery.com/jquery-3.6.0.min.js"
-			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-			  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
     $('#picUpload').on('change', function () {
         alert("hello");
@@ -193,4 +194,81 @@
 
         });
     });
+
+    $('#picUpload2').on('change', function () {
+        alert("hello");
+        var file = $("#picUpload2")[0].files[0];
+        var formdata = new FormData();
+        formdata.append('picUpload', file);
+        console.log("here")
+        //alert(file.name)
+        //document.getElementById("imgFilename") = file.name;
+        //$('#imgFilename') = "XCoder";
+        //$('#imgFilename').attr('value', file.name);
+
+        $.ajax({
+            url: '/admRestaurant/foodPic',
+            data: formdata,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            'success': (data) => {
+                console.log(data);
+                console.log(data.path);
+                $('#existPic').attr('src', data.path);
+                $('#trueFilePicture2').attr('value', data.path);
+
+                if (data.err) {
+                    $('#picErr2').show();
+                    $('#picErr2').text(data.err.message);
+                }
+                else {
+                    $('#picErr2').hide();
+                }
+            },
+            error: function (xhr, errorType, exception) {
+                alert("Error", errorType);
+            }
+
+
+        });
+    });
 </script>
+{{!-- $('#picUpload2').on('change', function () {
+alert("hello");
+var file = $("#picUpload2")[0].files[0];
+var formdata = new FormData();
+formdata.append('picUpload', file);
+console.log("here")
+//alert(file.name)
+//document.getElementById("imgFilename") = file.name;
+//$('#imgFilename') = "XCoder";
+//$('#imgFilename').attr('value', file.name);
+
+$.ajax({
+url: '/admRestaurant/menuPic',
+data: formdata,
+contentType: false,
+processData: false,
+type: 'POST',
+'success': (data) => {
+console.log(data);
+console.log(data.path);
+$('#existPic2').attr('src', data.path);
+$('#trueFilePicture2').attr('value', data.path);
+
+if (data.err) {
+$('#picErr').show();
+$('#picErr').text(data.err.message);
+}
+else {
+$('#picErr').hide();
+}
+},
+error: function (xhr, errorType, exception) {
+alert("Error", errorType);
+}
+
+
+});
+}); --}}

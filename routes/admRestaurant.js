@@ -78,7 +78,7 @@ router.get('/viewReservation', (req,res) => {
             });
         })
         .catch(err => console.log(err));
-})
+});
 
 // Update Reservation
 router.get('/updateReservation/:id', (req,res) => {
@@ -101,7 +101,7 @@ router.get('/updateReservation/:id', (req,res) => {
                 reservation:reservation
             });
         }).catch(err => console.log(err));
-})
+});
 
 router.post('/updateReservation/:id', (req, res) => {
     let cust_fname = req.body.cust_fname;
@@ -157,26 +157,6 @@ router.get('/deleteReservation/:id', (req, res) => {
         }
     });
 });
-
-// Upload poster
-// router.post('/upload', ensureAuthenticated, (req, res) => {
-// 	// Creates user id directory for upload if not exist
-// 	if (!fs.existsSync('./public/uploads/' + req.user.id)){
-// 		fs.mkdirSync('./public/uploads/' + req.user.id);
-// 	}
-	
-// 	upload(req, res, (err) => {
-// 		if (err) {
-// 			res.json({file: '/img/no-image.jpg', err: err});
-// 		} else {
-// 			if (req.file === undefined) {
-// 				res.json({file: '/img/no-image.jpg', err: err});
-// 			} else {
-// 				res.json({file: `/uploads/${req.user.id}/${req.file.filename}`});
-// 			}
-// 		}
-// 	});
-// })
 
 // view Contact Us
 router.get('/viewContact', (req,res) => {
@@ -329,8 +309,6 @@ router.post('/Foodupload', (req, res) => {
         .then((foodgallery) => {
             res.redirect('/admRestaurant/viewFoodGallery');
         }).catch(err => console.log(err));
-
-
 });
 
 // Upload picture inside the folder
@@ -349,23 +327,6 @@ router.post('/foodPic', (req, res) => {
         }
     });
 });
-
-// Update Picture
-router.post('/updateFoodPic/:id', (req, res) => {
-    let foodPhoto = req.body.foodPhoto;
-
-    FoodGallery.update({
-
-    }, {
-        where: {
-            id: req.params.id
-        }
-    }).then((foodgallery) => {
-        res.redirect('/admRestaurant/viewFoodGallery'); 
-as
-    }).catch(err => console.log(err));
-});
-
 
 // View Uploaded Images 
 router.get('/viewFoodGallery', (req,res) => {
@@ -389,7 +350,43 @@ router.get('/viewFoodGallery', (req,res) => {
         .catch(err => console.log(err));
 });
 
+router.get('/updateFoodPic/:id', (req,res) => {
+    const title = 'updatePicture';
+    console.log(req.params.id)
+    FoodGallery.findOne({
+        where: {
+            id: req.params.id
+        },
+        order: [
+            // [reservation.id, 'ASC']
+        ],
+        raw: true
+    })
+        .then((foodgallery) => {
+            console.log(foodgallery);
+            res.render('admRestaurant/viewFoodGallery', {
+                layout: "admin",
+                title: title,
+                foodgallery:foodgallery
+            });
+        }).catch(err => console.log(err));
+});
 
+// Update Picture
+router.post('/updateFoodPic/:id', (req, res) => {
+    let foodpic_data = req.body.trueFilePicture2;
+    // console.log(trueFilePicture2);
+    FoodGallery.update({
+        foodPhoto:foodpic_data
+    }, {
+        where: {
+            id: req.params.id
+        }
+    }).then((foodgallery) => {
+        res.redirect('/admRestaurant/viewFoodGallery'); 
+as
+    }).catch(err => console.log(err));
+});
 
 // Delete Picture
 router.get('/deleteFoodGallery/:id', (req, res) => {
@@ -426,6 +423,46 @@ const storage = multer.diskStorage({
 	}
 });
 
+
+
+
+// MENU
+
+// Upload Picture
+router.post('/UploadMenu', (req, res) => {
+	let cardPhoto_data = req.body.trueMenuPicture;
+    let cardName = req.body.cardName
+    let cardPrice = req.body.cardPrice
+	const title = "Upload Food Menu";
+    FoodCart.create({
+        cardName,
+        cardPrice,
+        cardPhoto : cardPhoto_data
+
+    }).then((foodcart) => {
+            res.redirect('/admRestaurant/viewFoodCart');
+        }).catch(err => console.log(err));
+
+
+});
+
+// Upload Menu pictures inside the folder
+router.post('/menuPic', (req, res) => {
+    foodPic(req, res, async (err) => {
+        if (err) {
+            res.json({ err: err });
+        } else {
+            if (req.file === undefined) {
+                console.log("The file is undefine.");
+                res.json({ err: err });
+            } else {
+                 res.json({ file: `${req.file.filename}`, path: '/menuPictures/' + `${req.file.filename}` });
+                // res.json({file: `/foodPictures/${req.file.filename}`});
+            }
+        }
+    });
+});
+
 // View Uploaded Images for Menu
 router.get('/viewFoodCart', (req,res) => {
     const title = 'FoodCart';
@@ -448,21 +485,28 @@ router.get('/viewFoodCart', (req,res) => {
         .catch(err => console.log(err));
 });
 
-// Upload Picture
-router.post('/UploadMenu', (req, res) => {
-	let cardPhoto_data = req.body.trueMenuPicture;
-    let cardName = req.body.cardName
-    let cardPrice = req.body.cardPrice
-	const title = "Upload Food Menu";
-    FoodCart.create({
-        cardName,
-        cardPrice,
-        cardPhoto : cardPhoto_data
-
+// Delete Menu Items
+router.get('/deleteFoodCart/:id', (req, res) => {
+    let id = req.params.id;
+    Foodcart.findOne({
+        where: {
+            id: id,
+        },
+        attributes: ['id']
     }).then((foodcart) => {
-            res.redirect('/admRestaurant/viewFoodCart');
-        }).catch(err => console.log(err));
-
-
+        // if record is found, user is owner of video
+        if (foodcart != null) {
+            foodcart.destroy({
+                where: {
+                    id: id
+                }
+            }).then(() => {
+                res.redirect('/admRestaurant/viewFoodCart'); // To retrieve all videos again
+            }).catch(err => console.log(err));
+        } else {
+            alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+            
+        }
+    });
 });
 module.exports = router;
