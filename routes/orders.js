@@ -126,6 +126,19 @@ router.post('/create', (req, res) => {
     let remarks = req.body.remarks;
     let status = req.body.status;
 
+    Inventory.findAll({
+        include: Supplier
+    }).then(findemail => {
+        Inventory.findAll({
+            where: {
+                email: req.supplier.email
+            }
+        }).then(email => {
+            console.log(findemail);
+            console.log(email);
+        })
+    })
+
     Orders.create({
         supplier,
         item_name,

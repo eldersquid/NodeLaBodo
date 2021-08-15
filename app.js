@@ -80,8 +80,6 @@ const roomsRoute = require('./routes/rooms');
 
 const supplierRoute = require('./routes/supplier');
 
-const supplierLoginRoute = require('./routes/supplierLogin');
-
 const inventoryRoute = require('./routes/inventory');
 
 const ordersRoute = require('./routes/orders');
@@ -230,8 +228,6 @@ app.use('/admRestaurant', admRestaurantRoute);
 
 app.use('/supplier', supplierRoute);
 
-app.use('/supplier', supplierLoginRoute);
-
 app.use('/inventory', inventoryRoute);
 
 app.use('/orders', ordersRoute);
@@ -298,7 +294,6 @@ passport.use(
 app.use(passport.initialize());
 
 app.use(passport.session());
-
 
 app.get('/googleauth/google', passport.authenticate('google', { scope: ['profile'] }));
 
