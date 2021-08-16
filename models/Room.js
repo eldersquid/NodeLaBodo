@@ -9,14 +9,12 @@ const Room = db.define('room', {
         primaryKey: true,
         allowNull: false
     },
+    
     bookInDate: {
         type: Sequelize.DATEONLY
     },
     bookOutDate: {
         type: Sequelize.DATEONLY
-    },
-    addItems: {
-        type: Sequelize.STRING
     },
     name: {
         type: Sequelize.STRING
@@ -35,6 +33,9 @@ const Room = db.define('room', {
     },
     paid : {
         type : Sequelize.BOOLEAN
+    },
+    nearbyHospital : {
+        type : Sequelize.STRING
     }
 });
 

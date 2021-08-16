@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
   <link rel="stylesheet" href="/sweetalert2/dist/sweetalert2.min.css">
-
+  
   
 
 </head>
@@ -16,9 +16,10 @@
                 <div class="container-fluid">
                   <div class="col d-flex justify-content">
                   
-                  <a class="btn btn-outline-secondary ml-1">Hospitals</a>
+                  <a class="btn btn-outline-secondary ml-1" href="/admin/hospitalList">Hospitals</a>
                   <a class="btn btn-outline-secondary ml-1" href="/rooms/bookingList">Bookings</a>
-                  <a class="btn btn-secondary ml-1" href="">Room Types</a>
+                  <a class="btn btn-secondary ml-1" >Room Types</a>
+                  <a class="btn btn-outline-secondary ml-1" href="/chatBot/chatBotList">Chuu Bot QnA</a>
                   <div class="col d-flex justify-content-end">
                     <a class="btn btn-outline-secondary ml-1" href="typeCreate"><i class="fas fa-plus-circle"></i> Create New Room Type </a>
                     
@@ -100,7 +101,7 @@
                                               </td>
                                               
                                               
-                                              <td><a href="/admin/hospitalEdit/{{type_id}}" class="btn btn-warning">Update</a></td>
+                                              <td><a href="/admin/typeEdit/{{type_id}}" class="btn btn-warning">Update</a></td>
                                               <td>
                                                 
 
@@ -115,11 +116,13 @@
                                                         </button>
                                                       </div>
                                                       <div class="modal-body">
-                                                        Do you really want to delete this hospital? This process cannot be undone.
+                                                        Do you really want to delete this room type? Any bookings done using this room type will be deleted.
+                                                        
+                                                        NOTE : NO REFUNDS FOR GUESTS.
                                                       </div>
                                                       <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <a href="/admin/hospitalDelete/{{type_id}}"  class="btn btn-danger">Delete</a>
+                                                        <a href="/admin/typeDelete/{{type_id}}"  class="btn btn-danger">Delete</a>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -127,7 +130,7 @@
 
 
 
-                                              <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#deleteModal_{{id}}">
+                                              <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#deleteModal_{{type_id}}">
 
                                               <span>Delete</span>
                                             </button>

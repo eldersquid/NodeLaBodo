@@ -1,9 +1,10 @@
 <head>
-  <link rel="stylesheet" href="/css/g_map.css">
-  <script
+<script
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
 			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 			  crossorigin="anonymous"></script>
+
+
 
 </head>
 
@@ -21,7 +22,6 @@
                 <!-- Begin Page Content -->
                 <br>
                 <div class="container-fluid">
-                  <div id="map"></div>
                 <div class="row flex-lg-nowrap">
                  
                   <div class="col">
@@ -35,33 +35,28 @@
                               </ul>
                               <div class="tab-content pt-3">
                                 <div class="tab-pane active">
-                                  <form method="POST" action="hospitalCreated">
-                                                            
+                                  <form method="POST" action="/admin/typeEdited/{{roomType.type_id}}?_method=PUT">
+                                   <input type="hidden" name="_method" value="PUT">                          
                                     <div class="row">
                                       <div class="col">
                                        
                                         <div class="row">
                                           <div class="col-lg-9">
                                             <div class="form-group">
-                                              <label>Place ID</label>
-                                                <input type="hidden" id="google_location" name="google_location" value="{{js_data}}"> 
-                                              <input type="text" id="location" class="form-control" value="{{js_data}}" readonly>
+                                             <label for="name">Room Type</label>
+                                             <input type="text" class="form-control" name="type" id="type" value="{{roomType.type}}" required>
                                             </div>
                                             <div class="form-group">
-                                             <label for="name">Hospital Name</label>
-                                             <input type="text" class="form-control" name="name" id="name" value="" required>
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="address">Address</label>
-                                             <input type="text" class="form-control" name="address" id="add" value="" required>
+                                              <label for="address">Room Name</label>
+                                             <input type="text" class="form-control" name="roomName" id="roomName" value="{{roomType.roomName}}" required>
                                             </div>
                                           </div>
                                           <div class="col-lg-3">
                                             {{!—-Hospital image --}}
-                                            <label for="hospital_image">Hospital Logo</label>
+                                            <label for="hotel_image">Room Image</label>
                                             <input type="file" id="photoUpload" name="photoUpload" accept="image/png,image/jpeg,image/jpg">
-                                            <img id="hospital_image" src="/img/hospital.jpeg" alt=""class="border img-thumbnail img-fluid"style="height:80%;width:90%">
-                                            <input id="photoURL" type="hidden" name="photoURL" value="/img/hospital.jpeg">
+                                            <img id="hotel_image" src="{{roomType.roomImage}}" alt=""class="border img-thumbnail img-fluid"style="height:80%;width:90%">
+                                            <input id="photoURL" type="hidden" name="photoURL" value="{{roomType.roomImage}}">
                                             </div>
                                             <div class="font-weight-bold text-danger small" id="photoErr" style="display:none">Error occurred.</div>
 
@@ -69,16 +64,29 @@
                                         <div class="row mt-3">
                                           <div class="col">
                                             <div class="form-group">
-                                             <label for="contact">Contact Number</label>
-                                             <input type="text" class="form-control" name="contact" id="contact" value="" required>
+                                             <label for="contact">Description</label>
+                                             <textarea class="form-control" name="description" id="description" rows="3">{{roomType.description}}</textarea>
+                                             
                                             </div>
                                           </div>
                                         </div>
                                         <div class="row">
                                           <div class="col">
                                             <div class="form-group">
-                                             <label for="website">Website</label>
-                                             <input type="text" class="form-control" name="website" id="website" value="" required>
+                                             <label for="website">Room Price</label>
+                                             <input type="text" class="form-control" name="roomPrice" id="roomPrice" value="{{roomType.roomPrice}}" required>
+                                            </div>
+                                          </div>
+                                          <div class="col">
+                                            <div class="form-group">
+                                             <label for="website">Minimum Room Number</label>
+                                             <input type="text" class="form-control" name="minRoomNo" id="minRoomNo" value="{{roomType.minRoomNo}}" required>
+                                            </div>
+                                          </div>
+                                          <div class="col">
+                                            <div class="form-group">
+                                             <label for="website">Maximum Room Number</label>
+                                             <input type="text" class="form-control" name="maxRoomNo" id="maxRoomNo" value="{{roomType.maxRoomNo}}" required>
                                             </div>
                                           </div>
                                         </div>
@@ -89,11 +97,9 @@
                                     </div>
 
                                     <div class="row">
-                                      <div class="col d-flex">
-                                        <a class="btn btn-secondary" href="">Hospital Search</a>
-                                      </div>
-                                      <div class="col d-flex justify-content-end">
-                                        <button class="btn btn-primary" type="submit">Create</button>
+                                      
+                                      <div class="col d-flex justify-content-start">
+                                        <button class="btn btn-primary" type="submit">Edit</button>
                                       </div>
                                     </div>
                                   </form>
@@ -156,14 +162,7 @@
 
 
    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhR62_UUROPzt6A8IOhVZBppjp9e51w2w&callback=initAutocomplete&libraries=places&v=weekly"
-    defer
-  ></script>
-  <script src="/js/google_map.js"></script>
-  <script src="/js/googlemaps_fetch.js"></script>
-   <script src="/js/logoUpload.js"></script>
-  {{!-- <script src="../js/natgeowild.js"></script> --}}
+   <script src="/js/hotelRoomUpload.js"></script>
   
 
 

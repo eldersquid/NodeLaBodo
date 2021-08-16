@@ -15,12 +15,14 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                   <div class="col d-flex justify-content">
+                  
                   <a class="btn btn-outline-secondary ml-1" href="/admin/hospitalList">Hospitals</a>
-                  <a class="btn btn-secondary ml-1" href="/rooms/bookingList">Bookings</a>
+                  <a class="btn btn-outline-secondary ml-1" href="/rooms/bookingList">Bookings</a>
                   <a class="btn btn-outline-secondary ml-1" href="/admin/typeList">Room Types</a>
-                  <a class="btn btn-outline-secondary ml-1" href="/chatBot/chatBotList">Chuu Bot QnA</a>
+                  <a class="btn btn-secondary ml-1">Chuu Bot QnA</a>
                   <div class="col d-flex justify-content-end">
-                    <a class="btn btn-outline-secondary ml-1" href="/rooms"> Select Rooms </a>
+                    <a class="btn btn-outline-secondary ml-1" href="intent"><i class="fas fa-plus-circle"></i> Create New QnA </a>
+                    <a class="btn btn-outline-secondary ml-1" href="syncDBs"><i class="fas fa-plus-circle"></i> Sync SQL DB with API DB </a>
                   </div>
                 </div>
                 
@@ -49,7 +51,11 @@
   </div>
 </div>
                   <br>
-
+                  
+                    {{#each chatBotIntents}}
+                      {{questions}}
+                    {{/each}}
+                    
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -58,15 +64,10 @@
                                     <table class="table table-bordered table-hover" id="hospitalTable" width="100%" cellspacing="1">
                                         <thead>
                                             <tr>
-                                                {{!-- <th>Logo</th> --}}
-                                                
-                                                <th>Room Type</th>
-                                                <th>Guest Name</th>
-                                                <th>Check-In Date</th>
-                                                <th>Check-Out Date</th>
-                                                <th>Room Number</th>
-                                                <th>Paid?</th>
-                                                <th>Price</th>
+                                                <th>Display Name</th>
+                                                <th>Top Question</th>
+                                                <th>Top Answer</th>
+                                                <th>Intent Path</th>
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
@@ -74,43 +75,33 @@
                                         </thead>
                                         
                                         <tbody>
-                                          {{#if room }}
+                                          {{#if chatBotIntents }}
                                             
-                                            {{#each room }}
+                                            {{#each chatBotIntents }}
+                                            
                                             <tr>
-  
-                                              
                                               <td>
-                                                {{roomType}}
+                                                {{intent}}
                                               </td>
                                               <td>
-                                                {{name}}
+                                                {{questions}}
                                               </td>
                                               <td>
-                                                {{bookInDate}}
+                                                {{answers}}
                                               </td>
                                               <td>
-                                                {{bookOutDate}}
+                                                {{intentPath}}
                                               </td>
                                               <td>
-                                                {{roomNo}}
+                                                <a href="/chatBot/intentDetails/{{intentPath}}" class="btn btn-dark">Details</a>
                                               </td>
+                                              <td><a href="/chatBot/intentEdit/{{intentPath}}" class="btn btn-warning">Update</a></td>
                                               <td>
-                                                {{paid}}
-                                                
-                                              </td>
-                                              <td>
-                                                {{price}}
-                                              </td>
-                                              <td>
-                                                <a href="/admin/hospitalProfile/{{id}}" class="btn btn-dark">Details</a>
-                                              </td>
-                                              <td><a href="/admin/hospitalEdit/{{id}}" class="btn btn-warning">Update</a></td>
-                                              <td>
+                                                  
                                                 
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal fade" id="deleteModal_{{intentPath}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                   <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                       <div class="modal-header">
@@ -120,11 +111,11 @@
                                                         </button>
                                                       </div>
                                                       <div class="modal-body">
-                                                        Do you really want to delete this booking? There will be no refunds.
+                                                        Do you really want to delete this intent? This process cannot be undone.
                                                       </div>
                                                       <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <a href="/rooms/bookingDelete/{{id}}"  class="btn btn-danger">Delete</a>
+                                                        <a href="/chatBot/intentDelete/{{intentPath}}"  class="btn btn-danger">Delete</a>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -132,7 +123,7 @@
 
 
 
-                                              <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#deleteModal_{{id}}">
+                                              <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#deleteModal_{{intentPath}}">
 
                                               <span>Delete</span>
                                             </button>
@@ -142,7 +133,7 @@
                                             {{/each}}
 
                                           {{else}}
-                                          
+                                         
 
                                         </tbody>
                                         {{/if}}
@@ -155,7 +146,7 @@
 
                               <div class="col-4">
 
-                                <form action="" method="POST">
+                                <form action="/admin/hospitalReset" method="POST">
                                   <!-- Modal -->
                                   <div class="modal fade" id="resetDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -167,7 +158,7 @@
                                           </button>
                                         </div>
                                         <div class="modal-body">
-                                          Do you want to reset all hospitals to default values?
+                                          Do you want to reset all hospitals?
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -284,3 +275,4 @@
        <!-- Page level custom scripts -->
        <script src="/js/datatables-demo.js"></script>
        <script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    

@@ -84,6 +84,8 @@ const inventoryRoute = require('./routes/inventory');
 
 const ordersRoute = require('./routes/orders');
 
+const ChatBotRoute = require('./routes/ChatBot');
+
 const adminDB = require('./config/DBConnection');
 
 const Swal = require('sweetalert2');
@@ -235,6 +237,8 @@ app.use('/profile', SignupRoute);
 // 2. roomsRoute is declared to point to routes/rooms.js
 // This route maps the rooms URL to any path defined in rooms.js
 app.use('/rooms', roomsRoute);
+
+app.use('/chatBot', ChatBotRoute);
 
 // google login
 var GoogleStrategy = require('passport-google-oauth20').Strategy;

@@ -1,0 +1,260 @@
+<head>
+
+
+
+</head>
+
+<body id="page-top">
+              <div class="container-fluid">
+                <a class="btn btn-outline-secondary" href="">Guest Details</a>
+                <button type="button" class="btn btn-secondary">Hospitals</button>
+                <button type="button" class="btn btn-outline-secondary">Occupations</button>
+                
+                <button type="button" class="btn btn-outline-secondary">Vehicles</button>
+                
+                <hr>
+
+              </div>
+                <!-- Begin Page Content -->
+                <br>
+                <div class="container-fluid">
+                  <div id="map"></div>
+                <div class="row flex-lg-nowrap">
+                 
+                  <div class="col">
+                    <div class="row">
+                      <div class="col mb-3">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="e-profile">
+                              <ul class="nav nav-tabs">
+                                <li class="nav-item"><a href="" class="active nav-link">Information</a></li>
+                              </ul>
+                              <div class="tab-content pt-3">
+                                <div class="tab-pane active">
+                                  <form method="POST" action="intentCreated">
+                                                         
+                                    <div class="row">
+                                      <div class="col">
+                                       
+                                        <div class="row">
+                                          <div class="col">
+                                            <div class="form-group">
+                                              <label>Display Name</label>
+                                              <input type="hidden" name="intentPath" id="intentPath" value="{{chatIntent.intentPath}}">
+                                              <input type="text" id="displayName" name="displayName" value="{{chatIntent.displayName}}" class="form-control" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                             <label for="name">Training Phrases</label>
+                                             <input type="text" class="form-control" name="trainingPhrases" id="trainingPhrases">
+                                             <button class="btn btn-primary" onclick="addPhrase()" type="button">Add Phrase</button>
+                                             <button class="btn btn-primary" onclick="resetPhrase()" type="button">Reset</button>
+                                            </div>
+                                            <div class="form-group" id="setQuestions">
+                                             <label for="name">Available Training Phrases</label>
+                                                
+                                                {{#each chatIntent.questions}}
+                                                  <p class="BotQuestions">{{this}}</p>
+                                                {{/each}}
+                                             
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Bot Replies</label>
+                                                <input type="text" class="form-control" name="botReply" id="botReply">
+                                                <button class="btn btn-primary" onclick="addReply()" type="button">Add Reply</button>
+                                                <button class="btn btn-primary" onclick="resetReply()" type="button">Reset</button>
+                                            </div>
+                                            <div class="form-group" id="setAnswers">
+                                                <label for="name">Available Bot Replies</label>
+                                                {{#each chatIntent.answers}}
+                                                  <p class="BotAnswers">{{this}}</p>
+                                                {{/each}}
+                                            </div>
+                                            </div>
+                                          
+
+                                        </div>
+                                        
+                                       
+
+                                        
+
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      
+                                    <div class="col d-flex justify-content-end">
+                                        <button class="btn btn-secondary" type="button" onclick="sendStuff()">Create QnA</button>
+                                      </div>
+                                    </div>
+                                    
+                                  </form>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+            <!-- End of Main Content -->
+
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+  <!--  <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a> -->
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        var botQuestions = document.getElementsByClassName("BotQuestions");
+        var botAnswers = document.getElementsByClassName("BotAnswers");
+        var originalPhrases = [];
+        var originalReplies = [];
+        var arrayPhrase = [];
+        var arrayReply = [];
+        for (var i = 0, len = botQuestions.length; i < len; i++) {
+            arrayPhrase.push(botQuestions[i].textContent);
+            originalPhrases.push(botQuestions[i].textContent);
+        }
+        for (var i = 0, len = botAnswers.length; i < len; i++) {
+            arrayReply.push(botAnswers[i].textContent);
+            originalReplies.push(botAnswers[i].textContent);
+        }
+        console.log(arrayPhrase);
+        console.log(arrayReply);
+
+        function addPhrase(){
+            var phrase = document.getElementById("trainingPhrases").value;
+            arrayPhrase.push(phrase);
+            var newPhrase = document.createElement("p")
+            newPhrase.textContent = phrase;
+            newPhrase.className = "BotQuestions";
+            document.getElementById("setQuestions").appendChild(newPhrase);
+            console.log(arrayPhrase);
+
+
+
+            
+        }
+        function resetPhrase(){
+            document.querySelectorAll('.BotQuestions').forEach(e => e.remove());
+            arrayPhrase = [];
+            originalPhrases = [];
+            alert("Reset completed!");
+
+
+
+            
+        }
+        function addReply(){
+            var phrase = document.getElementById("botReply").value;
+            arrayReply.push(phrase);
+            var newPhrase = document.createElement("p")
+            newPhrase.textContent = phrase;
+            newPhrase.className = "BotAnswers";
+            document.getElementById("setAnswers").appendChild(newPhrase);
+            console.log(arrayReply);
+
+
+
+
+            
+        }
+        function resetReply(){
+            document.querySelectorAll('.BotAnswers').forEach(e => e.remove());
+            arrayReply = [];
+            originalReplies = [];
+            alert("Reset completed!");
+
+
+
+            
+        }
+        function sendStuff(){
+            // var url= 'rooms/chuuSend';
+            var data = {
+                displayName : document.getElementById("displayName").value,
+                trainingPhrases : arrayPhrase,
+                botReplies : arrayReply,
+                originalPhrases : originalPhrases,
+                originalReplies : originalReplies
+
+
+            }
+            var JSONdata = JSON.stringify(data);
+            console.log(JSONdata);
+            $.ajax({
+                url: '/chatBot/intentEdited/' + document.getElementById("intentPath").value,
+                data: JSONdata,
+                contentType: 'application/json',
+                dataType : 'json',
+                type: 'POST'
+            }).done(function(result) {
+                console.log("Success!");
+                
+                console.log(result);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.log("fail: ",textStatus, errorThrown);
+            });
+            setTimeout(() => { location.href="/chatBot/chatBotList" }, 2000);
+            
+        
+    }
+
+
+
+
+
+
+    </script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script src="/js/logoUpload.js"></script>
+
+  {{!-- <script src="../js/natgeowild.js"></script> --}}
+
+

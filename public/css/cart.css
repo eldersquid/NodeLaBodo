@@ -50,6 +50,11 @@ body{
     font-size: 20px;
 }
 
+.title {
+    color:#000;
+
+}
+
 .product_wrap,.price_details{
     width: 560px;
     margin: 0 auto;

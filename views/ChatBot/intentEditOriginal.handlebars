@@ -32,53 +32,35 @@
                               </ul>
                               <div class="tab-content pt-3">
                                 <div class="tab-pane active">
-                                  <form method="POST" action="/admin/hospitalEdited/{{hospital.id}}?_method=PUT">
-                                    <input type="hidden" name="_method" value="PUT">                        
+                                  <form method="POST" action="intentCreated">
+                                                         
                                     <div class="row">
                                       <div class="col">
                                        
                                         <div class="row">
-                                          <div class="col-lg-9">
+                                          <div class="col">
                                             <div class="form-group">
-                                              <label>Place ID</label>
-                                                <input type="hidden" id="google_location" name="google_location" value="{{hospital.placeID}}"> 
-                                              <input type="text" id="location" class="form-control" value="{{hospital.placeID}}" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                             <label for="name">Hospital Name</label>
-                                             <input type="text" class="form-control" name="name" id="name" value="{{hospital.hospitalName}}" required>
+                                              <label>Display Name</label>
+                                              <input type="text" id="displayName" name="displayName" value="{{intent.displayName}}" class="form-control" readonly>
                                             </div>
                                             <div class="form-group">
-                                              <label for="address">Address</label>
-                                             <input type="text" class="form-control" name="address" id="add" value="{{hospital.address}}" required>
+                                             <label for="name">Training Phrases</label>
+                                             <input type="text" class="form-control" name="trainingPhrases" id="trainingPhrases">
+                                             <button class="btn btn-primary" onclick="addPhrase()" type="button">Add Phrase</button>
+                                             <button class="btn btn-primary" onclick="resetPhrase()" type="button">Reset</button>
                                             </div>
-                                          </div>
-                                          <div class="col-lg-3">
-                                            {{!—-Poster image --}}
-                                            <label for="hospital_image">Hospital Logo</label>
-                                            <input type="file" id="photoUpload" name="photoUpload" accept="image/png,image/jpeg,image/jpg">
-                                            <img id="hospital_image" src="{{hospital.photo}}" alt=""class="border img-thumbnail img-fluid"style="height:80%;width:90%">
-                                            <input id="photoURL" type="hidden" name="photoURL" value="">
+                                                <div class="form-group">
+                                                <label for="name">Bot Replies</label>
+                                                <input type="text" class="form-control" name="botReply" id="botReply">
+                                                <button class="btn btn-primary" onclick="addReply()" type="button">Add Reply</button>
+                                                <button class="btn btn-primary" onclick="resetReply()" type="button">Reset</button>
+                                                </div>
                                             </div>
-                                            <div class="font-weight-bold text-danger small" id="photoError" style="display:none"></div>
+                                          
 
                                         </div>
-                                        <div class="row mt-3">
-                                          <div class="col">
-                                            <div class="form-group">
-                                             <label for="contact">Contact Number</label>
-                                             <input type="text" class="form-control" name="contact" id="contact" value="{{hospital.contactNo}}" required>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div class="row">
-                                          <div class="col">
-                                            <div class="form-group">
-                                             <label for="website">Website</label>
-                                             <input type="text" class="form-control" name="website" id="website" value="{{hospital.website}}" required>
-                                            </div>
-                                          </div>
-                                        </div>
+                                        
+                                       
 
                                         
 
@@ -86,13 +68,12 @@
                                     </div>
 
                                     <div class="row">
-                                      <div class="col d-flex">
-                                        <a class="btn btn-secondary" href="">Hospital Search</a>
-                                      </div>
-                                      <div class="col d-flex justify-content-end">
-                                        <button class="btn btn-primary" type="submit">Edit</button>
+                                      
+                                    <div class="col d-flex justify-content-end">
+                                        <button class="btn btn-secondary" type="button" onclick="sendStuff()">Create QnA</button>
                                       </div>
                                     </div>
+                                    
                                   </form>
 
                                 </div>
@@ -152,6 +133,82 @@
     </div>
 
 
+
+
+    <script>
+        var arrayPhrase = [];
+        var arrayReply = [];
+        function addPhrase(){
+            var phrase = document.getElementById("trainingPhrases").value;
+            arrayPhrase.push(phrase);
+            alert(phrase);
+
+
+
+
+            
+        }
+        function resetPhrase(){
+            arrayPhrase = [];
+            alert("Reset completed!");
+
+
+
+            
+        }
+        function addReply(){
+            var reply = document.getElementById("botReply").value;
+            arrayReply.push(reply);
+            alert(reply);
+
+
+
+
+            
+        }
+        function resetReply(){
+            arrayReply = [];
+            alert("Reset completed!");
+
+
+
+            
+        }
+        function sendStuff(){
+            // var url= 'rooms/chuuSend';
+            var data = {
+                displayName : document.getElementById("displayName").value,
+                trainingPhrases : arrayPhrase,
+                botReplies : arrayReply
+
+
+            }
+            var JSONdata = JSON.stringify(data);
+            console.log(JSONdata);
+            $.ajax({
+                url: '/chatBot/intentCreate',
+                data: JSONdata,
+                contentType: 'application/json',
+                dataType : 'json',
+                type: 'POST'
+            }).done(function(result) {
+                console.log("Success!");
+                
+                console.log(result);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.log("fail: ",textStatus, errorThrown);
+            });
+            setTimeout(() => { location.href="/chatBot/chatBotList" }, 2000);
+            
+        
+    }
+
+
+
+
+
+
+    </script>
    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script src="/js/logoUpload.js"></script>
 

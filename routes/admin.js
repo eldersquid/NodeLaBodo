@@ -12,6 +12,7 @@ const urlParse = require('url-parse');
 const { trafficdirector } = require('googleapis/build/src/apis/trafficdirector');
 const fs = require('fs');
 const upload = require('../helpers/hospitalLogo');
+const roomUpload = require('../helpers/roomTypePictures');
 const Hospital = require('../models/Hospital');
 const RoomType = require('../models/RoomType');
 const moment = require('moment');
@@ -82,6 +83,58 @@ router.get("/typeList", (req, res) => {
 	  })
 	  .catch((err) => console.log(err));
   });
+
+
+  router.get('/typeDelete/:id', (req, res) => {
+	let id = req.params.id;
+	// Select * from videos where videos.id=videoID and videos.userId=userID
+	RoomType.findOne({
+		where: {
+			type_id: id,
+		},
+		attributes: ['type_id']
+	}).then((roomType) => {
+		// if record is found, user is owner of video
+		if (roomType != null) {
+			roomType.destroy({
+				where: {
+					type_id: id
+				}
+			}).then(() => {
+				res.redirect('/admin/typeList'); // To retrieve all videos again
+			}).catch(err => console.log(err));
+		} else {
+			alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+			
+		}
+	});
+});
+
+router.post('/roomPictureUpload', (req, res) => {
+	let js_data = res.body;
+	console.log(js_data);
+	// Creates user id directory for upload if not exist
+	if (!fs.existsSync("./public/roomPictures/")){
+	fs.mkdirSync("./public/roomPictures/");
+	}
+	roomUpload(req, res, (err) => {
+	if (err) {
+	res.json({file: '/img/hotel.jpeg', err: err});
+	console.log("Error.")
+	} else {
+	if (req.file === undefined) {
+	res.json({file: '/img/hotel.jpeg', err: err});
+	console.log("Undefined.")
+	} else {
+	res.json({file: `/roomPictures/${req.file.filename}`});
+	}
+	}
+	});
+	})
+
+
+
+
 	
 
 router.get('/hospitalSearch', cors(), (req, res) => {
@@ -152,7 +205,7 @@ router.post('/typeCreated', (req, res) => {
                 roomName,
                 description,
                 roomPrice,
-                photo,
+                roomImage:photo,
 				minRoomNo,
 				maxRoomNo
             }).then(roomType => {
@@ -162,6 +215,58 @@ router.post('/typeCreated', (req, res) => {
         }
     })
 });
+
+router.get("/typeEdit/:id", (req, res) => {
+	const title = "Edit Hospital Details";
+	RoomType.findOne({
+	  where: {
+		type_id: req.params.id,
+	  },
+	})
+	  .then((roomType) => {
+		
+		// call views/video/editVideo.handlebar to render the edit video page
+		res.render("admin/roomType/type_edit", {
+		  roomType, // passes video object to handlebar
+		  layout: "admin",
+		  title: title,
+		  
+		});
+	  })
+	  .catch((err) => console.log(err)); // To catch no video ID
+  });
+
+router.put('/typeEdited/:id', (req, res) => {
+	let type = req.body.type;
+	let roomName = req.body.roomName;
+	let roomImage = req.body.roomImage;
+	let description = req.body.description;
+	let roomPrice = req.body.roomPrice;
+	let minRoomNo = req.body.minRoomNo;
+	let maxRoomNo = req.body.maxRoomNo;
+	RoomType.update({
+		type,
+		roomName,
+		roomImage,
+		description,
+		roomPrice,
+		minRoomNo,
+		maxRoomNo
+	}, {
+	where: {
+	type_id: req.params.id
+	}
+	}).then(() => {
+	// After saving, redirect to router.get(/listVideos...) to retrieve all updated
+	// videos
+	res.redirect('/admin/typeList');
+	}).catch(err => console.log(err));
+	});
+
+
+
+
+
 
 router.post('/hospitalCreated', cors(), (req, res) => {
 	let hospitalName = req.body.name;
