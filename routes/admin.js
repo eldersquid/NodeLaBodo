@@ -216,6 +216,58 @@ router.post('/typeCreated', (req, res) => {
     })
 });
 
+router.get("/typeEdit/:id", (req, res) => {
+	const title = "Edit Hospital Details";
+	RoomType.findOne({
+	  where: {
+		type_id: req.params.id,
+	  },
+	})
+	  .then((roomType) => {
+		
+		// call views/video/editVideo.handlebar to render the edit video page
+		res.render("admin/roomType/type_edit", {
+		  roomType, // passes video object to handlebar
+		  layout: "admin",
+		  title: title,
+		  
+		});
+	  })
+	  .catch((err) => console.log(err)); // To catch no video ID
+  });
+
+router.put('/typeEdited/:id', (req, res) => {
+	let type = req.body.type;
+	let roomName = req.body.roomName;
+	let roomImage = req.body.roomImage;
+	let description = req.body.description;
+	let roomPrice = req.body.roomPrice;
+	let minRoomNo = req.body.minRoomNo;
+	let maxRoomNo = req.body.maxRoomNo;
+	RoomType.update({
+		type,
+		roomName,
+		roomImage,
+		description,
+		roomPrice,
+		minRoomNo,
+		maxRoomNo
+	}, {
+	where: {
+	type_id: req.params.id
+	}
+	}).then(() => {
+	// After saving, redirect to router.get(/listVideos...) to retrieve all updated
+	// videos
+	res.redirect('/admin/typeList');
+	}).catch(err => console.log(err));
+	});
+
+
+
+
+
+
 router.post('/hospitalCreated', cors(), (req, res) => {
 	let hospitalName = req.body.name;
 	let address = req.body.address;
