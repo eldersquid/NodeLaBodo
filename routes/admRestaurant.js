@@ -219,8 +219,7 @@ router.get('/createResponse/:id', (req,res) => {
             // [reservation.id, 'ASC']
         ],
         raw: true
-    })
-        .then((contact) => {
+    }).then((contact) => {
             console.log(contact);
             res.render('admRestaurant/createResponse', {
                 layout: "admin",
@@ -234,8 +233,6 @@ router.post('/createResponse', (req,res) => {
     let toEmail = req.body.toEmail
     let toSubject = req.body.toSubject
     let toMessage = req.body.toMessage
-
-    console.log(toEmail);
 
     Response.create({
         toEmail,
@@ -427,22 +424,107 @@ const storage = multer.diskStorage({
 
 // MENU
 
-// Upload Picture
-router.post('/UploadMenu', (req, res) => {
-	let cardPhoto_data = req.body.trueMenuPicture;
+// // Upload Picture
+// router.post('/createMenu', (req, res) => {
+// 	let cardPhoto_data = req.body.trueMenuPicture;
+//     let cardName = req.body.cardName
+//     let cardPrice = req.body.cardPrice
+// 	const title = "Upload Food Menu";
+//     FoodCart.create({
+//         cardName,
+//         cardPrice,
+//         cardPhoto : cardPhoto_data
+
+//     }).then((foodcart) => {
+//             res.redirect('/admRestaurant/viewFoodCart');
+//         }).catch(err => console.log(err));
+
+
+// });
+
+router.get('/createMenu', (req, res) => {
+    const title = 'FoodCart';
+    res.render('admRestaurant/createMenu', {
+        layout: "admin",
+        title: title
+    })
+});
+
+// Create Menu
+router.post('/createMenu', (req, res) => {
+    let errors =[];
+    let cardPhoto_data = req.body.trueMenuPicture;
+    let cardName = req.body.cardName;
+    let cardPrice = req.body.cardPrice;
+    console.log("THis photo data",cardPhoto_data)
+
+    FoodCart.findOne({
+        where: {
+            // id: req.params.id
+        }
+    }).then((foodcart) => {
+        console.log(foodcart);
+        if (foodcart){
+            alertMessage(res, 'danger', 'Item already Existed. ', 'fas fa-sign-in-alt', true);
+            errors.push(1);
+        }
+        if (errors.length > 0){
+            res.render('admRestaurant/createMenu', {
+                errors:errors,
+                layout: "admin",
+            });
+        }else if (errors.length == 0){
+            FoodCart.create({
+                cardPhoto:cardPhoto_data,
+                cardName:cardName,
+                cardPrice:cardPrice
+            }).then((foodcart) => {
+                alertMessage(res, 'success', ' ' + req.body.cardName + ' with the price of' + ' '+ '$' + req.body.cardPrice + ' ' + 'is added.', 'fas fa-sign-in-alt', true)
+                res.redirect('/admRestaurant/viewFoodCart');
+            }).catch(err => console.log(err))
+        }
+    });
+})
+
+
+// Update Menu
+router.get("/updateMenu/:id", (req, res) => {
+	const title = "Update Menu";
+	FoodCart.findOne({
+	  where: {
+		id: req.params.id,
+	  },
+      raw: true
+	})
+	  .then((foodcart) => {
+		res.render("admRestaurant/updateMenu", {
+		  layout: "admin",
+          foodcart:foodcart,
+		  title: title
+		});
+	  })
+	  .catch((err) => console.log(err)); // To catch no video ID
+  });
+
+router.put('/updateMenu/:id', (req, res) => {
+    let cardPhoto_data = req.body.trueMenuPicture2;
     let cardName = req.body.cardName
     let cardPrice = req.body.cardPrice
-	const title = "Upload Food Menu";
-    FoodCart.create({
-        cardName,
-        cardPrice,
-        cardPhoto : cardPhoto_data
 
+    console.log("1");
+
+    FoodCart.update({
+        cardPhoto:cardPhoto_data,
+        cardName:cardName,
+        cardPrice:cardPrice
+    }, {
+        where: {
+            id: req.params.id
+        }
     }).then((foodcart) => {
-            res.redirect('/admRestaurant/viewFoodCart');
-        }).catch(err => console.log(err));
-
-
+        alertMessage(res, 'success',  ' Menu has been updated.', 'fas fa-sign-in-alt', true);
+        res.redirect('/admRestaurant/viewFoodCart');
+    }).catch(err => console.log(err));
 });
 
 // Upload Menu pictures inside the folder

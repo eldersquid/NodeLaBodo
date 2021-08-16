@@ -10,13 +10,13 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const cors = require('cors');
+const fs = require('fs');
 if (process.env.NODE_ENV !== 'production'){
     require('dotenv').config()
 }
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY
-const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 
-console.log(stripeSecretKey, stripePublicKey)
+const Stripe = JSON.parse(fs.readFileSync('credentials/stripePayment.json')); //Gerald's stripe payment gateway
+console.log(Stripe.Public_Key);
 
 const passport = require('passport');
 // Messaging libraries
