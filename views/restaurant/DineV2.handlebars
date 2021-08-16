@@ -250,15 +250,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="mu-contact-area">
-
                     <div class="mu-title">
                         <span class="mu-subtitle">Get In Touch</span>
                         <h2>Contact Us</h2>
                     </div>
-
                     <div class="mu-contact-content">
                         <div class="row">
-
                             <div class="col-md-6">
                                 <div class="mu-contact-left">
                                     <!-- Start contact form -->
@@ -318,6 +315,7 @@
                 </div>
             </div>
         </div>
+        {{>_errors}}
     </div>
 </section>
 <!-- End Contact section -->
@@ -463,7 +461,7 @@
 
 </script>
 
-{{!-- <script>
+<script>
     $("#modalsubmit").click(function (e) {
         e.preventDefault();
         var fname = $("#cust_fname").val();
@@ -483,9 +481,10 @@
                 }
             });
     });
-</script> --}}
 
-<script>
+</script>
+
+{{!-- <script>
     $("#contactSubmit").click(function (e) {
         e.preventDefault();
 
@@ -494,22 +493,14 @@
         var contact_subject = $("#contact_subject").val();
         var contact_message = $("#contact_message").val();
 
-        if (contact_name == contact_name | contact_email == contact_email | contact_subject == contact_subject | contact_message = contact_message){
         Swal.fire(
-            'Submitted!',
-            'Respone Recieved!',
+            'Confirmed!',
+            'Table Reserved!',
             'success').then((result) => {
                 if (result.isConfirmed) {
                     $("#contact2").submit();
                 }
             });
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            button: 'Ok'
-        });
     });
 }
-</script>
+</script> --}}

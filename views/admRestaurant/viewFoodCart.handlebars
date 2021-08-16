@@ -1,196 +1,134 @@
-{{!--
-<link rel="stylesheet" href="/styles/templatemo-klassy-cafe.css"> --}}
-<link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
-{{!-- <link rel="stylesheet" href="/teststuff/css/Addcart.css" /> --}}
-{{!--
-<link href="/teststuff/style.css" rel="stylesheet"> --}}
+<head>
 
-<div class="container-fluid">
-    <h1 style="font-size = 3.5rem;">View Menu</h1>
-    <hr>
-    <div class="card-body">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMenu" name="addMenu">Add Food
-            Items</button>
+    <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="/sweetalert2/dist/sweetalert2.min.css">
+
+
+
+</head>
+<a href="/admRestaurant/createMenu" class="btn btn-primary">Add Menu</a>
+
+    <br>
+
+<body id="page-top">
+    <br>
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="hospitalTable" width="100%" cellspacing="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {{#if foodcart }}
+
+                        {{#each foodcart }}
+                        <tr>
+                            <td>
+                                {{id}}
+                            </td>
+                            <td>
+                                <img src="{{foodcart.cardPhoto}}" alt=""
+                                    class="border img-thumbnail img-fluid" style="width: 160px;">
+                            </td>
+                            <td>
+                                {{cardName}}
+                            </td>
+                            <td>
+                                {{cardPrice}}
+                            </td>
+                            <td><a href="/admRestaurant/updateMenu/{{id}}" class="btn btn-warning">Update</a></td>
+                            <td>
+                                <!-- Modal -->
+                                <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Do you really want to delete this Menu?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                <a href="/admRestaurant/deleteMenu/{{id}}" class="btn btn-danger">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <button type="button" class="btn btn-block btn-danger" data-toggle="modal"
+                                    data-target="#deleteModal_{{id}}">
+
+                                    <span>Delete</span>
+                                </button>
+
+                            </td>
+                        </tr>
+                        {{/each}}
+                        {{else}}
+                    </tbody>
+                    {{/if}}
+                </table>
+            </div>
+        </div>
     </div>
-    <!-- Start Menu -->
-    <section>
-        <div class="row d-flex " style="width: 1000px;">
-            {{#if foodcart}}
-            {{#each foodcart}}
-            <div class="col-sm-4 mt-3">
-                <div class="card" style="width: 20rem;">
-                    <div class="col">
-                        <img class="card-img-top" src="{{cardPhoto}}" alt="Card image cap">
-                        <div class="card-block">
-                            <h4 class="card-title">{{cardName}}</h4>
-                            <p class="card-text">Price: ${{cardPrice}}</p>
-                        </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#uploadMenuPic_{{id}}" name="uploadMenuPic">Edit</button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#deleteMenu_{{id}}" name="deleteMenu"
-                            value="deleteMenu">Delete</button>
-                    </div>
 
-                    <!-- ADD -->
-                    <form class="block-register" action="/admRestaurant/UploadMenu" method="POST">
-                        <div class="modal fade" id="addMenu" tabindex="-1" role="dialog" aria-labelledby="addMenulabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="addMenulabel">Add Menu</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group form-row">
-                                            <div class="col-md-6">
-                                                <label>Upload your image here</label>
-                                                <br>
-                                                <img id='pictureThumbnail1' name="pictureThumbnail1"
-                                                    src="/menuPictures/9.jpg" width="240" height="135" class="border">
-                                                <div style="position:relative; "></div>
-                                                <input type="file" accept="image/png,image/jpeg,image/jpg"
-                                                    name="MenuUpload" id="MenuUpload">
-                                                <input type="hidden" id='trueMenuPicture' name="trueMenuPicture">
-                                                <div class="font-weight-bold text-danger small" id="picErr"
-                                                    style`="display:none">
-                                                </div>
-                                                <form action="/admRestaurant/UploadMenu">
-                                                    <fieldset>
-                                                        <input name="cardName" type="text" id="cardName"
-                                                            placeholder="cardName*" required />
-                                                    </fieldset>
-                                                    <fieldset>
-                                                        <input name="cardPrice" type="text" id="cardPrice"
-                                                            placeholder="cardPrice*" required />
-                                                    </fieldset>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Upload Image</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- Update -->
-                    <div class="modal fade" id="uploadMenuPic_{{id}}" tabindex="-1" role="dialog"
-                        aria-labelledby="addMenulabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addMenulabel">Update Menu</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group form-row">
-                                        <div class="col-md-6">
-                                            <label>Update Menu image here</label>
-                                            <br>
-                                            <img id='existPic' name="existPic" src="{{cardPhoto}}" width="240"
-                                                height="135" class="border">
-                                            <div style="position:relative; "></div>
-                                            <input type="file" accept="image/png,image/jpeg,image/jpg" name="picUpload"
-                                                id="picUpload">
-                                            <input type="hidden" id='trueMenuPicture' name="trueMenuPicture">
-                                            <div class="font-weight-bold text-danger small" id="picErr"
-                                                style`="display:none">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <a href="/admRestaurant/updateFoodPic/{{id}}" class="btn btn-primary">Upload
-                                        Image</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- DELETE -->
-                    <div class="modal fade" id="deleteMenu_{{id}}" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
 
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Do you really want to delete this Picture?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <a href="/admRestaurant/deleteMenu/{{id}}" class="btn btn-danger">Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+
+    <!-- Scroll to Top Button-->
+    <!--  <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a> -->
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
-            {{/each}}
         </div>
-    </section>
-    {{else}}
-    <h3>~ No Menu ~</h3>
-    {{/if}}
-</div>
-<!-- End Gallery -->
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script>
-    $('#MenuUpload').on('change', function () {
-        alert("hello");
-        var file = $("#MenuUpload")[0].files[0];
-        var formdata = new FormData();
-        formdata.append('MenuUpload', file);
-        console.log("here")
-        //alert(file.name)
-        //document.getElementById("imgFilename") = file.name;
-        //$('#imgFilename') = "XCoder";
-        //$('#imgFilename').attr('value', file.name);
-
-        $.ajax({
-            url: '/admRestaurant/menuPic',
-            data: formdata,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            'success': (data) => {
-                console.log(data);
-                console.log(data.path);
-                $('#pictureThumbnail').attr('src', data.path);
-                $('#existPic').attr('src', data.path);
-                $('#trueMenuPicture').attr('value', data.path);
-
-                if (data.err) {
-                    $('#picErr').show();
-                    $('#picErr').text(data.err.message);
-                }
-                else {
-                    $('#picErr').hide();
-                }
-            },
-            error: function (xhr, errorType, exception) {
-                alert("Error", errorType);
-            }
+    </div>
 
 
-        });
-    });
-</script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js" charset="utf-8"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/datatables-demo.js"></script>
+    <script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
