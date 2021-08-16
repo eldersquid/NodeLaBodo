@@ -2,18 +2,6 @@ var sendBtn = document.getElementById('sendBtn');
 var textBox = document.getElementById('textbox');
 var chatContainer = document.getElementById('ChatBot_messages')
 var user = {message : ""};
-var possibleResponses = [
-    {message : "hi", response : "hello"},
-    {message : "how are you?", response : "im fine"},
-    {message : "do you love chuu?", response : "chuu is my wife"},
-    {message : "olivia hye or chuu?", response : "gowon lol"},
-    {message : "eat", response : "our restaurant is very nice!"},
-    {message : "what would happen if if im rank a", response : "dont come in pls no covid"},
-    {message : "what would happen if i i'm im rank B", response : "only 2nd floor"},
-    {message : "what would happen if i i'm im rank C", response : "dont waste our time la"},
-    {message : "work here", response : "lai pay is 500 only"}
-
-]
 
 var grammar_articles = ["a","an","the"]
 

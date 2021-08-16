@@ -51,11 +51,6 @@
   </div>
 </div>
                   <br>
-                  
-                    {{#each chatBotIntents}}
-                      {{questions}}
-                    {{/each}}
-                    
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -65,8 +60,9 @@
                                         <thead>
                                             <tr>
                                                 <th>Display Name</th>
-                                                <th>Top Question</th>
-                                                <th>Top Answer</th>
+                                                <th>Answer</th>
+                                                <th>Answer</th>
+                                                <th>End of Interaction?</th>
                                                 <th>Intent Path</th>
                                                 <th></th>
                                                 <th></th>
@@ -75,19 +71,27 @@
                                         </thead>
                                         
                                         <tbody>
-                                          {{#if chatBotIntents }}
+                                          {{#if advancedIntents }}
                                             
-                                            {{#each chatBotIntents }}
+                                            {{#each advancedIntents }}
                                             
                                             <tr>
                                               <td>
-                                                {{intent}}
+                                                {{displayName}}
                                               </td>
                                               <td>
-                                                {{questions}}
+                                                {{!-- {{messages[0].text.text[0]}} --}}
+                                                {{#each messages}}
+                                                    {{#each text}}
+                                                        {{0}}
+                                                    {{/each}}
+                                                {{/each}}
                                               </td>
                                               <td>
-                                                {{answers}}
+                                                {{Response}}
+                                              </td>
+                                              <td>
+                                                {{endInteraction}}
                                               </td>
                                               <td>
                                                 {{intentPath}}
@@ -133,7 +137,9 @@
                                             {{/each}}
 
                                           {{else}}
-                                         
+                                          <td>
+                                              Test lol
+                                          </td>
 
                                         </tbody>
                                         {{/if}}
