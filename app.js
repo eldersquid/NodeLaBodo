@@ -84,6 +84,10 @@ const inventoryRoute = require('./routes/inventory');
 
 const ordersRoute = require('./routes/orders');
 
+const facilitiesRoute = require('./routes/facilities');
+
+const admFacilitiesRoute = require('./routes/admFacilities');
+
 const ChatBotRoute = require('./routes/ChatBot');
 
 const adminDB = require('./config/DBConnection');
@@ -233,6 +237,10 @@ app.use('/inventory', inventoryRoute);
 app.use('/orders', ordersRoute);
 
 app.use('/profile', SignupRoute);
+
+app.use('/facilities', facilitiesRoute);
+
+app.use('/admFacilities', admFacilitiesRoute);
 
 // 2. roomsRoute is declared to point to routes/rooms.js
 // This route maps the rooms URL to any path defined in rooms.js
