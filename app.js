@@ -10,8 +10,10 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const cors = require('cors');
+const SignUpModel = require("./models/Signup");
 
-if (process.env.NODE_ENV !== 'production'){
+
+if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
@@ -20,48 +22,48 @@ const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 console.log(stripeSecretKey, stripePublicKey)
 
 const passport = require('passport');
-// const nodemailer = require('nodemailer')
-// const { google } = require('googleapis')
-// const CLIENT_ID = '855734212452-4ti1go2pp7ks8os3o98ragh1k8gh2mtb.apps.googleusercontent.com'
-// const CLIENT_SECRET = '6Wm2bPALLsbf2s_H_R-jJpa1'
-// const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-// const REFRESH_TOKEN = '1//04wi_I-DuOpscCgYIARAAGAQSNwF-L9Ir2mNKa0_6ofjTLeipoCL6YqO2WPMgFOHd9rNC8RLr4TPBVj4PGQJU5B0i1V-2qsrqnAw';
-// const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-// oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
+const nodemailer = require('nodemailer')
+const { google } = require('googleapis')
+const CLIENT_ID = '855734212452-4ti1go2pp7ks8os3o98ragh1k8gh2mtb.apps.googleusercontent.com'
+const CLIENT_SECRET = '6Wm2bPALLsbf2s_H_R-jJpa1'
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04wi_I-DuOpscCgYIARAAGAQSNwF-L9Ir2mNKa0_6ofjTLeipoCL6YqO2WPMgFOHd9rNC8RLr4TPBVj4PGQJU5B0i1V-2qsrqnAw';
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
 
-// async function sendMail() {
+async function sendMail() {
 
-//     try {
-//         const accessToken = await oAuth2Client.getAccessToken();
-//         const transport = nodemailer.createTransport({
-//             service: 'gmail',
-//             auth: {
-//                 type: 'OAuth2',
-//                 user: 'gabewungkana5@gmail.com',
-//                 clientId: CLIENT_ID,
-//                 clientSecret: CLIENT_SECRET,
-//                 refreshToken: REFRESH_TOKEN,
-//                 accessToken: accessToken
-//             }
-//         })
+    try {
+        const accessToken = await oAuth2Client.getAccessToken();
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                type: 'OAuth2',
+                user: 'gabewungkana5@gmail.com',
+                clientId: CLIENT_ID,
+                clientSecret: CLIENT_SECRET,
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken
+            }
+        })
 
-//         const mailOptions = {
-//             from: 'GABE :) <gabewungkana5@gmail.com>',
-//             to: 'progenji81@gmail.com',
-//             subject: "Reset Password",
-//             text: 'Dear  ,\n\nThis is your new password, lololol.   \n Sincerely,\nHotel La Bodo'
+        const mailOptions = {
+            from: 'GABE :) <gabewungkana5@gmail.com>',
+            to: 'progenji81@gmail.com',
+            subject: "Reset Password",
+            text: 'Dear  ,\n\nThis is your new password, lololol.   \n Sincerely,\nHotel La Bodo'
 
-//         };
+        };
 
-//         const result = await transport.sendMail(mailOptions);
-//         return result;
+        const result = await transport.sendMail(mailOptions);
+        return result;
 
-//     } catch (error) {
-//         return error
-//     }
-// }
-// sendMail().then(result => console.log('Email sent...', result))
-//     .catch(error => console.log(error.message));
+    } catch (error) {
+        return error
+    }
+}
+sendMail().then(result => console.log('Email sent...', result))
+    .catch(error => console.log(error.message));
 /*
  * Loads routes file main.js in routes directory. The main.js determines which function
  * will be called based on the HTTP request and URL.
@@ -232,7 +234,7 @@ app.use('/profile', SignupRoute);
 // This route maps the rooms URL to any path defined in rooms.js
 app.use('/rooms', roomsRoute);
 
-// google login
+// Google Login
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.serializeUser((user, done) => {
@@ -256,32 +258,40 @@ passport.use(
             // Register User 
             console.log(profile);
             cb(null, profile);
-
-            // User.findOne({ where: { username: profile.id, google_id: profile.id, usertype: 'customer' } })
-            // .then(Customer => {
-            // 	if (Customer) {
-            // 		cb(null, Customer);
-            // 	}
-            // 	else {
-            // 		console.log(profile);
-            // 		let firstname = profile.displayName.split(' ')[0];
-            // 		let lastname = profile.displayName.split(' ')[1];
-            // 		var password = generator.generate({
-            // 			length: 10,
-            // 			numbers: true
-            // 		});
-            // 		// console.log('passsssssworrrdddd',password);
-            // 		bcrypt.genSalt(10, (err, salt) => {
-            // 			bcrypt.hash(password, salt, (err, hash) => {
-            // 				if (err) throw err;
-            // 				password = hash;
-            // 				User.create({ username: profile.id, firstname: firstname, lastname: lastname, google_id: profile.id, usertype: 'customer', password: password })
-            // 					.then(user => {
-            // 						cb(null, user);
-            // 					})
-            // 					.catch(err => console.log(err));
         }
     ));
+
+//     function(accessToken, refreshToken, profile, cb) {
+//         SignUpModel.findOne({ where: { username: profile.id, googleId: profile.id, usertype: 'signup' } })
+//             .then(Signup => {
+//                 if (Signup) {
+//                     cb(null, Signup);
+//                 } else {
+//                     console.log(profile);
+//                     let firstname = profile.displayName.split(' ')[0];
+//                     let lastname = profile.displayName.split(' ')[1];
+//                     var password = generator.generate({
+//                         length: 10,
+//                         numbers: true
+//                     });
+//                     bcrypt.genSalt(10, (err, salt) => {
+//                         bcrypt.hash(password, salt, (err, hash) => {
+//                             if (err) throw err;
+//                             password = hash;
+//                             SignUpModel.create({ username: profile.id, firstname: firstname, lastname: lastname, google_id: profile.id, usertype: 'Signup', password: password })
+//                                 .then(Signup => {
+//                                     cb(null, Signup);
+//                                 })
+//                                 .catch(err => console.log(err));
+//                         })
+//                     });
+//                 }
+//             });
+//     }
+// ));
+
+
+
 
 app.use(passport.initialize());
 
@@ -295,9 +305,8 @@ app.get('/googleauth/google/home', passport.authenticate('google', { failureRedi
     res.end('Login Successful');
 })
 
-// facebook login
+// Facebook Login 
 const FacebookStrategy = require("passport-facebook").Strategy;
-const Signup = require('./models/Signup');
 passport.use(new FacebookStrategy({
         clientID: '157881506323867',
         clientSecret: '4ffba1b702ebb0e004d0a63f9dae0ff0',
@@ -306,38 +315,71 @@ passport.use(new FacebookStrategy({
     function(accessToken, refreshToken, profile, cb) {
         console.log(profile);
         cb(null, profile);
-
-        //     function(accessToken, refreshToken, profile, done) {
-        //         console.log('facebook-->', profile);
-
-        //         Signup.findOne({ where: { facebook_id: profile.id, usertype: 'signup' } })
-        //             .then(Signup => {
-        //                 if (Signup) {
-        //                     done(null, Signup);
-        //                 } else {
-        //                     let firstname = profile.displayName.split(' ')[0];
-        //                     let lastname = profile.displayName.split(' ')[1];
-        //                     var password = generator.generate({
-        //                         length: 10,
-        //                         numbers: true
-        //                     });
-        //                     bcrypt.genSalt(10, (err, salt) => {
-        //                         bcrypt.hash(password, salt, (err, hash) => {
-        //                             if (err) throw err;
-        //                             password = hash;
-        //                             User.create({ username: profile.id, firstname: firstname, lastname: lastname, facebook_id: profile.id, usertype: 'customer', password: password })
-        //                                 .then(user => {
-        //                                     // alertMessage(res, 'success', user.username + ' Please proceed to login', 'fas fa-sign-in-alt', true);
-        //                                     // res.redirect('customer/homecust');
-        //                                     done(null, user);
-        //                                 })
-        //                                 .catch(err => console.log(err));
-        //                         })
-        //                     });
-        //                 }
-        //             });
+        console.log('facebook: ', profile);
     }
 ));
+
+// User.findOne({ where: { facebook_id: profile.id, usertype: 'signup' } })
+//     .then(Signup => {
+//         if (Signup) {
+//             done(null, Signup);
+//         } else {
+//             let firstname = profile.displayName.split(' ')[0];
+//             let lastname = profile.displayName.split(' ')[1];
+//             var password = generator.generate({
+//                 length: 10,
+//                 numbers: true
+//             });
+//             bcrypt.genSalt(10, (err, salt) => {
+//                 bcrypt.hash(password, salt, (err, hash) => {
+//                     if (err) throw err;
+//                     password = hash;
+//                     Signup.create({ username: profile.id, firstname: firstname, lastname: lastname, facebook_id: profile.id, usertype: 'signup  ', password: password })
+//                         .then(signup => {
+//                             done(null, signup);
+//                         })
+//                         .catch(err => console.log(err));
+//                 })
+//             });
+//         }
+//     });
+
+// function(accessToken, refreshToken, profile, cb) {
+//     console.log(profile);
+//     cb(null, profile);
+
+
+//     function(accessToken, refreshToken, profile, done) {
+//         console.log('facebook-->', profile);
+
+//         Signup.findOne({ where: { facebook_id: profile.id, usertype: 'signup' } })
+//             .then(Signup => {
+//                 if (Signup) {
+//                     done(null, Signup);
+//                 } else {
+//                     let firstname = profile.displayName.split(' ')[0];
+//                     let lastname = profile.displayName.split(' ')[1];
+//                     var password = generator.generate({
+//                         length: 10,
+//                         numbers: true
+//                     });
+//                     bcrypt.genSalt(10, (err, salt) => {
+//                         bcrypt.hash(password, salt, (err, hash) => {
+//                             if (err) throw err;
+//                             password = hash;
+//                             User.create({ username: profile.id, firstname: firstname, lastname: lastname, facebook_id: profile.id, usertype: 'customer', password: password })
+//                                 .then(user => {
+//                                     // alertMessage(res, 'success', user.username + ' Please proceed to login', 'fas fa-sign-in-alt', true);
+//                                     // res.redirect('customer/homecust');
+//                                     done(null, user);
+//                                 })
+//                                 .catch(err => console.log(err));
+//                         })
+//                     });
+//                 }
+//             });
+//     }
+// ));
 
 
 

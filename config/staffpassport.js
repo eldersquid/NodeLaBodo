@@ -11,7 +11,7 @@ function localStrategy(passport) {
         StaffModel.findOne({ where: { staff_email: staff_email } })
             .then(staff => {
                 if (!staff) {
-                    return done(null, false, { message: 'No User Found' });
+                    return done(null, false, { text: 'No User Found' });
                 }
                 // Match password
                 bcrypt.compare(staff_password, staff.staff_password, (err, isMatch) => {

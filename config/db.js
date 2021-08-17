@@ -3,6 +3,4 @@ module.exports = {
     database: 'hotelbodo',
     username: 'bodo',
     password: 'bodo'
-    }
-    
-    
+}

@@ -6,7 +6,7 @@
     style="background-image: url('img/HotelLaBodo.jpeg');"
   ></div>
   <div class="contents order-2 order-md-1">
-
+    {{>_errors}}
     <div class="container">
       <div class="row align-items-center justify-content-center">
         <div class="col-md-7">
@@ -42,7 +42,7 @@
                 <div class="control__indicator"></div>
               </label>
               </label>
-                <span class="ml-auto"><a href="/app.js" class="forgot-pass">Forgot Password</a></span>
+                <span class="ml-auto"><a href="/app.js" class="forgot-pass" data-toggle="modal" data-target="#exampleModal">Forgot Password</a></span>
                 
             </div>
 
@@ -53,6 +53,35 @@
             />
 
           </form>
+<form>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Input Email</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>Enter Email</label>
+        <input
+                type="text"
+                class="form-control"
+                placeholder="xyz@gmail.com"
+                id="email"
+                name="email"
+              />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" onclick="" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
           
           
 
@@ -63,15 +92,20 @@
 
           
                       <div class="card-body">
-                        <a class="btn btn-block btn-social btn-google" href="/googleauth/google" role="button">
-                          <i class="fab fa-google"></i>
-                                Login with Google
+                        <p class="social-media d-flex justify-content-center">
+                        <a class="social-icon google d-flex align-items-center justify-content-center" href="/googleauth/google" role="button">
+                        <span class="fa fa-google"></span>
+                          
                         </a>
-                                                    <a class="btn btn-block btn-social btn-facebook"
+                        </p>
+                        <p class="social-media d-flex justify-content-center">
+                                                    <a class="social-icon facebook d-flex align-items-center justify-content-center"
                                                         href="/fbauth/facebook" role="button">
-                                                        <i class="fab fa-facebook"></i>
-                                                        Login with Facebook
+                                                        
+                                                        <span class="fa fa-facebook"></span>
+                                                        
                                                     </a>
+                                                    </p>
                                                 </div>
                                             </div>
       </div>                        

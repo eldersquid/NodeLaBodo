@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+{{!-- Positioning of CSS and JS is very important. Must be organized!!!!!! CSS in header, JS in body --}}
+{{!-- JQuery first --> Popper.js --> Bootstrap JS --}}
+{{!-- Don't just place the link or script anywhere, if there are similar links/scripts, just keep 1 or so --}}
+{{!-- There are alot of links that changes the whole entire theme, so put it at the position (top to bottom, from least priority to most priority) which you wish to have --}}
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	{{!-- it's best if this part of the code is below every css added as it will override the other css so it will work. but if you put this above every css, there is a possibility it will be overwritten by the rest --}}
+	{{!-- this two position matters has if the headermenu is below the signupvender thing it will affect the css for the signup so choose wisely --}}
+	{{!-- navbar --}}
+	{{!-- ----------------------------------------------------------------------- --}}
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+
+
+	<title>Hotel La Bodo - {{title}} </title>
+	{{{head}}}
+</head>
+
+<body>
+	{{{body}}}
+	
+	<script src="signupvendor/js/jquery.min.js"></script>
+	<script src="signupvendor/js/popper.js"></script>
+	<script src="signupvendor/js/bootstrap.min.js"></script>
+	<script src="signupvendor/js/main.js"></script>
+
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/main.js"></script>
+</body>
+
+</html>

@@ -5,12 +5,15 @@ const fastJson = require("fast-json-stringify");
 const bodyParser = require("body-parser");
 const Reservation = require("../models/Reservation");
 const SignUpModel = require("../models/Signup");
-var multer = require("multer");
+const multer = require("multer");
 var bcrypt = require('bcryptjs');
 // const Signup = require('../models/Signup');
 const StaffModel = require('../models/Staff')
 const alertMessage = require('../helpers/messenger');
-
+const regex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+// const Regex = require("regex");
+const Regex = require("regex");
+const validator = require("email-validator");
 
 router.get("/", (req, res) => {
     const title = "Home Page";
@@ -73,13 +76,41 @@ router.post("/login/signup", (req, res) => {
     let { name, username, email, phone_num, password, password2, package_deal } = req.body;
     let errors = [];
     // validation
+    if (!/^[0-9]{8}$/.test(req.body.phone_num)) {
+        errors.push({
+            text: 'Phone Number have to consist of 8 digits.'
+        });
+    }
+
+    if (validator.validate(req.body.email) == false) {
+        console.log("error 3");
+        errors.push({
+            text: 'Please enter a valid email address'
+        });
+    }
+
+    if (req.body.password.length < 8) {
+        console.log("error 2");
+        errors.push({
+            text: 'Password must be at least 8 characters'
+        });
+    }
+
+    // if (req.body.password != req.body.password2) {
+    //     console.log("error 1");
+    //     errors.push({
+    //         text: 'Passwords do not match'
+    //     });
+    // }
+
     if (password.length < 4) {
-        errors.push({ text: "password must be 4 characters" });
+        errors.push({ text: "password must be more than 4 characters" });
     }
     // checking if there are errors or no errors
     if (errors.length > 0) {
         console.log("There are errors in the form");
         res.render("login/signup", {
+            layout: "main",
             errors,
             name,
             username,
@@ -100,6 +131,7 @@ router.post("/login/signup", (req, res) => {
                 if (signup) {
                     console.log("The user has already been taken.");
                     res.render("login/signup", {
+                        layout: "main",
                         error: signup.email + " already registered",
                         name,
                         username,
@@ -148,7 +180,7 @@ router.post('/login', (req, res, next) => {
     console.log("Trying to authenticate");
     passport.authenticate('local', {
         successRedirect: '/rooms/apartment', // Route to /video/listVideos URL
-        failureRedirect: '/', // Route to /login URL
+        failureRedirect: '/mainlogin', // Route to /login URL
         failureFlash: true,
         //signupProperty: req.signup
         /* Setting the failureFlash option to true instructs Passport to flash an error message using the
@@ -159,7 +191,7 @@ router.post('/login', (req, res, next) => {
 
 // Staff Signup
 router.get("/staffsignup", (req, res) => {
-    res.render("login/staffsignup"); //
+    res.render("login/staffsignup", { layout: "staffSU" }); //
 });
 
 router.post('/login/staffsignup', (req, res) => {
@@ -176,6 +208,7 @@ router.post('/login/staffsignup', (req, res) => {
     }
     if (errors.length > 0) {
         res.render('login/staffsignup', {
+            layout: "staffSU",
             errors,
             staff_name,
             staff_ID,
@@ -200,6 +233,7 @@ router.post('/login/staffsignup', (req, res) => {
                     // If user is found, that means email has already been
                     // registered
                     res.render('login/staffsignup', {
+                        layout: "staffSU",
                         error: staff.email + ' already registered',
                         staff_name,
                         staff_ID,
@@ -236,7 +270,7 @@ router.post('/login/staffsignup', (req, res) => {
 // Staff Login
 
 router.get('/stafflogin', (req, res) => {
-    res.render('login/stafflogin') // 
+    res.render('login/stafflogin', { layout: "staffLS" }) // 
 });
 router.post('/login/stafflogin', (req, res, next) => {
     passport.authenticate('local', {

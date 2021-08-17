@@ -1,22 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
+{{!-- Positioning of CSS and JS is very important. Must be organized!!!!!! CSS in header, JS in body --}}
+{{!-- JQuery first --> Popper.js --> Bootstrap JS --}}
+{{!-- Don't just place the link or script anywhere, if there are similar links/scripts, just keep 1 or so --}}
+{{!-- There are alot of links that changes the whole entire theme, so put it at the position (top to bottom, from least priority to most priority) which you wish to have --}}
+
 <head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <title>Hotel La Bodo Server - {{title}}</title>
-    {{{head}}}
+
+
+
+
+
+	{{!-- please know your group's part, some of the links/scripts are not here, so if there are links/scripts that they really need, please discuss and check the positioning as it might override others or get overwritten --}}
+
+	{{!-- not sure what this for but Gerald added it --}}
+	<link rel="stylesheet" href="/styles/owl.transitions.css">
+	<link rel="stylesheet" href="/styles/responsive.css">
+	<link rel="stylesheet" href="/styles/flex-slider.css">
+	<link rel="stylesheet" href="/styles/ionicons.min.css" />
+	<link rel="stylesheet" href="/styles/Addcart.css">
+	{{!-- this link changes the theme so becareful --}}
+	<link rel="stylesheet" href="/styles/templatemo-klassy-cafe.css">
+	{{!-- ========= --}}
+	{{!-- DineV2 CSS --}}
+	{{!-- this link changes the whole entire theme as well --}}
+	{{!-- <link rel="stylesheet" href="/teststuff/css/hero-slider.css"> --}}
+	<link rel="stylesheet" href="/teststuff/css/owl-carousel.css">
+	{{!-- --------------------------------------------------------------- --}}
+
+
+
+	{{!-- it's best if this part of the code is below every css added as it will override the other css so it will work. but if you put this above every css, there is a possibility it will be overwritten by the rest --}}
+	{{!-- this two position matters has if the headermenu is below the signupvender thing it will affect the css for the signup so choose wisely --}}
+	{{!-- navbar --}}
+	<link rel="stylesheet" href="/css/headermenu.css"> {{!-- have error in this if i add but idk why lol--}}
+	{{!-- signup css --}}
+	<link rel="stylesheet" href="signupvendor/css/style.css">
+	{{!-- ----------------------------------------------------------------------- --}}
+
+
+
+	{{!-- Profile --}}
+	<link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css' rel='stylesheet'>
+	{{!-- ---------------------------------------------- --}}
+
+
+
+
+
+
+	{{!-- Main Login --}}
+	<link rel="stylesheet" href="fonts/icomoon/stylelogin.css">
+	<link rel="stylesheet" href="styles/owl.carousellogin.min.css">
+	<link rel="stylesheet" href="styles/bootstraplogin.min.css">
+	<link rel="stylesheet" href="styles/stylelogin.css">
+	{{!-- ----------------------------------------------- --}}
+
+	<title>Hotel La Bodo - {{title}} </title>
+	{{{head}}}
 </head>
 
 <body>
-    {{{body}}}
+	{{>_navbar}}
+	{{{body}}}
+	{{!-- this is for the main navbar --}}
+	<script src="/js/headermenu.js"></script>
 
-
+	 
+	<script src="signupvendor/js/jquery.min.js"></script>
+	<script src="signupvendor/js/popper.js"></script>
+	<script src="signupvendor/js/bootstrap.min.js"></script>
+	<script src="signupvendor/js/main.js"></script>
 </body>
 
 </html>

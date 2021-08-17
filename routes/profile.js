@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const alertMessage = require('../helpers/messenger.js');
 const Signup = require('../models/Signup');
-
+const profilePicUpload = require('../helpers/profileUpload');
 
 // Display the Profile
 router.get("/profile/:id", (req, res) => {
@@ -22,6 +22,25 @@ router.get("/profile/:id", (req, res) => {
             });
         })
         .catch((err) => console.log(err)); // To catch no video ID
+});
+
+router.post('/profilePicUpload', (req, res) => {
+    console.log("upload profile pic");
+    profilePicUpload(req, res, async(err) => {
+        console.log("printing req.file.filename")
+        console.log(req.file)
+        if (err) {
+            res.json({ err: err });
+        } else {
+            if (req.file === undefined) {
+                console.log("the file is undefined.");
+                res.json({ err: err });
+            } else {
+                res.json({ file: `${req.file.filename}`, path: '/profile/' + `${req.file.filename}` });
+            }
+        }
+    });
+
 });
 
 // Edit
