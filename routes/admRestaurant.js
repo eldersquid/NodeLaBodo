@@ -11,6 +11,7 @@ const path = require('path');
 // Required for file upload
 // const fs = require('fs');
 // const upload = require('../helpers/imageUpload');
+
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis');
 const FoodGallery = require('../models/FoodGallery');
@@ -19,9 +20,9 @@ const { body, validationResult } = require('express-validator');
 
 
 const CLIENT_ID = '188467906173-a5cq8hviitnaanin3cmag7el6kkqrcru.apps.googleusercontent.com'
-const CLIENT_SECRET = '9bCtMjwKlgz9oAd9H4kPS8pF'
+const CLIENT_SECRET = 'uJwKO7Pc693-lYfqgWNbIVNB'
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//043zEL3Pauc7vCgYIARAAGAQSNwF-L9IrjZn7SQZi6rODY4tf1Pk33-sx9_tuhG3d4TNnFMxKLwIw_EdkRMbRDp7XxlHz_oQOYVc';
+const REFRESH_TOKEN = '1//04Tt7yjfGWpdQCgYIARAAGAQSNwF-L9Ir_wKE_gHmQitcazwILvpG0TVhGDTssYZSZUOjozi05MfSKJrBjCcw4VE32AgEiL3cfcs';
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
