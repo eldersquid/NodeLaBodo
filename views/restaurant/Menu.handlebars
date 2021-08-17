@@ -29,7 +29,7 @@
                     <li>???????</li>
                 </ul>
                 <div>You have <span class="total-count">X</span> items in your cart</div>
-                <div>Total Cart:$<span class="total-cart"></span></div>
+                <div>Total Cart:$<span class="total-cart" id ="totalPrice"name="totalCart"></span></div>
             </div>
             <div class="modal-footer">
                 <button class="clear-cart btn btn-danger">Clear Cart</button>
@@ -81,3 +81,26 @@
 <br>
 <br>
 <script src="/teststuff/js/Addtocart.js"></script>
+
+<script>
+    function getPaynow() {
+        const id = document.getElementById('id');
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const amount = document.getElementById('amount');
+        const currency = document.getElementById('currency');
+        const status = document.getElementById('status');
+        const purpose = document.getElementById('purpose');
+        const reference_number = document.getElementById('reference_number');
+        const payment_methods = document.getElementById('payment_methods');
+        fetch('https://api.sandbox.hit-pay.com/v1/payment-requests' + 'd4b3a6ec6acb9c243071571fcca2be3e25850829dbd1499529bd4f9467e5aba9')
+            .then((res) => {
+                return res.json();
+            }).then((data) => {
+                console.log(data);
+            })
+    }
+
+    
+</script>
