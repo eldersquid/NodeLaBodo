@@ -450,45 +450,35 @@ router.get('/createMenu', (req, res) => {
 
 // Create Menu
 router.post('/createMenu', (req, res) => {
-    let errors =[];
+    let errors = [];
     let cardPhoto_data = req.body.trueMenuPicture;
     let cardName = req.body.cardName;
     let cardPrice = req.body.cardPrice;
-    console.log("THis photo data",cardPhoto_data)
+    console.log("THis photo data", cardPhoto_data)
 
     FoodCart.findOne({
         where: {
-            // id: req.params.id
+            cardName: cardName
         }
     }).then((foodcart) => {
         console.log(foodcart);
-        // var dict = foodcart;
-        // var list = [],
 
-        // for (var key in dict){
-        //     if(dict.hasOwnProperty(key)){
-        //         list.push([key, dict[key]]);
-        //     }
-        // };
-
-        // console.log(list);
-
-        if (req.body.cardName == !req.body.cardName){
+        if (foodcart) {
             alertMessage(res, 'danger', 'Item already Existed. ', 'fas fa-sign-in-alt', true);
             errors.push(1);
         }
-        if (errors.length > 0){
+        if (errors.length > 0) {
             console.log("It went hereee")
             res.render('admRestaurant/createMenu', {
                 layout: "admin",
             });
-        }else if (errors.length == 0){
+        } else if (errors.length == 0) {
             FoodCart.create({
-                cardPhoto:cardPhoto_data,
-                cardName:cardName,
-                cardPrice:cardPrice
+                cardPhoto: cardPhoto_data,
+                cardName: cardName,
+                cardPrice: cardPrice
             }).then((foodcart) => {
-                alertMessage(res, 'success', ' ' + req.body.cardName + ' with the price of' + ' '+ '$' + req.body.cardPrice + ' ' + 'is added.', 'fas fa-sign-in-alt', true)
+                alertMessage(res, 'success', ' ' + req.body.cardName + ' with the price of' + ' ' + '$' + req.body.cardPrice + ' ' + 'is added.', 'fas fa-sign-in-alt', true)
                 res.redirect('/admRestaurant/viewFoodCart');
             }).catch(err => console.log(err))
         }
@@ -552,18 +542,16 @@ router.get("/updateMenu/:id", (req, res) => {
     const title = "Update Menu";
     FoodCart.findOne({
         where: {
-            id: req.params.id,
+            id: req.params.id
         },
         raw: true
-    })
-        .then((foodcart) => {
-            res.render("admRestaurant/updateMenu", {
-                layout: "admin",
-                foodcart: foodcart,
-                title: title
-            });
-        })
-        .catch((err) => console.log(err)); // To catch no video ID
+    }).then((foodcart) => {
+        res.render("admRestaurant/updateMenu", {
+            layout: "admin",
+            foodcart: foodcart,
+            title: title
+        });
+    }).catch((err) => console.log(err)); // To catch no video ID
 });
 
 router.put('/updatedMenu/:id', (req, res) => {
@@ -572,7 +560,6 @@ router.put('/updatedMenu/:id', (req, res) => {
     let cardPrice = req.body.cardPrice
     console.log("THIS IS CARD PHOTO :")
     console.log(cardPhoto);
-
 
     FoodCart.update({
         cardPhoto: cardPhoto,
