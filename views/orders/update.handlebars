@@ -1,26 +1,26 @@
 <div class="container-fluid">
     <h1 class="display-5">Update Order Form</h1>
 
-    <form action="/order/update/{{order.order_id}}?_method=PUT" method="POST" id="form">
+    <form action="/orders/update/{{orders.orders_id}}?_method=PUT" method="POST" id="form">
         <div class="form-group">
             <label for="supplier">Supplier</label>
-            <input id="supplier" type="text" class="form-control" value="{{order.supplier}}" name="supplier" disabled>
+            <input id="supplier" type="text" class="form-control" value="{{orders.supplier}}" name="supplier" readonly>
         </div>
 
         <div class="form-group">
             <label for="item_name">Item Name</label>
-            <input id="item_name" type="text" class="form-control" name="item_name" value="{{order.item_name}}" disabled>
+            <input id="item_name" type="text" class="form-control" name="item_name" value="{{orders.item_name}}" readonly>
         </div>
 
         <div class="form-group">
             <label for="quantity">Quantity</label>
-            <input class="form-control" id="quantity" name="quantity" required type="number" value="{{order.quantity}}">
+            <input class="form-control" id="quantity" name="quantity" required type="number" value="{{orders.quantity}}">
         </div>
 
         <div id="prof">
             <div class="form-group">
                 <label for="remarks">Remarks</label>
-                <textarea class="form-control" id="remarks" name="remarks" value="{{order.remarks}}" disabled></textarea>
+                <textarea class="form-control" id="remarks" name="remarks" value="{{orders.remarks}}" readonly></textarea>
             </div>
         </div>
 
