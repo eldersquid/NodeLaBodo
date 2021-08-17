@@ -153,21 +153,6 @@ router.get('/bookingList', (req, res) => {
         .catch(err => console.log(err));
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Create reservation 
 router.post('/createReservation', [
     body('cust_fname').not().isEmpty().isAlpha().trim().escape().withMessage("First name is Invalid"),
