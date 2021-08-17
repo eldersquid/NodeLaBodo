@@ -43,7 +43,14 @@
 <!-- ***** Reservation Us Area Starts ***** -->
 <section class="section" id="reservation">
     <div class="container">
-        {{>_errors}}
+        {{#if error}}
+        <div class="alert alert-danger">{{error}}</div>
+        {{/if}}
+
+        {{#each errors}}
+        <div class="alert alert-danger">{{text}}</div>
+        {{else}}
+        {{/each}}
         <div class="row">
             <div class="col-lg-6 align-self-center">
                 <div class="left-text-content">
@@ -283,7 +290,17 @@
                 </div>
             </div>
         </div>
-        {{>_errors}}
+        {{#if error2}}
+        <div class="alert alert-danger">{{error2}}</div>
+        {{/if}}
+
+        {{!--
+        Loop through each text in {{errors}} array to display errors
+        --}}
+        {{#each errors2}}
+        <div class="alert alert-danger">{{text2}}</div>
+        {{else}}
+        {{/each}}
     </div>
 </section>
 <!-- End Contact section -->
@@ -429,7 +446,8 @@
 
 </script>
 
-{{!-- <script>
+{{!--
+<script>
     $("#modalsubmit").click(function (e) {
         e.preventDefault();
         var fname = $("#cust_fname").val();
@@ -452,7 +470,8 @@
 
 </script> --}}
 
-{{!-- <script>
+{{!--
+<script>
     $("#contactSubmit").click(function (e) {
         e.preventDefault();
 

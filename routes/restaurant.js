@@ -42,131 +42,116 @@ router.get("/Menu", (req, res) => {
         .catch((err) => console.log(err));
 });
 
-  router.post('/payPal', (req,res) => {
-	let totalPrice = req.body.totalPrice;
+router.post('/payPal', (req, res) => {
+    let totalPrice = req.body.totalPrice;
     console.log(totalPrice);
-			const create_payment_json = {
-				"intent": "sale",
-				"payer": {
-					"payment_method": "paypal"
-				},
-				"redirect_urls": {
-					"return_url": "http://localhost:5000/restaurant/paySuccess/" + totalPrice,
-					"cancel_url": "http://localhost:5000/restaurant/"
-				},
-				"transactions": [{
-					"item_list": {
-						"items": [{
-							"name": "Food Delivery",
-							"sku": totalPrice,
-							"price": totalPrice,
-							"currency": "SGD",
-							"quantity": 1
-						}]
-					},
-					"amount": {
-						"currency": "SGD",
-						"total": totalPrice
-					},
-					"description": "Hotel Booking Payment using PayPal"
-				}]
-			};
-			paypal.payment.create(create_payment_json, function (error, payment) {
-				if (error) {
-					throw error;
-				} else {
-					for (var i = 0; i < payment.links.length;i++) {
-						if (payment.links[i].rel === "approval_url"){
-							console.log("Create Payment Response");
-							console.log(payment);
-                            var payment_url = payment.links[i].href;
-                            res.end(JSON.stringify(payment_url));
-                            
-                            
-							// res.redirect(payment.links[i].href);
-							
-							
-							
+    const create_payment_json = {
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "redirect_urls": {
+            "return_url": "http://localhost:5000/restaurant/paySuccess/" + totalPrice,
+            "cancel_url": "http://localhost:5000/restaurant/"
+        },
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": "Food Delivery",
+                    "sku": totalPrice,
+                    "price": totalPrice,
+                    "currency": "SGD",
+                    "quantity": 1
+                }]
+            },
+            "amount": {
+                "currency": "SGD",
+                "total": totalPrice
+            },
+            "description": "Hotel Booking Payment using PayPal"
+        }]
+    };
+    paypal.payment.create(create_payment_json, function (error, payment) {
+        if (error) {
+            throw error;
+        } else {
+            for (var i = 0; i < payment.links.length; i++) {
+                if (payment.links[i].rel === "approval_url") {
+                    console.log("Create Payment Response");
+                    console.log(payment);
+                    var payment_url = payment.links[i].href;
+                    res.end(JSON.stringify(payment_url));
+
+
+                    // res.redirect(payment.links[i].href);
 
 
 
-						}
 
 
 
-					}
-					
-					
-					
-				}
-			});
-
-
-		
-	});
+                }
+            }
+        }
+    });
+});
 
 router.get('/paySuccess/:pay', (req, res) => {
-	const title = 'Success Payment';
+    const title = 'Success Payment';
     let totalPrice = req.params.pay;
-	const payerId = req.query.PayerID;
-	const paymentId = req.query.paymentId;
-		const execute_payment_json = {
-		"payer_id": payerId,
-		"transactions": [{
-			"amount": {
-				"currency": "SGD",
-				"total": totalPrice
-			}
-		}]
-	};
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
+    const execute_payment_json = {
+        "payer_id": payerId,
+        "transactions": [{
+            "amount": {
+                "currency": "SGD",
+                "total": totalPrice
+            }
+        }]
+    };
 
-	paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
-		if (error) {
-			console.log(error.response);
-			throw error;
-		} else {
-			console.log("Get Payment Response");
-			console.log(JSON.stringify(payment));
-			res.redirect('/restaurant/success');
-		}
-	});
-
-	
-	
-
-
-
+    paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+        if (error) {
+            console.log(error.response);
+            throw error;
+        } else {
+            console.log("Get Payment Response");
+            console.log(JSON.stringify(payment));
+            res.redirect('/restaurant/success');
+        }
+    });
 });
 
 router.get('/success', (req, res) => {
-	const title = 'Success!';
-	res.render('restaurant/success', {
-		title: title,
-		layout : "blank",
-	    })
+    const title = 'Success!';
+    res.render('restaurant/success', {
+        title: title,
+        layout: "blank",
+    })
 });
 
 router.get('/bookingList', (req, res) => {
-	const title = "Room Booking List";
-	
-	Room.findAll({
-	
-	order: [
-	['id', 'ASC']
-	],
-	raw: true
-	})
-	.then((room) => {
-	
-	// pass object to listVideos.handlebar
-	res.render('rooms/bookingList', {
-	layout : "admin",
-	title : title,
-	room: room
-	});
-	})
-	.catch(err => console.log(err));
-	});
+    const title = "Room Booking List";
+
+    Room.findAll({
+
+        order: [
+            ['id', 'ASC']
+        ],
+        raw: true
+    })
+        .then((room) => {
+
+            // pass object to listVideos.handlebar
+            res.render('rooms/bookingList', {
+                layout: "admin",
+                title: title,
+                room: room
+            });
+        })
+        .catch(err => console.log(err));
+});
 
 
 
@@ -259,7 +244,7 @@ router.post('/createContact', [
     body('contact_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
 ], (req, res) => {
     console.log("retrieving contact informationnn")
-    let errors = [];
+    let errors2 = [];
     let contact_name = req.body.contact_name;
     let contact_email = req.body.contact_email;
     let contact_subject = req.body.contact_subject;
@@ -268,13 +253,13 @@ router.post('/createContact', [
 
     if (!validatorErrors.isEmpty()) {
         console.log("Errors creating contact")
-        validatorErrors.array().forEach(error => {
-            console.log(error);
-            errors.push({ text: error.msg })
+        validatorErrors.array().forEach(error2 => {
+            console.log(error2);
+            errors2.push({ text2: error2.msg, location: 'contact2' })
         });
         res.render('restaurant/DineV2', {
             layout: "blank",
-            errors,
+            errors2,
             contact_name,
             contact_email,
             contact_subject,
@@ -288,6 +273,7 @@ router.post('/createContact', [
             contact_subject,
             contact_message
         }).then((contact) => {
+            // alertMessage(res, 'success', 'Test Error', 'fas fa-exclamation-circle', true);
             res.redirect('/restaurant/DineV2');
         }).catch(err => console.log(err));
     }
