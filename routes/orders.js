@@ -96,13 +96,36 @@ router.get('/supplierView', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/showCreate', async (req, res) => {
+router.get('/showCreate1', async (req, res) => {
+    const title = 'Orders';
+
+    const getSupplierData = () => {
+        const supplier = Supplier.findAll({
+            where: {
+                // adminId: req.admin.id
+            },
+            order: [
+                ['supplier_id', 'ASC']
+            ],
+            raw: true
+        })
+        return supplier
+    };
+
+    res.render('orders/create1', {
+        layout: "admin",
+        title: title,
+        supplier: await getSupplierData()
+    });
+});
+
+router.post('/showCreate2', async (req, res) => {
     const title = 'Orders';
 
     const getInventoryData = () => {
         const inventory = Inventory.findAll({
             where: {
-                // adminId: req.admin.id
+                supplier: req.body.supplier
             },
             order: [
                 ['inventory_id', 'ASC']
@@ -112,9 +135,10 @@ router.get('/showCreate', async (req, res) => {
         return inventory
     };
 
-    res.render('orders/create', {
+    res.render('orders/create2', {
         layout: "admin",
         title: title,
+        supplier: req.body.supplier,
         inventory: await getInventoryData()
     });
 });
@@ -126,14 +150,18 @@ router.post('/create', async (req, res) => {
     let remarks = req.body.remarks;
     let status = req.body.status;
 
-    let suppliers = await Supplier.findAll({
+    console.log(" ")
+    console.log(supplier)
+    console.log(" ")
+
+    let find_email = await Supplier.findAll({
         where: {
             company_name: req.body.supplier
         },
         attributes: ["email"]
     });
 
-    let email = JSON.stringify(suppliers).split("\"")
+    let email = JSON.stringify(find_email).split("\"")
     
 
     Orders.create({
@@ -147,7 +175,7 @@ router.post('/create', async (req, res) => {
             .catch(error => console.log(error.message));
         alertMessage(res, 'success', ' Order has been sent successfully.', 'fas fa-sign-in-alt', true);
         res.redirect('/orders/view');
-    }).catch(err => console.log(err));
+    })
 });
 
 router.get('/showUpdate/:orders_id', (req, res) => {

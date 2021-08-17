@@ -84,6 +84,10 @@ const inventoryRoute = require('./routes/inventory');
 
 const ordersRoute = require('./routes/orders');
 
+const facilitiesRoute = require('./routes/facilities');
+
+const admFacilitiesRoute = require('./routes/admFacilities');
+
 const ChatBotRoute = require('./routes/ChatBot');
 
 const adminDB = require('./config/DBConnection');
@@ -186,9 +190,14 @@ app.use(session({
 // Two flash messenging libraries - Flash (connect-flash) and Flash Messenger
 app.use(flash());
 app.use(FlashMessenger.middleware);
-const authenticate = require('./config/passport');
 const SendmailTransport = require('nodemailer/lib/sendmail-transport');
+const authenticate = require('./config/passport');
+const supplier_authenticate = require('./config/supplierpassport');
+const staff_authenticate = require('./config/supplierpassport');
 authenticate.localStrategy(passport);
+supplier_authenticate.localStrategy(passport);
+staff_authenticate.localStrategy(passport);
+
 
 
 
@@ -233,6 +242,10 @@ app.use('/inventory', inventoryRoute);
 app.use('/orders', ordersRoute);
 
 app.use('/profile', SignupRoute);
+
+app.use('/facilities', facilitiesRoute);
+
+app.use('/admFacilities', admFacilitiesRoute);
 
 // 2. roomsRoute is declared to point to routes/rooms.js
 // This route maps the rooms URL to any path defined in rooms.js

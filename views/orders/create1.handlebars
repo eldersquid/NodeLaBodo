@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <h1 class="display-5">Create New Order Form</h1>
+
+    <form method="POST" action="/orders/showCreate2" id="form">
+        <div class="form-group">
+            <label for="supplier">Supplier</label>
+            <select class="form-control" id="supplier" name="supplier" onchange="elimSupplier(this)" required>
+                <option value="none" selected disabled hidden></option>
+                {{#if supplier}}
+                {{#each supplier}}
+                <option value="{{company_name}}" style="text-transform: capitalize;">{{company_name}}</option>
+                {{/each}}
+                {{/if}}
+            </select>
+        </div>
+        <button type="submit" value="Submit" id="submit-btn" data-toggle="modal" data-target="#modalReply"
+            class="btn btn-primary">Submit</button>
+    </form>
+</div>
