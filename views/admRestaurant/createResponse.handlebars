@@ -6,19 +6,22 @@
     <form method="POST" action="/admRestaurant/createResponse/{{Contact.id}}" id="response">
         <div class="form-group">
             <label for="toEmail">To: </label>
-            <input class="form-control" id="toEmail" name="toEmail"  type="email" value="{{contact.contact_email}}" readonly>
+            <input class="form-control" id="toEmail" name="toEmail" type="email" value="{{contact.contact_email}}"
+                readonly>
         </div>
         <div class="form-group" hidden>
 
             <label for="fromEmail">From: </label>
-            <input class="form-control" id="fromEmail" name="fromEmail" required type="email" value="Hotel.La.Bodo@gmail.com">
+            <input class="form-control" id="fromEmail" name="fromEmail" required type="email"
+                value="Hotel.La.Bodo@gmail.com">
 
 
         </div>
         <div class="form-group">
 
             <label for="toSubject">Subject: </label>
-            <input class="form-control" id="toSubject" name="toSubject" required type="text" value="{{contact.contact_subject}}" readonly>
+            <input class="form-control" id="toSubject" name="toSubject" required type="text"
+                value="{{contact.contact_subject}}" readonly>
 
 
         </div>
@@ -26,8 +29,6 @@
 
             <label for="toMessage">Message: </label>
             <textarea class="form-control" id="toMessage" name="toMessage" required type="" value=""></textarea>
-
-
             <button type="submit" value="Submit" id="replySubmit" data-toggle="modal" data-target="#modalReply"
                 class="btn btn-primary">
                 Send
@@ -35,13 +36,13 @@
     </form>
 </div>
 
-<script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
+{{!-- <script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
 <script>
     $("#replySubmit").click(function (e) {
         e.preventDefault();
 
-       
+
         Swal.fire(
             'Submitted!',
             'Respone Recieved!',
@@ -51,4 +52,4 @@
                 }
             });
     });
-</script>
+</script> --}}
