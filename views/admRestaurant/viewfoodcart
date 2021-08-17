@@ -1,0 +1,196 @@
+{{!--
+<link rel="stylesheet" href="/styles/templatemo-klassy-cafe.css"> --}}
+<link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
+{{!-- <link rel="stylesheet" href="/teststuff/css/Addcart.css" /> --}}
+{{!--
+<link href="/teststuff/style.css" rel="stylesheet"> --}}
+
+<div class="container-fluid">
+    <h1 style="font-size = 3.5rem;">View Menu</h1>
+    <hr>
+    <div class="card-body">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMenu" name="addMenu">Add Food
+            Items</button>
+    </div>
+    <!-- Start Menu -->
+    <section>
+        <div class="row d-flex " style="width: 1000px;">
+            {{#if foodcart}}
+            {{#each foodcart}}
+            <div class="col-sm-4 mt-3">
+                <div class="card" style="width: 20rem;">
+                    <div class="col">
+                        <img class="card-img-top" src="{{cardPhoto}}" alt="Card image cap">
+                        <div class="card-block">
+                            <h4 class="card-title">{{cardName}}</h4>
+                            <p class="card-text">Price: ${{cardPrice}}</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#uploadMenuPic_{{id}}" name="uploadMenuPic">Edit</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#deleteMenu_{{id}}" name="deleteMenu"
+                            value="deleteMenu">Delete</button>
+                    </div>
+
+                    <!-- ADD -->
+                    <form class="block-register" action="/admRestaurant/UploadMenu" method="POST">
+                        <div class="modal fade" id="addMenu" tabindex="-1" role="dialog" aria-labelledby="addMenulabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addMenulabel">Add Menu</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group form-row">
+                                            <div class="col-md-6">
+                                                <label>Upload your image here</label>
+                                                <br>
+                                                <img id='pictureThumbnail1' name="pictureThumbnail1"
+                                                    src="/menuPictures/9.jpg" width="240" height="135" class="border">
+                                                <div style="position:relative; "></div>
+                                                <input type="file" accept="image/png,image/jpeg,image/jpg"
+                                                    name="MenuUpload" id="MenuUpload">
+                                                <input type="hidden" id='trueMenuPicture' name="trueMenuPicture">
+                                                <div class="font-weight-bold text-danger small" id="picErr"
+                                                    style`="display:none">
+                                                </div>
+                                                <form action="/admRestaurant/UploadMenu">
+                                                    <fieldset>
+                                                        <input name="cardName" type="text" id="cardName"
+                                                            placeholder="cardName*" required />
+                                                    </fieldset>
+                                                    <fieldset>
+                                                        <input name="cardPrice" type="text" id="cardPrice"
+                                                            placeholder="cardPrice*" required />
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Upload Image</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Update -->
+                    <div class="modal fade" id="uploadMenuPic_{{id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="addMenulabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addMenulabel">Update Menu</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label>Update Menu image here</label>
+                                            <br>
+                                            <img id='existPic' name="existPic" src="{{cardPhoto}}" width="240"
+                                                height="135" class="border">
+                                            <div style="position:relative; "></div>
+                                            <input type="file" accept="image/png,image/jpeg,image/jpg" name="picUpload"
+                                                id="picUpload">
+                                            <input type="hidden" id='trueMenuPicture' name="trueMenuPicture">
+                                            <div class="font-weight-bold text-danger small" id="picErr"
+                                                style`="display:none">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <a href="/admRestaurant/updateFoodPic/{{id}}" class="btn btn-primary">Upload
+                                        Image</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- DELETE -->
+                    <div class="modal fade" id="deleteMenu_{{id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Do you really want to delete this Picture?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <a href="/admRestaurant/deleteMenu/{{id}}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </section>
+    {{else}}
+    <h3>~ No Menu ~</h3>
+    {{/if}}
+</div>
+<!-- End Gallery -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $('#MenuUpload').on('change', function () {
+        alert("hello");
+        var file = $("#MenuUpload")[0].files[0];
+        var formdata = new FormData();
+        formdata.append('MenuUpload', file);
+        console.log("here")
+        //alert(file.name)
+        //document.getElementById("imgFilename") = file.name;
+        //$('#imgFilename') = "XCoder";
+        //$('#imgFilename').attr('value', file.name);
+
+        $.ajax({
+            url: '/admRestaurant/menuPic',
+            data: formdata,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            'success': (data) => {
+                console.log(data);
+                console.log(data.path);
+                $('#pictureThumbnail').attr('src', data.path);
+                $('#existPic').attr('src', data.path);
+                $('#trueMenuPicture').attr('value', data.path);
+
+                if (data.err) {
+                    $('#picErr').show();
+                    $('#picErr').text(data.err.message);
+                }
+                else {
+                    $('#picErr').hide();
+                }
+            },
+            error: function (xhr, errorType, exception) {
+                alert("Error", errorType);
+            }
+
+
+        });
+    });
+</script>

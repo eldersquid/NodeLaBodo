@@ -14,9 +14,6 @@ const Inventory = db.define('inventory', {
     supplier: {
         type: Sequelize.STRING
     },
-    product_name: {
-        type: Sequelize.STRING
-    },
     quantity: {
         type: Sequelize.INTEGER
     },

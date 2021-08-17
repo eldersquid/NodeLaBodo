@@ -161,17 +161,20 @@ var shoppingCart = (function () {
 
 $(document).ready(function () {
   $("#pay_now").on("click", function () {
-    var js_data = JSON.stringify(cart);
+    var string_data = {"totalPrice" : document.getElementById("totalPrice").textContent};
+    var js_data = JSON.stringify(string_data);
+    console.log(js_data);
     $.ajax({
-      url: '/payNowPls',
+      url: '/restaurant/payPal',
       type: 'POST',
       contentType: 'application/json',
       dataType: 'json',
       data: js_data
     }).done(function (result) {
       console.log(result);
-      window.location.href = "/cart_confirmation";
-      $("#data").html(result);
+      window.location = result;
+      
+      
     }).fail(function (jqXHR, textStatus, errorThrown) {
       console.log("fail: ", textStatus, errorThrown);
     });

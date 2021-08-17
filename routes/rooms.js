@@ -7,6 +7,7 @@ const Supplier = require('../models/Supplier');
 const Inventory = require('../models/Inventory');
 const Room = require('../models/Room');
 const RoomType = require('../models/RoomType');
+const Hospital = require('../models/Hospital');
 const paypal = require('paypal-rest-sdk');
 const methodOverride = require('method-override');
 
@@ -386,6 +387,7 @@ router.get('/apartment', (req, res) => {
 
 router.post('/bookingDetails', (req, res) => {
 	const title = 'Complete Booking';
+	let roomImage = req.body.roomImage;
 	let BookInDate = req.body.BookInDate;
 	let BookOutDate = req.body.BookOutDate;
 	let price = req.body.price;
@@ -394,22 +396,31 @@ router.post('/bookingDetails', (req, res) => {
 	let minRoomNo = req.body.minRoomNo;
 	let maxRoomNo = req.body.maxRoomNo;
 	console.log(type_id);
-	let roomImage = req.body.roomImage;
-	let roomNo = Math.floor(Math.random() * (maxRoomNo - minRoomNo + 1)+ minRoomNo)
+	
+	let roomNo = Math.floor(Math.random() * (parseInt(maxRoomNo) - parseInt(minRoomNo) + 1))+ parseInt(minRoomNo)
 	console.log(BookInDate);
-	res.render('rooms/booking_details', {title: title,
-		layout : "blank",
-		BookInDate : BookInDate,
-		BookOutDate : BookOutDate,
-		price : price,
-		roomNo : roomNo,
-		roomImage : roomImage,
-		type : type,
-		type_id : type_id
-	    }) // renders views/index.handlebars
+	Hospital.findAll({
+		order: [["id", "ASC"]],
+		raw: true,
+	  })
+		.then((hospitals) => {
+			res.render('rooms/booking_details', {title: title,
+				layout : "thalia",
+				BookInDate : BookInDate,
+				BookOutDate : BookOutDate,
+				price : price,
+				roomNo : roomNo,
+				roomImage : roomImage,
+				type : type,
+				type_id : type_id,
+				hospitals : hospitals
+				});
+		})
+		.catch((err) => console.log(err));
 });
 
 router.post('/booked', (req, res) => {
+	let roomImage = req.body.roomImage;
 	let bookInDate = req.body.bookInDate;
 	let bookOutDate = req.body.bookOutDate;
 	let type = req.body.type;
@@ -420,6 +431,7 @@ router.post('/booked', (req, res) => {
 	let package_deal = req.body.package_deal;
 	let roomNo = req.body.roomNo;
 	let price = req.body.price;
+	let hospitals = req.body.hospitals;
 	let paid = 0;
 
 	Room.create({
@@ -432,7 +444,8 @@ router.post('/booked', (req, res) => {
 		roomNo,
 		price,
 		paid,
-		roomTypeID : type_id
+		roomTypeID : type_id,
+		nearbyHospital : hospitals
 
 	}).then((room)=> {
 		res.redirect('/rooms/bookingCart/' + room.id);
@@ -445,38 +458,36 @@ router.post('/booked', (req, res) => {
 
 router.get('/bookingCart/:id', (req, res) => {
 	const title = 'Booking Cart';
+	console.log(req.params.id)
 	Room.findOne({
 		where: {
 		  id: req.params.id,
 		},
-	  })
-		.then((room) => {
-		  res.render("rooms/cart", {
-			room, 
-			layout: "blank",
-			title: title,
-			
-		  });
-		})
-		.catch((err) => console.log(err)); 
+	  }).then(async (room) => {
+		await RoomType.findOne({
+			where : {
+				type_id : room.roomTypeID
+			}
+		}).then((roomtype)=>{
+			res.render("rooms/cart", {
+				room, 
+				layout: "thalia",
+				title: title,
+				roomtype
+			  });
+
+			})
+		}).catch((err) => console.log(err)); 
 	});
 
 router.post('/payPal/:id', (req,res) => {
+	let roomType = req.body.roomType;
 	Room.findOne({
 		where: {
 		  id: req.params.id,
 		},
 	  })
 		.then((room) => {
-			if (room.roomType == "Apartment") {
-				var price = "500.00";
-			  } else if (room.roomType == "Small Room") {
-				var price = "300.00";
-			  } else if (room.roomType == "Big Apartment") {
-				var price = "700.00";
-			  } else if (room.roomType == "Villa") {
-				var price = "1000.00";
-			  }
 			const create_payment_json = {
 				"intent": "sale",
 				"payer": {
@@ -489,16 +500,16 @@ router.post('/payPal/:id', (req,res) => {
 				"transactions": [{
 					"item_list": {
 						"items": [{
-							"name": room.roomType,
+							"name": roomType,
 							"sku": room.roomNo,
-							"price": price,
+							"price": room.price,
 							"currency": "SGD",
 							"quantity": 1
 						}]
 					},
 					"amount": {
 						"currency": "SGD",
-						"total": price
+						"total": room.price
 					},
 					"description": "Hotel Booking Payment using PayPal"
 				}]
@@ -556,21 +567,12 @@ router.get('/paySuccess/:id', (req, res) => {
 		},
 	  })
 		.then((room) => {
-		if (room.roomType == "Apartment") {
-				var price = "500.00";
-			  } else if (room.roomType == "Small Room") {
-				var price = "300.00";
-			  } else if (room.roomType == "Big Apartment") {
-				var price = "700.00";
-			  } else if (room.roomType == "Villa") {
-				var price = "1000.00";
-			  }
 		const execute_payment_json = {
 		"payer_id": payerId,
 		"transactions": [{
 			"amount": {
 				"currency": "SGD",
-				"total": price
+				"total": room.price
 			}
 		}]
 	};

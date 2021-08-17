@@ -96,13 +96,36 @@ router.get('/supplierView', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/showCreate', async (req, res) => {
+router.get('/showCreate1', async (req, res) => {
+    const title = 'Orders';
+
+    const getSupplierData = () => {
+        const supplier = Supplier.findAll({
+            where: {
+                // adminId: req.admin.id
+            },
+            order: [
+                ['supplier_id', 'ASC']
+            ],
+            raw: true
+        })
+        return supplier
+    };
+
+    res.render('orders/create1', {
+        layout: "admin",
+        title: title,
+        supplier: await getSupplierData()
+    });
+});
+
+router.post('/showCreate2', async (req, res) => {
     const title = 'Orders';
 
     const getInventoryData = () => {
         const inventory = Inventory.findAll({
             where: {
-                // adminId: req.admin.id
+                supplier: req.body.supplier
             },
             order: [
                 ['inventory_id', 'ASC']
@@ -112,32 +135,34 @@ router.get('/showCreate', async (req, res) => {
         return inventory
     };
 
-    res.render('orders/create', {
+    res.render('orders/create2', {
         layout: "admin",
         title: title,
+        supplier: req.body.supplier,
         inventory: await getInventoryData()
     });
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
     let supplier = req.body.supplier;
     let item_name = req.body.item_name;
     let quantity = req.body.quantity;
     let remarks = req.body.remarks;
     let status = req.body.status;
 
-    Inventory.findAll({
-        include: Supplier
-    }).then(findemail => {
-        Inventory.findAll({
-            where: {
-                email: req.supplier.email
-            }
-        }).then(email => {
-            console.log(findemail);
-            console.log(email);
-        })
-    })
+    console.log(" ")
+    console.log(supplier)
+    console.log(" ")
+
+    let find_email = await Supplier.findAll({
+        where: {
+            company_name: req.body.supplier
+        },
+        attributes: ["email"]
+    });
+
+    let email = JSON.stringify(find_email).split("\"")
+    
 
     Orders.create({
         supplier,
@@ -146,11 +171,11 @@ router.post('/create', (req, res) => {
         remarks,
         status
     }).then((orders) => {
-        sendMail(supplier, item_name, quantity, remarks).then(result => console.log(result))
+        sendMail(email, item_name, quantity, remarks).then(result => console.log(result))
             .catch(error => console.log(error.message));
         alertMessage(res, 'success', ' Order has been sent successfully.', 'fas fa-sign-in-alt', true);
         res.redirect('/orders/view');
-    }).catch(err => console.log(err))
+    })
 });
 
 router.get('/showUpdate/:orders_id', (req, res) => {

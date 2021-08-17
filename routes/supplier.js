@@ -46,7 +46,16 @@ router.post('/create', (req, res) => {
 
     Supplier.findOne({
         where: {
+            company_name
+        },
+        where: {
             uen_number
+        },
+        where: {
+            email
+        },
+        where: {
+            office_number
         }
     }).then(supplier => {
         if (supplier){

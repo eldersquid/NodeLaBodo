@@ -29,7 +29,7 @@
                     <li>???????</li>
                 </ul>
                 <div>You have <span class="total-count">X</span> items in your cart</div>
-                <div>Total Cart:$<span class="total-cart"></span></div>
+                <div>Total Cart:$<span class="total-cart" id ="totalPrice"name="totalCart"></span></div>
             </div>
             <div class="modal-footer">
                 <button class="clear-cart btn btn-danger">Clear Cart</button>
@@ -72,117 +72,7 @@
             </div>
             {{/each}}
             {{/if}}
-            <div class="col">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="/img/pasta.jpg" alt="Card image cap">
-                    <div class="card-block">
-                        <h4 class="card-title">Pasta</h4>
-                        <p class="card-text">Price: $15</p>
-                        <button type="button" data-name="Pasta" data-price="15" class="add-to-cart btn btn-primary">Add
-                            to cart</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="/img/pizza.jpg" alt="Card image cap">
-                    <div class="card-block">
-                        <h4 class="card-title">Pizza</h4>
-                        <p class="card-text">Price: $16</p>
-                        <button name="add_cart" data-name="Pizza" data-price="16"
-                            class="add-to-cart btn btn-primary">Add to cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="/img/Fried_noodle.jpg" alt="Card image cap">
-                    <div class="card-block">
-                        <h4 class="card-title">Fried Noodle</h4>
-                        <p class="card-text">Price: $14</p>
-                        <button name="add_cart" data-name="FriedNoodle" data-price="14"
-                            class="add-to-cart btn btn-primary">Add to cart</button>
-                    </div>
-                </div>
-            </div>
         </div>
-        <hr>
-        <div class="row">
-            <div class="col">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="/img/chicken_rice.jpg" alt="Card image cap">
-                    <div class="card-block">
-                        <h4 class="card-title">Chicken Rice</h4>
-                        <p class="card-text">Price: $12</p>
-                        <button type="button" data-name="ChickenRice" data-price="12"
-                            class="add-to-cart btn btn-primary">Add to cart</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="/img/Baked_Rice.jpg" alt="Card image cap">
-                    <div class="card-block">
-                        <h4 class="card-title">Baked Rice</h4>
-                        <p class="card-text">Price: $14</p>
-                        <button name="add_cart" data-name="BakedRice" data-price="14"
-                            class="add-to-cart btn btn-primary">Add to cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="/img/fried_rice.jpg" alt="Card image cap">
-                    <div class="card-block">
-                        <h4 class="card-title">Fried Rice</h4>
-                        <p class="card-text">Price: $20</p>
-                        <button name="add_cart" data-name="FriedRice" data-price="20"
-                            class="add-to-cart btn btn-primary">Add to cart</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="/img/mushroom_soup.jpg" alt="Card image cap">
-                    <div class="card-block">
-                        <h4 class="card-title">Mushroom Soup</h4>
-                        <p class="card-text">Price: $10</p>
-                        <button type="button" data-name="MushroomSoup" data-price="10"
-                            class="add-to-cart btn btn-primary">Add to cart</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="/img/steak.jpg" alt="Card image cap">
-                    <div class="card-block">
-                        <h4 class="card-title">Steak</h4>
-                        <p class="card-text">Price: $30</p>
-                        <button name="add_cart" data-name="Steak" data-price="30"
-                            class="add-to-cart btn btn-primary">Add to cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="/img/Burger.jpg" alt="Card image cap">
-                    <div class="card-block">
-                        <h4 class="card-title">Burger</h4>
-                        <p class="card-text">Price: $25</p>
-                        <button name="add_cart" data-name="Burger" data-price="25"
-                            class="add-to-cart btn btn-primary">Add to cart</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
     </div>
 </form>
 <br>
@@ -211,4 +101,6 @@
                 console.log(data);
             })
     }
+
+    
 </script>
