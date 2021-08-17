@@ -641,35 +641,27 @@ router.get("/chatBotList", (req, res) => {
 
 
 // Original chat bot list that shows all the questions and answers from the API itself
-router.get("/chatBotListOriginal", (req, res) => {
-  const title = "Chat Bot Instances";
-    listIntents().then((advancedIntents) => {
-      var advancedIntentsArray = [];
+// router.get("/chatBotListOriginal", (req, res) => {
+//   const title = "Chat Bot Instances";
+//     listIntents().then((advancedIntents) => {
+//       var advancedIntentsArray = [];
       
-      advancedIntents.forEach(intent =>{ 
-        var name = intent.name;
-        var name_split = name.split("/");
-        // advancedIntentsArray.push({"intentPath" : name_split[(name_split.length)-1]})
-        intent["intentPath"] = name_split[(name_split.length)-1];
-      });
-      // console.log(advancedIntentsArray);
-      res.render("ChatBot/chatBotList", {
-        layout: "admin",
-        title: title,
-        advancedIntents,
-        // advancedIntentsArray
-      });
-    })
-    .catch((err) => console.log(err));
-});
-
-
-
-
-
-
-
-
+//       advancedIntents.forEach(intent =>{ 
+//         var name = intent.name;
+//         var name_split = name.split("/");
+//         // advancedIntentsArray.push({"intentPath" : name_split[(name_split.length)-1]})
+//         intent["intentPath"] = name_split[(name_split.length)-1];
+//       });
+//       // console.log(advancedIntentsArray);
+//       res.render("ChatBot/chatBotList", {
+//         layout: "admin",
+//         title: title,
+//         advancedIntents,
+//         // advancedIntentsArray
+//       });
+//     })
+//     .catch((err) => console.log(err));
+// });
 
 
 
@@ -726,37 +718,37 @@ router.post('/intentCreate',(req,res)=>{
 
 
 //Original intentCreate with no changes
-router.post('/intentCreateOriginal',(req,res)=>{
-  let displayName = req.body.displayName;
-  let questions = req.body.trainingPhrases;
-  let answers = req.body.botReplies;
-  console.log(req.body.displayName);
-  console.log(req.body.trainingPhrases);
-  console.log(req.body.botReplies);
-  createIntent(req.body.displayName,req.body.trainingPhrases,req.body.botReplies);
-  Chatbot.create({
-    Intent : displayName
+// router.post('/intentCreateOriginal',(req,res)=>{
+//   let displayName = req.body.displayName;
+//   let questions = req.body.trainingPhrases;
+//   let answers = req.body.botReplies;
+//   console.log(req.body.displayName);
+//   console.log(req.body.trainingPhrases);
+//   console.log(req.body.botReplies);
+//   createIntent(req.body.displayName,req.body.trainingPhrases,req.body.botReplies);
+//   Chatbot.create({
+//     Intent : displayName
     
 
-  }).then((intent) => {
-  questions.forEach((question) => {
-    ChatQuestion.create({
-      IntentID : intent.id,
-      Question : question
+//   }).then((intent) => {
+//   questions.forEach((question) => {
+//     ChatQuestion.create({
+//       IntentID : intent.id,
+//       Question : question
 
-    });
+//     });
     
-    })
-    answers.forEach((answer) => {
-      ChatAnswer.create({
-        IntentID : intent.id,
-        Answer : answer
+//     })
+//     answers.forEach((answer) => {
+//       ChatAnswer.create({
+//         IntentID : intent.id,
+//         Answer : answer
   
-      });
+//       });
       
-      })
-    })
-});
+//       })
+//     })
+// });
 
 
 router.get('/intentDelete/:path', (req, res) => {
@@ -781,7 +773,7 @@ router.get('/intentDelete/:path', (req, res) => {
           alertMessage(res, 'danger', "Invalid error.", 'fas fa-exclamation-circle', true)
           );
 			} else {
-				alertMessage(res, 'danger', "Test error", 'fas fa-exclamation-circle', true);
+				alertMessage(res, 'danger', "Error occured!", 'fas fa-exclamation-circle', true);
 				
 			}
 		});
@@ -866,19 +858,19 @@ router.get('/intentEdit/:path', (req, res) => {
 
 
 //Original intent edit with no changes
-router.get('/intentEditOriginal/:path', (req, res) => {
-  let path = req.params.path;
-  getIntent(path).then((intent) => {
-    res.render('ChatBot/intentEdit', { 
-      layout: "admin",
-      intent
+// router.get('/intentEditOriginal/:path', (req, res) => {
+//   let path = req.params.path;
+//   getIntent(path).then((intent) => {
+//     res.render('ChatBot/intentEdit', { 
+//       layout: "admin",
+//       intent
       
-    });
+//     });
 
 
-  })
-  // UpdateIntentQuick(path);
-});
+//   })
+//   // UpdateIntentQuick(path);
+// });
 
 
 

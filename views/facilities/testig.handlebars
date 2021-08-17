@@ -15,18 +15,18 @@
     )
       .then((res) => {
         return res.json();
-      })
-      .then((data) => {
+      }).then((data) => {
         if (data.Response === "False") {
           console.log("Error found!!");
         } else {
           var igfeed = data;
-          console.log(igfeed)
+          console.log(igfeed);
           
       }
       .catch((error) => {
         console.log(error);
       });
+    })
   }
-  }</script>
+  </script>
 </html>
