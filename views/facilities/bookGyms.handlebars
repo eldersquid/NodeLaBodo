@@ -1,3 +1,5 @@
+
+
 {{>_navbar}} 
 <br><br><br>
 
@@ -10,7 +12,14 @@
 </div>
 <div class="card">
     <div class="container">
-<form action="bookGym" method="post">
+<form action="bookGym" method="post"> 
+  <div class="elem-group">
+<label for="type">Select Facility Type</label>
+<select name="fac_type" id="fac_type" value = "{{facilities.fac_type}}" required>
+  <option value="Gym">Gym</option>
+  <option value="Swimming Pool">Swimming Pool</option>
+</select>
+</div>
   <div class="elem-group">
     <label for="name">Your Name</label>
     <input type="text" id="fac_name" name="fac_name" placeholder="John Doe" value = "{{facilities.fac_name}}" pattern=[A-Z\sa-z]{3,20} required>
@@ -24,6 +33,7 @@
     <input type="tel" id="fac_num" name="fac_num" placeholder="Phone Number" value = "{{facilities.fac_num}}"  required>
   </div>
 <div class="elem-group">
+  <label for="time">Time</label>
 <fieldset>
     <input name="fac_time" type="time" id="fac_time" placeholder="Time*"
         value="{{facilities.fac_time}}" required />
@@ -250,4 +260,4 @@ checkinElem.onchange = function () {
         $("#exampleModal").submit()
     });
 </script>
-</script>
+</script
