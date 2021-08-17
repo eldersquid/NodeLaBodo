@@ -6,6 +6,49 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const alertMessage = require('../helpers/messenger');
 
+const nodemailer = require('nodemailer')
+const { google } = require('googleapis')
+
+const CLIENT_ID = '188467906173-a5cq8hviitnaanin3cmag7el6kkqrcru.apps.googleusercontent.com'
+const CLIENT_SECRET = 'uJwKO7Pc693-lYfqgWNbIVNB'
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04Tt7yjfGWpdQCgYIARAAGAQSNwF-L9Ir_wKE_gHmQitcazwILvpG0TVhGDTssYZSZUOjozi05MfSKJrBjCcw4VE32AgEiL3cfcs';
+
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+async function sendMail(email) {
+    try {
+        const accessToken = await oAuth2Client.getAccessToken();
+
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                type: 'OAuth2',
+                user: 'hotel.la.bodo@gmail.com',
+                clientId: CLIENT_ID,
+                clientSecret: CLIENT_SECRET,
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken
+            }
+        });
+
+        const mailOptions = {
+            from: 'Hotel La Bodo <hotel.la.bodo@gmail.com>',
+            to: email,
+            subject: 'Forget Password',
+            text: 'Dear Valued Supplier ' + ',\n' + '\nPlease click on the link below to change your password.' + '\n\nLink: ' + 'localhost:5000/supplier/showChangepassword' + '\n\nWe hope to hear from you soon!\n' + 'Sincerely,\nHotel La Bodo'
+        };
+
+        const result = await transport.sendMail(mailOptions);
+        return result;
+
+    } catch (error) {
+
+        return error
+    }
+};
+
 router.get('/view', async (req, res) => {
     const title = 'Supplier';
 
@@ -217,12 +260,15 @@ router.post('/signup', (req, res) => {
     } else {
         SupplierSignup.findOne({
             where: {
+                company_name
+            },
+            where: {
                 uen_number
             }
         }).then(supplier => {
             if (supplier) {
                 res.render('supplier/signuplogin', {
-                    error: supplier.uen_number + ' already registered',
+                    error: supplier.company_name + ' with ' + supplier.uen_number + ' already registered',
                     supplier_id,
                     company_name,
                     uen_number,
@@ -237,13 +283,14 @@ router.post('/signup', (req, res) => {
                         password = hash;
                         // Create new user record
                         SupplierSignup.create({
+                            supplier_id,
                             company_name,
                             uen_number,
                             password
                         })
                             .then(supplier => {
                                 alertMessage(res, 'success', supplier.company_name + ' added. Please login', 'fas fa-sign-in-alt', true);
-                                res.redirect('supplier/signuplogin');
+                                res.redirect('/supplier/showLoginSignup');
                             })
                             .catch(err => console.log(err));
                     })
@@ -262,10 +309,135 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+router.get('/showChangepassword', (req, res) => {
+    const title = 'Supplier';
+    res.render('supplier/changepassword', {
+        layout: "empty",
+        title: title
+    });
+});
+
+router.post('/changepassword', async (req, res) => {
+
+    let errors = [];
+
+    let supplier_id = req.body.supplier_id;
+    let password = req.body.password;
+    let password2 = req.body.password2;
+
+
+    if (password !== password2) {
+        errors.push({
+            text: 'Passwords does not seem to match.'
+        });
+    }
+
+    if (password.length < 4) {
+        errors.push({
+            text: 'Password must be at least 4 characters.'
+        });
+    }
+
+    Supplier.findOne({
+        where: {
+            supplier_id
+        }
+    }).then(supplier => {
+        if (!supplier) {
+            errors.push({
+                text: 'Supplier ID was not found, Please contact the Hotel La Bodo Admin.'
+            })
+        }
+    }).catch(err => console.log(err));
+    
+    let find_details = await SupplierSignup.findAll({
+        where: {
+            supplier_id: req.body.supplier_id
+        },
+        attributes: ["company_name", "uen_number"]
+    });
+
+    let details = JSON.stringify(find_details).split("\"")
+    console.log(" ")
+    console.log("hello " + details[3] + " " + details[7])
+    console.log(" ")
+    let company_name = details[3];
+    let uen_number = details[7];
+
+    if (errors.length > 0) {
+        res.render('supplier/changepassword', {
+            errors,
+            supplier_id,
+            password,
+            password2
+        });
+
+    } else {
+
+        SupplierSignup.findOne({
+            where: {
+                supplier_id
+            }
+        }).then(supplier => {
+                // Generate salt hashed password
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(password, salt, (err, hash) => {
+                        if (err) throw err;
+                        password = hash;
+                        SupplierSignup.update({
+                            supplier_id,
+                            company_name,
+                            uen_number,
+                            password
+                        }, 
+                        { 
+                            where: {
+                                supplier_id :supplier_id
+                            }
+                        })
+                            .then(supplier => {
+                                alertMessage(res, 'success', company_name + ' password has been updated. Please login', 'fas fa-sign-in-alt', true);
+                                res.redirect('/supplier/showLoginSignup');
+                            })
+                            .catch(err => console.log(err));
+                    })
+                });
+        });
+    }
+});
+
+router.get('/showForgetpassword', (req, res) => {
+    const title = 'Supplier';
+    res.render('supplier/forgetpassword', {
+        layout: "empty",
+        title: title
+    });
+});
+
+router.post('/forgetpassword', async (req, res) => {
+    let supplier_id = req.body.supplier_id
+
+    let find_email = await Supplier.findAll({
+        where: {
+            supplier_id: req.body.supplier_id,
+            company_name: req.body.company_name,
+            uen_number: req.body.uen_number
+        },
+        attributes: ["email"]
+    });
+
+    let email = JSON.stringify(find_email).split("\"")
+
+    sendMail(email).then(result => console.log(result))
+        .catch(error => console.log(error.message));
+    alertMessage(res, 'success', ' Request change of password has been sent successfully.', 'fas fa-sign-in-alt', true);
+    res.redirect('/supplier/showLoginSignup');
+});
+
 router.get('/logout', (req, res) => {
     req.logout();
     alertMessage(res, 'info', 'Successfully Logout.', 'fas fa-power-off', true);
-    res.redirect('/');
+    res.redirect('/showLoginSignup');
 });
 
 
