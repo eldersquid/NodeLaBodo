@@ -186,9 +186,14 @@ app.use(session({
 // Two flash messenging libraries - Flash (connect-flash) and Flash Messenger
 app.use(flash());
 app.use(FlashMessenger.middleware);
-const authenticate = require('./config/passport');
 const SendmailTransport = require('nodemailer/lib/sendmail-transport');
+const authenticate = require('./config/passport');
+const supplier_authenticate = require('./config/supplierpassport');
+const staff_authenticate = require('./config/supplierpassport');
 authenticate.localStrategy(passport);
+supplier_authenticate.localStrategy(passport);
+staff_authenticate.localStrategy(passport);
+
 
 
 
