@@ -5,19 +5,21 @@
 </head>
 
 <body id="page-top">
-              <div class="container-fluid">
-                <a class="btn btn-outline-secondary" href="">Guest Details</a>
-                <button type="button" class="btn btn-secondary">Hospitals</button>
-                <button type="button" class="btn btn-outline-secondary">Occupations</button>
-                
-                <button type="button" class="btn btn-outline-secondary">Vehicles</button>
-                
-                <hr>
-
-              </div>
+              
                 <!-- Begin Page Content -->
                 <br>
-                <div class="container-fluid">
+                <div class="container-fluid" id="alerts">
+                  {{#if error}}
+<div class="alert alert-danger">{{error}}</div>
+{{/if}}
+
+{{!--
+Loop through each text in {{errors}} array to display errors
+--}}
+{{#each errors}}
+<div class="alert alert-danger">{{text}}</div>
+{{else}}
+{{/each}}
                   <div class="alert alert-primary" role="alert">
                     For links, please use the following example format or it will just become a normal question :
                     "text < link > /restaurant/DineV2" [remove the space in link]
@@ -35,7 +37,7 @@
                               </ul>
                               <div class="tab-content pt-3">
                                 <div class="tab-pane active">
-                                  <form method="POST" action="intentCreated">
+                                  <form method="POST">
                                                          
                                     <div class="row">
                                       <div class="col">
@@ -52,12 +54,22 @@
                                              <button class="btn btn-primary" onclick="addPhrase()" type="button">Add Phrase</button>
                                              <button class="btn btn-primary" onclick="resetPhrase()" type="button">Reset</button>
                                             </div>
+                                            <div class="form-group" id="setQuestions">
+                                             <label for="name">Available Training Phrases</label>
+                                                
+                                                
+                                             
+                                            </div>
                                                 <div class="form-group">
                                                 <label for="name">Bot Replies</label>
                                                 <input type="text" class="form-control" name="botReply" id="botReply">
                                                 <button class="btn btn-primary" onclick="addReply()" type="button">Add Reply</button>
                                                 <button class="btn btn-primary" onclick="resetReply()" type="button">Reset</button>
                                                 </div>
+                                                <div class="form-group" id="setAnswers">
+                                                <label for="name">Available Bot Replies</label>
+                                                  
+                                            </div>
                                             </div>
                                           
 
@@ -143,8 +155,18 @@
         var arrayReply = [];
         function addPhrase(){
             var phrase = document.getElementById("trainingPhrases").value;
-            arrayPhrase.push(phrase);
-            alert(phrase);
+            if (arrayPhrase.includes(phrase)){
+              alert("No duplicates!")
+            } else {
+              arrayPhrase.push(phrase);
+            var newPhrase = document.createElement("p")
+            newPhrase.textContent = phrase;
+            newPhrase.className = "BotQuestions";
+            document.getElementById("setQuestions").appendChild(newPhrase);
+            console.log(arrayPhrase);
+
+            }
+            
 
 
 
@@ -152,6 +174,7 @@
             
         }
         function resetPhrase(){
+            document.querySelectorAll('.BotQuestions').forEach(e => e.remove());
             arrayPhrase = [];
             alert("Reset completed!");
 
@@ -160,17 +183,26 @@
             
         }
         function addReply(){
-            var reply = document.getElementById("botReply").value;
-            arrayReply.push(reply);
-            alert(reply);
-
+            var phrase = document.getElementById("botReply").value;
+            if (arrayReply.includes(phrase)){
+              alert("No duplicates!")
+            } else {
+            arrayReply.push(phrase);
+            var newPhrase = document.createElement("p")
+            newPhrase.textContent = phrase;
+            newPhrase.className = "BotAnswers";
+            document.getElementById("setAnswers").appendChild(newPhrase);
+            console.log(arrayReply);
+            }
 
 
 
             
         }
         function resetReply(){
+            document.querySelectorAll('.BotAnswers').forEach(e => e.remove());
             arrayReply = [];
+            
             alert("Reset completed!");
 
 
@@ -196,12 +228,28 @@
                 type: 'POST'
             }).done(function(result) {
                 console.log("Success!");
-                
                 console.log(result);
+                if (result.message == "PASS"){
+                  setTimeout(() => { location.href="/chatBot/chatBotList" }, 2000);
+                } else {
+                  
+                  var errorer = document.createElement("div");
+                  errorer.className = "alert alert-danger";
+                  errorer.innerHTML = "Intent name cannot be the same.";
+                  document.getElementById("alerts").prepend(errorer);
+                }
+                
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 console.log("fail: ",textStatus, errorThrown);
+                var errorer = document.createElement("div");
+                errorer.className = "alert alert-danger";
+                errorer.innerHTML = "Intent name cannot be the same.";
+                document.getElementById("alerts").prepend(errorer);
+
             });
-            setTimeout(() => { location.href="/chatBot/chatBotList" }, 2000);
+              
+           
+            
             
         
     }

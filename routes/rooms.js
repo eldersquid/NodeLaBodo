@@ -276,11 +276,15 @@ app.use(methodOverride('_method'));
 router.post('/chuuSend',(req,res)=>{
 	console.log("Test : ",req.body.chuuMessage);
 	runSample(req.body.chuuMessage).then(data =>{
-		res.send({reply:data})
+		if (data){
+			res.send({reply:data})
 
-
-
-	})
+		} else {
+			console.log("Error.")
+		}
+		
+	}
+	)
 
 
 

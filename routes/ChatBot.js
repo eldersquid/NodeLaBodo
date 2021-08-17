@@ -4,7 +4,7 @@ const router = express.Router();
 const fs = require('fs');
 const dialogflow = require('@google-cloud/dialogflow'); // Danish's Chatbot woo
 const ChatBot = require('../models/ChatBot');
-
+const alertMessage = require('../helpers/messenger');
 const methodOverride = require('method-override');
 const Chatbot = require('../models/Chatbot');
 const ChatQuestion = require('../models/ChatQuestion');
@@ -28,7 +28,7 @@ const CONFIGURATION = {
 
 async function runSample(question) {
 	// A unique identifier for the given session
-	var sessionId = "123"
+	var sessionId = Math.random();
 	// Create a new session
 	const sessionClient = new dialogflow.SessionsClient(CONFIGURATION);
 	const sessionPath = sessionClient.projectAgentSessionPath(
@@ -679,40 +679,55 @@ router.get('/intent', (req, res) => {
 
 
 router.post('/intentCreate',(req,res)=>{
+  
   let displayName = req.body.displayName;
   let questions = req.body.trainingPhrases;
   let answers = req.body.botReplies;
   console.log(req.body.displayName);
   console.log(req.body.trainingPhrases);
   console.log(req.body.botReplies);
-  var intentPath = createIntent(req.body.displayName,req.body.trainingPhrases,req.body.botReplies);
-  intentPath.then(function(result){
-    console.log("Intent name of LOONA is :")
-    console.log(result);
-    Chatbot.create({
-      id : result,
-      Intent : displayName,
-      IntentPath : result
-  
-    }).then((intent) => {
-    questions.forEach((question) => {
-      ChatQuestion.create({
-        IntentID : intent.id,
-        Question : question
-  
-      });
-      
-      })
-      answers.forEach((answer) => {
-        ChatAnswer.create({
-          IntentID : intent.id,
-          Answer : answer
-    
-        });
+    Chatbot.findOne({
+      where: {
+          Intent : displayName
+      }
+  }).then(chuuBot => {
+    if (chuuBot){
+      res.json({message : "FAIL"})
+
         
-        })
+    } else {
+      var intentPath = createIntent(req.body.displayName,req.body.trainingPhrases,req.body.botReplies);
+      intentPath.then(function(result){
+        console.log("Intent name of LOONA is :")
+        console.log(result);
+        Chatbot.create({
+          id : result,
+          Intent : displayName,
+          IntentPath : result
+      
+        }).then((intent) => {
+        questions.forEach((question) => {
+          ChatQuestion.create({
+            IntentID : intent.id,
+            Question : question
+      
+          });
+          
+          })
+          answers.forEach((answer) => {
+            ChatAnswer.create({
+              IntentID : intent.id,
+              Answer : answer
+        
+            });
+            
+            })
+          })
       })
-  })
+      res.json({message : "PASS"})
+    }
+})
+  
 });
 
 
@@ -770,10 +785,10 @@ router.get('/intentDelete/:path', (req, res) => {
 					res.redirect('/chatBot/chatBotList');
 				}).catch(err => 
           console.log(err),
-          alertMessage(res, 'danger', "Invalid error.", 'fas fa-exclamation-circle', true)
+          // alertMessage(res, 'danger', "Invalid error.", 'fas fa-exclamation-circle', true)
           );
 			} else {
-				alertMessage(res, 'danger', "Error occured!", 'fas fa-exclamation-circle', true);
+				// alertMessage(res, 'danger', "Error occured!", 'fas fa-exclamation-circle', true);
 				
 			}
 		});
