@@ -13,12 +13,12 @@ const cors = require('cors');
 const { Template } = require('ejs');
 const { body, validationResult } = require('express-validator');
 
-// User View Restaurant 
-router.get('/DineV2', (req, res) => {
-    res.render('restaurant/DineV2', {
-        layout: "blank",
-    });
-});
+// // User View Restaurant 
+// router.get('/DineV2', (req, res) => {
+//     res.render('restaurant/DineV2', {
+//         layout: "blank",
+//     });
+// });
 
 // User View Menu
 
@@ -184,75 +184,68 @@ router.get('/bookingList', (req, res) => {
 
 
 //Create reservation 
-// router.post('/createReservation', (req, res) => {
-//     let cust_fname = req.body.cust_fname
-//     let cust_lname = req.body.cust_lname
-//     let cust_email = req.body.cust_email
-//     let cust_phone = req.body.cust_phone
-//     let number_guest = req.body.number_guest
-//     let cust_date = req.body.cust_date
-//     let cust_time = req.body.cust_time
-//     let cust_message = req.body.cust_message
-
-//     Reservation.create({
-//         cust_fname,
-//         cust_lname,
-//         cust_email,
-//         cust_phone,
-//         number_guest,
-//         cust_date,
-//         cust_time,
-//         cust_message
-//     }).then((reservation) => {
-//         res.redirect('/restaurant/DineV2');
-//     }).catch(err => console.log(err))
-// });
-
 router.post('/createReservation', [
-    body('cust_fname').not().isEmpty().isAlpha().trim().escape().withMessage("Name is Invalid"),
-    body('cust_lname').not().isEmpty().isAlpha().trim().escape().withMessage("Name is Invalid"),
-    body('cust_email').trim().isEmail().withMessage("Invalid Email"),
-    body('contact_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
-    body('cust_phone').custom(validator => {
-        if (!validator.isMobilePhone(fields.mobileNumber, option.mobileNumberLocale)) {
-            throw new Error("Invalid mobile number!");
+    body('cust_fname').not().isEmpty().isAlpha().trim().escape().withMessage("First name is Invalid"),
+    body('cust_lname').not().isEmpty().isAlpha().trim().escape().withMessage("Last name is Invalid"),
+    body('cust_email').trim().isEmail().withMessage("Invalid Email").normalizeEmail().toLowerCase(),
+    body('cust_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
+    body('cust_date').not().isEmpty().trim().escape().withMessage("Require Date Field"),
+    body('cust_time').not().isEmpty().trim().escape().withMessage("Require Time Field"),
+    // body('cust_phone').custom(value => {
+    //     if (value > 9){
+    //         throw new Error("Invalid phone number!");
+    //     }
+    //     return true;
+    // }),
+    body('number_guest').custom(value => {
+        if (value > 5) {
+            throw new Error("Cannot Exceed 5 memebers!");
         }
         return true;
     }),
-    body('number_guest').not().isEmpty().trim().escape().withMessage(""),
-    body('cust_date').not().isEmpty().trim().escape().withMessage("Invalid Message"),
-    body('cust_time').not().isEmpty().trim().escape().withMessage("Require Time Field")
 ], (req, res) => {
-    console.log("retrieving contact informationnn")
+    console.log("retrieving reservationnn")
     let errors = [];
-    let contact_name = req.body.contact_name; 
-    let contact_email = req.body.contact_email;
-    let contact_subject = req.body.contact_subject;
-    let contact_message = req.body.contact_message;
+    let cust_fname = req.body.cust_fname
+    let cust_lname = req.body.cust_lname
+    let cust_email = req.body.cust_email
+    // let cust_phone = req.body.cust_phone
+    let number_guest = req.body.number_guest
+    let cust_date = req.body.cust_date
+    let cust_time = req.body.cust_time
+    let cust_message = req.body.cust_message
     const validatorErrors = validationResult(req);
 
-    if (!validatorErrors.isEmpty()){
-        console.log("Errors creating contact")
+    if (!validatorErrors.isEmpty()) {
+        console.log("Errors creating reservation")
         validatorErrors.array().forEach(error => {
             console.log(error);
-            errors.push({text: error.msg})
+            errors.push({ text: error.msg })
         });
         res.render('restaurant/DineV2', {
-            layout:"blank",
+            layout: "blank",
             errors,
-            contact_name,
-            contact_email,
-            contact_subject,
-            contact_message,
+            cust_fname,
+            cust_lname,
+            cust_email,
+            // cust_phone,
+            number_guest,
+            cust_date,
+            cust_time,
+            cust_message
         });
     } else {
-            console.log("creating contact")
-            Contact.create({
-            contact_name,
-            contact_email,
-            contact_subject,
-            contact_message
-        }).then((contact) => {
+        console.log("creating reservation")
+        Reservation.create({
+            cust_fname,
+            cust_lname,
+            cust_email,
+            // cust_phone,
+            number_guest,
+            cust_date,
+            cust_time,
+            cust_message
+        }).then((reservation) => {
             res.redirect('/restaurant/DineV2');
         }).catch(err => console.log(err));
     }
@@ -261,26 +254,26 @@ router.post('/createReservation', [
 // Create Contact Form
 router.post('/createContact', [
     body('contact_name').not().isEmpty().isAlpha().trim().escape().withMessage("Name is Invalid"),
-    body('contact_email').trim().isEmail().withMessage("Invalid Email"),
+    body('contact_email').trim().isEmail().withMessage("Invalid Email").normalizeEmail().toLowerCase(),
     body('contact_subject').not().isEmpty().trim().escape().withMessage("Must be in Alphabets"),
     body('contact_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
 ], (req, res) => {
     console.log("retrieving contact informationnn")
     let errors = [];
-    let contact_name = req.body.contact_name; 
+    let contact_name = req.body.contact_name;
     let contact_email = req.body.contact_email;
     let contact_subject = req.body.contact_subject;
     let contact_message = req.body.contact_message;
     const validatorErrors = validationResult(req);
 
-    if (!validatorErrors.isEmpty()){
+    if (!validatorErrors.isEmpty()) {
         console.log("Errors creating contact")
         validatorErrors.array().forEach(error => {
             console.log(error);
-            errors.push({text: error.msg})
+            errors.push({ text: error.msg })
         });
         res.render('restaurant/DineV2', {
-            layout:"blank",
+            layout: "blank",
             errors,
             contact_name,
             contact_email,
@@ -288,8 +281,8 @@ router.post('/createContact', [
             contact_message,
         });
     } else {
-            console.log("creating contact")
-            Contact.create({
+        console.log("creating contact")
+        Contact.create({
             contact_name,
             contact_email,
             contact_subject,
