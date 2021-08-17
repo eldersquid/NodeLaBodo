@@ -46,6 +46,11 @@ router.get('/bookSwim', (req, res) => {
     });
 });
 
+router.get('/testig', (req, res) => {
+    res.render('facilities/testig', {
+        layout: "admin",
+    });
+});
 //Create reservation 
 router.post('/bookGym', (req, res) => {
     let fac_date = req.body.fac_date

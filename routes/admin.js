@@ -22,7 +22,7 @@ const alertMessage = require('../helpers/messenger');
 // Method override middleware to use other HTTP methods such as PUT and DELETE
 app.use(methodOverride('_method'));
 const dialogflow = require('@google-cloud/dialogflow');
-var thesaurus = require('thesaurus');
+const { body, validationResult } = require('express-validator');
 const CREDENTIALS = JSON.parse(fs.readFileSync('credentials/hotel-la-bodo-5338d4f99b8b.json'));
 const PROJECTID = CREDENTIALS.project_id;
 
@@ -101,36 +101,37 @@ router.get("/typeList", (req, res) => {
 					type_id: id
 				}
 			}).then(() => {
+				alertMessage(res, 'info', 'Room type has been deleted', 'far fa-trash-alt', true);
 				res.redirect('/admin/typeList'); // To retrieve all videos again
 			}).catch(err => console.log(err));
 		} else {
-			alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
-			
+			alertMessage(res, 'danger', 'Room type not found!', 'fas fa-exclamation-circle', true);
+			res.redirect('/admin/typeList');
 		}
 	});
 });
 
-router.post('/roomPictureUpload', (req, res) => {
-	let js_data = res.body;
-	console.log(js_data);
-	// Creates user id directory for upload if not exist
-	if (!fs.existsSync("./public/roomPictures/")){
-	fs.mkdirSync("./public/roomPictures/");
-	}
-	roomUpload(req, res, (err) => {
-	if (err) {
-	res.json({file: '/img/hotel.jpeg', err: err});
-	console.log("Error.")
-	} else {
-	if (req.file === undefined) {
-	res.json({file: '/img/hotel.jpeg', err: err});
-	console.log("Undefined.")
-	} else {
-	res.json({file: `/roomPictures/${req.file.filename}`});
-	}
-	}
-	});
-	})
+router.post("/roomPictureUpload", (req, res) => {
+  let js_data = res.body;
+  console.log(js_data);
+  // Creates user id directory for upload if not exist
+  if (!fs.existsSync("./public/roomPictures/")) {
+    fs.mkdirSync("./public/roomPictures/");
+  }
+  roomUpload(req, res, (err) => {
+    if (err) {
+      res.json({ file: "/img/hotel.jpeg", err: err });
+      console.log("Error.");
+    } else {
+      if (req.file === undefined) {
+        res.json({ file: "/img/hotel.jpeg", err: err });
+        console.log("Undefined.");
+      } else {
+        res.json({ file: `/roomPictures/${req.file.filename}` });
+      }
+    }
+  });
+});
 
 
 
@@ -175,7 +176,58 @@ router.get('/typeCreate', cors(), (req, res) => {
 
 });
 
-router.post('/typeCreated', (req, res) => {
+
+
+router.post('/typeCreated', [
+    body('roomName').not().isEmpty().trim().escape().withMessage("Room name is Invalid"),
+    body('minRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Minimum room number is Invalid"),
+	body('maxRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Maximum room number is Invalid"),
+    // body('cust_email').trim().isEmail().withMessage("Invalid Email").normalizeEmail().toLowerCase(),
+    // body('cust_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
+    // body('cust_date').not().isEmpty().trim().escape().withMessage("Require Date Field"),
+    // body('cust_time').not().isEmpty().trim().escape().withMessage("Require Time Field"),
+    
+	body('roomName').custom(value => {
+		let isnum = /^\d+$/.test(value);
+        if (isnum == true){
+            throw new Error("Room Name must be in alphabets!");
+        }
+        return true;
+    }),
+	body('roomPrice').custom(value => {
+		let isnum = /^\d+$/.test(value);
+        if (value < 0){
+            throw new Error("Cannot be negative value!");
+        }
+		if (isnum == false){
+			throw new Error ("Room Price must be a number!")
+
+		}
+        return true;
+    }),
+	body('minRoomNo').custom((value,{req}) => {
+        if (value > req.body.maxRoomNo){
+            throw new Error("Minimum room number CANNOT be more than maximum room number!");
+        }
+        return true;
+    }),
+	body('maxRoomNo').custom((value,{req}) => {
+        if (value < req.body.minRoomNo){
+            throw new Error("Maximum room number CANNOT be less than minimum room number!");
+        }
+        return true;
+    }),
+
+    // body('number_guest').custom(value => {
+    //     if (value > 5) {
+    //         throw new Error("Cannot Exceed 5 memebers!");
+    //     }
+    //     return true;
+    // }),
+],
+
+(req, res) => {
+	let errors = [];
     let type = req.body.type;
 	console.log("This is room type : ");
 	console.log(type);
@@ -185,6 +237,7 @@ router.post('/typeCreated', (req, res) => {
     let photo = req.body.photoURL;
 	let minRoomNo = req.body.minRoomNo;
 	let maxRoomNo = req.body.maxRoomNo;
+	const validatorErrors = validationResult(req);
     RoomType.findOne({
         where: {
             type
@@ -199,25 +252,44 @@ router.post('/typeCreated', (req, res) => {
             })
 
         } else {
-			console.log("Else statement")
-            RoomType.create({
+
+			if (!validatorErrors.isEmpty()) {
+				console.log("Errors creating room type")
+				validatorErrors.array().forEach(error => {
+					console.log(error);
+					errors.push({ text: error.msg })
+				});
+				res.render('admin/roomType/type_create', {
+                layout: "admin",
                 type,
-                roomName,
-                description,
-                roomPrice,
-                roomImage:photo,
+				roomName,
+				description,
+				roomPrice,
+				roomImage:photo,
 				minRoomNo,
-				maxRoomNo
-            }).then(roomType => {
+				maxRoomNo,
+                errors
+            });
+			} else {
+				RoomType.create({
+					type,
+					roomName,
+					description,
+					roomPrice,
+					roomImage:photo,
+					minRoomNo,
+					maxRoomNo
+				}).then(roomType => {
                 alertMessage(res, 'success', ' ' + roomType.type + ' created. ', 'fas fa-sign-in-alt', true);
                 res.redirect('/admin/typeList');
             }).catch(err => console.log(err))
+			}
         }
     })
 });
 
 router.get("/typeEdit/:id", (req, res) => {
-	const title = "Edit Hospital Details";
+	const title = "Edit Room Type Details";
 	RoomType.findOne({
 	  where: {
 		type_id: req.params.id,
@@ -227,7 +299,7 @@ router.get("/typeEdit/:id", (req, res) => {
 		
 		// call views/video/editVideo.handlebar to render the edit video page
 		res.render("admin/roomType/type_edit", {
-		  roomType, // passes video object to handlebar
+		  roomType, 
 		  layout: "admin",
 		  title: title,
 		  
@@ -236,32 +308,103 @@ router.get("/typeEdit/:id", (req, res) => {
 	  .catch((err) => console.log(err)); // To catch no video ID
   });
 
-router.put('/typeEdited/:id', (req, res) => {
+router.put('/typeEdited/:id', [
+    body('roomName').not().isEmpty().trim().escape().withMessage("Room name is Invalid!"),
+    body('minRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Minimum room number is Invalid!"),
+	body('maxRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Maximum room number is Invalid!"),
+    // body('cust_email').trim().isEmail().withMessage("Invalid Email").normalizeEmail().toLowerCase(),
+    // body('cust_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
+    // body('cust_date').not().isEmpty().trim().escape().withMessage("Require Date Field"),
+    // body('cust_time').not().isEmpty().trim().escape().withMessage("Require Time Field"),
+    
+	body('roomName').custom(value => {
+		let isnum = /^\d+$/.test(value);
+        if (isnum == true){
+            throw new Error("Room Name must be in alphabets!");
+        }
+        return true;
+    }),
+	body('roomPrice').custom(value => {
+		let isnum = /^\d+$/.test(value);
+        if (value < 0){
+            throw new Error("Cannot be negative value!");
+        }
+		if (isnum == false){
+			throw new Error ("Room Price must be a number!")
+
+		}
+        return true;
+    }),
+	body('minRoomNo').custom((value,{req}) => {
+        if (value > req.body.maxRoomNo){
+            throw new Error("Minimum room number CANNOT be more than maximum room number!");
+        }
+        return true;
+    }),
+	body('maxRoomNo').custom((value,{req}) => {
+        if (value < req.body.minRoomNo){
+            throw new Error("Maximum room number CANNOT be less than minimum room number!");
+        }
+        return true;
+    }),
+
+    // body('number_guest').custom(value => {
+    //     if (value > 5) {
+    //         throw new Error("Cannot Exceed 5 memebers!");
+    //     }
+    //     return true;
+    // }),
+],
+
+(req, res) => {
+	const validatorErrors = validationResult(req);
+	let errors = [];
 	let type = req.body.type;
+	console.log("Room type is :")
+	console.log(type);
+	let type_id = req.params.id;
 	let roomName = req.body.roomName;
 	let roomImage = req.body.roomImage;
 	let description = req.body.description;
 	let roomPrice = req.body.roomPrice;
 	let minRoomNo = req.body.minRoomNo;
 	let maxRoomNo = req.body.maxRoomNo;
-	RoomType.update({
+	if (!validatorErrors.isEmpty()) {
+		console.log("Errors creating room type")
+		validatorErrors.array().forEach(error => {
+			console.log(error);
+			errors.push({ text: error.msg })
+		});
+		res.render('admin/roomType/type_edited', {
+		layout: "admin",
 		type,
 		roomName,
-		roomImage,
 		description,
 		roomPrice,
+		roomImage,
 		minRoomNo,
-		maxRoomNo
-	}, {
-	where: {
-	type_id: req.params.id
-	}
-	}).then(() => {
-	// After saving, redirect to router.get(/listVideos...) to retrieve all updated
-	// videos
-	res.redirect('/admin/typeList');
-	}).catch(err => console.log(err));
+		maxRoomNo,
+		type_id,
+		errors
 	});
+	} else {
+		RoomType.update({
+			type,
+			roomName,
+			roomImage,
+			description,
+			roomPrice,
+			minRoomNo,
+			maxRoomNo
+		}, {
+		where: {
+		type_id: req.params.id
+		}
+		}).then(() => {
+			res.redirect('/admin/typeList');
+			}).catch(err => console.log(err));
+	}
+})
 
 
 
@@ -302,13 +445,21 @@ router.get("/hospitalProfile/:id", (req, res) => {
     },
   })
     .then((hospital) => {
-      let place_ID = hospital.placeID;
+		if (hospital != null) {
+			let place_ID = hospital.placeID;
       res.render("admin/hospital/hospitalProfile", {
         hospital, 
         layout: "admin",
         title: title,
 		place_ID : place_ID
-      });
+      }).catch(err => 
+	  console.log(err),
+	  alertMessage(res, 'danger', "Error occurred!", 'fas fa-exclamation-circle', true)
+	  );
+		} else {
+			alertMessage(res, 'danger', "No such hospital found!", 'fas fa-exclamation-circle', true);
+			res.redirect('/admin/hospitalList');
+		}
     })
     .catch((err) => console.log(err)); 
 });
@@ -321,14 +472,18 @@ router.get("/hospitalEdit/:id", (req, res) => {
 	  },
 	})
 	  .then((hospital) => {
-		let place_ID = hospital.placeID;
-		// call views/video/editVideo.handlebar to render the edit video page
-		res.render("admin/hospital/hospital_edit", {
-		  hospital, // passes video object to handlebar
-		  layout: "admin",
-		  title: title,
-		  place_ID : place_ID
-		});
+		if (!hospital) { 
+            alertMessage(res, 'info', 'No such hospital found!', 'fas fa-exclamation-circle', true);
+            res.redirect('/admin/hospitalList');
+        } else {
+			let place_ID = hospital.placeID;
+			res.render("admin/hospital/hospital_edit", {
+			  hospital, 
+			  layout: "admin",
+			  title: title,
+			  place_ID : place_ID
+			}).catch(err => console.log(err));
+        }
 	  })
 	  .catch((err) => console.log(err)); // To catch no video ID
   });
