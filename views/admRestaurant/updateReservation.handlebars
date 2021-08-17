@@ -47,7 +47,7 @@
                 <fieldset>
                     <label>Date: </label>
                     <input name="cust_date" type="date" id="cust_date" class="datepicker form-control"
-                        value="{{reservation.cust_date}}" placeholder="Date*" required="">
+                        value="{{reservation.cust_date}}" placeholder="Date*" required=""readonly>
                 </fieldset>
             </div>
         </div>
@@ -55,14 +55,15 @@
             <fieldset>
                 <label>Time: </label>
                 <input class="form-control" name="cust_time" type="time" id="cust_time" placeholder="Time*"
-                    value="{{reservation.cust_time}}" required="">
+                    value="{{reservation.cust_time}}" required="" readonly>
             </fieldset>
         </div>
         <div class="form-group">
             <fieldset>
                 <label>Message: </label>
+                {{!-- <input class="form-control" id="toSubject" name="toSubject" required type="text" value="{{contact.contact_subject}}" readonly> --}}
                 <textarea class="form-control" name="cust_message" rows="6" id="cust_message" placeholder="Message"
-                    value="" required="">{{reservation.cust_message}}</textarea>
+                    value="" required="" readonly>{{reservation.cust_message}}</textarea>
             </fieldset>
         </div>
         <div class="col d-flex justify-content-end">

@@ -153,21 +153,6 @@ router.get('/bookingList', (req, res) => {
         .catch(err => console.log(err));
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Create reservation 
 router.post('/createReservation', [
     body('cust_fname').not().isEmpty().isAlpha().trim().escape().withMessage("First name is Invalid"),
@@ -194,7 +179,7 @@ router.post('/createReservation', [
     let cust_fname = req.body.cust_fname
     let cust_lname = req.body.cust_lname
     let cust_email = req.body.cust_email
-    // let cust_phone = req.body.cust_phone
+    let cust_phone = req.body.cust_phone
     let number_guest = req.body.number_guest
     let cust_date = req.body.cust_date
     let cust_time = req.body.cust_time
@@ -213,7 +198,7 @@ router.post('/createReservation', [
             cust_fname,
             cust_lname,
             cust_email,
-            // cust_phone,
+            cust_phone,
             number_guest,
             cust_date,
             cust_time,
@@ -225,7 +210,7 @@ router.post('/createReservation', [
             cust_fname,
             cust_lname,
             cust_email,
-            // cust_phone,
+            cust_phone,
             number_guest,
             cust_date,
             cust_time,
@@ -273,8 +258,8 @@ router.post('/createContact', [
             contact_subject,
             contact_message
         }).then((contact) => {
-            // alertMessage(res, 'success', 'Test Error', 'fas fa-exclamation-circle', true);
             res.redirect('/restaurant/DineV2');
+            alertMessage(res, 'success', 'Test Error', 'fas fa-exclamation-circle', true);
         }).catch(err => console.log(err));
     }
 });
