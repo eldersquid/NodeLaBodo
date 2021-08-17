@@ -39,10 +39,10 @@
         value="{{facilities.fac_time}}" required />
         </fieldset>
         </div>
-  <hr>
+  
   <div class="elem-group inlined">
     <label for="checkin-date">Check-in Date</label>
-    <input type="date" id="fac_date" name="fac_date" value = "{{facilities.fac_date}}" required>
+    <input type="date" id="fac_date" name="fac_date" value = "{{facilities.fac_date}}" min = "2021-08-18" required>
   </div>
  
   <hr>
@@ -249,7 +249,7 @@ checkinElem.onchange = function () {
 
         minDate.setDate(minDate.getDate()); // set days - mean previous date from current date + mean future date from current date
         maxDate.setDate(maxDate.getDate() + 14);
-        $('#cust_date').datetimepicker({
+        $('#fac_date').datetimepicker({
             format: 'YYYY-MM-DD',
             minDate: minDate,
             maxDate: maxDate,
