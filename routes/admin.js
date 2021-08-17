@@ -309,9 +309,9 @@ router.get("/typeEdit/:id", (req, res) => {
   });
 
 router.put('/typeEdited/:id', [
-    body('roomName').not().isEmpty().trim().escape().withMessage("Room name is Invalid"),
-    body('minRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Minimum room number is Invalid"),
-	body('maxRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Maximum room number is Invalid"),
+    body('roomName').not().isEmpty().trim().escape().withMessage("Room name is Invalid!"),
+    body('minRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Minimum room number is Invalid!"),
+	body('maxRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Maximum room number is Invalid!"),
     // body('cust_email').trim().isEmail().withMessage("Invalid Email").normalizeEmail().toLowerCase(),
     // body('cust_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
     // body('cust_date').not().isEmpty().trim().escape().withMessage("Require Date Field"),
@@ -360,7 +360,9 @@ router.put('/typeEdited/:id', [
 	const validatorErrors = validationResult(req);
 	let errors = [];
 	let type = req.body.type;
+	console.log("Room type is :")
 	console.log(type);
+	let type_id = req.params.id;
 	let roomName = req.body.roomName;
 	let roomImage = req.body.roomImage;
 	let description = req.body.description;
@@ -373,7 +375,7 @@ router.put('/typeEdited/:id', [
 			console.log(error);
 			errors.push({ text: error.msg })
 		});
-		res.render('admin/roomType/type_create', {
+		res.render('admin/roomType/type_edited', {
 		layout: "admin",
 		type,
 		roomName,
@@ -382,6 +384,7 @@ router.put('/typeEdited/:id', [
 		roomImage,
 		minRoomNo,
 		maxRoomNo,
+		type_id,
 		errors
 	});
 	} else {
