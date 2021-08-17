@@ -1,0 +1,263 @@
+
+
+{{>_navbar}} 
+<br><br><br>
+
+<div class="card">
+    <img src="https://cdn.galaxy.tf/thumb/sizeW1920/uploads/2s/cms_image/001/567/586/1567586486_5d6f78b6f1038-thumb.jpg" alt="">
+    <div class="container">
+        <p>La Bodo Gym @ Lvl 24</p>
+    </div>
+
+</div>
+<div class="card">
+    <div class="container">
+<form action="bookGym" method="post"> 
+  <div class="elem-group">
+<label for="type">Select Facility Type</label>
+<select name="fac_type" id="fac_type" value = "{{facilities.fac_type}}" required>
+  <option value="Gym">Gym</option>
+  <option value="Swimming Pool">Swimming Pool</option>
+</select>
+</div>
+  <div class="elem-group">
+    <label for="name">Your Name</label>
+    <input type="text" id="fac_name" name="fac_name" placeholder="John Doe" value = "{{facilities.fac_name}}" pattern=[A-Z\sa-z]{3,20} required>
+  </div>
+  <div class="elem-group">
+    <label for="email">Your E-mail</label>
+    <input type="email" id="fac_email" name="fac_email" placeholder="john.doe@email.com"  value = "{{facilities.fac_email}}"required>
+  </div>
+  <div class="elem-group">
+    <label for="phone">Your Phone</label>
+    <input type="tel" id="fac_num" name="fac_num" placeholder="Phone Number" value = "{{facilities.fac_num}}"  required>
+  </div>
+<div class="elem-group">
+  <label for="time">Time</label>
+<fieldset>
+    <input name="fac_time" type="time" id="fac_time" placeholder="Time*"
+        value="{{facilities.fac_time}}" required />
+        </fieldset>
+        </div>
+  <hr>
+  <div class="elem-group inlined">
+    <label for="checkin-date">Check-in Date</label>
+    <input type="date" id="fac_date" name="fac_date" value = "{{facilities.fac_date}}" required>
+  </div>
+ 
+  <hr>
+ <br><br><br><br>
+  <fieldset>
+
+
+
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" onclick=""
+                                                        class="btn btn-success btn-sm" data-toggle="modal"
+                                                        data-target="#exampleModal">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+</form>
+</div>
+</div>
+
+<style>
+    body {
+  width: 500px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+div.elem-group {
+  margin: 20px 0;
+}
+
+div.elem-group.inlined {
+  width: 49%;
+  display: inline-block;
+  float: left;
+  margin-left: 1%;
+}
+
+label {
+  display: block;
+  font-family: 'Nanum Gothic';
+  padding-bottom: 10px;
+  font-size: 1.25em;
+}
+
+input, select, textarea {
+  border-radius: 2px;
+  border: 2px solid #777;
+  box-sizing: border-box;
+  font-size: 1.25em;
+  font-family: 'Nanum Gothic';
+  width: 100%;
+  padding: 10px;
+}
+div.elem-group.inlined input {
+  width: 95%;
+  display: inline-block;
+}
+
+textarea {
+  height: 250px;
+}
+
+hr {
+  border: 1px dotted #ccc;
+}
+
+button {
+  height: 50px;
+  background: orange;
+  border: none;
+  color: white;
+  font-size: 1.25em;
+  font-family: 'Nanum Gothic';
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  border: 2px solid black;
+
+.card {
+  /* Add shadows to create the "card" effect /
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+/ On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.container {
+  padding: 4px 20px;
+}
+</style>
+
+<script>
+    var currentDateTime = new Date();
+var year = currentDateTime.getFullYear();
+var month = (currentDateTime.getMonth() + 1);
+var date = (currentDateTime.getDate() + 1);
+
+if(date < 10) {
+  date = '0' + date;
+  }
+if(month < 10) {
+  month = '0' + month;
+}
+
+var dateTomorrow = year + "-" + month + "-" + date;
+var checkinElem = document.querySelector("#checkin-date");
+var checkoutElem = document.querySelector("#checkout-date");
+
+checkinElem.setAttribute("min", dateTomorrow);
+
+checkinElem.onchange = function () {
+    checkoutElem.setAttribute("min", this.value);
+}
+</script>
+
+
+<script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        // navigation click actions
+        $('.scroll-link').on('click', function (event) {
+            event.preventDefault();
+            var sectionID = $(this).attr("data-id");
+            scrollToID('#' + sectionID, 750);
+        });
+        // scroll to top action
+        $('.scroll-top').on('click', function (event) {
+            event.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        });
+        // mobile nav toggle
+        $('#nav-toggle').on('click', function (event) {
+            event.preventDefault();
+            $('#main-nav').toggleClass("open");
+        });
+    });
+    // scroll function
+    function scrollToID(id, speed) {
+        var offSet = 0;
+        var targetOffset = $(id).offset().top - offSet;
+        var mainNav = $('#main-nav');
+        $('html,body').animate({ scrollTop: targetOffset }, speed);
+        if (mainNav.hasClass("open")) {
+            mainNav.css("height", "1px").removeClass("in").addClass("collapse");
+            mainNav.removeClass("open");
+        }
+    }
+    if (typeof console === "undefined") {
+        console = {
+            log: function () { }
+        };
+    }
+</script>
+
+<script type="text/javascript">
+    $("#modalsubmit").click(function () {
+        var fname = $("#fac_name").val();
+        var email = $("#fac_email").val();
+        var phone = $("#fac_num").val();
+        var date = $("#fac_date").val();
+        var time = $("#fac_time").val();
+        var str = "Thank you " + fname  + " for making a reservation with us. <br/>"
+            + "<br/>"
+            + "Please ensure that the details below is correct before submmitting.<br/>"
+            + "<br/>"
+            + "Email: " + email + "<br/>"
+            + "Phone Number: " + phone + "<br/>"
+            + "Date: " + date + "<br/>"
+            + "<br/>"
+            + "we will be sending these details to your email."
+        $("#modal_body").html(str);
+    });
+</script>
+
+<script>
+    $(function () {
+        $.extend(true, $.fn.datetimepicker.defaults, {
+            icons: {
+                time: 'far fa-clock',
+                date2: 'far fa-calendar',
+                up: 'fas fa-arrow-up',
+                down: 'fas fa-arrow-down',
+                previous: 'fas fa-chevron-left',
+                next: 'fas fa-chevron-right',
+                today: 'far fa-calendar-check-o',
+                clear: 'far fa-trash',
+                close: 'far fa-times'
+            }
+        });
+    });
+
+    $(function () {
+        var minDate = new Date();
+        var maxDate = new Date();
+
+        minDate.setDate(minDate.getDate()); // set days - mean previous date from current date + mean future date from current date
+        maxDate.setDate(maxDate.getDate() + 14);
+        $('#cust_date').datetimepicker({
+            format: 'YYYY-MM-DD',
+            minDate: minDate,
+            maxDate: maxDate,
+        });
+    });
+
+    $("#modalSubmit").click(function () {
+        $("#exampleModal").submit()
+    });
+</script>
+</script
