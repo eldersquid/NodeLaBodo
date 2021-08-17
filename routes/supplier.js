@@ -302,8 +302,9 @@ router.post('/signup', (req, res) => {
 
 
 router.post('/login', (req, res, next) => {
+    let uen_number = req.body.uen_number
     passport.authenticate('local', {
-        successRedirect: '/orders/supplierview',
+        successRedirect: '/orders/supplierview/' + uen_number,
         failureRedirect: '/supplier/showLoginSignup',
         failureFlash: true
     })(req, res, next);
