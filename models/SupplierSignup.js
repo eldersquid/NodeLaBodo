@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
 const SupplierSignup = db.define('suppliersignup', {
-    signup_id: {
+    supplier_id: {
         type: Sequelize.STRING
     },
     company_name:{

@@ -186,6 +186,9 @@ app.use(session({
     saveUninitialized: false,
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Place to define global variables - not used in practical 1
 // Two flash messenging libraries - Flash (connect-flash) and Flash Messenger
 app.use(flash());
@@ -193,10 +196,8 @@ app.use(FlashMessenger.middleware);
 const SendmailTransport = require('nodemailer/lib/sendmail-transport');
 const authenticate = require('./config/passport');
 const supplier_authenticate = require('./config/supplierpassport');
-const staff_authenticate = require('./config/supplierpassport');
 authenticate.localStrategy(passport);
 supplier_authenticate.localStrategy(passport);
-staff_authenticate.localStrategy(passport);
 
 
 
@@ -304,9 +305,6 @@ passport.use(
         }
     ));
 
-app.use(passport.initialize());
-
-app.use(passport.session());
 
 app.get('/googleauth/google', passport.authenticate('google', { scope: ['profile'] }));
 
