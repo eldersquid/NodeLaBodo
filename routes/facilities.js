@@ -48,7 +48,7 @@ router.get('/bookSwim', (req, res) => {
 
 router.get('/testig', (req, res) => {
     res.render('facilities/testig', {
-        layout: "admin",
+        layout: "blank",
     });
 });
 //Create reservation 

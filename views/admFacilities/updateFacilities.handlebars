@@ -1,0 +1,52 @@
+<head>
+    <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/sweetalert2/dist/sweetalert2.min.css">
+</head>
+
+<div class="container-fluid">
+    <h1 class="display-4">Update Reservation</h1>
+    <form id="contact4" action="/admFacilities/updateFacilities/{{facilities.id}}" method="post">
+
+        <div class="form-group">
+        </div>
+        <div class="form-group">
+            <div id="filterDate2">
+                <fieldset>
+                    <label>Date: </label>
+                    <input name="fac_date" type="date" id="fac_date" class="datepicker form-control"
+                        value="{{facilities.fac_date}}" placeholder="Date*" required="">
+                </fieldset>
+            </div>
+        </div>
+        <div class="form-group">
+            <fieldset>
+                <label>Time: </label>
+                <input class="form-control" name="fac_time" type="time" id="fac_time" placeholder="Time*"
+                    value="{{facilities.fac_time}}" required="">
+            </fieldset>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <button class="btn btn-primary" type="submit" id="modalUpdate">Update</button>
+        </div>
+    </form>
+
+    <script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    {{!-- <script>
+        $("#modalUpdate").click(function (e) {
+            e.preventDefault();
+
+            var fac_name = $("#fac_name").val();
+            var fac_email = $("#fac_email").val();
+            var fac_num = $("#fac_num").val();
+            var fac_date = $("#fac_date").val();
+            var fac_time = $("#fac_time").val();
+            Swal.fire(
+                'Update!',
+                'Updated Successfully!',
+                'success').then((result) => {
+                    if (result.isConfirmed) {
+                        $("#contact4").submit();
+                    }
+                });
+        });
+    </script> --}}
