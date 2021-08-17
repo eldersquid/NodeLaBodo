@@ -4,6 +4,14 @@
 
 <div class="container-fluid">
     <h1 class="display-4">Update Menu</h1>
+    {{#if error}}
+    <div class="alert alert-danger">{{error}}</div>
+    {{/if}}
+
+    {{#each errors}}
+    <div class="alert alert-danger">{{text}}</div>
+    {{else}}
+    {{/each}}
     <form id="Menu" action="/admRestaurant/updatedMenu/{{foodcart.id}}?_method=PUT" method="post">
         <input type="hidden" name="_method" value="PUT">
         <div class="form-group">
@@ -20,14 +28,14 @@
             <fieldset>
                 <label>Name: </label>
                 <input class="form-control" name="cardName" type="text" id="cardName" value="{{foodcart.cardName}}"
-                    required="">
+                    required="" readonly>
             </fieldset>
         </div>
         <div class="form-group">
             <fieldset>
                 <label>Price: </label>
-                <input class="form-control" name="cardPrice" type="text" id="cardPrice" placeholder="$"
-                   $ value="{{foodcart.cardPrice}}" required="">
+                <input class="form-control" name="cardPrice" type="text" id="cardPrice" placeholder="$" $
+                    value="{{foodcart.cardPrice}}" required="">
             </fieldset>
         </div>
         <button type="submit" value="Submit" class="btn btn-primary">
@@ -35,8 +43,8 @@
         </button>
     </form>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <script>
         $('#updateMenu').on('change', function () {
