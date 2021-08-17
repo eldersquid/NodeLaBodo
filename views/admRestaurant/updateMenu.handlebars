@@ -4,15 +4,15 @@
 
 <div class="container-fluid">
     <h1 class="display-4">Update Menu</h1>
-    <form id="Menu" action="/admRestaurant/updateMenu/{{foodcart.id}}?_method=PUT" method="post">
-
+    <form id="Menu" action="/admRestaurant/updatedMenu/{{foodcart.id}}?_method=PUT" method="post">
+        <input type="hidden" name="_method" value="PUT">
         <div class="form-group">
             <label>Update Menu image here</label>
             <br>
-            <img id='existPic' name="existPic" src="{{foodcart.cardPhoto_data}}" width="240" height="135" class="border">
+            <img id='existPic' name="existPic" src="{{foodcart.cardPhoto}}" width="240" height="135" class="border">
             <div style="position:relative; "></div>
             <input type="file" accept="image/png,image/jpeg,image/jpg" name="updateMenu" id="updateMenu">
-            <input type="hidden" id='trueMenuPicture2' name="trueMenuPicture2">
+            <input type="hidden" id='trueMenuPicture2' name="trueMenuPicture2" value="{{foodcart.cardPhoto}}">
             <div class="font-weight-bold text-danger small" id="picErr" style`="display:none">
             </div>
         </div>
@@ -60,7 +60,7 @@
                     console.log(data);
                     console.log(data.path);
                     $('#existPic').attr('src', data.path);
-                    $('#trueFilePicture2').attr('value', data.path);
+                    $('#trueMenuPicture2').attr('value', data.path);
 
                     if (data.err) {
                         $('#picErr2').show();
