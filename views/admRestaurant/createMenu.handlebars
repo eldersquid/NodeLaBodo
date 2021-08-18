@@ -56,7 +56,6 @@
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
     $('#MenuUpload').on('change', function () {
-        alert("hello");
         var file = $("#MenuUpload")[0].files[0];
         var formdata = new FormData();
         formdata.append('picUpload', file);
