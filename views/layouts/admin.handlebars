@@ -21,15 +21,61 @@
     <link href="/styles/all.min.css" rel="stylesheet" type="text/css">
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../public/sweetalert2/dist/sweetalert2.css">
+        	{{!-- Chatbot css --}}
+	    <link rel="stylesheet" href="/styles/chat.css">
+    	<link rel="stylesheet" href="/styles/chatBot.css">
+    	<link rel="stylesheet" href="/styles/typing.css">
+	<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
 </head>
 
 <body>
     {{>_servernav}}
+    <div class="container-fluid">
+        {{>_flashmsg}}
+        {{>_msg}}
+        {{>_errors}}
+    </div>
+    <div class="container">
+        <div class="chatbox">
+            <div class="chatbox__support" id="test">
+                <div class="chatbox__header">
+                    <div class="chatbox__image--header">
+                        <img src="/img/botAvatarSmall.png" class="img-thumbnail rounded-circle" alt="image">
+                    </div>
+                    <div class="chatbox__content--header">
+						
+                        <h4 class="chatbox__heading--header">Chuu Bot</h4>
+                        <p class="chatbox__description--header">A personal search assistant to navigate Hotel La Bodo.</p>
+                    </div>
+                </div>
+                <div class="chatbox__messages" id="ChatBot_message">
+                    <div id="ChatBot_messages">
+						
+                        <div class="messages__item messages__item--visitor">
+                            I’m Chuu, your Hotel La Bodo virtual assistant! Here to assist you with your query on our services!
+                        </div>
+                    </div>
+                </div>
+                <div class="chatbox__footer">
+                    <input type="text" id="textbox" name="textbox" placeholder="Write a message...">
+					<button id="sendBtn" type="button" class="btn btn-primary">Send</button>
+                    
+                </div>
+            </div>
+            <div class="chatbox__button">
+                <button>button</button>
+            </div>
+        </div>
+    </div>
     {{{body}}}
-
-
-    <script src="../../public/sweetalert2/dist/sweetalert2.all.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous"></script>
+    	<!-- Optional JavaScript -->
+	<script src="/js/Chat.js"></script>
+    <script src="/js/chatActivate.js"></script>
     <!-- Bootstrap core JavaScript-->
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>

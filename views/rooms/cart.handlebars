@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart Design Page For beginners</title>
+    
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <link rel="stylesheet" href="/css/cart.css">
-    <script src="./jquery-3.5.1.js"></script>
+
     <script>$(document).ready(function(){
         $(".size_select").click(function () {
            $(".slider").addClass("active");
@@ -44,32 +44,35 @@
 </head>
 
 <body>
+<br>
+<br>
+<br>
+<br>
+<br>
 
     <div class="wrapper">
 
         <div class="wrapper_content">
             <div class="header_title">
                 <div class="title">
-                    MY SHOPPING CART :
+                    
                 </div>
                 <div class="amount">
-                    <b>( 1 ) ITEMS</b>
+                    <b>ROOM</b>
                 </div>
 
             </div>
-            <div class="product_wrap">
+            <div class="contact-form">
                 <div class="product_info">
                     <div class="product_img">
-                        <img src="./shoe.jpg" alt="ProductImage" width="200px" height="200px">
+                        <img src="{{roomtype.roomImage}}" alt="ProductImage" width="200px" height="200px">
                     </div>
                     <div class="product_data">
                         <div class="description">
-                            <div class="main_header">
-                                Apartment
-                            </div>
-                            <div class="sub_header">
-                                Additional Items :
-                                AR 15, Face Shield V2
+                            <input type="hidden" name="roomType" value="{{roomtype.type}}">
+                            <div class="main_header" style="color: black;">
+                                
+                                {{roomtype.type}}
                             </div>
                             <div class="sub_header">
                                 Book In Date : {{room.bookInDate}}
@@ -86,7 +89,7 @@
                             </div>
                         </div> -->
                         <div class="price">
-                            <div class="current_price">$500</div>
+                            <div class="current_price">${{roomtype.roomPrice}}</div>
                             <!-- <div class="normal_price">$30</div>
                             <div class="discount">15% OFF</div> -->
                         </div>
@@ -190,8 +193,8 @@
                 </div>
                 <div class="price_details">
                     <div class="item">
-                        <p>{{room.roomType}} </p>
-                        <p>$500</p>
+                        <p>{{roomtype.type}} </p>
+                        <p>${{roomtype.roomPrice}}</p>
                     </div>
                     <div class="item">
                         <p>{{room.package_deal}}</p>
@@ -206,22 +209,19 @@
                         <p>Delivery Charges :</p>
                         <p><span style="text-decoration: line-through;"></span>$5 <span class="green">FREE</span></p>
                     </div> -->
-                    <div class="coupon">
-                        <p>Coupon Discount :</p>
-                        <p><a href="#">Apply Coupon</a></p>
-                    </div>
+                    
                     <div class="total">
                         <p>Total :</p>
-                        <p>$500</p>
+                        <p name="price">${{roomtype.roomPrice}}</p>
                     </div>
                 </div>
-                <div class="checkout">
-                    <a href="#" role="button" class="checkout_btn">Pay</a>
-                </div>
-                <div class="checkout">
-                    <input type="submit" value="Pay by PayPal" class="checkout_btn">
+                <div class="col mt-2">
                     
+                    <button type="submit" class="btn btn-primary btn-sm" >
+                                        Pay by PayPal
+                                    </button>
                 </div>
+                
             </div>
         </form>
     </div>

@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <h1 class="display-5">Create New Order Form</h1>
+
+    <form method="POST" action="/orders/create" id="form">
+
+        <div class="form-group" hidden>
+            <label for="supplier">Supplier</label>
+            <input class="form-control" id="supplier" name="supplier" required type="text" value="{{supplier}}">
+        </div>
+
+        <div class="form-group">
+            <label for="item_name">Item Name</label>
+            <select class="form-control" id="item_name" name="item_name" required>
+                <option value="none" selected disabled hidden></option>
+                {{#if inventory}}
+                {{#each inventory}}
+                <option value="{{item_name}}" style="text-transform: capitalize;">{{item_name}}</option>
+                {{/each}}
+                {{/if}}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input class="form-control" id="quantity" name="quantity" required type="number" value="">
+        </div>
+
+        <div id="prof">
+            <div class="form-group">
+                <label for="remarks">Remarks</label>
+                <textarea class="form-control" id="remarks" name="remarks"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group" hidden>
+            <label for="status">Status</label>
+            <select class="form-control" id="status" name="status" required>
+                <option value="Awaiting Supplier Call" selected>Awaiting Supplier Call</option>
+            </select>
+        </div>
+
+        
+        <button type="submit" value="Submit" id="submit-btn" data-toggle="modal" data-target="#modalReply"
+            class="btn btn-primary">Submit</button>
+    </form>
+</div>

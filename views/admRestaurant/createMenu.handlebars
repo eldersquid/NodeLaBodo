@@ -1,0 +1,96 @@
+ 
+
+<div class="container-fluid">
+    <h1 class="display-5">Add Menu</h1>
+
+    <form method="POST" action="/admRestaurant/createMenu" id="createMenu">
+        <div class="form-group">
+            <label>Upload your image here</label>
+            <br>
+            <img id='pictureThumbnail1' name="pictureThumbnail1" src="/foodPictures/9.jpg" width="240" height="135"
+                class="border">
+            <div style="position:relative; "></div>
+            <input type="file" accept="image/png,image/jpeg,image/jpg" name="MenuUpload" id="MenuUpload">
+            <input type="hidden" id='trueMenuPicture' name="trueMenuPicture">
+            <div class="font-weight-bold text-danger small" id="picErr" style`="display:none">
+            </div>
+        </div>
+        <div class="form-group">
+
+            <label for="cardName">Name: </label>
+            <input class="form-control" id="cardName" name="cardName" required type="text"
+                value="{{cardName}}">
+        </div>
+            <div class="form-group">
+            <label for="cardPrice">Price: </label>
+            <input class="form-control" id="cardPrice" name="cardPrice" required type="text"
+                value="{{cardPrice}}">
+        </div>
+
+            <button type="submit" value="Submit" 
+                class="btn btn-primary">
+                Add
+            </button>
+    </form>
+</div>
+
+{{!-- <script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+<script>
+    $("#replySubmit").click(function (e) {
+        e.preventDefault();
+
+
+        Swal.fire(
+            'Submitted!',
+            'Respone Recieved!',
+            'success').then((result) => {
+                if (result.isConfirmed) {
+                    $("#response").submit();
+                }
+            });
+    });
+</script> --}}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $('#MenuUpload').on('change', function () {
+        alert("hello");
+        var file = $("#MenuUpload")[0].files[0];
+        var formdata = new FormData();
+        formdata.append('picUpload', file);
+        console.log("here")
+        //alert(file.name)
+        //document.getElementById("imgFilename") = file.name;
+        //$('#imgFilename') = "XCoder";
+        //$('#imgFilename').attr('value', file.name);
+
+        $.ajax({
+            url: '/admRestaurant/foodPic',
+            data: formdata,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            'success': (data) => {
+                console.log(data);
+                console.log(data.path);
+                $('#pictureThumbnail1').attr('src', data.path);
+                $('#trueMenuPicture').attr('value', data.path);
+
+                if (data.err) {
+                    $('#picErr').show();
+                    $('#picErr').text(data.err.message);
+                }
+                else {
+                    $('#picErr').hide();
+                }
+            },
+            error: function (xhr, errorType, exception) {
+                alert("Error", errorType);
+            }
+
+
+        });
+    });
+</script>

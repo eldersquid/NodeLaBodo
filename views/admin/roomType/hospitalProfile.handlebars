@@ -1,0 +1,266 @@
+
+
+<head>
+  <link rel="stylesheet" href="/css/g_map.css">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+          <h2 class="placeID" id="placeID" style="display: none;">{{place_ID}}</h2>
+
+            <div class="container">
+                <div class="main-body">
+
+                      <!-- Breadcrumb -->
+      
+                      <!-- /Breadcrumb -->
+
+                      <div class="row gutters-sm">
+                        <div class="col-md-4 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+
+                              <div class="d-flex flex-column align-items-center text-center">
+                                
+                                <img src="{{hospital.photo}}" alt="Generic Hospital Logo" class="rounded-circle" width="200">
+                                <h4 class="mt-2">Rating</h4>
+                                <h3 class="mt-2"><span class="small text-muted" id="rating">3.5 </span> / 5</h3>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card mt-3">
+                            <ul class="list-group list-group-flush">
+                              <h3 class="card-title m-3 text-center text-muted">Opening Hours</h3>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="mon">Open 24 Hours</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="tues">Open 24 Hours</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="wed">Open 24 Hours</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="thurs">Open 24 Hours</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="fri">Open 24 Hours</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="sat">Open 24 Hours</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="sun">Open 24 Hours</span>
+                              </li>
+                            </ul>
+                          </div>
+
+                          <div class="card mt-3">
+                            <h3 class="card-title m-3 text-center text-muted">Coordinates</h3>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6>Latitude : <span class="text-secondary" id="coord_lat"></span> </h6>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6>Longitude : <span class="text-secondary" id="coord_lng"></span> </h6>
+                              </li>
+                            </ul>
+                          </div>
+
+                          <div class="card mt-3">
+                            <h3 class="card-title m-3 text-center text-muted">Establishment Type</h3>
+                    
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="type1"></span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="type2"></span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="type3"></span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="text-secondary" id="type4"></span>
+                              </li>
+                            </ul>
+                          </div>
+
+
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card mb-3">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Hospital Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                  {{hospital.hospitalName}}
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Address</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                   {{hospital.address}}
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Contact Number</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                  {{hospital.contactNo}}
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Website</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                   {{hospital.website}}
+                                </div>
+                              </div>
+                              
+                              
+                              <hr>
+
+                              <div class="row">
+                                <div class="col d-flex justify-content">
+                                  <a class="btn btn-info " target="__blank" href="/admin/hospitalEdit/{{hospital.id}}">Edit</a>
+                                  
+
+                                </div>
+                                <div class="col d-flex justify-content-end">
+                                  
+                                  <a class="btn btn-danger " target="__blank" href="/admin/hospitalList">Back</a>
+
+                                </div>
+                              </div>
+
+                            </div>
+
+
+                          </div>
+
+
+
+
+
+                          <div class="row gutters-sm">
+                            <div class="col">
+                              <div class="card h-100">
+                                <h3 class="card-title m-3 text-center text-muted">Recent Reviews</h3>
+                                <hr>
+                                <div class="card-body">
+                                  <div class="row">
+                                    <div class="col-sm-3 d-flex flex-column align-items-center text-center">
+                                      <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" id="avatar1" class="rounded-circle" width="100">
+                                      <h6 class="mt-2" id="review1name">Jang Wonyoung</h6>
+                                      <h3 class="mt-2"><span class="small text-muted" id="review1rating">3.5 </span> / 5</h3>
+
+                                    </div>
+                                    <div class="col-sm-9 mt-2">
+                                      <p><small id="review1time">2 months ago</small></p>
+                                      <p id="review1">Clinic 2A: The attitude of the doctor is worse than the customer service personnel at the registration and payment counters. Due to his lack of knowledge, the doctor does not instill any confidence in the patient at all. The entire session makes me feel like he is just going through the motions. Zero work ethics, compassion and empathy.</p>
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3 d-flex flex-column align-items-center text-center">
+                                      <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" id="avatar2" class="rounded-circle" width="100">
+                                      <h6 class="mt-2" id="review2name">Jang Wonyoung</h6>
+                                      <h3 class="mt-2"><span class="small text-muted" id="review2rating">3.5 </span> / 5</h3>
+
+                                    </div>
+                                    <div class="col-sm-9 mt-2">
+                                      <p><small id="review2time">2 months ago</small></p>
+                                      <p id="review2">Clinic 2A: The attitude of the doctor is worse than the customer service personnel at the registration and payment counters. Due to his lack of knowledge, the doctor does not instill any confidence in the patient at all. The entire session makes me feel like he is just going through the motions. Zero work ethics, compassion and empathy.</p>
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3 d-flex flex-column align-items-center text-center">
+                                      <img src="https://bootdey.com/img/Content/avatar/avatar7.png" id="avatar3" alt="Admin" class="rounded-circle" width="100">
+                                      <h6 class="mt-2" id="review3name">Jang Wonyoung</h6>
+                                      <h3 class="mt-2"><span class="small text-muted" id="review3rating">3.5 </span> / 5</h3>
+
+                                    </div>
+                                    <div class="col-sm-9 mt-2">
+                                      <p><small id="review3time">2 months ago</small></p>
+                                      <p id="review3">Clinic 2A: The attitude of the doctor is worse than the customer service personnel at the registration and payment counters. Due to his lack of knowledge, the doctor does not instill any confidence in the patient at all. The entire session makes me feel like he is just going through the motions. Zero work ethics, compassion and empathy.</p>
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3 d-flex flex-column align-items-center text-center">
+                                      <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" id="avatar4" class="rounded-circle" width="100">
+                                      <h6 class="mt-2" id="review4name">Jang Wonyoung</h6>
+                                      <h3 class="mt-2"><span class="small text-muted" id="review4rating">3.5 </span> / 5</h3>
+
+                                    </div>
+                                    <div class="col-sm-9 mt-2">
+                                      <p><small id="review4time">2 months ago</small></p>
+                                      <p id="review4">Clinic 2A: The attitude of the doctor is worse than the customer service personnel at the registration and payment counters. Due to his lack of knowledge, the doctor does not instill any confidence in the patient at all. The entire session makes me feel like he is just going through the motions. Zero work ethics, compassion and empathy.</p>
+                                    </div>
+                                  </div>
+                                  <hr>
+
+                                  <div class="row">
+                                    <div class="col-sm-3 d-flex flex-column align-items-center text-center">
+                                      <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" id="avatar5" class="rounded-circle" width="100">
+                                      <h6 class="mt-2" id="review5name">Jang Wonyoung</h6>
+                                      <h3 class="mt-2"><span class="small text-muted" id="review5rating">3.5 </span> / 5</h3>
+
+                                    </div>
+                                    <div class="col-sm-9 mt-2">
+                                      <p><small id="review5time">2 months ago</small></p>
+                                      <p id="review5">Clinic 2A: The attitude of the doctor is worse than the customer service personnel at the registration and payment counters. Due to his lack of knowledge, the doctor does not instill any confidence in the patient at all. The entire session makes me feel like he is just going through the motions. Zero work ethics, compassion and empathy.</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+
+
+                          </div>
+
+
+
+                        </div>
+
+                      </div>
+
+                    </div>
+                </div>
+
+
+
+       <!-- Page level plugins -->
+       <script type="text/javascript">
+       var myTest = #{JSON.stringify(place_ID)};
+       </script>
+       <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+       <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+       <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js" charset="utf-8"></script>
+
+       <!-- Page level custom scripts -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhR62_UUROPzt6A8IOhVZBppjp9e51w2w&callback=initAutocomplete&libraries=places&v=weekly"
+        defer
+      ></script>
+         <script src="/js/google_map.js"></script>
+        <script src="/js/profileFetch.js"></script>
+       <script src="/js/datatables-demo.js"></script>
+
+</body>
+

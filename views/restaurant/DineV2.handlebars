@@ -43,6 +43,14 @@
 <!-- ***** Reservation Us Area Starts ***** -->
 <section class="section" id="reservation">
     <div class="container">
+        {{#if error}}
+        <div class="alert alert-danger">{{error}}</div>
+        {{/if}}
+
+        {{#each errors}}
+        <div class="alert alert-danger">{{text}}</div>
+        {{else}}
+        {{/each}}
         <div class="row">
             <div class="col-lg-6 align-self-center">
                 <div class="left-text-content">
@@ -91,7 +99,7 @@
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                    <input name="cust_email" type="text" id="cust_email" pattern="[^ @]*@[^ @]*"
+                                    <input name="cust_email" type="email" id="cust_email"
                                         placeholder="Your Email Address*" required />
                                 </fieldset>
                             </div>
@@ -127,42 +135,9 @@
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <button type="submit" "btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#exampleModal" id="modalsubmit">
+                                    <button type="submit" "btn btn-primary btn-sm">
                                         Make A Reservation
                                     </button>
-
-                                    {{!--
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h3 class="modal-title" id="exampleModalLabel"
-                                                        style="float: left; width: auto; text-align: center;">
-                                                        Confirmation
-                                                    </h3>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close" style="float: right; width: auto;">
-                                                        <span aria-hidden="true">
-                                                            ×
-                                                        </span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h6 id="modal_body"></h6>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" onclick="" class="btn btn-success btn-sm"
-                                                        data-toggle="modal" data-target="#exampleModal">
-                                                        Submit
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
                                 </fieldset>
                             </div>
                         </div>
@@ -183,7 +158,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="mu-gallery-area">
-
                     <div class="mu-title">
                         <span class="mu-subtitle">Discover</span>
                         <h2>Our Gallery</h2>
@@ -211,7 +185,6 @@
                             <!-- End single gallery image -->
                         </div>
                     </div>
-                    {{!-- {{/if}} --}}
                 </div>
             </div>
         </div>
@@ -231,8 +204,10 @@
                         <br>
                         <br>
                         <br>
-                        <div class="primary-button">
-                            <a href="/restaurant/Menu">view Menu</a>
+                        <div>
+                            <div class="primary-button">
+                                <a href="/restaurant/Menu">view Menu</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -243,21 +218,19 @@
 </section>
 <!-- End Menu -->
 
+
 <!-- Start Contact section -->
 <section id="mu-contact">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="mu-contact-area">
-
                     <div class="mu-title">
                         <span class="mu-subtitle">Get In Touch</span>
                         <h2>Contact Us</h2>
                     </div>
-
                     <div class="mu-contact-content">
                         <div class="row">
-
                             <div class="col-md-6">
                                 <div class="mu-contact-left">
                                     <!-- Start contact form -->
@@ -317,6 +290,17 @@
                 </div>
             </div>
         </div>
+        {{#if error2}}
+        <div class="alert alert-danger">{{error2}}</div>
+        {{/if}}
+
+        {{!--
+        Loop through each text in {{errors}} array to display errors
+        --}}
+        {{#each errors2}}
+        <div class="alert alert-danger">{{text2}}</div>
+        {{else}}
+        {{/each}}
     </div>
 </section>
 <!-- End Contact section -->
@@ -462,6 +446,7 @@
 
 </script>
 
+{{!--
 <script>
     $("#modalsubmit").click(function (e) {
         e.preventDefault();
@@ -482,8 +467,10 @@
                 }
             });
     });
-</script>
 
+</script> --}}
+
+{{!--
 <script>
     $("#contactSubmit").click(function (e) {
         e.preventDefault();
@@ -493,22 +480,14 @@
         var contact_subject = $("#contact_subject").val();
         var contact_message = $("#contact_message").val();
 
-        if (contact_name == contact_name | contact_email == contact_email | contact_subject == contact_subject | contact_message = contact_message){
         Swal.fire(
-            'Submitted!',
-            'Respone Recieved!',
+            'Confirmed!',
+            'Table Reserved!',
             'success').then((result) => {
                 if (result.isConfirmed) {
                     $("#contact2").submit();
                 }
             });
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            button: 'Ok'
-        });
     });
 }
-</script>
+</script> --}}

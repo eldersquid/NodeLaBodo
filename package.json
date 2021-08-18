@@ -10,7 +10,9 @@
     "author": "Node La Bodo",
     "license": "ISC",
     "dependencies": {
+        "@google-cloud/dialogflow": "^4.2.0",
         "@handlebars/allow-prototype-access": "^1.0.5",
+        "actions-on-google": "^2.14.0",
         "axios": "^0.21.1",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
@@ -25,6 +27,7 @@
         "express-handlebars": "^3.1.0",
         "express-mysql-session": "^2.1.6",
         "express-session": "^1.15.6",
+        "express-validator": "^6.12.1",
         "fast-json-stringify": "^2.7.5",
         "flash-messenger": "^1.1.1",
         "google-auth-library": "^7.2.0",
@@ -47,7 +50,8 @@
         "sequelize": "^6.6.4",
         "session": "^0.1.0",
         "sweetalert2": "^11.0.18",
-        "url-parse": "^1.5.3"
+        "url-parse": "^1.5.3",
+        "thesaurus-com": "^1.2.3"
     },
     "devDependencies": {
         "nodemon": "^2.0.7"

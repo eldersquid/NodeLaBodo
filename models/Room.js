@@ -1,18 +1,20 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
+const RoomType = require('../models/RoomType');
 
 const Room = db.define('room', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false
+    },
+    
     bookInDate: {
         type: Sequelize.DATEONLY
     },
     bookOutDate: {
         type: Sequelize.DATEONLY
-    },
-    roomType: {
-        type: Sequelize.STRING
-    },
-    addItems: {
-        type: Sequelize.STRING
     },
     name: {
         type: Sequelize.STRING
@@ -31,7 +33,11 @@ const Room = db.define('room', {
     },
     paid : {
         type : Sequelize.BOOLEAN
+    },
+    nearbyHospital : {
+        type : Sequelize.STRING
     }
 });
+
 
 module.exports = Room;

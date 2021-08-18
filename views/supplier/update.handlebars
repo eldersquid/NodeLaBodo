@@ -1,5 +1,3 @@
-<script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
-<link rel="stylesheet" href="../../public/sweetalert2/dist/sweetalert2.css">
 <div class="container-fluid">
     <h1 class="display-4">Update Supplier</h1>
 
@@ -7,7 +5,7 @@
         <div class="form-group">
 
             <label for="company_name">Company Name</label>
-            <input class="form-control" id="company_name" name="company_name" required type="text" value="{{supplier.company_name}}">
+            <input class="form-control" id="company_name" name="company_name" required type="text" value="{{supplier.company_name}}" readonly>
             
 
 
@@ -15,7 +13,7 @@
         <div class="form-group">
 
             <label for="uen_number">UEN Number</label>
-            <input class="form-control" id="uen_number" name="uen_number" required type="number" value="{{supplier.uen_number}}">
+            <input class="form-control" id="uen_number" name="uen_number" required type="number" value="{{supplier.uen_number}}" readonly>
 
 
         </div>
@@ -37,43 +35,3 @@
             class="btn btn-primary">Submit</button>
     </form>
 </div>
-<script>
-    $("#submit-btn").click(function (e) {
-        e.preventDefault();
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
-        })
-
-        swalWithBootstrapButtons.fire({
-            title: 'Are you sure?',
-            text: "Confirm to update the Supplier?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Comfirm',
-            cancelButtonText: 'Cancel',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                swalWithBootstrapButtons.fire(
-                    'Updated!',
-                    'Supplier has been updated.',
-                    'success'
-                )
-                $("#form").submit()
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire(
-                    'Cancelled',
-                    'Supplier has not been updated.',
-                    'error'
-                )
-            }
-        })
-    })
-</script>

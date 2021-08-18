@@ -9,61 +9,22 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
+const fs = require('fs');
+const flash = require('connect-flash');
 const cors = require('cors');
+const FlashMessenger = require('flash-messenger');
 const SignUpModel = require("./models/Signup");
+const passport = require("passport");
 
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY
-const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 
-console.log(stripeSecretKey, stripePublicKey)
+const Stripe = JSON.parse(fs.readFileSync('credentials/stripePayment.json')); //Gerald's stripe payment gateway
+console.log(Stripe.Public_Key);
 
-const passport = require('passport');
-const nodemailer = require('nodemailer')
-const { google } = require('googleapis')
-const CLIENT_ID = '855734212452-4ti1go2pp7ks8os3o98ragh1k8gh2mtb.apps.googleusercontent.com'
-const CLIENT_SECRET = '6Wm2bPALLsbf2s_H_R-jJpa1'
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04wi_I-DuOpscCgYIARAAGAQSNwF-L9Ir2mNKa0_6ofjTLeipoCL6YqO2WPMgFOHd9rNC8RLr4TPBVj4PGQJU5B0i1V-2qsrqnAw';
-const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
 
-async function sendMail() {
-
-    try {
-        const accessToken = await oAuth2Client.getAccessToken();
-        const transport = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                type: 'OAuth2',
-                user: 'gabewungkana5@gmail.com',
-                clientId: CLIENT_ID,
-                clientSecret: CLIENT_SECRET,
-                refreshToken: REFRESH_TOKEN,
-                accessToken: accessToken
-            }
-        })
-
-        const mailOptions = {
-            from: 'GABE :) <gabewungkana5@gmail.com>',
-            to: 'progenji81@gmail.com',
-            subject: "Reset Password",
-            text: 'Dear  ,\n\nThis is your new password, lololol.   \n Sincerely,\nHotel La Bodo'
-
-        };
-
-        const result = await transport.sendMail(mailOptions);
-        return result;
-
-    } catch (error) {
-        return error
-    }
-}
-sendMail().then(result => console.log('Email sent...', result))
-    .catch(error => console.log(error.message));
 /*
  * Loads routes file main.js in routes directory. The main.js determines which function
  * will be called based on the HTTP request and URL.
@@ -82,7 +43,13 @@ const supplierRoute = require('./routes/supplier');
 
 const inventoryRoute = require('./routes/inventory');
 
-const orderRoute = require('./routes/order');
+const ordersRoute = require('./routes/orders');
+
+const facilitiesRoute = require('./routes/facilities');
+
+const admFacilitiesRoute = require('./routes/admFacilities');
+
+const ChatBotRoute = require('./routes/ChatBot');
 
 const adminDB = require('./config/DBConnection');
 
@@ -98,14 +65,15 @@ const SignupRoute = require('./routes/profile');
 
 
 
+
+
+
+
 const { replaceCommas } = require('./helpers/hbs');
 // Library to use MySQL to store session objects
 const MySQLStore = require('express-mysql-session');
 const db = require('./config/db');
 
-// Messaging libraries
-const flash = require('connect-flash');
-const FlashMessenger = require('flash-messenger');
 // const Reservation = require('./models/Reservation');
 
 // 1. Danish's Route
@@ -161,8 +129,8 @@ app.use(cookieParser());
 
 // To store session information. By default it is stored as a cookie on browser
 app.use(session({
-    key: 'vidjot_session',
-    secret: 'tojiv',
+    key: 'hotel_session',
+    secret: 'bodo',
     store: new MySQLStore({
         host: db.host,
         port: 3306,
@@ -183,9 +151,14 @@ app.use(session({
 // Two flash messenging libraries - Flash (connect-flash) and Flash Messenger
 app.use(flash());
 app.use(FlashMessenger.middleware);
-const authenticate = require('./config/passport');
 const SendmailTransport = require('nodemailer/lib/sendmail-transport');
+const authenticate = require('./config/passport');
+const supplier_authenticate = require('./config/supplierpassport');
+const staff_authenticate = require('./config/supplierpassport');
 authenticate.localStrategy(passport);
+supplier_authenticate.localStrategy(passport);
+staff_authenticate.localStrategy(passport);
+
 
 
 
@@ -222,19 +195,26 @@ app.use('/admin', adminRoute); // mainRoute is declared to point to routes/main.
 app.use('/restaurant', restaurantRoute);
 
 app.use('/admRestaurant', admRestaurantRoute);
+
 app.use('/supplier', supplierRoute);
 
 app.use('/inventory', inventoryRoute);
 
-app.use('/order', orderRoute);
+app.use('/orders', ordersRoute);
 
 app.use('/profile', SignupRoute);
+
+app.use('/facilities', facilitiesRoute);
+
+app.use('/admFacilities', admFacilitiesRoute);
 
 // 2. roomsRoute is declared to point to routes/rooms.js
 // This route maps the rooms URL to any path defined in rooms.js
 app.use('/rooms', roomsRoute);
 
-// Google Login
+app.use('/chatBot', ChatBotRoute);
+
+// google login
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.serializeUser((user, done) => {
@@ -296,7 +276,6 @@ passport.use(
 app.use(passport.initialize());
 
 app.use(passport.session());
-
 
 app.get('/googleauth/google', passport.authenticate('google', { scope: ['profile'] }));
 

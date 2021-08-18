@@ -22,7 +22,7 @@ function localStrategy(passport) {
                     } else {
                         console.log("password incorrect");
                         return done(null, false, {
-                            message: 'Password incorrect'
+                            text: 'Password incorrect'
                         });
                     }
                 })

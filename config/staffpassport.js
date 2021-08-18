@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const StaffModel = require('../models/Staff');
 
 function localStrategy(passport) {
-    passport.use(new LocalStrategy({ emailField: 'staff_ID' }, (staff_email, staff_password,
+    passport.use(new LocalStrategy({ emailField: 'staff_email' }, (staff_email, staff_password,
         done) => {
         console.log("This is the email: ", staff_email);
         console.log("This is the password: ", staff_password);

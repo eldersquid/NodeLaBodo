@@ -14,7 +14,7 @@ const path = require('path');
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis');
 const FoodGallery = require('../models/FoodGallery');
- 
+
 
 
 const CLIENT_ID = '188467906173-a5cq8hviitnaanin3cmag7el6kkqrcru.apps.googleusercontent.com'
@@ -52,13 +52,13 @@ async function sendMail(toEmail, toSubject, toMessage) {
         return result;
 
     } catch (error) {
-        
+
         return error
     }
 };
 
 // View Reservation
-router.get('/viewReservation', (req,res) => {
+router.get('/viewReservation', (req, res) => {
     const title = 'Reservation';
     Reservation.findAll({
         where: {
@@ -74,14 +74,14 @@ router.get('/viewReservation', (req,res) => {
             res.render('admRestaurant/viewReservation', {
                 layout: "admin",
                 title: title,
-                reservation:reservation
+                reservation: reservation
             });
         })
         .catch(err => console.log(err));
-})
+});
 
 // Update Reservation
-router.get('/updateReservation/:id', (req,res) => {
+router.get('/updateReservation/:id', (req, res) => {
     const title = 'updateReservation';
     console.log(req.params.id)
     Reservation.findOne({
@@ -98,10 +98,10 @@ router.get('/updateReservation/:id', (req,res) => {
             res.render('admRestaurant/updateReservation', {
                 layout: "admin",
                 title: title,
-                reservation:reservation
+                reservation: reservation
             });
         }).catch(err => console.log(err));
-})
+});
 
 router.post('/updateReservation/:id', (req, res) => {
     let cust_fname = req.body.cust_fname;
@@ -153,33 +153,13 @@ router.get('/deleteReservation/:id', (req, res) => {
             }).catch(err => console.log(err));
         } else {
             alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
-            
+
         }
     });
 });
 
-// Upload poster
-// router.post('/upload', ensureAuthenticated, (req, res) => {
-// 	// Creates user id directory for upload if not exist
-// 	if (!fs.existsSync('./public/uploads/' + req.user.id)){
-// 		fs.mkdirSync('./public/uploads/' + req.user.id);
-// 	}
-	
-// 	upload(req, res, (err) => {
-// 		if (err) {
-// 			res.json({file: '/img/no-image.jpg', err: err});
-// 		} else {
-// 			if (req.file === undefined) {
-// 				res.json({file: '/img/no-image.jpg', err: err});
-// 			} else {
-// 				res.json({file: `/uploads/${req.user.id}/${req.file.filename}`});
-// 			}
-// 		}
-// 	});
-// })
-
 // view Contact Us
-router.get('/viewContact', (req,res) => {
+router.get('/viewContact', (req, res) => {
     const title = 'Contact';
     Contact.findAll({
         where: {
@@ -195,7 +175,7 @@ router.get('/viewContact', (req,res) => {
             res.render('admRestaurant/viewContact', {
                 layout: "admin",
                 title: title,
-                contact:contact
+                contact: contact
             });
         })
         .catch(err => console.log(err));
@@ -222,13 +202,13 @@ router.get('/deleteContact/:id', (req, res) => {
             }).catch(err => console.log(err));
         } else {
             alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
-            
+
         }
     });
 });
 
 // Create Response
-router.get('/createResponse/:id', (req,res) => {
+router.get('/createResponse/:id', (req, res) => {
     const title = 'contact';
     console.log(req.params.id)
     Contact.findOne({
@@ -239,23 +219,20 @@ router.get('/createResponse/:id', (req,res) => {
             // [reservation.id, 'ASC']
         ],
         raw: true
-    })
-        .then((contact) => {
-            console.log(contact);
-            res.render('admRestaurant/createResponse', {
-                layout: "admin",
-                title: title,
-                contact:contact
-            });
-        }).catch(err => console.log(err));
+    }).then((contact) => {
+        console.log(contact);
+        res.render('admRestaurant/createResponse', {
+            layout: "admin",
+            title: title,
+            contact: contact
+        });
+    }).catch(err => console.log(err));
 })
 
-router.post('/createResponse', (req,res) => {
+router.post('/createResponse', (req, res) => {
     let toEmail = req.body.toEmail
     let toSubject = req.body.toSubject
     let toMessage = req.body.toMessage
-
-    console.log(toEmail);
 
     Response.create({
         toEmail,
@@ -270,12 +247,12 @@ router.post('/createResponse', (req,res) => {
 });
 
 // view Response
-router.get('/viewResponse', (req,res) => {
+router.get('/viewResponse', (req, res) => {
     const title = 'Response';
     Response.findAll({
         where: {
             // adminId: req.params.id
-        }, 
+        },
         order: [
             // [reservation.id, 'ASC']
         ],
@@ -286,7 +263,7 @@ router.get('/viewResponse', (req,res) => {
             res.render('admRestaurant/viewResponse', {
                 layout: "admin",
                 title: title,
-                response:response
+                response: response
             });
         })
         .catch(err => console.log(err));
@@ -313,28 +290,22 @@ router.get('/deleteResponse/:id', (req, res) => {
             }).catch(err => console.log(err));
         } else {
             alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
-            
+
         }
     });
 });
 
 // Upload Picture
 router.post('/Foodupload', (req, res) => {
-	let foodpic_data = req.body.trueFilePicture;
-	const title = "Upload Food Pictures";
+    let foodpic_data = req.body.trueFilePicture;
+    console.log("THis is foodpic data", foodpic_data);
+    const title = "Upload Food Pictures";
     FoodGallery.create({
-        foodPhoto:foodpic_data
+        foodPhoto: foodpic_data
     })
-	// res.render('admRestaurant/viewFoodGallery', { 
-	// 	layout: "admin",
-	// 	title: title,
-	// 	foodpic_data : foodpic_data
-	// });
         .then((foodgallery) => {
             res.redirect('/admRestaurant/viewFoodGallery');
         }).catch(err => console.log(err));
-
-
 });
 
 // Upload picture inside the folder
@@ -347,32 +318,15 @@ router.post('/foodPic', (req, res) => {
                 console.log("The file is undefine.");
                 res.json({ err: err });
             } else {
-                 res.json({ file: `${req.file.filename}`, path: '/foodPictures/' + `${req.file.filename}` });
+                res.json({ file: `${req.file.filename}`, path: '/foodPictures/' + `${req.file.filename}` });
                 // res.json({file: `/foodPictures/${req.file.filename}`});
             }
         }
     });
 });
 
-// Update Picture
-router.post('/updateFoodPic/:id', (req, res) => {
-    let foodPhoto = req.body.foodPhoto;
-
-    FoodGallery.update({
-
-    }, {
-        where: {
-            id: req.params.id
-        }
-    }).then(() => {
-        res.redirect('/admRestaurant/viewFoodGallery'); 
-as
-    }).catch(err => console.log(err));
-});
-
-
 // View Uploaded Images 
-router.get('/viewFoodGallery', (req,res) => {
+router.get('/viewFoodGallery', (req, res) => {
     const title = 'FoodGallery';
     FoodGallery.findAll({
         where: {
@@ -387,13 +341,47 @@ router.get('/viewFoodGallery', (req,res) => {
             res.render('admRestaurant/viewFoodGallery', {
                 layout: "admin",
                 title: title,
-                foodgallery:foodgallery
+                foodgallery: foodgallery
             });
         })
         .catch(err => console.log(err));
 });
 
+// router.get('/UpdateFoodPic/:id', (req,res) => {
+//     const title = 'updatePicture';
+//     console.log(req.params.id)
+//     FoodGallery.findOne({
+//         where: {
+//             id: req.params.id
+//         },
+//         order: [
+//             // [reservation.id, 'ASC']
+//         ],
+//         raw: true
+//     })
+//         .then((foodgallery) => {
+//             console.log(foodgallery);
+//             res.render('admRestaurant/viewFoodGallery', {
+//                 layout: "admin",
+//                 title: title,
+//                 foodgallery:foodgallery
+//             });
+//         }).catch(err => console.log(err));
+// });
 
+// Update Picture
+router.post('/UpdateFoodPic/:id', (req, res) => {
+    let foodpic_data = req.body.trueFilePicture2;
+    FoodGallery.update({
+        foodPhoto: foodpic_data
+    }, {
+        where: {
+            id: req.params.id
+        }
+    }).then((foodgallery) => {
+        res.redirect('/admRestaurant/viewFoodGallery');
+    }).catch(err => console.log(err));
+});
 
 // Delete Picture
 router.get('/deleteFoodGallery/:id', (req, res) => {
@@ -415,23 +403,197 @@ router.get('/deleteFoodGallery/:id', (req, res) => {
             }).catch(err => console.log(err));
         } else {
             alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
-            
+
         }
     });
 });
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
-	destination: (req, file, callback) => {
-		callback(null, './public/uploads/' + '/');
-	},
-	filename: (req, file, callback) => {
-		callback(null, req.user.id + '-' + Date.now() + path.extname(file.originalname));
-	}
+    destination: (req, file, callback) => {
+        callback(null, './public/uploads/' + '/');
+    },
+    filename: (req, file, callback) => {
+        callback(null, req.user.id + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+
+
+// MENU
+
+// // Upload Picture
+// router.post('/createMenu', (req, res) => {
+// 	let cardPhoto_data = req.body.trueMenuPicture;
+//     let cardName = req.body.cardName
+//     let cardPrice = req.body.cardPrice
+// 	const title = "Upload Food Menu";
+//     FoodCart.create({
+//         cardName,
+//         cardPrice,
+//         cardPhoto : cardPhoto_data
+
+//     }).then((foodcart) => {
+//             res.redirect('/admRestaurant/viewFoodCart');
+//         }).catch(err => console.log(err));
+
+
+// });
+
+router.get('/createMenu', (req, res) => {
+    const title = 'FoodCart';
+    res.render('admRestaurant/createMenu', {
+        layout: "admin",
+        title: title
+    })
+});
+
+// Create Menu
+router.post('/createMenu', (req, res) => {
+    let errors = [];
+    let cardPhoto_data = req.body.trueMenuPicture;
+    let cardName = req.body.cardName;
+    let cardPrice = req.body.cardPrice;
+    console.log("THis photo data", cardPhoto_data)
+
+    FoodCart.findOne({
+        where: {
+            cardName: cardName
+        }
+    }).then((foodcart) => {
+        console.log(foodcart);
+
+        if (foodcart) {
+            alertMessage(res, 'danger', 'Item already Existed. ', 'fas fa-sign-in-alt', true);
+            errors.push(1);
+        }
+        if (errors.length > 0) {
+            console.log("It went hereee")
+            res.render('admRestaurant/createMenu', {
+                layout: "admin",
+            });
+        } else if (errors.length == 0) {
+            FoodCart.create({
+                cardPhoto: cardPhoto_data,
+                cardName: cardName,
+                cardPrice: cardPrice
+            }).then((foodcart) => {
+                alertMessage(res, 'success', ' ' + req.body.cardName + ' with the price of' + ' ' + '$' + req.body.cardPrice + ' ' + 'is added.', 'fas fa-sign-in-alt', true)
+                res.redirect('/admRestaurant/viewFoodCart');
+            }).catch(err => console.log(err))
+        }
+    });
+})
+
+// router.post('/createMenu', [
+//     body('cardPrice').not().isEmpty().trim().escape().isInt().withMessage("Invalid Price."),
+//     body('cardName').custom(value => {
+//         var value = cardName;
+//         if (foodcart == value) {
+//             // throw new Error('Item already existed.');
+//             alertMessage(res, 'danger', 'Item already Existed. ', 'fas fa-sign-in-alt', true);
+//         }
+//         return true;
+//     })
+// ], (req, res) => {
+//     console.log("retrieving Menu")
+//     let errors = [];
+//     let cardPhoto_data = req.body.trueMenuPicture;
+//     let cardName = req.body.cardName;
+//     let cardPrice = req.body.cardPrice;
+//     const validatorErrors = validationResult(req);
+//     console.log("THis photo data", cardPhoto_data)
+
+//     if (!validatorErrors.isEmpty()) {
+//         console.log("Errors creating reservation")
+//         validatorErrors.array().forEach(error => {
+//             console.log(error);
+//             errors.push({ text: error.msg })
+//         });
+//         res.render('admRestaurant/createMenu', {
+//             layout: "admin",
+//             errors,
+//             cardName,
+//             cardPhoto,
+//             cardPrice
+//         });
+//     } else {
+//         console.log("creating Menu")
+//         FoodCart.findOne({
+//             where: {
+//                 // id: req.params.id
+//             }
+//         }).then((foodcart) => {
+//             FoodCart.create({
+//                 cardPhoto: cardPhoto_data,
+//                 cardName: cardName,
+//                 cardPrice: cardPrice
+//             }).then((foodcart) => {
+//                 alertMessage(res, 'success', ' ' + req.body.cardName + ' with the price of' + ' ' + '$' + req.body.cardPrice + ' ' + 'is added.', 'fas fa-sign-in-alt', true)
+//                 res.redirect('/admRestaurant/viewFoodCart');
+//             }).catch(err => console.log(err))
+//         })
+//     }
+// });
+
+
+// Update Menu
+router.get("/updateMenu/:id", (req, res) => {
+    const title = "Update Menu";
+    FoodCart.findOne({
+        where: {
+            id: req.params.id
+        },
+        raw: true
+    }).then((foodcart) => {
+        res.render("admRestaurant/updateMenu", {
+            layout: "admin",
+            foodcart: foodcart,
+            title: title
+        });
+    }).catch((err) => console.log(err)); // To catch no video ID
+});
+
+router.put('/updatedMenu/:id', (req, res) => {
+    let cardPhoto = req.body.trueMenuPicture2;
+    let cardName = req.body.cardName
+    let cardPrice = req.body.cardPrice
+    console.log("THIS IS CARD PHOTO :")
+    console.log(cardPhoto);
+
+    FoodCart.update({
+        cardPhoto: cardPhoto,
+        cardName: cardName,
+        cardPrice: cardPrice
+    }, {
+        where: {
+            id: req.params.id
+        }
+    }).then((foodcart) => {
+        alertMessage(res, 'success', ' Menu has been updated.', 'fas fa-sign-in-alt', true);
+        res.redirect('/admRestaurant/viewFoodCart');
+    }).catch(err => console.log(err));
+});
+
+// Upload Menu pictures inside the folder
+router.post('/menuPic', (req, res) => {
+    foodPic(req, res, async (err) => {
+        if (err) {
+            res.json({ err: err });
+        } else {
+            if (req.file === undefined) {
+                console.log("The file is undefine.");
+                res.json({ err: err });
+            } else {
+                res.json({ file: `${req.file.filename}`, path: '/menuPictures/' + `${req.file.filename}` });
+                // res.json({file: `/foodPictures/${req.file.filename}`});
+            }
+        }
+    });
 });
 
 // View Uploaded Images for Menu
-router.get('/viewFoodCart', (req,res) => {
+router.get('/viewFoodCart', (req, res) => {
     const title = 'FoodCart';
     FoodCart.findAll({
         where: {
@@ -446,27 +608,59 @@ router.get('/viewFoodCart', (req,res) => {
             res.render('admRestaurant/viewFoodCart', {
                 layout: "admin",
                 title: title,
-                foodcart:foodcart
+                foodcart: foodcart
             });
         })
         .catch(err => console.log(err));
 });
 
-// Upload Picture
-router.post('/UploadMenu', (req, res) => {
-	let cardPhoto_data = req.body.trueFilePicture;
-    let cardName = req.body.cardName
-    let cardPrice = req.body.cardPrice
-	const title = "Upload Food Menu";
-    FoodCart.create({
-        cardName,
-        cardPrice,
-        cardPhoto : cardPhoto_data
-
+// Delete Menu Items
+router.get('/deleteFoodCart/:id', (req, res) => {
+    let id = req.params.id;
+    Foodcart.findOne({
+        where: {
+            id: id,
+        },
+        attributes: ['id']
     }).then((foodcart) => {
-            res.redirect('/admRestaurant/viewFoodCart');
-        }).catch(err => console.log(err));
+        // if record is found, user is owner of video
+        if (foodcart != null) {
+            foodcart.destroy({
+                where: {
+                    id: id
+                }
+            }).then(() => {
+                res.redirect('/admRestaurant/viewFoodCart'); // To retrieve all videos again
+            }).catch(err => console.log(err));
+        } else {
+            alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
 
+        }
+    });
+});
 
+// Delete Picture
+router.get('/deleteMenu/:id', (req, res) => {
+    let id = req.params.id;
+    FoodCart.findOne({
+        where: {
+            id: id,
+        },
+        attributes: ['id']
+    }).then((foodcart) => {
+        // if record is found, user is owner of video
+        if (foodcart != null) {
+            foodcart.destroy({
+                where: {
+                    id: id
+                }
+            }).then(() => {
+                res.redirect('/admRestaurant/viewFoodCart'); // To retrieve all videos again
+            }).catch(err => console.log(err));
+        } else {
+            alertMessage(res, 'danger', 'Test Error', 'fas fa-exclamation-circle', true);
+
+        }
+    });
 });
 module.exports = router;

@@ -1,14 +1,292 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
+const fs = require('fs');
+const dialogflow = require('@google-cloud/dialogflow'); // Danish's Chatbot woo
 const Supplier = require('../models/Supplier');
 const Inventory = require('../models/Inventory');
 const Room = require('../models/Room');
+const RoomType = require('../models/RoomType');
+const Hospital = require('../models/Hospital');
 const paypal = require('paypal-rest-sdk');
 const methodOverride = require('method-override');
-const Swal = require('sweetalert2');
+
+const CREDENTIALS = JSON.parse(fs.readFileSync('credentials/hotel-la-bodo-5338d4f99b8b.json')); //Danish's Google Service Account created for Chatbot
+const PROJECTID = CREDENTIALS.project_id;
+
+
+const CONFIGURATION = {
+	credentials : {
+		private_key : CREDENTIALS['private_key'],
+		client_email : CREDENTIALS['client_email']
+
+	}
+
+
+}
+
+
+// CHATBOT FUNCTIONS !!! DO NOT DELETE UNLESS NECESSARY!! //
+
+async function runSample(question) {
+	// A unique identifier for the given session
+	var sessionId = "123"
+	// Create a new session
+	const sessionClient = new dialogflow.SessionsClient(CONFIGURATION);
+	const sessionPath = sessionClient.projectAgentSessionPath(
+	  PROJECTID,
+	  sessionId
+	);
+  
+	// The text query request.
+	const request = {
+	  session: sessionPath,
+	  queryInput: {
+		text: {
+		  // The query to send to the dialogflow agent
+		  text: question,
+		  // The language used by the client (en-US)
+		  languageCode: 'en-US',
+		},
+	  },
+	};
+  
+	// Send request and log result
+	const responses = await sessionClient.detectIntent(request);
+	console.log('Detected intent');
+	const result = responses[0].queryResult;
+	console.log(`  Query: ${result.queryText}`);
+	console.log(`  Response: ${result.fulfillmentText}`);
+	if (result.intent) {
+	  console.log(`  Intent: ${result.intent.displayName}`);
+	} else {
+	  console.log('  No intent matched.');
+	}
+    return result.fulfillmentText;
+  }
+
+  async function createIntent(displayName,trainingPhrasesParts,messageTexts) {
+	// Construct request
+	const intentsClient = new dialogflow.IntentsClient(CONFIGURATION);
+	// The path to identify the agent that owns the created intent.
+	const agentPath = intentsClient.projectAgentPath(PROJECTID);
+
+	const trainingPhrases = [];
+
+	trainingPhrasesParts.forEach(trainingPhrasesPart => {
+	const part = {
+		text: trainingPhrasesPart,
+	};
+
+	// Here we create a new training phrase for each provided part.
+	const trainingPhrase = {
+		type: 'EXAMPLE',
+		parts: [part],
+	};
+
+	trainingPhrases.push(trainingPhrase);
+	});
+
+	const messageText = {
+	text: messageTexts,
+	};
+
+	const message = {
+	text: messageText,
+	};
+
+	const intent = {
+	displayName: displayName,
+	trainingPhrases: trainingPhrases,
+	messages: [message],
+	};
+
+	const createIntentRequest = {
+	parent: agentPath,
+	intent: intent,
+	};
+
+	// Create the intent
+	const [response] = await intentsClient.createIntent(createIntentRequest);
+	console.log(`Intent ${response.name} created`);
+}
+
+
+// Example of create intent
+
+// createIntent("MAKE_RESERVATION",["Where to get reservation?","I wanna eat","GIMME FOOD LOL"],["Shut up desuu"]);
+
+async function listIntents() {
+    // Construct request
+    const intentsClient = new dialogflow.IntentsClient(CONFIGURATION);
+    // The path to identify the agent that owns the intents.
+    const projectAgentPath = intentsClient.projectAgentPath(PROJECTID);
+
+    console.log(projectAgentPath);
+
+    const request = {
+      parent: projectAgentPath,
+    };
+
+    // Send the request for listing intents.
+    const [response] = await intentsClient.listIntents(request);
+    response.forEach(intent => {
+      console.log('====================');
+      Object.entries(intent).forEach(entry => {
+        const [key, value] = entry;
+        console.log(key, value);
+      });
+      console.log(`Intent name: ${intent.name}`);
+      console.log(`Intent display name: ${intent.displayName}`);
+      console.log(`Action: ${intent.action}`);
+      console.log(`Root folowup intent: ${intent.rootFollowupIntentName}`);
+      console.log(`Parent followup intent: ${intent.parentFollowupIntentName}`);
+      
+      console.log(`Response: ${intent.messages[0].text.text[0]}`);
+      
+      console.log('Input contexts:');
+      intent.inputContextNames.forEach(inputContextName => {
+        console.log(`\tName: ${inputContextName}`);
+      });
+
+      console.log('Output contexts:');
+      intent.outputContexts.forEach(outputContext => {
+        console.log(`\tName: ${outputContext.name}`);
+      });
+    });
+  }
+
+  async function updateIntent(newTrainingPhrases) { // WARNING : THIS DELETES ALL AVAILABLE TRAINING PHRASES AND REPLACES THEM WITH NEW ONES
+    // Imports the Dialogflow library
+    
+    // Instantiates clients
+    const intentsClient = new dialogflow.IntentsClient(CONFIGURATION);
+
+    const projectAgentPath = intentsClient.projectAgentPath(PROJECTID);
+
+    console.log(projectAgentPath);
+
+    const request = {
+      parent: projectAgentPath,
+    };
+
+    const [response] = await intentsClient.listIntents(request);
+    
+    const existingIntent = response[0]; // Take in the very first intent for testing purposes
+
+    const intent = existingIntent; //get the intent that needs to be updated from the [response]
+  
+    const trainingPhrases = [];
+    let previousTrainingPhrases =
+      existingIntent.trainingPhrases.length > 0
+        ? existingIntent.trainingPhrases
+        : [];
+  
+    previousTrainingPhrases.forEach(textdata => {
+      newTrainingPhrases.push(textdata.parts[0].text);
+    });
+  
+    newTrainingPhrases.forEach(phrase => {
+      const part = {
+        text: phrase
+      };
+  
+      // Here we create a new training phrase for each provided part.
+      const trainingPhrase = {
+        type: "EXAMPLE",
+        parts: [part]
+      };
+      trainingPhrases.push(trainingPhrase);
+    });
+    intent.trainingPhrases = trainingPhrases;
+
+    const updateIntentRequest = {
+      intent
+      
+    };
+  
+    // Send the request for update the intent.
+    const result = await intentsClient.updateIntent(updateIntentRequest);
+  
+    return result;
+  }
+
+// updateIntent(["test statement"]); TEST UPDATE INTENT
+
+async function deleteIntent(existingIntent) { 
+    // Imports the Dialogflow library
+    
+    // Instantiates clients
+    const intentsClient = new dialogflow.IntentsClient(CONFIGURATION);
+
+    const projectAgentPath = intentsClient.projectAgentPath(PROJECTID);
+
+    console.log(projectAgentPath);
+
+    const request = {
+      parent: projectAgentPath,
+    };
+
+    var count = 0;
+    var targetIntent ="";
+    var deleteIntentRequest = {};
+
+    const [response] = await intentsClient.listIntents(request);
+
+    response.forEach(intent => {
+        if (intent.displayName == existingIntent){
+            targetIntent = intent.name;
+            count++;
+                
+        }}); 
+
+    if (count>0){
+        const intent_split = targetIntent.split("/");
+        const intentPath = intentsClient.projectAgentIntentPath(PROJECTID, intent_split[(intent_split.length)-1]);
+        console.log(intentPath);
+        deleteIntentRequest["name"] = intentPath;
+
+
+    } else {
+        return console.log("Not found.");
+
+    }
+    
+    const result = await intentsClient.deleteIntent(deleteIntentRequest);
+    console.log(`${existingIntent} intent is deleted successfully.`);
+    return result;  
+    
+
+    
+  }
+// END OF FUNCTIONS //
+
 // Method override middleware to use other HTTP methods such as PUT and DELETE
 app.use(methodOverride('_method'));
+
+//440621396466-esnk2ehi54ki6fkoh4scomu9r285iolg.apps.googleusercontent.com remember to delete this
+
+//KH6OEAEGnreCHUPn7EV0KJKO remember to delete this
+
+//https://cors-anywhere.herokuapp.com/
+// go here every day or when the day of testing comes to enable api calls!!
+
+
+
+router.post('/chuuSend',(req,res)=>{
+	console.log("Test : ",req.body.chuuMessage);
+	runSample(req.body.chuuMessage).then(data =>{
+		res.send({reply:data})
+
+
+
+	})
+
+
+
+});
+
+
 
 paypal.configure({
 	'mode': 'sandbox', //sandbox or live
@@ -17,11 +295,71 @@ paypal.configure({
   });
 
 router.get('/', (req, res) => {
-	const title = 'Hotel Rooms';
-	res.render('rooms/hotel_rooms', {
-		title: title,
-		layout : "thalia",
-	    }) // renders views/index.handlebars
+    const title = 'Hotel Rooms';
+
+    RoomType.findAll({
+        where: {
+            // adminId: req.admin.id
+        },
+        order: [
+            ['type_id', 'ASC']
+        ],
+        raw: true
+    })
+        .then((roomType) => {
+            // pass object to listVideos.handlebar
+            res.render('rooms/hotel_rooms', {
+                layout: "thalia",
+                title: title,
+                roomType
+            });
+        })
+        .catch(err => console.log(err));
+
+});
+
+router.get('/details/:type_id', (req, res) => {
+    const title = "Room Details";
+
+    RoomType.findOne({
+        where: {
+            type_id: req.params.type_id
+        },
+        raw: true
+    }).then((roomType) => {
+        if (!roomType) { // check video first because it could be null.
+            alertMessage(res, 'info', 'No such room found', 'fas fa-exclamation-circle', true);
+            res.redirect('/');
+        } else {
+			Inventory.findAll({
+				where: {
+					// adminId: req.admin.id
+				},
+				order: [
+					['inventory_id', 'ASC']
+				],
+				raw: true
+			})
+				.then((inventory) => {
+					
+					res.render('rooms/roomDetails', {
+						title: title,
+						layout : "thalia",
+						inventory,
+						roomType
+						});
+					
+				})
+				.catch(err => console.log(err));
+            // Only authorised user who is owner of video can edit it
+            // if (req.user.id === video.userId) {
+            //     checkOptions(video);
+            // } else {
+            //     alertMessage(res, 'danger', 'Unauthorised access to video', 'fas fa-exclamation-circle', true);
+            //     res.redirect('/logout');
+            // }
+        }
+    }).catch(err => console.log(err)); // To catch no video ID
 });
 
 router.get('/apartment', (req, res) => {
@@ -31,7 +369,7 @@ router.get('/apartment', (req, res) => {
             // adminId: req.admin.id
         },
         order: [
-            ['id', 'ASC']
+            ['inventory_id', 'ASC']
         ],
         raw: true
     })
@@ -49,51 +387,65 @@ router.get('/apartment', (req, res) => {
 
 router.post('/bookingDetails', (req, res) => {
 	const title = 'Complete Booking';
+	let roomImage = req.body.roomImage;
 	let BookInDate = req.body.BookInDate;
 	let BookOutDate = req.body.BookOutDate;
 	let price = req.body.price;
-	let roomType = req.body.roomType;
-	if (roomType == "Apartment") {
-		var roomNo = Math.floor(Math.random() * 100) + 201;
-	  } else if (roomType == "Small Room") {
-		var roomNo = Math.floor(Math.random() * 101) + 100;
-	  } else if (roomType == "Big Apartment") {
-		var roomNo = Math.floor(Math.random() * 100) + 301;
-	  } else if (roomType == "Villa") {
-		var roomNo = Math.floor(Math.random() * 100) + 401;
-	  }
+	let type = req.body.type;
+	let type_id = req.body.type_id;
+	let minRoomNo = req.body.minRoomNo;
+	let maxRoomNo = req.body.maxRoomNo;
+	console.log(type_id);
+	
+	let roomNo = Math.floor(Math.random() * (parseInt(maxRoomNo) - parseInt(minRoomNo) + 1))+ parseInt(minRoomNo)
 	console.log(BookInDate);
-	res.render('rooms/booking_details', {title: title,
-		layout : "blank",
-		BookInDate : BookInDate,
-		BookOutDate : BookOutDate,
-		price : price,
-		roomNo : roomNo
-	    }) // renders views/index.handlebars
+	Hospital.findAll({
+		order: [["id", "ASC"]],
+		raw: true,
+	  })
+		.then((hospitals) => {
+			res.render('rooms/booking_details', {title: title,
+				layout : "thalia",
+				BookInDate : BookInDate,
+				BookOutDate : BookOutDate,
+				price : price,
+				roomNo : roomNo,
+				roomImage : roomImage,
+				type : type,
+				type_id : type_id,
+				hospitals : hospitals
+				});
+		})
+		.catch((err) => console.log(err));
 });
 
 router.post('/booked', (req, res) => {
+	let roomImage = req.body.roomImage;
 	let bookInDate = req.body.bookInDate;
 	let bookOutDate = req.body.bookOutDate;
-	let roomType = req.body.roomType;
+	let type = req.body.type;
 	// let addItems = req.body.addItems;
+	let type_id = req.body.type_id;
 	let name = req.body.name;
 	let username = req.body.username;
 	let package_deal = req.body.package_deal;
 	let roomNo = req.body.roomNo;
 	let price = req.body.price;
+	let hospitals = req.body.hospitals;
 	let paid = 0;
 
 	Room.create({
 		bookInDate,
 		bookOutDate,
-		roomType,
+		type,
 		name,
 		username,
 		package_deal,
 		roomNo,
 		price,
-		paid
+		paid,
+		roomTypeID : type_id,
+		nearbyHospital : hospitals
 
 	}).then((room)=> {
 		res.redirect('/rooms/bookingCart/' + room.id);
@@ -106,38 +458,36 @@ router.post('/booked', (req, res) => {
 
 router.get('/bookingCart/:id', (req, res) => {
 	const title = 'Booking Cart';
+	console.log(req.params.id)
 	Room.findOne({
 		where: {
 		  id: req.params.id,
 		},
-	  })
-		.then((room) => {
-		  res.render("rooms/cart", {
-			room, 
-			layout: "blank",
-			title: title,
-			
-		  });
-		})
-		.catch((err) => console.log(err)); 
+	  }).then(async (room) => {
+		await RoomType.findOne({
+			where : {
+				type_id : room.roomTypeID
+			}
+		}).then((roomtype)=>{
+			res.render("rooms/cart", {
+				room, 
+				layout: "thalia",
+				title: title,
+				roomtype
+			  });
+
+			})
+		}).catch((err) => console.log(err)); 
 	});
 
 router.post('/payPal/:id', (req,res) => {
+	let roomType = req.body.roomType;
 	Room.findOne({
 		where: {
 		  id: req.params.id,
 		},
 	  })
 		.then((room) => {
-			if (room.roomType == "Apartment") {
-				var price = "500.00";
-			  } else if (room.roomType == "Small Room") {
-				var price = "300.00";
-			  } else if (room.roomType == "Big Apartment") {
-				var price = "700.00";
-			  } else if (room.roomType == "Villa") {
-				var price = "1000.00";
-			  }
 			const create_payment_json = {
 				"intent": "sale",
 				"payer": {
@@ -150,16 +500,16 @@ router.post('/payPal/:id', (req,res) => {
 				"transactions": [{
 					"item_list": {
 						"items": [{
-							"name": room.roomType,
+							"name": roomType,
 							"sku": room.roomNo,
-							"price": price,
+							"price": room.price,
 							"currency": "SGD",
 							"quantity": 1
 						}]
 					},
 					"amount": {
 						"currency": "SGD",
-						"total": price
+						"total": room.price
 					},
 					"description": "Hotel Booking Payment using PayPal"
 				}]
@@ -217,21 +567,12 @@ router.get('/paySuccess/:id', (req, res) => {
 		},
 	  })
 		.then((room) => {
-		if (room.roomType == "Apartment") {
-				var price = "500.00";
-			  } else if (room.roomType == "Small Room") {
-				var price = "300.00";
-			  } else if (room.roomType == "Big Apartment") {
-				var price = "700.00";
-			  } else if (room.roomType == "Villa") {
-				var price = "1000.00";
-			  }
 		const execute_payment_json = {
 		"payer_id": payerId,
 		"transactions": [{
 			"amount": {
 				"currency": "SGD",
-				"total": price
+				"total": room.price
 			}
 		}]
 	};

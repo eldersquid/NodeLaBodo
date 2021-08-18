@@ -65,19 +65,25 @@
         </button>
       </div>
       <div class="modal-body">
+        <form method="POST" action="/login/forgetpw">
         <label>Enter Email</label>
-        <input
+        <input  value="email"
                 type="text"
                 class="form-control"
                 placeholder="xyz@gmail.com"
                 id="email"
                 name="email"
               />
+              
       </div>
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" onclick="" class="btn btn-primary">Submit</button>
+        <button type="submit" value="Submit" id="submit-btn" data-toggle="modal" data-target="#modalReply"
+            class="btn btn-primary">Submit</button>
+        
       </div>
+      </form>
     </div>
   </div>
 </div>

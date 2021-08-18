@@ -15,6 +15,50 @@ const regex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
 const Regex = require("regex");
 const validator = require("email-validator");
 
+
+
+const nodemailer = require('nodemailer')
+const { google } = require('googleapis')
+const CLIENT_ID = '855734212452-4ti1go2pp7ks8os3o98ragh1k8gh2mtb.apps.googleusercontent.com'
+const CLIENT_SECRET = '6Wm2bPALLsbf2s_H_R-jJpa1'
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04wi_I-DuOpscCgYIARAAGAQSNwF-L9Ir2mNKa0_6ofjTLeipoCL6YqO2WPMgFOHd9rNC8RLr4TPBVj4PGQJU5B0i1V-2qsrqnAw';
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
+
+async function sendMail() {
+
+    try {
+        const accessToken = await oAuth2Client.getAccessToken();
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                type: 'OAuth2',
+                user: 'gabewungkana5@gmail.com',
+                clientId: CLIENT_ID,
+                clientSecret: CLIENT_SECRET,
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken
+            }
+        })
+
+        const mailOptions = {
+            from: 'gabewungkana5@gmail.com',
+            to: 'progenji81@gmail.com',
+            subject: "Reset Password",
+            text: 'Dear  ,\n\nThis is your new password, lololol.   \n Sincerely,\nHotel La Bodo'
+
+        };
+
+        const result = await transport.sendMail(mailOptions);
+        return result;
+
+    } catch (error) {
+        return error
+    }
+}
+
+
 router.get("/", (req, res) => {
     const title = "Home Page";
     res.render("home", {
@@ -96,7 +140,7 @@ router.post("/login/signup", (req, res) => {
         });
     }
 
-    // if (req.body.password != req.body.password2) {
+    // if (req.body.password !== req.body.password2) {
     //     console.log("error 1");
     //     errors.push({
     //         text: 'Passwords do not match'
@@ -172,6 +216,18 @@ router.get('/mainlogin', (req, res) => {
     res.render('login/mainlogin') // 
 });
 
+router.post('/forgetpw', (req, res, next) => {
+    let email = req.body.email;
+
+
+    sendMail(email).then(result => console.log('Email sent...', result))
+        .catch(error => console.log(error.message));
+    alertMessage(res, 'success', 'Email has been sent.', 'fas fa-sign-in-alt', true);
+
+});
+
+
+
 router.post('/login', (req, res, next) => {
     let email = req.body.email;
     let password = req.body.password;
@@ -202,9 +258,17 @@ router.post('/login/staffsignup', (req, res) => {
     if (staff_password !== staff_repeat) {
         errors.push({ text: 'Passwords do not match' });
     }
-    // Checks that password length is more than 4
-    if (staff_password.length < 4) {
-        errors.push({ text: 'Password must be at least 4 characters' });
+    // Checks that password length is more than 8
+    if (staff_password.length < 8) {
+        errors.push({ text: 'Password must be at least 8 characters' });
+    }
+
+
+    if (validator.validate(req.body.staff_email) == false) {
+        console.log("email error");
+        errors.push({
+            text: 'Please enter a valid email address'
+        });
     }
     if (errors.length > 0) {
         res.render('login/staffsignup', {
@@ -286,7 +350,7 @@ router.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-// Logout User
+// Logout Staff
 router.get('/stafflogout', (req, res) => {
     req.logout();
     res.redirect('/stafflogin');

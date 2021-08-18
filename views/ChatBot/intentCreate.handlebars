@@ -1,0 +1,220 @@
+<head>
+
+
+
+</head>
+
+<body id="page-top">
+              <div class="container-fluid">
+                <a class="btn btn-outline-secondary" href="">Guest Details</a>
+                <button type="button" class="btn btn-secondary">Hospitals</button>
+                <button type="button" class="btn btn-outline-secondary">Occupations</button>
+                
+                <button type="button" class="btn btn-outline-secondary">Vehicles</button>
+                
+                <hr>
+
+              </div>
+                <!-- Begin Page Content -->
+                <br>
+                <div class="container-fluid">
+                  <div class="alert alert-primary" role="alert">
+                    For links, please use the following example format or it will just become a normal question :
+                    "text < link > /restaurant/DineV2" [remove the space in link]
+                  </div>
+                <div class="row flex-lg-nowrap">
+                 
+                  <div class="col">
+                    <div class="row">
+                      <div class="col mb-3">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="e-profile">
+                              <ul class="nav nav-tabs">
+                                <li class="nav-item"><a href="" class="active nav-link">Information</a></li>
+                              </ul>
+                              <div class="tab-content pt-3">
+                                <div class="tab-pane active">
+                                  <form method="POST" action="intentCreated">
+                                                         
+                                    <div class="row">
+                                      <div class="col">
+                                       
+                                        <div class="row">
+                                          <div class="col">
+                                            <div class="form-group">
+                                              <label>Display Name</label>
+                                              <input type="text" id="displayName" name="displayName" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                             <label for="name">Training Phrases</label>
+                                             <input type="text" class="form-control" name="trainingPhrases" id="trainingPhrases">
+                                             <button class="btn btn-primary" onclick="addPhrase()" type="button">Add Phrase</button>
+                                             <button class="btn btn-primary" onclick="resetPhrase()" type="button">Reset</button>
+                                            </div>
+                                                <div class="form-group">
+                                                <label for="name">Bot Replies</label>
+                                                <input type="text" class="form-control" name="botReply" id="botReply">
+                                                <button class="btn btn-primary" onclick="addReply()" type="button">Add Reply</button>
+                                                <button class="btn btn-primary" onclick="resetReply()" type="button">Reset</button>
+                                                </div>
+                                            </div>
+                                          
+
+                                        </div>
+                                        
+                                       
+
+                                        
+
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      
+                                    <div class="col d-flex justify-content-end">
+                                        <button class="btn btn-secondary" type="button" onclick="sendStuff()">Create QnA</button>
+                                      </div>
+                                    </div>
+                                    
+                                  </form>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+            <!-- End of Main Content -->
+
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+  <!--  <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a> -->
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        var arrayPhrase = [];
+        var arrayReply = [];
+        function addPhrase(){
+            var phrase = document.getElementById("trainingPhrases").value;
+            arrayPhrase.push(phrase);
+            alert(phrase);
+
+
+
+
+            
+        }
+        function resetPhrase(){
+            arrayPhrase = [];
+            alert("Reset completed!");
+
+
+
+            
+        }
+        function addReply(){
+            var reply = document.getElementById("botReply").value;
+            arrayReply.push(reply);
+            alert(reply);
+
+
+
+
+            
+        }
+        function resetReply(){
+            arrayReply = [];
+            alert("Reset completed!");
+
+
+
+            
+        }
+        function sendStuff(){
+            // var url= 'rooms/chuuSend';
+            var data = {
+                displayName : document.getElementById("displayName").value,
+                trainingPhrases : arrayPhrase,
+                botReplies : arrayReply
+
+
+            }
+            var JSONdata = JSON.stringify(data);
+            console.log(JSONdata);
+            $.ajax({
+                url: '/chatBot/intentCreate',
+                data: JSONdata,
+                contentType: 'application/json',
+                dataType : 'json',
+                type: 'POST'
+            }).done(function(result) {
+                console.log("Success!");
+                
+                console.log(result);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.log("fail: ",textStatus, errorThrown);
+            });
+            setTimeout(() => { location.href="/chatBot/chatBotList" }, 2000);
+            
+        
+    }
+
+
+
+
+
+
+    </script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script src="/js/logoUpload.js"></script>
+
+  {{!-- <script src="../js/natgeowild.js"></script> --}}
+
+

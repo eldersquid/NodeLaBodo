@@ -1,0 +1,80 @@
+<head>
+    <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css">
+</head>
+
+<div class="container-fluid">
+    <h1 class="display-4">Update Menu</h1>
+    <form id="Menu" action="/admRestaurant/updatedMenu/{{foodcart.id}}?_method=PUT" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="form-group">
+            <label>Update Menu image here</label>
+            <br>
+            <img id='existPic' name="existPic" src="{{foodcart.cardPhoto}}" width="240" height="135" class="border">
+            <div style="position:relative; "></div>
+            <input type="file" accept="image/png,image/jpeg,image/jpg" name="updateMenu" id="updateMenu">
+            <input type="hidden" id='trueMenuPicture2' name="trueMenuPicture2" value="{{foodcart.cardPhoto}}">
+            <div class="font-weight-bold text-danger small" id="picErr" style`="display:none">
+            </div>
+        </div>
+        <div class="form-group">
+            <fieldset>
+                <label>Name: </label>
+                <input class="form-control" name="cardName" type="text" id="cardName" value="{{foodcart.cardName}}"
+                    required="">
+            </fieldset>
+        </div>
+        <div class="form-group">
+            <fieldset>
+                <label>Price: </label>
+                <input class="form-control" name="cardPrice" type="text" id="cardPrice" placeholder="$"
+                   $ value="{{foodcart.cardPrice}}" required="">
+            </fieldset>
+        </div>
+        <button type="submit" value="Submit" class="btn btn-primary">
+            Update
+        </button>
+    </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+        $('#updateMenu').on('change', function () {
+            alert("hello");
+            var file = $("#updateMenu")[0].files[0];
+            var formdata = new FormData();
+            formdata.append('picUpload', file);
+            console.log("here")
+            //alert(file.name)
+            //document.getElementById("imgFilename") = file.name;
+            //$('#imgFilename') = "XCoder";
+            //$('#imgFilename').attr('value', file.name);
+
+            $.ajax({
+                url: '/admRestaurant/foodPic',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                'success': (data) => {
+                    console.log(data);
+                    console.log(data.path);
+                    $('#existPic').attr('src', data.path);
+                    $('#trueMenuPicture2').attr('value', data.path);
+
+                    if (data.err) {
+                        $('#picErr2').show();
+                        $('#picErr2').text(data.err.message);
+                    }
+                    else {
+                        $('#picErr2').hide();
+                    }
+                },
+                error: function (xhr, errorType, exception) {
+                    alert("Error", errorType);
+                }
+
+
+            });
+        });
+    </script>

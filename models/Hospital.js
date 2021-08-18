@@ -2,6 +2,12 @@ const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
 const Hospital = db.define('hospitals', {
+id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    primaryKey: true,
+    allowNull: false
+},
 placeID : {
     type : Sequelize.STRING(1000)
 
