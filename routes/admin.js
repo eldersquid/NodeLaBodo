@@ -22,6 +22,7 @@ const alertMessage = require('../helpers/messenger');
 // Method override middleware to use other HTTP methods such as PUT and DELETE
 app.use(methodOverride('_method'));
 const dialogflow = require('@google-cloud/dialogflow');
+const { Op } = require('sequelize');
 const { body, validationResult } = require('express-validator');
 const CREDENTIALS = JSON.parse(fs.readFileSync('credentials/hotel-la-bodo-5338d4f99b8b.json'));
 const PROJECTID = CREDENTIALS.project_id;
@@ -113,6 +114,7 @@ router.get("/typeList", (req, res) => {
 
 router.post("/roomPictureUpload", (req, res) => {
   let js_data = res.body;
+  console.log("this is the data tbh")
   console.log(js_data);
   // Creates user id directory for upload if not exist
   if (!fs.existsSync("./public/roomPictures/")) {
@@ -127,6 +129,7 @@ router.post("/roomPictureUpload", (req, res) => {
         res.json({ file: "/img/hotel.jpeg", err: err });
         console.log("Undefined.");
       } else {
+		console.log("Success");
         res.json({ file: `/roomPictures/${req.file.filename}` });
       }
     }
@@ -165,252 +168,6 @@ router.post('/hospitalCreate', cors(), (req, res) => {
 
 });
 
-router.get('/typeCreate', cors(), (req, res) => {
-	const title = "Create Room Type";
-	res.render('admin/roomType/type_create', { 
-		layout: "admin",
-		title: title,
-		RoomType
-	});
-
-
-});
-
-
-
-router.post('/typeCreated', [
-    body('roomName').not().isEmpty().trim().escape().withMessage("Room name is Invalid"),
-    body('minRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Minimum room number is Invalid"),
-	body('maxRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Maximum room number is Invalid"),
-    // body('cust_email').trim().isEmail().withMessage("Invalid Email").normalizeEmail().toLowerCase(),
-    // body('cust_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
-    // body('cust_date').not().isEmpty().trim().escape().withMessage("Require Date Field"),
-    // body('cust_time').not().isEmpty().trim().escape().withMessage("Require Time Field"),
-    
-	body('roomName').custom(value => {
-		let isnum = /^\d+$/.test(value);
-        if (isnum == true){
-            throw new Error("Room Name must be in alphabets!");
-        }
-        return true;
-    }),
-	body('roomPrice').custom(value => {
-		let isnum = /^\d+$/.test(value);
-        if (value < 0){
-            throw new Error("Cannot be negative value!");
-        }
-		if (isnum == false){
-			throw new Error ("Room Price must be a number!")
-
-		}
-        return true;
-    }),
-	body('minRoomNo').custom((value,{req}) => {
-        if (value > req.body.maxRoomNo){
-            throw new Error("Minimum room number CANNOT be more than maximum room number!");
-        }
-        return true;
-    }),
-	body('maxRoomNo').custom((value,{req}) => {
-        if (value < req.body.minRoomNo){
-            throw new Error("Maximum room number CANNOT be less than minimum room number!");
-        }
-        return true;
-    }),
-
-    // body('number_guest').custom(value => {
-    //     if (value > 5) {
-    //         throw new Error("Cannot Exceed 5 memebers!");
-    //     }
-    //     return true;
-    // }),
-],
-
-(req, res) => {
-	let errors = [];
-    let type = req.body.type;
-	console.log("This is room type : ");
-	console.log(type);
-    let roomName = req.body.roomName;
-    let description = req.body.description;
-    let roomPrice = req.body.roomPrice;
-    let photo = req.body.photoURL;
-	let minRoomNo = req.body.minRoomNo;
-	let maxRoomNo = req.body.maxRoomNo;
-	const validatorErrors = validationResult(req);
-    RoomType.findOne({
-        where: {
-            type
-        }
-    }).then(roomType => {
-        if (roomType) {
-            const title = 'Create Room Type';
-            res.render('admin/roomType/type_create', {
-                layout: "admin",
-                title: title,
-                error: alertMessage(res, 'danger', ' ' + roomType.type + ' already available. ', 'fas fa-exclamation-circle', true)
-            })
-
-        } else {
-
-			if (!validatorErrors.isEmpty()) {
-				console.log("Errors creating room type")
-				validatorErrors.array().forEach(error => {
-					console.log(error);
-					errors.push({ text: error.msg })
-				});
-				res.render('admin/roomType/type_create', {
-                layout: "admin",
-                type,
-				roomName,
-				description,
-				roomPrice,
-				roomImage:photo,
-				minRoomNo,
-				maxRoomNo,
-                errors
-            });
-			} else {
-				RoomType.create({
-					type,
-					roomName,
-					description,
-					roomPrice,
-					roomImage:photo,
-					minRoomNo,
-					maxRoomNo
-				}).then(roomType => {
-                alertMessage(res, 'success', ' ' + roomType.type + ' created. ', 'fas fa-sign-in-alt', true);
-                res.redirect('/admin/typeList');
-            }).catch(err => console.log(err))
-			}
-        }
-    })
-});
-
-router.get("/typeEdit/:id", (req, res) => {
-	const title = "Edit Room Type Details";
-	RoomType.findOne({
-	  where: {
-		type_id: req.params.id,
-	  },
-	})
-	  .then((roomType) => {
-		
-		// call views/video/editVideo.handlebar to render the edit video page
-		res.render("admin/roomType/type_edit", {
-		  roomType, 
-		  layout: "admin",
-		  title: title,
-		  
-		});
-	  })
-	  .catch((err) => console.log(err)); // To catch no video ID
-  });
-
-router.put('/typeEdited/:id', [
-    body('roomName').not().isEmpty().trim().escape().withMessage("Room name is Invalid!"),
-    body('minRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Minimum room number is Invalid!"),
-	body('maxRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Maximum room number is Invalid!"),
-    // body('cust_email').trim().isEmail().withMessage("Invalid Email").normalizeEmail().toLowerCase(),
-    // body('cust_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
-    // body('cust_date').not().isEmpty().trim().escape().withMessage("Require Date Field"),
-    // body('cust_time').not().isEmpty().trim().escape().withMessage("Require Time Field"),
-    
-	body('roomName').custom(value => {
-		let isnum = /^\d+$/.test(value);
-        if (isnum == true){
-            throw new Error("Room Name must be in alphabets!");
-        }
-        return true;
-    }),
-	body('roomPrice').custom(value => {
-		let isnum = /^\d+$/.test(value);
-        if (value < 0){
-            throw new Error("Cannot be negative value!");
-        }
-		if (isnum == false){
-			throw new Error ("Room Price must be a number!")
-
-		}
-        return true;
-    }),
-	body('minRoomNo').custom((value,{req}) => {
-        if (value > req.body.maxRoomNo){
-            throw new Error("Minimum room number CANNOT be more than maximum room number!");
-        }
-        return true;
-    }),
-	body('maxRoomNo').custom((value,{req}) => {
-        if (value < req.body.minRoomNo){
-            throw new Error("Maximum room number CANNOT be less than minimum room number!");
-        }
-        return true;
-    }),
-
-    // body('number_guest').custom(value => {
-    //     if (value > 5) {
-    //         throw new Error("Cannot Exceed 5 memebers!");
-    //     }
-    //     return true;
-    // }),
-],
-
-(req, res) => {
-	const validatorErrors = validationResult(req);
-	let errors = [];
-	let type = req.body.type;
-	console.log("Room type is :")
-	console.log(type);
-	let type_id = req.params.id;
-	let roomName = req.body.roomName;
-	let roomImage = req.body.roomImage;
-	let description = req.body.description;
-	let roomPrice = req.body.roomPrice;
-	let minRoomNo = req.body.minRoomNo;
-	let maxRoomNo = req.body.maxRoomNo;
-	if (!validatorErrors.isEmpty()) {
-		console.log("Errors creating room type")
-		validatorErrors.array().forEach(error => {
-			console.log(error);
-			errors.push({ text: error.msg })
-		});
-		res.render('admin/roomType/type_edited', {
-		layout: "admin",
-		type,
-		roomName,
-		description,
-		roomPrice,
-		roomImage,
-		minRoomNo,
-		maxRoomNo,
-		type_id,
-		errors
-	});
-	} else {
-		RoomType.update({
-			type,
-			roomName,
-			roomImage,
-			description,
-			roomPrice,
-			minRoomNo,
-			maxRoomNo
-		}, {
-		where: {
-		type_id: req.params.id
-		}
-		}).then(() => {
-			res.redirect('/admin/typeList');
-			}).catch(err => console.log(err));
-	}
-})
-
-
-
-
-
-
 router.post('/hospitalCreated', cors(), (req, res) => {
 	let hospitalName = req.body.name;
 	let address = req.body.address;
@@ -418,21 +175,35 @@ router.post('/hospitalCreated', cors(), (req, res) => {
 	let contactNo = req.body.contact;
 	let website = req.body.website;
 	let placeID = req.body.google_location;
-
-	Hospital.create({
-		placeID,
-		photo,
-		hospitalName,
-		address,
-		contactNo,
-		website
-
-
-	}).then((hospital)=> {
-		res.redirect('/admin/hospitalList');
-
-
-
+	Hospital.findOne({
+        where: {
+            placeID : placeID
+        }
+    }).then((hospital)=> {
+		if (hospital){
+            const title = 'Hospital';
+            res.render('admin/hospital/hospital_search', {
+                layout: "admin",
+                title: title,
+				
+                error: alertMessage(res, 'danger', '' + hospital.hospitalName + ' already exists in the database.', 'fas fa-exclamation-circle', true)
+            })
+            
+        } else {
+			Hospital.create({
+				placeID,
+				photo,
+				hospitalName,
+				address,
+				contactNo,
+				website
+		
+		
+			}).then(hospital => {
+                alertMessage(res, 'success', ' ' + hospital.hospitalName + ' has been added.', 'fas fa-sign-in-alt', true);
+                res.redirect('/admin/hospitalList');
+            }).catch(err => console.log(err))
+		}
 	}).catch(err => console.log(err))
 
 });
@@ -568,6 +339,314 @@ router.post('/hospitalReset', (req, res) => {
 			res.redirect('/admin/hospitalList');
 		});
 	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.get('/typeCreate', cors(), (req, res) => {
+	const title = "Create Room Type";
+	res.render('admin/roomType/type_create', { 
+		layout: "admin",
+		title: title,
+		RoomType
+	});
+
+
+});
+
+
+
+router.post('/typeCreated', [
+    body('roomName').not().isEmpty().trim().escape().withMessage("Room name is Invalid"),
+    body('minRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Minimum room number is Invalid"),
+	body('maxRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Maximum room number is Invalid"),
+    // body('cust_email').trim().isEmail().withMessage("Invalid Email").normalizeEmail().toLowerCase(),
+    // body('cust_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
+    // body('cust_date').not().isEmpty().trim().escape().withMessage("Require Date Field"),
+    // body('cust_time').not().isEmpty().trim().escape().withMessage("Require Time Field"),
+    
+	body('roomName').custom(value => {
+		let isnum = /^\d+$/.test(value);
+        if (isnum == true){
+            throw new Error("Room Name must be in alphabets!");
+        }
+        return true;
+    }),
+	body('roomPrice').custom(value => {
+		let isnum = /^\d+$/.test(value);
+        if (value < 0){
+            throw new Error("Cannot be negative value!");
+        }
+		if (isnum == false){
+			throw new Error ("Room Price must be a number!")
+
+		}
+        return true;
+    }),
+	body('minRoomNo').custom((value,{req}) => {
+        if (value > req.body.maxRoomNo){
+            throw new Error("Minimum room number CANNOT be more than maximum room number!");
+        }
+        return true;
+    }),
+	body('maxRoomNo').custom((value,{req}) => {
+        if (value < req.body.minRoomNo){
+            throw new Error("Maximum room number CANNOT be less than minimum room number!");
+        }
+        return true;
+    }),
+
+    // body('number_guest').custom(value => {
+    //     if (value > 5) {
+    //         throw new Error("Cannot Exceed 5 memebers!");
+    //     }
+    //     return true;
+    // }),
+],
+
+(req, res) => {
+	let errors = [];
+    let type = req.body.type;
+	console.log("This is room type : ");
+	console.log(type);
+    let roomName = req.body.roomName;
+    let description = req.body.description;
+    let roomPrice = req.body.roomPrice;
+    let photo = req.body.photoURL;
+	let minRoomNo = req.body.minRoomNo;
+	let maxRoomNo = req.body.maxRoomNo;
+	const validatorErrors = validationResult(req);
+    RoomType.findOne({
+        where: {
+            [Op.or] : [
+				{type : type},
+				{minRoomNo : minRoomNo},
+				{maxRoomNo : maxRoomNo}
+			]
+			
+        }
+    }).then(roomType => {
+		console.log(roomType)
+		if (roomType) {
+			if (roomType.type == type) {
+				const title = 'Create Room Type';
+				res.render('admin/roomType/type_create', {
+					layout: "admin",
+					title: title,
+					type,
+					roomName,
+					description,
+					roomPrice,
+					photo,
+					minRoomNo,
+					maxRoomNo,
+					roomImage:photo,
+					error: alertMessage(res, 'danger', ' ' + roomType.type + ' already available. ', 'fas fa-exclamation-circle', true)
+				})
+	
+			} else if (roomType.minRoomNo == minRoomNo) {
+				const title = 'Create Room Type';
+				res.render('admin/roomType/type_create', {
+					layout: "admin",
+					title: title,
+					type,
+					roomName,
+					description,
+					roomPrice,
+					photo,
+					minRoomNo,
+					maxRoomNo,
+					roomImage:photo,
+					error: alertMessage(res, 'danger', ' '  + ' Minimum room number is same as other room types. ', 'fas fa-exclamation-circle', true)
+				})
+	
+	
+			} else if (roomType.maxRoomNo == maxRoomNo) {
+				const title = 'Create Room Type';
+				res.render('admin/roomType/type_create', {
+					layout: "admin",
+					title: title,
+					type,
+					roomName,
+					description,
+					roomPrice,
+					photo,
+					minRoomNo,
+					maxRoomNo,
+					roomImage:photo,
+					error: alertMessage(res, 'danger', ' ' + ' Maximum room number is same as other room types. ', 'fas fa-exclamation-circle', true)
+				})
+	
+			}
+
+		}	else {
+
+			if (!validatorErrors.isEmpty()) {
+				console.log("Errors creating room type")
+				validatorErrors.array().forEach(error => {
+					console.log(error);
+					errors.push({ text: error.msg })
+				});
+				res.render('admin/roomType/type_create', {
+                layout: "admin",
+                type,
+				roomName,
+				description,
+				roomPrice,
+				roomImage:photo,
+				minRoomNo,
+				maxRoomNo,
+                errors
+            });
+			} else {
+				RoomType.create({
+					type,
+					roomName,
+					description,
+					roomPrice,
+					roomImage:photo,
+					minRoomNo,
+					maxRoomNo
+				}).then(roomType => {
+                alertMessage(res, 'success', ' ' + roomType.type + ' created. ', 'fas fa-sign-in-alt', true);
+                res.redirect('/admin/typeList');
+            }).catch(err => console.log(err))
+			}
+        }
+    })
+});
+
+router.get("/typeEdit/:id", (req, res) => {
+	const title = "Edit Room Type Details";
+	RoomType.findOne({
+	  where: {
+		type_id: req.params.id,
+	  },
+	})
+	  .then((roomType) => {
+		
+		// call views/video/editVideo.handlebar to render the edit video page
+		res.render("admin/roomType/type_edit", {
+		  roomType, 
+		  layout: "admin",
+		  title: title,
+		  
+		});
+	  })
+	  .catch((err) => console.log(err)); // To catch no video ID
+  });
+
+router.put('/typeEdited/:id', [
+    body('roomName').not().isEmpty().trim().escape().withMessage("Room name is Invalid!"),
+    body('minRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Minimum room number is Invalid!"),
+	body('maxRoomNo').not().isEmpty().isInt().trim().escape().withMessage("Maximum room number is Invalid!"),
+    // body('cust_email').trim().isEmail().withMessage("Invalid Email").normalizeEmail().toLowerCase(),
+    // body('cust_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
+    // body('cust_date').not().isEmpty().trim().escape().withMessage("Require Date Field"),
+    // body('cust_time').not().isEmpty().trim().escape().withMessage("Require Time Field"),
+    
+	body('roomName').custom(value => {
+		let isnum = /^\d+$/.test(value);
+        if (isnum == true){
+            throw new Error("Room Name must be in alphabets!");
+        }
+        return true;
+    }),
+	body('roomPrice').custom(value => {
+		let isnum = /^\d+$/.test(value);
+        if (value < 0){
+            throw new Error("Cannot be negative value!");
+        }
+		if (isnum == false){
+			throw new Error ("Room Price must be a number!")
+
+		}
+        return true;
+    }),
+	body('minRoomNo').custom((value,{req}) => {
+        if (value > req.body.maxRoomNo){
+            throw new Error("Minimum room number CANNOT be more than maximum room number!");
+        }
+        return true;
+    }),
+	body('maxRoomNo').custom((value,{req}) => {
+        if (value < req.body.minRoomNo){
+            throw new Error("Maximum room number CANNOT be less than minimum room number!");
+        }
+        return true;
+    }),
+
+    // body('number_guest').custom(value => {
+    //     if (value > 5) {
+    //         throw new Error("Cannot Exceed 5 memebers!");
+    //     }
+    //     return true;
+    // }),
+],
+
+(req, res) => {
+	const validatorErrors = validationResult(req);
+	let errors = [];
+	let type = req.body.type;
+	let type_id = req.params.id;
+	let roomName = req.body.roomName;
+	let roomImage = req.body.photoURL;
+	let description = req.body.description;
+	let roomPrice = req.body.roomPrice;
+	let minRoomNo = req.body.minRoomNo;
+	let maxRoomNo = req.body.maxRoomNo;
+	console.log("Room image is :")
+	console.log(roomImage);
+	if (!validatorErrors.isEmpty()) {
+		console.log("Errors creating room type")
+		validatorErrors.array().forEach(error => {
+			console.log(error);
+			errors.push({ text: error.msg })
+		});
+		res.render('admin/roomType/type_edited', {
+		layout: "admin",
+		type,
+		roomName,
+		description,
+		roomPrice,
+		roomImage,
+		minRoomNo,
+		maxRoomNo,
+		type_id,
+		errors
+	});
+	} else {
+		RoomType.update({
+			type,
+			roomName,
+			roomImage,
+			description,
+			roomPrice,
+			minRoomNo,
+			maxRoomNo
+		}, {
+		where: {
+		type_id: req.params.id
+		}
+		}).then(() => {
+			res.redirect('/admin/typeList');
+			}).catch(err => console.log(err));
+	}
+})
+
+
+
 
 // [START dialogflow_create_intent]
 

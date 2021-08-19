@@ -708,7 +708,6 @@ router.get("/bookingEdit/:id",(req, res) => {
   });
 
   router.put('/bookingEdited/:id', (req, res) => {
-	
 	let roomNo = req.body.roomNo;
 	let paid = req.body.paid;
 	let bookInDate = req.body.bookInDate;
