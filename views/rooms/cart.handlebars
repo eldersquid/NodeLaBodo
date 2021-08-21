@@ -78,6 +78,8 @@
                                 Book In Date : {{room.bookInDate}}
                                 <br>
                                 Book Out Date : {{room.bookOutDate}}
+                                <br>
+                                Package Deal : {{room.package_deal}}
                             </div>
                         </div>
                         <!-- <div class="qty">
@@ -188,7 +190,7 @@
                         BOOKING DETAILS:
                     </div>
                     <div class="amount">
-                        <b>$ 500</b>
+                        <b>{{roomtype.roomPrice}}</b>
                     </div>
                 </div>
                 <div class="price_details">
@@ -196,10 +198,7 @@
                         <p>{{roomtype.type}} </p>
                         <p>${{roomtype.roomPrice}}</p>
                     </div>
-                    <div class="item">
-                        <p>{{room.package_deal}}</p>
-                        <p class="green">-$0</p>
-                    </div>
+                   
 
                     <!-- <div class="item">
                         <p>Order Total :</p>

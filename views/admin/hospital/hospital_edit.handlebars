@@ -1,5 +1,8 @@
 <head>
-
+  <script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous"></script>
 
 
 </head>
@@ -39,11 +42,7 @@
                                        
                                         <div class="row">
                                           <div class="col-lg-9">
-                                            <div class="form-group">
-                                              <label>Place ID</label>
-                                                <input type="hidden" id="google_location" name="google_location" value="{{hospital.placeID}}"> 
-                                              <input type="text" id="location" class="form-control" value="{{hospital.placeID}}" readonly>
-                                            </div>
+                                            
                                             <div class="form-group">
                                              <label for="name">Hospital Name</label>
                                              <input type="text" class="form-control" name="name" id="name" value="{{hospital.hospitalName}}" required>
@@ -58,7 +57,7 @@
                                             <label for="hospital_image">Hospital Logo</label>
                                             <input type="file" id="photoUpload" name="photoUpload" accept="image/png,image/jpeg,image/jpg">
                                             <img id="hospital_image" src="{{hospital.photo}}" alt=""class="border img-thumbnail img-fluid"style="height:80%;width:90%">
-                                            <input id="photoURL" type="hidden" name="photoURL" value="">
+                                            <input id="photoURL" type="hidden" name="photoURL" value="{{hospital.photo}}">
                                             </div>
                                             <div class="font-weight-bold text-danger small" id="photoError" style="display:none"></div>
 
@@ -153,7 +152,35 @@
 
 
    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-  <script src="/js/logoUpload.js"></script>
+  {{!-- <script src="/js/logoUpload.js"></script> --}}
+  <script>
+    $("#photoUpload").on("change", function () {
+  let image = $("#photoUpload")[0].files[0];
+  console.log("This is where you show the image lol");
+  console.log(image);
+  let formdata = new FormData();
+  formdata.append("photoUpload", image);
+  $.ajax({
+    url: "/admin/hospitalLogoUpload",
+    type: "POST",
+    data: formdata,
+    contentType: false,
+    processData: false,
+    'success': (data) => {
+      $("#hospital_image").attr("src", data.file);
+      $("#photoURL").attr("value", data.file); // sets posterURL hidden field
+      if (data.err) {
+        $("#photoErr").show();
+        $("#photoErr").text(data.err.message);
+      } else {
+        $("#photoErr").hide();
+      }
+    },
+  });
+});
+
+
+  </script>
 
   {{!-- <script src="../js/natgeowild.js"></script> --}}
 

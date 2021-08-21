@@ -12,31 +12,7 @@
 
 
 
-	<!-- Modal -->
-<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" id="cart">
-  <div class="modal-dialog" style="max-width:40%;" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Bookings</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <ul class="show-cart">
-                <li>???????</li>
-            </ul>
-            <div>You have <span class="total-count">X</span> bookings currently.</div>
-            <div>Cost:$<span class="total-cart"></span></div>
-      </div>
-      <div class="modal-footer">
-          <button class="clear-cart btn btn-danger">Clear Bookings</button>
-        <button type="submit" class="btn btn-primary" id="pay_now" data-target="#cartModal" data-dismiss="modal">Check Out</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 
 
@@ -53,8 +29,6 @@
 
 		<div class="hero-center-section pages">
 			<div class="container">
-				<button name="add_cart" data-name="{{roomType.type}}" data-price="{{roomType.roomPrice}}" data-misc="" class="add-to-cart btn btn-primary">Add Booking</button>
-				{{!-- <button name="add_cart" class="show-date btn btn-primary">Test Date</button> --}}
 				<div class="row justify-content-center">
 					<div class="col-12 parallax-fade-top">
 						<div class="hero-text" name="type">{{roomType.type}}</div>
@@ -114,9 +88,7 @@
 		<div class="section z-bigger">
 			<div class="container">
 				<div class="row mb-3">
-          <div class="col">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cartModal" >Bookings (<span class="total-count"></span>)</button>
-          </div>
+          
       </div>
 				<div class="row">
 					
@@ -130,34 +102,7 @@
 
 							</div>
 						</div>
-						{{!-- <div class="section">
-							<div id="rooms-sync2" class="owl-carousel">
-								<div class="item">
-									<img src="/img/kura.jpg" alt="">
-								</div>
-								<div class="item">
-									<img src="/img/kura.jpg" alt="">
-								</div>
-								<div class="item">
-									<img src="/img/kura.jpg" alt="">
-								</div>
-								<div class="item">
-									<img src="/img/kura.jpg" alt="">
-								</div>
-								<div class="item">
-									<img src="/img/kura.jpg" alt="">
-								</div>
-								<div class="item">
-									<img src="/img/kura.jpg" alt="">
-								</div>
-								<div class="item">
-									<img src="/img/kura.jpg" alt="">
-								</div>
-								<div class="item">
-									<img src="/img/kura.jpg" alt="">
-								</div>
-							</div>
-						</div> --}}
+					
 						
 						<div class="section pt-5">
 							<h5>description</h5>

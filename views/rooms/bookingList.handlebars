@@ -15,10 +15,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                   <div class="col d-flex justify-content">
-                  <a class="btn btn-outline-secondary ml-1" href="/admin/hospitalList">Hospitals</a>
-                  <a class="btn btn-secondary ml-1" href="/rooms/bookingList">Bookings</a>
-                  <a class="btn btn-outline-secondary ml-1" href="/admin/typeList">Room Types</a>
-                  <a class="btn btn-outline-secondary ml-1" href="/chatBot/chatBotList">Chuu Bot QnA</a>
+
                   <div class="col d-flex justify-content-end">
                     <a class="btn btn-outline-secondary ml-1" href="/rooms"> Select Rooms </a>
                   </div>
@@ -60,15 +57,17 @@
                                             <tr>
                                                 {{!-- <th>Logo</th> --}}
                                                 
-                                                <th>Room Type</th>
+                                                
                                                 <th>Guest Name</th>
                                                 <th>Check-In Date</th>
                                                 <th>Check-Out Date</th>
                                                 <th>Room Number</th>
                                                 <th>Paid?</th>
                                                 <th>Price</th>
+                                                <th>Nearby Hospital</th>
+                                                <th>Package Deal</th>
                                                 <th></th>
-                                                <th></th>
+                                                
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -80,9 +79,7 @@
                                             <tr>
   
                                               
-                                              <td>
-                                                {{roomType}}
-                                              </td>
+                                              
                                               <td>
                                                 {{name}}
                                               </td>
@@ -96,16 +93,19 @@
                                                 {{roomNo}}
                                               </td>
                                               <td>
-                                                {{paid}}
-                                                
+                                                {{paidBoo}}
                                               </td>
                                               <td>
                                                 {{price}}
                                               </td>
                                               <td>
-                                                <a href="/admin/hospitalProfile/{{id}}" class="btn btn-dark">Details</a>
+                                                {{nearbyHospital}}
                                               </td>
-                                              <td><a href="/admin/hospitalEdit/{{id}}" class="btn btn-warning">Update</a></td>
+                                              <td>
+                                                {{package_deal}}
+                                              </td>
+                                              
+                                              <td><a href="/rooms/bookingEdit/{{id}}" class="btn btn-warning">Update</a></td>
                                               <td>
                                                 
 

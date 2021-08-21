@@ -72,13 +72,21 @@ router.get('/view', (req, res) => {
 
 });
 
-router.get('/supplierView', (req, res) => {
+router.get('/supplierView/:id', async (req, res) => {
     const title = 'Orders';
+
+    let find_supplier = await Supplier.findAll({
+        where: {
+            uen_number: req.params.id
+        },
+        attributes: ["company_name"]
+    });
+
+    let supplier = JSON.stringify(find_supplier).split("\"")
 
     Orders.findAll({
         where: {
-            // supplierId: req.supplier.id
-            // supplierName: req.supplier
+            supplier: supplier
         },
         order: [
             ['orders_id', 'ASC']
@@ -208,12 +216,21 @@ router.get('/showUpdate/:orders_id', (req, res) => {
     }).catch(err => console.log(err)); // To catch no video ID
 });
 
-router.put('/update/:orders_id', (req, res) => {
+router.put('/update/:orders_id', async (req, res) => {
     let supplier = req.body.supplier;
     let item_name = req.body.item_name;
     let quantity = req.body.quantity;
     let remarks = req.body.remarks;
     let status = req.body.status;
+
+    let find_uen = await Supplier.findAll({
+        where: {
+            company_name: supplier
+        },
+        attributes: ["uen_number"]
+    });
+
+    let uen_number = JSON.stringify(find_uen).split("\"")
 
     Orders.update({
         supplier,
@@ -227,7 +244,7 @@ router.put('/update/:orders_id', (req, res) => {
         }
     }).then((orders) => {
         alertMessage(res, 'success', ' Status for ' + orders.supplier + ' has been updated.', 'fas fa-sign-in-alt', true);
-        res.redirect('/orders/view');
+        res.redirect('/orders/supplierview/' + uen_number[3]);
     }).catch(err => console.log(err));
 });
 

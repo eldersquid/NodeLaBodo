@@ -276,11 +276,15 @@ app.use(methodOverride('_method'));
 router.post('/chuuSend',(req,res)=>{
 	console.log("Test : ",req.body.chuuMessage);
 	runSample(req.body.chuuMessage).then(data =>{
-		res.send({reply:data})
+		if (data){
+			res.send({reply:data})
 
-
-
-	})
+		} else {
+			console.log("Error.")
+		}
+		
+	}
+	)
 
 
 
@@ -469,6 +473,7 @@ router.get('/bookingCart/:id', (req, res) => {
 				type_id : room.roomTypeID
 			}
 		}).then((roomtype)=>{
+			
 			res.render("rooms/cart", {
 				room, 
 				layout: "thalia",
@@ -616,12 +621,23 @@ router.get('/bookingList', (req, res) => {
 	raw: true
 	})
 	.then((room) => {
+		for (let i = 0; i < room.length; i++){
+			if (room[i].paid == 1) {
+				var paidBoo = "YES"
+				room[i].paidBoo = paidBoo
+			} else {
+				var paidBoo = "NO"
+				room[i].paidBoo = paidBoo
+			}
+			console.log(room[i])
+		}
+		
 	
-	// pass object to listVideos.handlebar
 	res.render('rooms/bookingList', {
 	layout : "admin",
 	title : title,
-	room: room
+	room: room,
+	
 	});
 	})
 	.catch(err => console.log(err));
@@ -652,7 +668,7 @@ router.get('/bookingList', (req, res) => {
 		});
 	});
 
-router.get("/bookingEdit/:id", (req, res) => {
+router.get("/bookingEdit/:id",(req, res) => {
 	const title = "Edit BookingDetails";
 	Room.findOne({
 	  where: {
@@ -660,11 +676,33 @@ router.get("/bookingEdit/:id", (req, res) => {
 	  },
 	})
 	  .then((room) => {
-		res.render("rooms/bookingEdit", {
-		  room,
-		  layout: "admin",
-		  title: title,
-		});
+		Hospital.findAll({
+			order: [["id", "ASC"]],
+			raw: true,
+		  }).then((hospitals) => {
+			var availableHospitals = [];
+			if (room.paid == 1){
+				var paidBoo = "YES"
+			}
+			else {
+				var paidBoo = "NO"
+			}
+			for (let i = 0; i < hospitals.length; i++) {
+				console.log(hospitals[i])
+				if (hospitals[i].hospitalName != room.nearbyHospital){
+					availableHospitals.push(hospitals[i].hospitalName);
+					
+				}
+			  }
+			  console.log(availableHospitals); 
+			res.render("rooms/bookingEdit", {
+			  room,
+			  layout: "admin",
+			  title: title,
+			  paidBoo,
+			  availableHospitals
+			});
+		  })
 	  })
 	  .catch((err) => console.log(err)); // To catch no video ID
   });
@@ -675,12 +713,12 @@ router.get("/bookingEdit/:id", (req, res) => {
 	let paid = req.body.paid;
 	let bookInDate = req.body.bookInDate;
 	let bookOutDate = req.body.bookOutDate;
+	let nearbyHospital = req.body.nearbyHospital;
 	Room.update({
 		bookInDate,
 		bookOutDate,
-		addItems,
 		roomNo,
-		paid
+		nearbyHospital,
 	}, {
 	where: {
 	id: req.params.id

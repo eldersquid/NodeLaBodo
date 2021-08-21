@@ -140,12 +140,12 @@ router.post("/login/signup", (req, res) => {
         });
     }
 
-    // if (req.body.password !== req.body.password2) {
-    //     console.log("error 1");
-    //     errors.push({
-    //         text: 'Passwords do not match'
-    //     });
-    // }
+    if (req.body.password != req.body.password2) {
+        console.log("error 1");
+        errors.push({
+            text: 'Passwords do not match'
+        });
+    }
 
     if (password.length < 4) {
         errors.push({ text: "password must be more than 4 characters" });

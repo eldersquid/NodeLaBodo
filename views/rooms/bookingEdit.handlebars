@@ -6,10 +6,6 @@
 
 <body id="page-top">
               <div class="container-fluid">
-                <button type="button" class="btn btn-secondary">Hospitals</button>
-                <button type="button" class="btn btn-outline-secondary">Occupations</button>
-                
-                <button type="button" class="btn btn-outline-secondary">Vehicles</button>
                 
                 <hr>
 
@@ -55,12 +51,7 @@
                                         </div>
                                         
                                         <div class="row">
-                                          <div class="col">
-                                            <div class="form-group">
-                                             <label for="contact">Room Type</label>
-                                             <input type="text" class="form-control" name="roomType" id="roomType" value="{{room.roomType}}" readonly>
-                                            </div>
-                                          </div>
+                                          
                                           <div class="col">
                                             <div class="form-group">
                                              <label for="website">Room Number</label>
@@ -70,7 +61,7 @@
                                           <div class="col">
                                             <div class="form-group">
                                              <label for="website">Paid?</label>
-                                             <input type="text" class="form-control" name="paid" id="paid" value="{{room.paid}}" required>
+                                             <input type="text" class="form-control" name="paid" id="paid" value="{{paidBoo}}" required readonly>
                                             </div>
                                           </div>
                                         </div>
@@ -86,6 +77,36 @@
                                             <div class="form-group">
                                              <label for="website">Check Out Date</label>
                                              <input type="date" class="form-control" name="bookOutDate" id="bookOutDate" value="{{room.bookOutDate}}" required>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                          <div class="col">
+                                            <div class="form-group">
+                                             <label for="website">Package Deal</label>
+                                             <input type="text" class="form-control" name="package_deal" id="package_deal" value="{{room.package_deal}}" required readonly>
+                                            </div>
+                                          </div>
+                                          <div class="col">
+                                            <div class="form-group">
+                                             <label for="website">Nearby Hospital</label>
+                                             {{#if availableHospitals}}
+                                    <select class="custom-select" name="nearbyHospital" aria-label=".form-select-sm example">
+                                      <option value="none">No Hospital Selected</option>
+                                      <option value="{{room.nearbyHospital}}" selected>{{room.nearbyHospital}}</option>
+                                        {{#each availableHospitals}}
+                                            <option value="{{this}}">{{this}}</option>
+                                        {{/each}}
+                                    </select>
+                                    {{else}}
+                                         <select class="custom-select" name="nearbyHospital" aria-label=".form-select-sm example">
+                                           <option value="{{room.nearbyHospital}}" selected>{{room.nearbyHospital}}</option>
+                                        <option value="none">No Hospital Selected</option>
+                                            
+                                        
+                                    </select>
+                                    {{/if}}
                                             </div>
                                           </div>
                                         </div>

@@ -11,16 +11,18 @@ const path = require('path');
 // Required for file upload
 // const fs = require('fs');
 // const upload = require('../helpers/imageUpload');
+
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis');
 const FoodGallery = require('../models/FoodGallery');
+const { body, validationResult } = require('express-validator');
 
 
 
 const CLIENT_ID = '188467906173-a5cq8hviitnaanin3cmag7el6kkqrcru.apps.googleusercontent.com'
-const CLIENT_SECRET = '9bCtMjwKlgz9oAd9H4kPS8pF'
+const CLIENT_SECRET = 'uJwKO7Pc693-lYfqgWNbIVNB'
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//043zEL3Pauc7vCgYIARAAGAQSNwF-L9IrjZn7SQZi6rODY4tf1Pk33-sx9_tuhG3d4TNnFMxKLwIw_EdkRMbRDp7XxlHz_oQOYVc';
+const REFRESH_TOKEN = '1//04Tt7yjfGWpdQCgYIARAAGAQSNwF-L9Ir_wKE_gHmQitcazwILvpG0TVhGDTssYZSZUOjozi05MfSKJrBjCcw4VE32AgEiL3cfcs';
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
@@ -103,6 +105,7 @@ router.get('/updateReservation/:id', (req, res) => {
         }).catch(err => console.log(err));
 });
 
+
 router.post('/updateReservation/:id', (req, res) => {
     let cust_fname = req.body.cust_fname;
     let cust_lname = req.body.cust_lname;
@@ -131,6 +134,78 @@ router.post('/updateReservation/:id', (req, res) => {
         // reservation
     }).catch(err => console.log(err));
 });
+// router.post('/updateReservation/:id', [
+//     body('cust_fname').not().isEmpty().isAlpha().trim().escape().withMessage("First name is Invalid"),
+//     body('cust_lname').not().isEmpty().isAlpha().trim().escape().withMessage("Last name is Invalid"),
+//     body('cust_email').trim().isEmail().withMessage("Invalid Email").normalizeEmail().toLowerCase(),
+//     body('cust_message').not().isEmpty().trim().escape().withMessage("Invalid Message"),
+//     body('cust_date').not().isEmpty().trim().escape().withMessage("Require Date Field"),
+//     body('cust_time').not().isEmpty().trim().escape().withMessage("Require Time Field"),
+//     // body('cust_phone').custom(value => {
+//     //     if (value > 9){
+//     //         throw new Error("Invalid phone number!");
+//     //     }
+//     //     return true;
+//     // }),
+//     body('number_guest').custom(value => {
+//         if (value > 5) {
+//             throw new Error("Cannot Exceed 5 memebers!");
+//         }
+//         return true;
+//     }),
+// ], (req, res) => {
+//     console.log("retrieving Updated reservation")
+//     let errors = [];
+//     let cust_fname = req.body.cust_fname;
+//     let cust_lname = req.body.cust_lname;
+//     let cust_email = req.body.cust_email;
+//     // let cust_phone = req.body.cust_phone;
+//     let number_guest = req.body.number_guest;
+//     let cust_date = req.body.cust_date;
+//     let cust_time = req.body.cust_time;
+//     let cust_message = req.body.cust_message;
+
+//     const validatorErrors = validationResult(req);
+
+//     if (!validatorErrors.isEmpty()) {
+//         console.log("Errors updating reservation")
+//         validatorErrors.array().forEach(error => {
+//             console.log(error);
+//             errors.push({ text: error.msg })
+//         });
+//         res.render('admRestaurant/updateReservation', {
+//             layout: "admin",
+//             errors,
+//             cust_fname,
+//             cust_lname,
+//             cust_email,
+//             // cust_phone,
+//             number_guest,
+//             cust_date,
+//             cust_time,
+//             cust_message
+//         });
+//     } else {
+//         console.log("Updating reservation")
+//         Reservation.update({
+//             cust_fname,
+//             cust_lname,
+//             cust_email,
+//             // cust_phone,
+//             number_guest,
+//             cust_date,
+//             cust_time,
+//             cust_message
+//         }, {
+//             where: {
+//                 id: req.params.id
+//             }
+//         }).then(() => {
+//             res.redirect('/admRestaurant/viewReservation'); // redirect to call router.get(/listSupplier...) to retrieve all updated
+//             // reservation
+//         }).catch(err => console.log(err));
+//     }
+// });
 
 // Delete Reservation
 router.get('/deleteReservation/:id', (req, res) => {
@@ -241,6 +316,7 @@ router.post('/createResponse', (req, res) => {
     }).then((response) => {
         sendMail(toEmail, toSubject, toMessage).then(result => console.log('Email sent...', result))
             .catch(error => console.log(error.message));
+        alertMessage(res, 'success', ' Response has been sent successfully.', 'fas fa-sign-in-alt', true);
         res.redirect('/admRestaurant/viewResponse');
     }).catch(err => console.log(err))
 
@@ -295,13 +371,13 @@ router.get('/deleteResponse/:id', (req, res) => {
     });
 });
 
-// Upload Picture
+// Create Picture
 router.post('/Foodupload', (req, res) => {
-    let foodpic_data = req.body.trueFilePicture;
-    console.log("THis is foodpic data", foodpic_data);
+    let createPic = req.body.trueFilePicture;
+    console.log("THis is foodpic data", createPic);
     const title = "Upload Food Pictures";
     FoodGallery.create({
-        foodPhoto: foodpic_data
+        foodPhoto: createPic
     })
         .then((foodgallery) => {
             res.redirect('/admRestaurant/viewFoodGallery');
@@ -347,31 +423,32 @@ router.get('/viewFoodGallery', (req, res) => {
         .catch(err => console.log(err));
 });
 
-// router.get('/UpdateFoodPic/:id', (req,res) => {
-//     const title = 'updatePicture';
-//     console.log(req.params.id)
-//     FoodGallery.findOne({
-//         where: {
-//             id: req.params.id
-//         },
-//         order: [
-//             // [reservation.id, 'ASC']
-//         ],
-//         raw: true
-//     })
-//         .then((foodgallery) => {
-//             console.log(foodgallery);
-//             res.render('admRestaurant/viewFoodGallery', {
-//                 layout: "admin",
-//                 title: title,
-//                 foodgallery:foodgallery
-//             });
-//         }).catch(err => console.log(err));
-// });
+router.get('/UpdateFoodPic/:id', (req,res) => {
+    const title = 'updatePicture';
+    console.log(req.params.id)
+    FoodGallery.findOne({
+        where: {
+            id: req.params.id
+        },
+        order: [
+            // [reservation.id, 'ASC']
+        ],
+        raw: true
+    })
+        .then((foodgallery) => {
+            console.log(foodgallery);
+            res.render('admRestaurant/viewFoodGallery', {
+                layout: "admin",
+                title: title,
+                foodgallery:foodgallery
+            });
+        }).catch(err => console.log(err));
+});
 
 // Update Picture
 router.post('/UpdateFoodPic/:id', (req, res) => {
     let foodpic_data = req.body.trueFilePicture2;
+    console.log("THis is Update foodpic data", foodpic_data);
     FoodGallery.update({
         foodPhoto: foodpic_data
     }, {
@@ -570,10 +647,93 @@ router.put('/updatedMenu/:id', (req, res) => {
             id: req.params.id
         }
     }).then((foodcart) => {
-        alertMessage(res, 'success', ' Menu has been updated.', 'fas fa-sign-in-alt', true);
+        alertMessage(res, 'success', ' ' + req.body.cardName + ' has been updated. ' , 'fas fa-sign-in-alt', true)
         res.redirect('/admRestaurant/viewFoodCart');
     }).catch(err => console.log(err));
 });
+
+// router.put('/updatedMenu/:id', [
+//     body('cardName').not().isEmpty().isAlpha().trim().escape().withMessage("Name is Invalid"),
+// ],(req, res) => {
+//     let errors = [];
+//     let cardPhoto = req.body.trueMenuPicture2;
+//     let cardName = req.body.cardName
+//     let cardPrice = req.body.cardPrice
+//     console.log("THIS IS CARD PHOTO :")
+//     console.log(cardPhoto);
+//     const validatorErrors = validationResult(req);
+//     if (!validatorErrors.isEmpty()) {
+//         console.log("Errors creating contact")
+//         validatorErrors.array().forEach(error => {
+//             console.log(error);
+//             errors.push({ text: error.msg})
+//         });
+//         res.render('admRestaurant/updateMenu', {
+//             layout:"admin",
+//             errors,
+//             cardPhoto,
+//             cardName,
+//             cardPrice
+//         });
+//     } else {
+//         console.log("updating menu")
+//     }FoodCart.update({
+//         cardPhoto: cardPhoto,
+//         cardName: cardName,
+//         cardPrice: cardPrice
+//     }, {
+//         where: {
+//             id: req.params.id
+//         }
+//     }).then((foodcart) => {
+//         alertMessage(res, 'success', ' Menu has been updated.', 'fas fa-sign-in-alt', true);
+//         res.redirect('/admRestaurant/viewFoodCart');
+//     }).catch(err => console.log(err));
+// });
+
+// router.put('/updatedMenu/:id', (req, res) => {
+//     let errors = [];
+//     let cardPhoto = req.body.trueMenuPicture2;
+//     let cardName = req.body.cardName
+//     let cardPrice = req.body.cardPrice
+//     console.log("THIS IS CARD PHOTO :")
+//     console.log(cardPhoto);
+
+//     FoodCart.findOne({
+//         where: {
+//             cardName:cardName
+//         },
+//         raw: true
+//     }).then((foodcart) => {
+//         console.log(foodcart);
+
+//         if (foodcart) {
+//             alertMessage(res, 'danger', 'Item already Existed. ', 'fas fa-sign-in-alt', true);
+//             errors.push(1);
+//         }
+//         if (errors.length > 0) {
+//             console.log("It went hereee")
+//             res.render('admRestaurant/updateMenu', {
+//                 layout: 'admin',
+//             });
+//         } else if (errors.length == 0) {
+//             FoodCart.update({
+//                 cardPhoto: cardPhoto,
+//                 cardName: cardName,
+//                 cardPrice: cardPrice
+//             }, {
+//                 where: {
+//                     id: req.params.id
+//                 }
+//             }).then((foodcart) => {
+//                 alertMessage(res, 'success', ' Menu has been updated.', 'fas fa-sign-in-alt', true);
+//                 res.redirect('/admRestaurant/viewFoodCart');
+//             }).catch(err => console.log(err));
+//         }
+//     })
+// });
+
+
 
 // Upload Menu pictures inside the folder
 router.post('/menuPic', (req, res) => {

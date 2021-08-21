@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+{{>_navbar}} 
+  <div class="hero-image">
+  <div class="hero-text">
+    <h1 style="color:white;">Gallery</h1>
+  </div>
+</div>
+<br>
+  <style>
+body, html {
+    height: 100%;
+}
+
+/* The hero image */
+.hero-image {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  background-image: linear-gradient(rgba(2, 2, 2, 0.5), rgba(10, 7, 7, 0.5)), url("https://www.jetsetter.com//uploads/sites/7/2018/04/jleQRg3N-1380x690.jpeg");
+
+  /* Set a specific height */
+  height: 50%;
+
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+/* Place text in the middle of the image */
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+div.insta {
+  border: 1px solid #ccc;
+  
+}
+
+div.insta:hover {
+  border: 1px solid #777;
+
+}
+
+div.insta img {
+  width: 400px;
+  height: 400px;
+  
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.responsive {
+  padding: 0 6px;
+  float: left;
+  width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px) {
+  .responsive {
+    width: 49.99999%;
+    margin: 6px 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .responsive {
+    width: 100%;
+  }
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+</head>
+<body>
+
+
+  <div class="insta" id = "insta">
+    <div class="desc">Add a description of the image here</div>
+  </div>
+
+
+
+
+</body>
+<script>
+
+    window.onload = async function profile_fetch() {
+    fetch("https://v1.nocodeapi.com/zsumurf/instagram/bCHQUPlNyOzgbzQB"
+  
+    )
+      .then((res) => {
+        return res.json();
+      }).then((data) => {
+        if (data.Response === "False") {
+          console.log("Error found!!");
+        } else {
+          var igfeed = data;
+          for (let i = 0; i < igfeed.data.length; i++) {
+              var img = document.createElement("img");    
+              img.src = igfeed.data[i].media_url;
+              console.log(igfeed.data[i].media_url);
+              document.getElementById("insta").appendChild(img);
+              
+              }
+          
+      }
+
+    })
+  }
+  </script>
+</html>
