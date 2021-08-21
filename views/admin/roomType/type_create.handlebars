@@ -10,11 +10,7 @@
 
 <body id="page-top">
               <div class="container-fluid">
-                <a class="btn btn-outline-secondary" href="">Guest Details</a>
-                <button type="button" class="btn btn-secondary">Hospitals</button>
-                <button type="button" class="btn btn-outline-secondary">Occupations</button>
                 
-                <button type="button" class="btn btn-outline-secondary">Vehicles</button>
                 
                 <hr>
 
@@ -44,11 +40,11 @@
                                           <div class="col-lg-9">
                                             <div class="form-group">
                                              <label for="name">Room Type</label>
-                                             <input type="text" class="form-control" name="type" id="type" value="" required>
+                                             <input type="text" class="form-control" name="type" id="type" value="{{type}}" required>
                                             </div>
                                             <div class="form-group">
                                               <label for="address">Room Name</label>
-                                             <input type="text" class="form-control" name="roomName" id="roomName" value="" required>
+                                             <input type="text" class="form-control" name="roomName" id="roomName" value="{{roomName}}" required>
                                             </div>
                                           </div>
                                           <div class="col-lg-3">
@@ -65,7 +61,7 @@
                                           <div class="col">
                                             <div class="form-group">
                                              <label for="contact">Description</label>
-                                             <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                                             <textarea class="form-control" name="description" id="description" rows="3">{{description}}</textarea>
                                              
                                             </div>
                                           </div>
@@ -74,19 +70,19 @@
                                           <div class="col">
                                             <div class="form-group">
                                              <label for="website">Room Price</label>
-                                             <input type="text" class="form-control" name="roomPrice" id="roomPrice" value="" required>
+                                             <input type="text" class="form-control" name="roomPrice" id="roomPrice" value="{{roomPrice}}" required>
                                             </div>
                                           </div>
                                           <div class="col">
                                             <div class="form-group">
                                              <label for="website">Minimum Room Number</label>
-                                             <input type="text" class="form-control" name="minRoomNo" id="minRoomNo" value="" required>
+                                             <input type="text" class="form-control" name="minRoomNo" id="minRoomNo" value="{{minRoomNo}}" required>
                                             </div>
                                           </div>
                                           <div class="col">
                                             <div class="form-group">
                                              <label for="website">Maximum Room Number</label>
-                                             <input type="text" class="form-control" name="maxRoomNo" id="maxRoomNo" value="" required>
+                                             <input type="text" class="form-control" name="maxRoomNo" id="maxRoomNo" value="{{maxRoomNo}}" required>
                                             </div>
                                           </div>
                                         </div>

@@ -4,6 +4,7 @@ $("#photoUpload").on("change", function () {
   console.log(image);
   let formdata = new FormData();
   formdata.append("photoUpload", image);
+  console.log(formdata);
   $.ajax({
     url: "/admin/roomPictureUpload",
     type: "POST",

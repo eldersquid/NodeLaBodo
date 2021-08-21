@@ -165,197 +165,10 @@ async function listIntents() {
     return response;
   }
 
-  async function updateIntent(newTrainingPhrases) { // WARNING : THIS DELETES ALL AVAILABLE TRAINING PHRASES AND REPLACES THEM WITH NEW ONES
-    // Imports the Dialogflow library
-    
-    // Instantiates clients
-    const intentsClient = new dialogflow.IntentsClient(CONFIGURATION);
-
-    const projectAgentPath = intentsClient.projectAgentPath(PROJECTID);
-
-    console.log(projectAgentPath);
-
-    const request = {
-      parent: projectAgentPath,
-    };
-
-    const [response] = await intentsClient.listIntents(request);
-    
-    const existingIntent = response[0]; // Take in the very first intent for testing purposes
-
-    const intent = existingIntent; //get the intent that needs to be updated from the [response]
-  
-    const trainingPhrases = [];
-    let previousTrainingPhrases =
-      existingIntent.trainingPhrases.length > 0
-        ? existingIntent.trainingPhrases
-        : [];
-  
-    previousTrainingPhrases.forEach(textdata => {
-      newTrainingPhrases.push(textdata.parts[0].text);
-    });
-  
-    newTrainingPhrases.forEach(phrase => {
-      const part = {
-        text: phrase
-      };
-  
-      // Here we create a new training phrase for each provided part.
-      const trainingPhrase = {
-        type: "EXAMPLE",
-        parts: [part]
-      };
-      trainingPhrases.push(trainingPhrase);
-    });
-    intent.trainingPhrases = trainingPhrases;
-
-    const updateIntentRequest = {
-      intent
-      
-    };
-  
-    // Send the request for update the intent.
-    const result = await intentsClient.updateIntent(updateIntentRequest);
-  
-    return result;
-  }
-
 // updateIntent(["test statement"]); TEST UPDATE INTENT
 
 
-
-
-async function updateIntentQuick(intentID,newTrainingPhrases) { // NEW EDITED
-  // Imports the Dialogflow library
-  
-  // Instantiates clients
-  const intentsClient = new dialogflow.IntentsClient(CONFIGURATION);
-
-  const projectAgentPath = intentsClient.projectAgentPath(PROJECTID);
-
-  console.log(projectAgentPath);
-
-  // const request = {
-  //   parent: projectAgentPath,
-  // };
-
-
-  // const [response] = await intentsClient.listIntents(request);
-  
-  var intent =await getIntent(intentID);
-  console.log("test data is ",intent);
-
-
-  const trainingPhrases = [];
-  
-  let previousTrainingPhrases =
-    intent.trainingPhrases.length > 0
-      ? intent.trainingPhrases
-      : [];
-
-  previousTrainingPhrases.forEach(textdata => {
-    newTrainingPhrases.push(textdata.parts[0].text);
-  });
-
-  newTrainingPhrases.forEach(phrase => {
-    const part = {
-      text: phrase
-    };
-
-  
-
-
-
-
-
-
-    
-
-    // Here we create a new training phrase for each provided part.
-    const trainingPhrase = {
-      type: "EXAMPLE",
-      parts: [part]
-    };
-    trainingPhrases.push(trainingPhrase);
-  });
-  
-  intent.trainingPhrases = trainingPhrases;
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Test
-
-  // const trainingPhrases = [];
-  
-  // let previousTrainingPhrases =
-  //   intent.trainingPhrases.length > 0
-  //     ? intent.trainingPhrases
-  //     : [];
-
-  // previousTrainingPhrases.forEach(textdata => {
-  //   newTrainingPhrases.push(textdata.parts[0].text);
-  // });
-
-  // newTrainingPhrases.forEach(phrase => {
-  //   const part = {
-  //     text: phrase
-  //   };
-
-  
-
-
-
-
-
-
-    
-
-  //   // Here we create a new training phrase for each provided part.
-  //   const trainingPhrase = {
-  //     type: "EXAMPLE",
-  //     parts: [part]
-  //   };
-  //   trainingPhrases.push(trainingPhrase);
-  // });
-
-
-  
-  
-  intent.trainingPhrases = trainingPhrases;
-  
-
-
-
-
-
-
-
-  const updateIntentRequest = {
-    intent
-    
-  };
-
-  // Send the request for update the intent.
-  const result = await intentsClient.updateIntent(updateIntentRequest);
-  console.log("Success.")
-  return result;
-}
-
-// updateIntent(["test statement"]); TEST UPDATE INTENT
-
-
-
-async function updateIntentAPI(intentID,previousTrainingPhrases,newTrainingPhrases,previousMessageTexts,newMessageTexts) { // NEW EDITED
+async function updateIntentAPI(intentID,previousTrainingPhrases,newTrainingPhrases,previousMessageTexts,newMessageTexts,displayName) { // NEW EDITED
   // Imports the Dialogflow library
   
   // Instantiates clients
@@ -413,7 +226,7 @@ async function updateIntentAPI(intentID,previousTrainingPhrases,newTrainingPhras
   });
   
   intent.trainingPhrases = trainingPhrases;
-
+  intent.displayName = displayName;
   intent.messages = [message];
 
 
@@ -432,70 +245,6 @@ async function updateIntentAPI(intentID,previousTrainingPhrases,newTrainingPhras
 
 // updateIntent(["test statement"]); TEST UPDATE INTENT
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-async function deleteIntent(existingIntent) { 
-    // Imports the Dialogflow library
-    
-    // Instantiates clients
-    const intentsClient = new dialogflow.IntentsClient(CONFIGURATION);
-
-    const projectAgentPath = intentsClient.projectAgentPath(PROJECTID);
-
-    console.log(projectAgentPath);
-
-    const request = {
-      parent: projectAgentPath,
-    };
-
-    var count = 0;
-    var targetIntent ="";
-    var deleteIntentRequest = {};
-
-    const [response] = await intentsClient.listIntents(request);
-
-    response.forEach(intent => {
-        if (intent.displayName == existingIntent){
-            targetIntent = intent.name;
-            count++;
-                
-        }}); 
-
-    if (count>0){
-        const intent_split = targetIntent.split("/");
-        const intentPath = intentsClient.projectAgentIntentPath(PROJECTID, intent_split[(intent_split.length)-1]);
-        console.log(intentPath);
-        deleteIntentRequest["name"] = intentPath;
-
-
-    } else {
-        return console.log("Not found.");
-
-    }
-    
-    const result = await intentsClient.deleteIntent(deleteIntentRequest);
-    console.log(`${existingIntent} intent is deleted successfully.`);
-    return result;  
-    
-
-    
-  }
 
   async function deleteIntentQuick(intentID) { 
     // Imports the Dialogflow library
@@ -638,30 +387,26 @@ router.get("/chatBotList", (req, res) => {
 
 
 
+router.get("/chatBotListAPI", (req, res) => {
+  const title = "Chat Bot Instances";
+  const chatBotIntents = [];
+  listIntents().then((chatbots) => {
+    console.log(chatbots[2]);
+    res.render("ChatBot/chatBotListAPI", {
+    layout: "admin",
+    title: title,
+    chatbots : chatbots
+    });
+    })
+    .catch((err) => console.log(err));
+});
 
 
-// Original chat bot list that shows all the questions and answers from the API itself
-// router.get("/chatBotListOriginal", (req, res) => {
-//   const title = "Chat Bot Instances";
-//     listIntents().then((advancedIntents) => {
-//       var advancedIntentsArray = [];
-      
-//       advancedIntents.forEach(intent =>{ 
-//         var name = intent.name;
-//         var name_split = name.split("/");
-//         // advancedIntentsArray.push({"intentPath" : name_split[(name_split.length)-1]})
-//         intent["intentPath"] = name_split[(name_split.length)-1];
-//       });
-//       // console.log(advancedIntentsArray);
-//       res.render("ChatBot/chatBotList", {
-//         layout: "admin",
-//         title: title,
-//         advancedIntents,
-//         // advancedIntentsArray
-//       });
-//     })
-//     .catch((err) => console.log(err));
-// });
+
+
+
+
+
 
 
 
@@ -915,7 +660,7 @@ router.post('/intentEdited/:path',(req,res)=>{
   console.log(req.body.displayName);
   console.log(req.body.trainingPhrases);
   console.log(req.body.botReplies);
-  var intentPath = updateIntentAPI(path,originalQuestions,questions,originalReplies,answers);
+  var intentPath = updateIntentAPI(path,originalQuestions,questions,originalReplies,answers,displayName);
   intentPath.then(function(){
     console.log("Intent name of LOONA is :")
     

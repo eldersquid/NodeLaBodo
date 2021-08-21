@@ -30,6 +30,11 @@
                             data-target="#deletePictures_{{id}}" name="deletePictures"
                             value="deletePictures">Delete</button>
                     </div>
+                    {{/each}}
+                    {{!-- {{/if}} --}}
+                    {{else}}
+                    <h3>~ No Pictures Uploaded ~</h3>
+                    {{/if}}
                     <!-- ADD -->
                     <form class="block-register" action="/admRestaurant/Foodupload" method="POST">
                         <!-- Modal -->
@@ -141,13 +146,8 @@
                     </div>
                 </div>
             </div>
-            {{/each}}
-            {{!-- {{/if}} --}}
         </div>
     </section>
-    {{else}}
-    <h3>~ No Pictures Uploaded ~</h3>
-    {{/if}}
 </div>
 <!-- End Gallery -->
 
